@@ -1,0 +1,765 @@
+2007-10-10  Michael Sperber  <sperber@deinprogramm.de>
+
+	* EFS 1.24.
+
+2007-08-27  Michael Sperber  <sperber@informatik.uni-tuebingen.de>
+
+	* efs-cu.el (efs): 
+	(efs-behavior): 
+	(efs-auto-save): 
+	(efs-gateways): 
+	(efs-programs): 
+	(efs-parameters): 
+	(efs-hooks): Move these customization groups from efs.el.
+	(efs-vms-host-regexp): 
+	(efs-cms-host-regexp): 
+	(efs-mts-host-regexp): 
+	(efs-ti-explorer-host-regexp): 
+	(efs-ti-twenex-host-regexp): 
+	(efs-sysV-unix-host-regexp): 
+	(efs-bsd-unix-host-regexp): 
+	(efs-next-unix-host-regexp): 
+	(efs-unix-host-regexp): 
+	(efs-dumb-unix-host-regexp): 
+	(efs-super-dumb-unix-host-regexp): 
+	(efs-dos-host-regexp): 
+	(efs-apollo-unix-host-regexp): 
+	(efs-mvs-host-regexp): 
+	(efs-tops-20-host-regexp): 
+	(efs-mpe-host-regexp): 
+	(efs-ka9q-host-regexp):
+	(efs-dos-distinct-host-regexp): 
+	(efs-os2-host-regexp): 
+	(efs-vos-host-regexp): 
+	(efs-hell-host-regexp): 
+	(efs-guardian-host-regexp): 
+	(efs-ms-unix-host-regexp): 
+	(efs-plan9-host-regexp): 
+	(efs-cms-knet-host-regexp): 
+	(efs-nos-ve-host-regexp): 
+	(efs-netware-host-regexp): 
+	(efs-dumb-apollo-unix-regexp): Customize.
+
+2007-08-21  Mike Sperber  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-skip-msgs-alist): Ignore IPv6 "No route to host"
+	error messages from the client.
+
+2007-05-10  Noah Friedman  <friedman@splode.com>
+
+	* efs.el (efs-require): Handle extra arguments beyond feature and
+	filename portably.  Emacs 22 has 'noerror' argument.
+
+	* efs-netrc.el (efs-root-file-name-completion): Handle optional
+	arg `predicate' for Emacs 22.
+
+2007-02-05  Michael Sperber  <sperber@informatik.uni-tuebingen.de>
+
+	* efs-dired.el (efs-dired-copy-file): Enable recursive copying.
+
+2007-01-03  Mike Sperber  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-month-and-time-regexp): Copy change for Breton month
+	names from Dired.
+
+2006-04-12  Mike Sperber  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-ftp-explicit-empty-file-name): Add, to handle
+	*BSD-specific kludge for ftp clients that don't accept an explicit
+	empty file name.
+
+2005-04-09  Mike Sperber  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.texi (Getting help): Note new mailing list.
+
+	* efs-report.el (efs-bug-address): New mailing list.
+
+	* efs.el (efs-process-scream-and-yell)
+	(efs-require-scream-and-yell): New mailing list.
+
+2005-01-14  Steve Youngs  <steve@sxemacs.org>
+
+	* efs-fnh.el (efs-handle-emacs-version): Use `emacs-*-version'
+	variables for version info instead of string-matching through
+	`emacs-version'.
+
+2005-01-23  Timothy OCallaghan <T.OCallaghan@elsevier.com>.
+
+	* efs-vms.el (efs-fix-path):
+	(efs-fix-dir-path): Make EFS work better for VMS hosts.
+
+2005-01-23  Michael Sperber  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-send-cmd): Kludge addition for VMS, based on a patch
+	by Timothy OCallaghan <T.OCallaghan@elsevier.com>.
+
+2004-10-02  Mike Sperber  <sperber@informatik.uni-tuebingen.de>
+
+	* EFS 1.23.
+
+2003-12-02  Michael Sperber  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-cmd-ok-msgs): Add 229 to `efs-cmd-ok-msgs' as per
+	RFC 2428.  For full RFC 2428, we still need to be able to do a
+	EPSV instead of a PASV.
+
+2003-09-29  Ville Skyttä  <scop@xemacs.org>
+
+	* efs.el: Add "efs-" prefix to all defgroups.
+
+2003-09-29  Mike Sperber  <sperber@informatik.uni-tuebingen.de>
+
+	* EFS 1.22
+
+2003-09-05  Mike Sperber  <sperber@informatik.uni-tuebingen.de>
+
+	* efs-cp-p.el (efs-local-time): Use `efs-decode-month-name'
+	instead of `efs-month-alist.'
+
+	* default-dir.el (default-dir-set-visited-file-name): Accept
+	optional args.
+
+2003-09-05  Mike Sperber  <sperber@informatik.uni-tuebingen.de>
+
+	* EFS 1.21.
+
+2003-08-11  Mike Sperber  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-skip-msgs-alist): Add EPRT as another command which
+	ftp clients might send behind EFS's back.
+
+2003-08-07  Mike Sperber  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-month-and-time-regexp): Rewrite to match Dired.
+	(efs-file-size-submatch):
+	(efs-month-date-submatch):
+	(efs-time-or-year-submatch): Add.
+	(efs-month-regexp-alist): Replaces `efs-month-alist'.  Should
+	handle lotsa more languages than before.
+	(efs-decode-month-name): Add.
+	(efs-parse-month-date): Add.
+	(efs-unix-t-converter): Use above.
+	(efs-unix-S-converter): Use above.
+	(efs-ls-parse-file-line): Use above.
+	(efs-ls-parse-1-liner): Use above.
+
+2003-08-06  Mike Sperber  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-binary-file-name-regexp): Add .bz2 to
+	`efs-binary-file-name-regexp'.
+
+2003-08-05  Mike Sperber  <sperber@informatik.uni-tuebingen.de>
+
+	(efs-start-process): Do (setenv "TERM" "dumb") so the ftp client
+	doesn't output fancy escape sequence as if talking to a human.
+	(efs-send-progress-off): Zap; with above change, we don't need it
+	any more.
+	(efs-guess-hash-mark-size): Don't respect `efs-send-progress-off'
+	anymore.
+
+2003-08-05  Mike Sperber  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-ls): Zap --dired if it's part of the switches.
+
+2002-09-05  Katsumi Yamaoka  <yamaoka@jpl.org>
+
+	* efs.el (efs-load):
+	(efs-require): Make `eval-after-load' work.
+
+2002-09-01  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-send-cmd): Use `efs-fix-dir-path' instead of
+	`efs-fix-path' for CWD.
+
+2002-08-29  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs-guardian.el (efs-fix-path): Rewrite slightly.
+
+2002-08-28  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-insert-file-contents-general): Send a NOOP command
+	after a solitary rnfr for Guardian hosts, as they choke on the
+	command after RNFR if it's not RNTO.
+
+2002-08-27  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs-guardian.el (efs-fix-path):
+	(efs-split-guardian-path):
+	(efs-guardian-file-name-nondirectory):
+	(efs-fix-dir-path): Rewrite Guardian path handling based on
+	suggestions from Richard Bielawski
+	<Richard_Bielawski@mastercard.com>.
+
+	* efs.el (efs-mvs-pwd-line-template): Fix regexp.  Suggested by
+	Matthew Miner <Matthew.Miner@iqfinancial.com>.
+
+	* efs-netrc.el (efs-disable-netrc-security-check): Set to nil on
+	Windows.  Suggested by Matthew Miner <Matthew.Miner@iqfinancial.com>.
+
+	* Makefile.efs (install_elc): Rename from install_obj.
+
+2002-08-10  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-start-polling): Modify to use a timer rather than
+	a wakeup process.
+	(efs-ftp-buffer-poll-timer): Introduce.
+
+2002-06-04  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-tmp-name-template): Guess `efs-tmp-name-template'
+	better on GNU Emacs.
+
+2002-05-29  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs-guardian.el (efs-fix-path): Make the regexps more liberal,
+	based on data from Richard Bielawski <Richard_Bielawski@mastercard.com>.
+
+2002-05-17  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-local-apollo-unix): Put back (getenv "HOME").
+
+2002-04-18  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* EFS 1.20.
+
+2002-04-13  Jonathan Harris <jhar@tardis.ed.ac.uk>
+
+	* efs-dired.el (efs-dired-compress-file):
+	* efs.el (efs-recover-file):
+	* efs-cu.el (efs-chase-symlinks): Force proper use of
+	`efs-file-symlink-p'.
+
+2002-04-13  Bob Weiner <weiner@altrasoft.com>
+
+	* efs.el:
+	(efs-wipe-from-ls-cache):
+	(efs-substitute-in-file-name):
+	(efs-file-name-as-directory):
+	(efs-file-name-directory):
+	(efs-file-name-nondirectory):
+	(efs-directory-file-name): Catch potential nil return values of
+	`efs-ftp-path.'
+
+2002-04-13  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-file-regular-p):
+	(efs-internal-file-regular-p):
+	* efs-guardian.el (efs-internal-file-regular-p): Added
+	`file-regular-p' for remote files.
+
+	* efs.el (efs-substitute-in-file-name): Recognize _ in environment
+	variable names.
+	(efs-dumb-unix-listing-regexp): Recognize newer version of NcFTPd.
+
+2002-04-03  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-abort-recursive-edit-and-then): Supplied missing
+	second argument to `setq'.
+	(efs-quoted-cmds): Added.
+	(efs-quote-percents): Added.
+	(efs-ftp-broken-quote): Added.
+	(efs-raw-send-cmd): Quote % for QUOTE commands in broken ftp
+	clients which are derivatives of ftp in 4.2BSD.
+
+2002-04-02  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* passwd.el (read-passwd-1): Bind `binding' later to fix bug
+	reported by Nuutti Kotivuori <nuutti.kotivuori@smarttrust.com> on
+	xemacs-patches.
+	(read-passwd): Prevent `view-lossage' from seeing the password.
+
+	* efs-guardian.el (efs-fix-dir-path): Add missing `dir-path'
+	parameter to `format.'
+
+	* efs-netrc.el (efs-netrc-scream-and-yell): Handle temp buffer
+	more properly.
+
+2002-03-13  Katsumi Yamaoka  <yamaoka@jpl.org>
+
+	* efs.el (efs-load): Work for `after-load-alist'.
+
+2001-08-10  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs-cu.el (efs-path-regexp): Allow @ within user arg.
+
+	* efs.el (efs-skip-msgs-alist): Make the "EPSV not understood
+	regexp" more liberal.
+
+2001-08-09  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-process-scream-and-yell): Send bug reports to
+	efs-bugs, not ange.
+
+2001-06-09  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* RELEASE: 1.20pre2
+
+	* Makefile (GENERATED): Add custom-load AFTER including
+	XEmacs.rules.
+
+	* efs.el (efs-send-progress-off): Add this variable to support ftp
+	clients that display fancy progress bars instead of hash marks.
+	(efs-good-msgs): Ignore "Progress bar off" message.
+	(efs-guess-hash-mark-size): Send "progress off" command if so
+	desired.
+	(efs-process-handle-line): Back out introduction of
+	`efs-cmd-ok-cmds-p'.  The new logic was flawed.
+
+2001-06-03  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-month-and-time-regexp): Allow a space in time specs
+	such as 5:13.  This is needed eg. on ftp.microsoft.com.
+	(efs-slash-local-paths): Add.
+	(efs-adjust-local-path): Rename from `efs-quote-local-paths' and
+	extend to handle `efs-slash-local-paths'.
+
+2001-06-01  Steve Youngs  <youngs@xemacs.org>
+
+	* Makefile (GENERATED): Add custom-load.elc.
+	(all): Ditto.
+
+2001-05-17  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* RELEASE: 1.20pre1
+
+2001-05-17  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-skip-msgs-alist): Create, generalizing
+	`efs-skip-msgs'.  This hopefully will cure the gratuitous "EPSV
+	not understood"	messages spewed out by some ftp clients.
+	(efs-skip-cmd-msg-p): Create.
+	(efs-cmd-ok-cmds-msgs-alist): Create, generalizing
+	`efs-cmd-ok-cmds' and `efs-cmd-ok-msgs'.
+	(efs-process-handle-line): Use above.
+	(efs-send-cmd): Handle null directory to avoid arg count mismatch.
+	(efs-good-msgs): Shorten "hash mark" regexp.
+	(efs-hash-mark-msgs): Shorten "hash mark" regexp.
+
+2001-05-06  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-write-region): Restore `buffer-modified-p' on all
+	conditions.
+
+2001-01-17  Edwin Steiner <edwinstein@hotmail.com>
+
+	* efs.el (efs-quote-local-paths): Adds a customization variable
+	`efs-quote-local-paths'. If it is non-nil, local path names in FTP
+	commands are quoted (\ becomes \\ ...) by the new function
+	`efs-quote-local-path.'  This is to support a ported version of a
+	unix FTP client under Win98 which expects local path names to be
+	quoted.
+
+2000-10-15  Martin Buchholz <martin@xemacs.org>
+
+	* *: spelling fixes.
+
+2000-10-15  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-ls): CWD to nondirectory part of `file' instead in
+	an attempt to prevent spurious CWD's to non-directories.
+
+2000-10-15  Katsumi Yamaoka <yamaoka@jpl.org>
+
+	* efs.el (efs-ls): Preserve `temp' and `nlist' across
+	continuation.
+
+2000-07-16  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-ls): Proper `noerror' handling for CWD.
+
+2000-07-12  Ben Wing  <ben@xemacs.org>
+
+	* efs.el:
+	* efs.el (efs-null-device): New.
+	* efs.el (efs-tmp-name-template): Fix up problems with Cygwin
+	FTP client and Windows native XEmacs.
+	* efs.el (efs-expand-tilde): Use efs-null-device.
+	* efs.el (efs-guess-host-type): ditto.
+
+2000-03-27  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* RELEASE: 1.19
+
+1998-10-27  Jan Vroonhof  <vroonhof@math.ethz.ch>
+
+	* efs.el: Require comint softly. Provide dummy if not
+		available (bare XEmacs)
+
+	* efs-netrc.el: Do not require passwd. Use autoload.
+
+1999-10-19  Kirat Singh <singhki@jany.gs.com>
+
+	* efs.el: Added support for sidewinder ftp proxy.
+
+2000-03-11  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* Makefile.efs:
+	* efs-vm.el: Removed efs-vm.el as per Kyle's recommendation.
+
+2000-03-04  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-ls): Try to please wu-ftpd 2.6.0 by CWD'ing before
+	doing an ls.
+
+1999-12-28  Katsumi Yamaoka   <yamaoka@jpl.org>
+
+	* efs.el (efs-load, efs-require): Signal `file-error'.
+
+1999-11-03    Robert Fenk <fenk@forwiss.tu-muenchen.de>
+
+	* efs.el (efs-local-apollo-unix): `getenv "HOME"' replaced by
+	`user-home-directory', because usually HOME is not defined on WinNT.
+
+1999-06-15  Jan Vroonhof  <vroonhof@math.ethz.ch>
+
+	* efs.el (efs-insert-file-contents-general): Generalized i-f-c
+	function derived from old i-f-c function.
+	(efs-insert-file-contents): Use it.
+	(efs-insert-file-contents-literally): Use it.
+
+1999-01-03  Mike Sperber  <sperber@informatik.uni-tuebingen.de>
+
+	* RELEASE: 1.18.
+
+	* efs.el (efs-ftp-flush-command): This variable replaces
+ 	EFS-FTP-FLUSH-BY-NOOP, hopefully with better results on NT.
+
+1999-01-03  Jonathan Harris  <jhar@tardis.ed.ac.uk>
+
+	* efs.el (efs-set-umask): Catered to nil umask.
+
+1998-12-19  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* Makefile: Bumped version numbers, integrated with updated build
+ 	procedure.
+
+	* efs.el (efs-copy-remote-to-remote): Fixed breakage I introduced
+ 	by earlier fix.
+
+1998-12-17  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-ftp-flush-by-noop): Introduced and used new variable.
+	(efs-umask-command): Introduced and used new variable.
+	(efs-internal-file-name-as-directory): Replaced by code that does
+ 	the job manually.
+
+1998-11-29  Jonathan Harris  <jhar@tardis.ed.ac.uk>
+
+	* efs.el: (efs-send-cmd): Don't quote the second filename in GET
+ 	commands or the first filename in PUT or APPEND commands because
+ 	these filenames refer to local files.
+
+	* efs.el: (efs-tmp-name-template): Use TEMP-DIRECTORY for
+ 	EFS-TMP-NAME-TEMPLATE if fbound.
+
+	* efs.el: (efs-nslookup-program): Fixed Custom setting for
+ 	EFS-NSLOOKUP-PROGRAM.
+
+1998-08-23  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* RELEASE: 1.17.
+
+	* efs.el: (efs-guardian-path-template): Last component may have up
+ 	to 8 characters.
+
+	* efs.el (efs-backup-buffer): Respect `backup-inhibited'.
+
+	* efs.el (efs-use-remote-shell-internally): Introduced and used.
+  	Set *this* to nil instead of `efs-remote-shell-file-name' which
+ 	was a silly idea in the first place.
+
+1998-08-22  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-dumb-unix-listing-regexp): Added experimental "dumb"
+ 	recognition of NCFtpd.
+
+	* efs.el, efs-report.el, LISTS, efs.texi: Updated mailing list
+ 	addresses.
+
+	* efs.el (efs-shell-call-process): A nil
+ 	`efs-remote-shell-file-name' now means that no remote shell is to
+ 	be used instead on nonexistent ftp commands.
+
+1998-05-06  Raymond Toy  <toy@rtp.ericsson.se>
+
+	* efs-kerberos.el: Fixed a typo in efs-kerberos-login (eror -> error).
+
+1998-08-22  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs-19.23.el, efs-19.34.el, efs-19.el, efs-fnh.el,
+ 	efs-l19.11.el, fn-handler.el: Lucid -> XEmacs renamings.
+
+	* Makefile.efs: Added IGNORE_CUSTOM variable to control inclusion
+ 	of cust-stub.el.
+
+	* cust-stub.el: Added, courtesy of Noah Friedman <friedman@prep.ai.mit.edu>.
+
+1998-08-22  Jerry Quinn <jquinn@nortel.ca>
+
+	* efs.el (efs-process-handle-hash): Added display of transfer rate.
+
+1998-08-22  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-barf-or-query-if-file-exists): Added legible error messages.
+	Added declaration for 'file-already-exists error.
+
+	* efs.el (efs-copy-remote-to-remote): Fixed complete brokenness.
+
+	* dumped-lisp.el: Removed---it was a dumb idea in the first place.
+
+1998-03-20  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* RELEASE: 1.16.
+
+	* INSTALL: Adjustments.
+
+1998-03-14  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs-dump.el: Pulled in necessary variables and autoloads.
+
+	* dumped-lisp.el: Created.
+
+1998-03-13  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* fixup.el, Makefile: Added DIREDDIR and CUSTOMDIR for GNU Emacs
+ 	installation.
+
+	* efs-dired-mule.el: GNU Emacs compatibility fixes.
+
+	* auto-save.el, passwd.el: Required custom.  Various other GNU
+ 	Emacs compatibility fixes.
+
+	* efs-19.34.el: Created.
+
+	* efs-18.el, efs-19.el, efs-19.23.el: Added char-before.
+
+	* efs-ovwrt.el (efs-overwrite-fn): Reverted GNU-Emacs-compatible
+ 	code.
+
+	* INSTALL: Created.
+
+	* efs.texi: Various updates.
+
+	* efs.el: Added custom declarations.
+
+1998-02-17  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el (efs-write-region): Would recurse infinitely and thereby
+ 	break file-precious-flag.
+
+1998-02-17 Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs-pc.el, efs.el: Added support for Microsoft's NT server.
+
+1998-01-05  Karl M. Hegbloom <karlheg@bittersweet.inetarena.com>
+
+	* efs-netrc.el: change char-equal to eq in two instances where nil
+ 	might arise.
+
+1997-12-12  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs-18.el, efs-19.23.el, efs-19.el, efs-l19.11.el: Overwrite
+ 	expand-file-name with version that uses file-name handlers.
+
+	* efs-pc.el: Added support for the Hummingbird ftpd
+
+	* ChangeLog: created
+
+1997-12-12  Alastair Burt <alastair.burt@dfki.de>
+
+	* efs-dired.el: EFS now confirms overwrites.
+
+	Tue Dec  9 08:05:29 1997  Michael Sperber [Mr. Preprocessor]  <sperber@brabantio>
+
+	* Attic/custom-load.el, Attic/auto-autoloads.el:
+	Automatically generated.
+
+1997-12-02  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el:
+	EFS now short-circuits filenames only when the underlying Emacs also
+	does so.
+
+	* efs.el:
+	expand-file-name can now be handled via file-name-handler-alist.
+	Small dumb-unix extension.
+
+	* efs-19.23.el, efs-19.el, efs-l19.11.el, efs-18.el:
+	expand-file-name can now be handled via file-name-handler-alist.
+
+	* efs.el: Suspected Netware patch.
+
+	* efs-defun.el, efs-dos-distinct.el: Version number fix.
+
+	* efs.texi, fixup.el, efs.el, efs-x19.15.el, efs-vos.el, efs-vm.el, efs-vms.el, efs-tops-20.el, efs-ti-twenex.el, efs-ti-explorer.el, efs-report.el, efs-plan9.el, efs-pc.el, efs-nos-ve.el, efs-ovwrt.el, efs-netrc.el, efs-netware.el, efs-mvs.el, efs-mts.el, efs-ms-unix.el, efs-kerberos.el, efs-mpe.el, efs-ka9q.el, efs-gwp.el, efs-hell.el, efs-fnh.el, efs-guardian.el, efs-dos-distinct.el, efs-dump.el, efs-dired.el, efs-dl.el, efs-defun.el, efs-dired-mule.el, efs-cu.el, efs-coke.el, efs-cp-p.el, efs-cms.el, efs-auto.el, efs-cms-knet.el, Attic/auto-autoloads.el, Attic/custom-load.el, README, default-dir.el, Makefile:
+	Import of XEmacs 20.4b7
+
+	* Makefile: Preliminary shot at customization.
+
+1997-12-02  Karl M. Hegbloom <karlheg@inetarena.com>
+
+	* efs.el, efs-tops-20.el, efs-vos.el, efs-pc.el, efs-netware.el, efs-nos-ve.el, efs-mts.el, efs-mvs.el, efs-netrc.el, efs-mpe.el, efs-ms-unix.el, efs-hell.el, efs-ka9q.el, efs-dos-distinct.el, efs-guardian.el, efs-dired.el, efs-dl.el, efs-cms.el:
+	Remove preceding-char & following-char.
+
+
+1997-04-25  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.texi: Directory entry.
+
+	* efs.el: Passive mode support.
+
+1997-04-22  Jamie Zawinski <jwz@netscape.com>
+
+	* auto-save.el: Bug fixes.
+
+1997-04-22  Bill Clark <bclark@pixel.cirrus.com>,
+
+1997-04-04  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el: rsh magic for chmod.
+
+	* efs-fnh.el: Moved in allow-remote-paths.
+
+	* efs-dump.el: Moved out allow-remote-paths.
+
+	* efs-dired.el: rsh magic for chmod.
+
+	* efs-cu.el: Autoload for efs-ftp-path.
+
+	* efs-auto.el: More autoloads.
+
+	* default-dir.el: Shell commands now complete filenames in XEmacs.
+
+	* Makefile: PC compilation flags.
+
+1997-03-24  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el: Added conditional variable for remote access.
+
+	* efs-ovwrt.el: Correct inclusion of advice.
+
+	* efs-fnh.el, efs-dump.el:
+	Added conditional variable for remote access.
+
+	* Makefile: Adjustments for XEmacs 20.
+
+	* efs.texi: Bug fixes, so it runs through Makeinfo.
+
+1997-03-23  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.texi: First stab; very rough but runs through.
+
+1997-03-21  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs-auto.el: Reverted to 1.15 version.
+
+	* efs.el, efs-report.el, efs-netrc.el: Added autoloads.
+
+	* efs-ovwrt.el: Fixed potential conflict with advice.el.
+
+	* efs-cu.el: Adaptations for XEmacs 20.1.
+
+	* efs-x19.15.el, efs-l19.11.el, efs-19.23.el, efs-19.el, efs-18.el:
+	Removed (require 'default-dir).
+
+	* default-dir.el: Support for Latin1 XEmacs 20.
+	Removed advice.el references.
+
+	* Makefile: Source installation and diffing support.
+
+	* efs-dump.el: Created.
+
+1997-03-09  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el, efs-netrc.el, efs-cu.el, efs-auto.el:
+	So's EFS support can be dumped safely.
+
+1997-03-09  Martin Buchholz <martin@xemacs.org>
+
+	* efs.el, efs-pc.el: Typo fixes.
+
+1997-02-23  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* emacs-19.el, efs.el, efs-x19.15.el, efs-vms.el, efs-tops-20.el, efs-ti-explorer.el, efs-ti-twenex.el, efs-report.el, efs-plan9.el, efs-ovwrt.el, efs-pc.el, efs-nos-ve.el, efs-netrc.el, efs-netware.el, efs-mvs.el, efs-ms-unix.el, efs-mpe.el, efs-l19.11.el, efs-ka9q.el, efs-kerberos.el, efs-gwp.el, efs-guardian.el, efs-dl.el, efs-dired.el, efs-defun.el, efs-cu.el, efs-cp-p.el, efs-cms.el, efs-cms-knet.el, efs-auto.el, default-dir.el, Makefile:
+	Merged with XEmacs 19.15b95.
+
+1997-02-22  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el: Comments.
+
+	* Makefile: Various stuff.
+
+	* default-dir.el: Support for view-less.
+
+1997-02-18  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs-x19.15.el, efs-vos.el, efs-vms.el, efs-report.el, efs.el, efs-netware.el, efs-nos-ve.el, efs-mvs.el, efs-mpe.el, efs-kerberos.el, efs-ka9q.el, efs-guardian.el, efs-fnh.el, efs-dl.el, efs-dired.el, efs-cu.el, efs-cms.el, default-dir.el, auto-save.el, Makefile:
+	Merged with XEmacs 20.1b1.
+
+1997-02-15  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* MANIFEST: Removed.
+
+	* README: Updated for the version bundled with XEmacs.
+
+	* efs.el: Respects file name extension on remote file insertion.
+
+	* efs-cu.el: Fixed password seed stuff again.
+
+	* default-dir.el: Bug fix for XEmacs/MULE.
+
+	* auto-save.el: Merged with auto-save.el in XEmacs.
+
+1997-02-04  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs-fnh.el: Version check bug fix so it works under XEmacs 19.15.
+
+	* reporter.el: Resurrected; it's not in Emacs 18
+
+	* Makefile: Resurrected reporter.el.
+
+1997-02-02  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs-fnh.el, Makefile: Cleanup.
+
+	* reporter.el, efs-l19.6.el, efs-l19.8.el, efs-l19.10.el, PATCHES_FOR_LEMACS_19.10:
+	Removed.
+
+1997-02-01  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs-cu.el: Made efs-code-string really work with XEmacs 20.0.
+
+1997-01-27  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs-cu.el: Fix for the broken compatibility fix.
+
+1997-01-25  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el, efs-guardian.el:
+	Bug fix from mailing list.
+
+1997-01-25  Christoph Wedler <wedler@fmi.uni-passau.de>
+
+	* auto-save.el:	Bug fix.
+
+1997-01-20  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs-cu.el: XEmacs 20 compatibility fix in efs-code-string.
+
+1997-01-03  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* all:
+	Merged with EFS 1.15 from ange.
+
+	* Makefile, efs-fnh.el: Added support for efs-x19.15.
+
+	* efs-x19.15.el: Created.
+
+1996-12-15  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* efs.el, efs-vos.el, efs-report.el, efs-vms.el, efs-netware.el, efs-nos-ve.el, efs-mvs.el, efs-ka9q.el, efs-mpe.el, efs-guardian.el, efs-dl.el, efs-fnh.el, efs-cms.el:
+	Port to XEmacs 20.
+
+1996-12-09  Michael Sperber [Mr. Preprocessor]  <sperber@informatik.uni-tuebingen.de>
+
+	* all: Merged with EFS 1.14 from Sandy.

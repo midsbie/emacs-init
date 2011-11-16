@@ -184,3 +184,8 @@
 (defun set-frame-height-interactive (arg)
    (interactive "p")
    (set-frame-height (selected-frame) arg))
+
+(set-frame-width-interactive 185)
+(set-frame-height-interactive 86)
+
+(server-start)

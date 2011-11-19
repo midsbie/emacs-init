@@ -33,6 +33,14 @@
 ;; nxhtml-mode
 (load "nxhtml/autostart.el")
 ;(setq mumamo-background-colors nil)     ;; disable background color changes
+(css-color-global-mode)
+
+(defun web-mode()
+  (interactive)
+  (nxhtml-mumamo-mode))
+
+(add-to-list 'auto-mode-alist '("\\.inc$" .nxhtml-mumamo-mode))
+(add-to-list 'auto-mode-alist '("\\.php$" . nxhtml-mumamo-mode))
 
 ;; FIX for mumamo's annoying warning messages ;;;;;;;;;;;;;;;;
 ; Mumamo is making emacs 23.3 freak out:

@@ -1,10 +1,10 @@
 (add-to-list 'load-path "/usr/share/emacs/common-lisp/color-themes/")
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(comment-multi-line t)
  '(comment-style (quote extra-line))
@@ -18,22 +18,17 @@
  '(tab-width 2)
  '(tool-bar-mode nil))
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:stipple nil :background "#1a0f0b" :foreground "#c3be98" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 90 :width normal :foundry "unknown" :family "Liberation Mono"))))
- '(Info-title-1-face ((t (:weight bold))) t)
- '(font-lock-comment-face ((t (:foreground "#999d63"))))
- '(linum ((t (:foreground "#696969")))))
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "#151515" :foreground "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 91 :width normal :foundry "unknown" :family "Liberation Mono")))))
 
 ;; load cc-mode
 (autoload 'awk-mode "cc-mode" nil t)
 (add-hook 'c-mode-common-hook
           (lambda () (c-toggle-auto-hungry-state 1)
             (c-toggle-auto-state -1)))
-
-;;(load "linum")
 
 ;; nxhtml-mode
 (load "nxhtml/autostart.el")
@@ -52,7 +47,7 @@
 
 ;; Highlighter
 (global-hl-line-mode 1)
-(set-face-background 'hl-line "#484840")
+(set-face-background 'hl-line "#383830")
 
 ;; Text mode is happier than Fundamental mode
 (setq default-major-mode 'text-mode)

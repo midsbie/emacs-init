@@ -1,20 +1,21 @@
 (add-to-list 'load-path "/usr/share/emacs/common-lisp/php-mode-1.5.0/")
 (add-to-list 'load-path "/usr/share/emacs/common-lisp/css-mode/")
 (add-to-list 'load-path "/usr/share/emacs/common-lisp/linum/")
-(add-to-list 'load-path "/usr/share/emacs/common-lisp/color-theme-6.6.0/")
+;(add-to-list 'load-path "/usr/share/emacs/common-lisp/color-theme-6.6.0/")
 (add-to-list 'load-path "/usr/share/emacs/common-lisp/python-mode/")
 (add-to-list 'load-path "/usr/share/emacs/common-lisp/cc-mode-5.31.3/")
+(add-to-list 'load-path "/usr/share/emacs/common-lisp/color-theme-6.6.0/themes/")
 
 
 ;; zen-coding mode
-(require 'zencoding-mode)
-(add-hook 'sgml-mode-hook 'zencoding-mode) ;; Auto-start on any markup modes
-(global-set-key (kbd "M-RET") 'zencoding-expand-line) ;; Bind M-RET
+;; (require 'zencoding-mode)
+;; (add-hook 'sgml-mode-hook 'zencoding-mode) ;; Auto-start on any markup modes
+;; (global-set-key (kbd "M-RET") 'zencoding-expand-line) ;; Bind M-RET
 
 ;; load espresso-mode
-(autoload #'espresso-mode "espresso" "Start espresso-mode" t)
-(add-to-list 'auto-mode-alist '("\\.js$" . espresso-mode))
-(add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode))
+;; (autoload #'espresso-mode "espresso" "Start espresso-mode" t)
+;; (add-to-list 'auto-mode-alist '("\\.js$" . espresso-mode))
+;; (add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode))
 
 ;;(require 'find-recursive)
 
@@ -23,7 +24,6 @@
 (add-hook 'c-mode-common-hook
           (lambda () (c-toggle-auto-hungry-state 1)
             (c-toggle-auto-state -1)))
-
 
 (load "linum")
 
@@ -35,6 +35,10 @@
 ;; css-mode
 (load "css-mode")
 (add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode))
+
+;; nxhtml-mode
+(load "nxhtml/autostart.el")
+(setq mumamo-background-colors nil)     ;; disable background color changes
 
 ;; python-mode  
 (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
@@ -55,10 +59,10 @@
              (add-hook 'write-contents-hooks 'java-mode-untabify)))
 
 ;;Add u-color-cycle to zone-programs
-(eval-after-load 'zone
-  '(progn
-     (load-library "u-color-cycle")
-     (setq zone-programs (vconcat zone-programs [ u-color-cycle-window ]))))
+;(eval-after-load 'zone
+;  '(progn
+;     (load-library "u-color-cycle")
+;     (setq zone-programs (vconcat zone-programs [ u-color-cycle-window ]))))
 
 
 ;; Highlighter
@@ -82,11 +86,13 @@
 ;;(require 'cua-base)
 ;;(recentf-mode t)
 
-(require 'color-theme)
-(eval-after-load "color-theme"
-  '(progn
-     (color-theme-initialize)
-     (color-theme-chocolate-rain)))
+;; (require 'color-theme)
+;; (eval-after-load "color-theme"
+;;   '(progn
+;;      (color-theme-initialize)
+;;      (color-theme-zenburn)))
+(require 'color-theme-zenburn)
+(color-theme-zenburn)
 
 ;; Keyboard shortcuts
 (global-set-key (kbd "M-g") 'goto-line)
@@ -185,7 +191,20 @@
    (interactive "p")
    (set-frame-height (selected-frame) arg))
 
-(set-frame-width-interactive 185)
-(set-frame-height-interactive 86)
+;(set-frame-width-interactive 185)
+;(set-frame-height-interactive 86)
+
+;; FIX for mumamo's annoying warning messages ;;;;;;;;;;;;;;;;
+; Mumamo is making emacs 23.3 freak out:
+(when (and (equal emacs-major-version 23)
+           (equal emacs-minor-version 3))
+  (eval-after-load "bytecomp"
+    '(add-to-list 'byte-compile-not-obsolete-vars
+                  'font-lock-beginning-of-syntax-function))
+  ;; tramp-compat.el clobbers this variable!
+  (eval-after-load "tramp-compat"
+    '(add-to-list 'byte-compile-not-obsolete-vars
+                  'font-lock-beginning-of-syntax-function)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (server-start)

@@ -22,7 +22,7 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#151515" :foreground "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 91 :width normal :foundry "unknown" :family "Liberation Mono")))))
+ '(default ((t (:inherit nil :stipple nil :background "#080808" :foreground "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 91 :width normal :foundry "unknown" :family "Liberation Mono")))))
 
 ;; load cc-mode
 (autoload 'awk-mode "cc-mode" nil t)
@@ -32,7 +32,20 @@
 
 ;; nxhtml-mode
 (load "nxhtml/autostart.el")
-(setq mumamo-background-colors nil)     ;; disable background color changes
+;(setq mumamo-background-colors nil)     ;; disable background color changes
+
+;; FIX for mumamo's annoying warning messages ;;;;;;;;;;;;;;;;
+; Mumamo is making emacs 23.3 freak out:
+(when (and (equal emacs-major-version 23)
+           (equal emacs-minor-version 3))
+  (eval-after-load "bytecomp"
+    '(add-to-list 'byte-compile-not-obsolete-vars
+                  'font-lock-beginning-of-syntax-function))
+  ;; tramp-compat.el clobbers this variable!
+  (eval-after-load "tramp-compat"
+    '(add-to-list 'byte-compile-not-obsolete-vars
+                  'font-lock-beginning-of-syntax-function)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; we hate tabs!
 (setq c-default-style "linux"
@@ -66,8 +79,8 @@
 ;;(require 'cua-base)
 ;;(recentf-mode t)
 
-(require 'color-theme-zenburn)
-(color-theme-zenburn)
+(require 'color-theme-chocolate-rain)
+(color-theme-chocolate-rain)
 
 ;; Keyboard shortcuts
 (global-set-key (kbd "M-g") 'goto-line)
@@ -139,18 +152,5 @@
 ;; Set custom fame height and width
 (set-frame-width-interactive 185)
 (set-frame-height-interactive 86)
-
-;; FIX for mumamo's annoying warning messages ;;;;;;;;;;;;;;;;
-; Mumamo is making emacs 23.3 freak out:
-(when (and (equal emacs-major-version 23)
-           (equal emacs-minor-version 3))
-  (eval-after-load "bytecomp"
-    '(add-to-list 'byte-compile-not-obsolete-vars
-                  'font-lock-beginning-of-syntax-function))
-  ;; tramp-compat.el clobbers this variable!
-  (eval-after-load "tramp-compat"
-    '(add-to-list 'byte-compile-not-obsolete-vars
-                  'font-lock-beginning-of-syntax-function)))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (server-start)

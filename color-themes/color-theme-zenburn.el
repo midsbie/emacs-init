@@ -55,10 +55,9 @@
 (defvar zenburn-fg "#dcdccc")
 (defvar zenburn-fg-1 "#656555")
 (defvar zenburn-bg-1 "#2b2b2b")
-(defvar zenburn-bg "#151515") ;3f3f3f")
+(defvar zenburn-bg "#3f3f3f")
 (defvar zenburn-bg+1 "#4f4f4f")
 (defvar zenburn-bg+2 "#5f5f5f")
-(defvar zenburn-bg+3 "#7f7f5f")
 (defvar zenburn-red+1 "#dca3a3")
 (defvar zenburn-red "#cc9393")
 (defvar zenburn-red-1 "#bc8383")
@@ -77,7 +76,7 @@
 (defvar zenburn-green+4 "#bfebbf")
 (defvar zenburn-cyan "#93e0e3")
 (defvar zenburn-blue+1 "#94bff3")
-(defvar zenburn-blue "#8CBFD3") ;#8cd0d3")
+(defvar zenburn-blue "#8cd0d3")
 (defvar zenburn-blue-1 "#7cb8bb")
 (defvar zenburn-blue-2 "#6ca0a3")
 (defvar zenburn-blue-3 "#5c888b")
@@ -107,7 +106,7 @@
      ;;; define some reusable zenburn faces that we can inherit from afterwards
      (zenburn-strong-1-face ((t (:foreground ,zenburn-yellow :weight bold))))
      (zenburn-strong-2-face ((t (:foreground ,zenburn-orange :weight bold))))
-     (zenburn-warning-face ((t (:foreground ,zenburn-yellow-1 :weight bold :underline nil))))
+     (zenburn-warning-face ((t (:foreground ,zenburn-yellow-1 :weight bold :underline t))))
      (zenburn-error-face ((t (:foreground ,zenburn-red-1 :weight bold :underline t))))
 
      ;;; basic coloring
@@ -117,7 +116,7 @@
      (escape-glyph-face ((t (:foreground ,zenburn-red))))
      (fringe ((t (:foreground ,zenburn-fg :background ,zenburn-bg))))
      (header-line ((t (:foreground ,zenburn-yellow :background ,zenburn-bg-1))))
-     (highlight ((t (:background ,zenburn-bg+3))))
+     (highlight ((t (:background ,zenburn-bg+1))))
 
      ;;; compilation
      (compilation-column-face ((t (:foreground ,zenburn-yellow))))
@@ -140,7 +139,7 @@
      (match ((t (:background ,zenburn-bg-1 :foreground ,zenburn-orange :weight bold))))
 
      ;; faces used by isearch
-     (isearch ((t (:foreground ,zenburn-yellow :background ,zenburn-bg+3))))
+     (isearch ((t (:foreground ,zenburn-yellow :background ,zenburn-bg-1))))
      (isearch-fail ((t (:foreground ,zenburn-fg :background ,zenburn-red-4))))
      (lazy-highlight ((t (:foreground ,zenburn-yellow :background ,zenburn-bg+2))))
 

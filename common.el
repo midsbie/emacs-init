@@ -1,23 +1,31 @@
-(add-to-list 'load-path "/usr/share/emacs/common-lisp/php-mode-1.5.0/")
-(add-to-list 'load-path "/usr/share/emacs/common-lisp/css-mode/")
-(add-to-list 'load-path "/usr/share/emacs/common-lisp/linum/")
-;(add-to-list 'load-path "/usr/share/emacs/common-lisp/color-theme-6.6.0/")
-(add-to-list 'load-path "/usr/share/emacs/common-lisp/python-mode/")
-(add-to-list 'load-path "/usr/share/emacs/common-lisp/cc-mode-5.31.3/")
-(add-to-list 'load-path "/usr/share/emacs/common-lisp/color-theme-6.6.0/themes/")
+(add-to-list 'load-path "/usr/share/emacs/common-lisp/color-themes/")
 
-
-;; zen-coding mode
-;; (require 'zencoding-mode)
-;; (add-hook 'sgml-mode-hook 'zencoding-mode) ;; Auto-start on any markup modes
-;; (global-set-key (kbd "M-RET") 'zencoding-expand-line) ;; Bind M-RET
-
-;; load espresso-mode
-;; (autoload #'espresso-mode "espresso" "Start espresso-mode" t)
-;; (add-to-list 'auto-mode-alist '("\\.js$" . espresso-mode))
-;; (add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode))
-
-;;(require 'find-recursive)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(column-number-mode t)
+ '(comment-multi-line t)
+ '(comment-style (quote extra-line))
+ '(css-electric-brace-behavior nil)
+ '(css-indent-offset 2)
+ '(global-linum-mode t)
+ '(indent-tabs-mode nil)
+ '(js-indent-level 2)
+ '(standard-indent 2)
+ '(tab-stop-list (quote (2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 82 84 86 88 90 92 94 96 98 100)))
+ '(tab-width 2)
+ '(tool-bar-mode nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:stipple nil :background "#1a0f0b" :foreground "#c3be98" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 90 :width normal :foundry "unknown" :family "Liberation Mono"))))
+ '(Info-title-1-face ((t (:weight bold))) t)
+ '(font-lock-comment-face ((t (:foreground "#999d63"))))
+ '(linum ((t (:foreground "#696969")))))
 
 ;; load cc-mode
 (autoload 'awk-mode "cc-mode" nil t)
@@ -25,27 +33,11 @@
           (lambda () (c-toggle-auto-hungry-state 1)
             (c-toggle-auto-state -1)))
 
-(load "linum")
-
-;; php-mode
-(load "php-mode")
-(add-to-list 'auto-mode-alist
-             '("\\.php[34]?\\'\\|\\.phtml\\'" . php-mode))
-
-;; css-mode
-(load "css-mode")
-(add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode))
+;;(load "linum")
 
 ;; nxhtml-mode
 (load "nxhtml/autostart.el")
 (setq mumamo-background-colors nil)     ;; disable background color changes
-
-;; python-mode  
-(add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
-(add-hook 'python-mode-hook 'elide-head)
-(add-to-list 'interpreter-mode-alist '("python" . python-mode))
-(autoload 'python-mode "python-mode" "Python editing mode." t)
-(autoload 'py-shell "python-mode" "Python shell." t)
 
 ;; we hate tabs!
 (setq c-default-style "linux"
@@ -58,16 +50,9 @@
              (make-local-variable 'write-contents-hooks)
              (add-hook 'write-contents-hooks 'java-mode-untabify)))
 
-;;Add u-color-cycle to zone-programs
-;(eval-after-load 'zone
-;  '(progn
-;     (load-library "u-color-cycle")
-;     (setq zone-programs (vconcat zone-programs [ u-color-cycle-window ]))))
-
-
 ;; Highlighter
 (global-hl-line-mode 1)
-(set-face-background 'hl-line "#330")
+(set-face-background 'hl-line "#484840")
 
 ;; Text mode is happier than Fundamental mode
 (setq default-major-mode 'text-mode)
@@ -86,11 +71,6 @@
 ;;(require 'cua-base)
 ;;(recentf-mode t)
 
-;; (require 'color-theme)
-;; (eval-after-load "color-theme"
-;;   '(progn
-;;      (color-theme-initialize)
-;;      (color-theme-zenburn)))
 (require 'color-theme-zenburn)
 (color-theme-zenburn)
 
@@ -118,7 +98,7 @@
 
 ;; Emacs - different bindings & custom settings
 ;; the following binding is disabled so as to force myself to use C-j
-;; (define-key global-map (kbd "RET") 'newline-and-indent)          DISABLED so as to force myself to use C-j
+;; (define-key global-map (kbd "RET") 'newline-and-indent)
 
 (keyboard-translate ?\C-h ?\C-?)                  ; assign backspace's abilities to C-h
 (global-set-key [(meta h)] 'backward-kill-word)   ; this new key binding replaces mark-paragraph
@@ -128,36 +108,6 @@
 (setq initial-scratch-message nil)      ; Disable startup message
 (delete-selection-mode t)               ; Enable C-D to delete selected text
 (transient-mark-mode t)                 ; Enable typing to replace selected text
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(column-number-mode t)
- '(comment-multi-line t)
- '(comment-style (quote extra-line))
- '(css-electric-brace-behavior nil)
- '(css-indent-offset 2)
- '(espresso-enabled-frameworks (quote (javascript prototype)))
- '(espresso-expr-indent-offset 2)
- '(espresso-indent-level 2)
- '(global-linum-mode t)
- '(indent-tabs-mode nil)
- '(js-indent-level 2)
- '(standard-indent 2)
- '(tab-stop-list (quote (2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 82 84 86 88 90 92 94 96 98 100)))
- '(tab-width 2)
- '(tool-bar-mode nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:stipple nil :background "#1a0f0b" :foreground "#c3be98" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 90 :width normal :foundry "unknown" :family "Liberation Mono"))))
- '(Info-title-1-face ((t (:weight bold))) t)
- '(font-lock-comment-face ((t (:foreground "#999d63"))))
- '(linum ((t (:foreground "#696969")))))
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
@@ -191,8 +141,9 @@
    (interactive "p")
    (set-frame-height (selected-frame) arg))
 
-;(set-frame-width-interactive 185)
-;(set-frame-height-interactive 86)
+;; Set custom fame height and width
+(set-frame-width-interactive 185)
+(set-frame-height-interactive 86)
 
 ;; FIX for mumamo's annoying warning messages ;;;;;;;;;;;;;;;;
 ; Mumamo is making emacs 23.3 freak out:

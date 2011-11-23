@@ -39,7 +39,7 @@
   (interactive)
   (nxhtml-mumamo-mode))
 
-(add-to-list 'auto-mode-alist '("\\.inc$" .nxhtml-mumamo-mode))
+(add-to-list 'auto-mode-alist '("\\.inc$" . nxhtml-mumamo-mode))
 (add-to-list 'auto-mode-alist '("\\.php$" . nxhtml-mumamo-mode))
 
 ;; FIX for mumamo's annoying warning messages ;;;;;;;;;;;;;;;;

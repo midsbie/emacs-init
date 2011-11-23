@@ -8,7 +8,8 @@
 
 (defvar choco-fg "#c3be98")
 (defvar choco-bg "#101010") ;"#1a0f0b")
-(defvar choco-bg-alt "#151510")
+(defvar choco-bg-alt  "#0d0d0d")
+(defvar choco-bg-alt2 "#0a0a0a")
 
 (defvar choco-black "#000000")
 (defvar choco-blue-0 "#8a9a95")
@@ -173,8 +174,9 @@
           `(mode-line ((t (:foreground ,choco-black :background ,choco-purple-0))))
           `(mode-line-highlight ((t (:foreground ,choco-yellow-2))))
           `(mode-line-inactive ((t (:foreground ,choco-fg :background ,choco-brown-4))))
-          `(mumamo-background-chunk-major ((t (:background ,choco-bg-alt))))
-          `(mumamo-background-chunk-submode1 ((t (:background ,choco-bg))))
+          `(mumamo-background-chunk-major ((t (:background ,choco-bg))))
+          `(mumamo-background-chunk-submode1 ((t (:background ,choco-bg-alt))))
+          `(mumamo-background-chunk-submode2 ((t (:foreground ,choco-green-0 :background ,choco-bg-alt2))))
           `(org-block ((t (:foreground ,choco-fg))))
           `(org-checkbox ((t (:foreground ,choco-purple-0))))
           `(org-date ((t (:foreground ,choco-blue-0))))

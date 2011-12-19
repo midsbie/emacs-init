@@ -157,8 +157,13 @@
    (interactive "p")
    (set-frame-height (selected-frame) arg))
 
-;; Set custom fame height and width
-(set-frame-width-interactive 185)
-(set-frame-height-interactive 86)
+(defun init ()
+  (interactive)
+  (add-to-list 'default-frame-alist (cons 'width 185))
+  (add-to-list 'default-frame-alist (cons 'height 83))
+  (set-frame-width-interactive 185)
+  (set-frame-height-interactive 83)
+  (server-start))
 
-(server-start)
+;; Let's now initialise this thing!
+(init)

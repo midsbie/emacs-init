@@ -111,6 +111,10 @@
 
 (global-set-key (kbd "C-c C-t") 'c-toggle-hungry-state)
 
+;; redefine C-h (help) as C-x h and define backspace as C-h
+(global-set-key [?\C-h] 'delete-backward-char)
+(global-set-key [?\C-x ?h] 'help-command)
+
 
 ;; Emacs - different bindings & custom settings
 ;; the following binding is disabled so as to force myself to use C-j

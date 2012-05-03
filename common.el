@@ -1,29 +1,5 @@
 (add-to-list 'load-path "/usr/share/emacs/common-lisp/color-themes/")
 
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(column-number-mode t)
- '(comment-multi-line t)
- '(comment-style (quote extra-line))
- '(css-electric-brace-behavior nil)
- '(css-indent-offset 2)
- '(global-linum-mode t)
- '(indent-tabs-mode nil)
- '(js-indent-level 2)
- '(standard-indent 2)
- '(tab-stop-list (quote (2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 82 84 86 88 90 92 94 96 98 100)))
- '(tab-width 2)
- '(tool-bar-mode nil))
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#080808" :foreground "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 91 :width normal :foundry "unknown" :family "Liberation Mono")))))
-
 ;; load cc-mode
 (autoload 'awk-mode "cc-mode" nil t)
 (add-hook 'c-mode-common-hook
@@ -84,20 +60,11 @@
 (defalias 'replace-query-regexp 'query-replace-regexp)
 (defalias 'replace-query-regexp-eval 'query-replace-regexp-eval)
 
-;;(require 'cua-base)
-;;(recentf-mode t)
-
 (require 'color-theme-chocolate-rain)
 (color-theme-chocolate-rain)
 
-;; Keyboard shortcuts
-(global-set-key (kbd "M-g") 'goto-line)
-
-(global-set-key (kbd "C-]") 'scroll-down)
-(global-set-key (kbd "C-#") 'scroll-up)
-
-(global-set-key (kbd "M-p") 'backward-paragraph)
-(global-set-key (kbd "M-n") 'forward-paragraph)
+;; (global-set-key (kbd "M-p") 'backward-paragraph)
+;; (global-set-key (kbd "M-n") 'forward-paragraph)
 
 ;; awesome key bindings for moving around windows
 (global-set-key [M-left] 'windmove-left)          ; move to left window
@@ -105,24 +72,20 @@
 (global-set-key [M-up] 'windmove-up)              ; move to upper window
 (global-set-key [M-down] 'windmove-down)          ; move to downer window
 
-;; (global-set-key (kbd "C-S-w") 'longlines-mode)
+(global-set-key (kbd "C-x x") 'mark-whole-buffer)
+
 (global-set-key (kbd "C-S-w") 'toggle-truncate-lines)
 (global-set-key (kbd "M-r") 'revert-buffer)
 
-(global-set-key (kbd "C-c C-t") 'c-toggle-hungry-state)
+;(global-set-key (kbd "C-c C-t") 'c-toggle-hungry-state)
 
 ;; redefine C-h (help) as C-x h and define backspace as C-h
 (global-set-key [?\C-h] 'delete-backward-char)
 (global-set-key [?\C-x ?h] 'help-command)
 
 
-;; Emacs - different bindings & custom settings
-;; the following binding is disabled so as to force myself to use C-j
-;; (define-key global-map (kbd "RET") 'newline-and-indent)
-
 (keyboard-translate ?\C-h ?\C-?)                  ; assign backspace's abilities to C-h
 (global-set-key [(meta h)] 'backward-kill-word)   ; this new key binding replaces mark-paragraph
-(global-set-key [(hyper h)] 'help-command)        ; doesn't seem to be working
 
 (setq inhibit-splash-screen t)          ; Disable splash screen
 (setq initial-scratch-message nil)      ; Disable startup message
@@ -164,10 +127,49 @@
 (defun init ()
   (interactive)
   (add-to-list 'default-frame-alist (cons 'width 185))
-  (add-to-list 'default-frame-alist (cons 'height 83))
+  (add-to-list 'default-frame-alist (cons 'height 73))
   (set-frame-width-interactive 185)
-  (set-frame-height-interactive 83)
-  (server-start))
+  (set-frame-height-interactive 73)
+  (server-start) )
+
+(size-indication-mode)                    ; turn on size indication mode
+(scroll-bar-mode -1)                      ; disable scrollbars
+(menu-bar-mode -1)                        ; disable menu bar
+
+;; get intermittent messages to stop typing
+;; (type-break-mode)
+
+(setq enable-recursive-minibuffers t)     ; allow recursive editing in minibuffer
+(follow-mode t)                           ; follow-mode by default
+(split-window-horizontally)               ; two windows at startup
+
+;; Setup NNTP newsgroups
+(setq gnus-select-method '(nntp "eunews.blocknews.net"))
+(setq gnus-read-active-file nil)
 
 ;; Let's now initialise this thing!
 (init)
+
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(column-number-mode t)
+ '(comment-multi-line t)
+ '(comment-style (quote extra-line))
+ '(css-electric-brace-behavior nil)
+ '(css-indent-offset 2)
+ '(global-linum-mode t)
+ '(indent-tabs-mode nil)
+ '(js-indent-level 2)
+ '(standard-indent 2)
+ '(tab-stop-list (quote (2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 82 84 86 88 90 92 94 96 98 100)))
+ '(tab-width 2)
+ '(tool-bar-mode nil))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "#080808" :foreground "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 88 :width normal :foundry "unknown" :family "Liberation Mono")))))

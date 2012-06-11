@@ -140,7 +140,6 @@
 ;; (type-break-mode)
 
 (setq enable-recursive-minibuffers t)     ; allow recursive editing in minibuffer
-(follow-mode t)                           ; follow-mode by default
 (split-window-horizontally)               ; two windows at startup
 
 ;; Setup NNTP newsgroups
@@ -163,9 +162,6 @@
       smtpmail-smtp-server "smtp.gmail.com"
       smtpmail-smtp-service 587
       smtpmail-local-domain "abstratti.com")
-
-;; Let's now initialise this thing!
-(init)
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
@@ -190,3 +186,6 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "#080808" :foreground "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 88 :width normal :foundry "unknown" :family "Liberation Mono")))))
+
+;; Let's now initialise this thing!
+(init)

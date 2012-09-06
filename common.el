@@ -66,11 +66,21 @@
 ;; (global-set-key (kbd "M-p") 'backward-paragraph)
 ;; (global-set-key (kbd "M-n") 'forward-paragraph)
 
-;; awesome key bindings for moving around windows
+;; windmove: awesome key bindings for moving around windows
 (global-set-key [M-left] 'windmove-left)          ; move to left window
 (global-set-key [M-right] 'windmove-right)        ; move to right window
 (global-set-key [M-up] 'windmove-up)              ; move to upper window
 (global-set-key [M-down] 'windmove-down)          ; move to downer window
+
+;; buffer-move: key bindings
+(require 'buffer-move)
+(global-set-key (kbd "<C-S-up>")     'buf-move-up)
+(global-set-key (kbd "<C-S-down>")   'buf-move-down)
+(global-set-key (kbd "<C-S-left>")   'buf-move-left)
+(global-set-key (kbd "<C-S-right>")  'buf-move-right)
+
+;; framemove: movement between multiple frames
+(require 'framemove)
 
 (global-set-key (kbd "C-x x") 'mark-whole-buffer)
 

@@ -1,4 +1,12 @@
-(add-to-list 'load-path "/usr/share/emacs/common-lisp/color-themes/")
+;; requires
+(require 'conf-cedet)
+(require 'conf-frame-size)
+(require 'buffer-move)
+(require 'framemove)
+(require 'uniquify)
+(require 'ido)
+(require 'dedicated-window)
+
 
 ;; load cc-mode
 (autoload 'awk-mode "cc-mode" nil t)
@@ -7,29 +15,30 @@
             (c-toggle-auto-state -1)))
 
 ;; nxhtml-mode
-(load "nxhtml/autostart.el")
-;(setq mumamo-background-colors nil)     ;; disable background color changes
-(css-color-global-mode)
+;; (load "nxhtml/autostart.el")
+;; (setq mumamo-background-colors nil)     ;; disable background color changes
+;; (css-color-global-mode)
 
-(defun web-mode()
-  (interactive)
-  (nxhtml-mumamo-mode))
+;; (defun web-mode()
+;;   (interactive)
+;;   (nxhtml-mumamo-mode))
 
-(add-to-list 'auto-mode-alist '("\\.inc$" . nxhtml-mumamo-mode))
-(add-to-list 'auto-mode-alist '("\\.php$" . nxhtml-mumamo-mode))
+;; (add-to-list 'auto-mode-alist '("\\.inc$" . nxhtml-mumamo-mode))
+;; (add-to-list 'auto-mode-alist '("\\.php$" . nxhtml-mumamo-mode))
 
-;; FIX for mumamo's annoying warning messages ;;;;;;;;;;;;;;;;
-; Mumamo is making emacs 23.3 freak out:
-(when (and (equal emacs-major-version 23)
-           (equal emacs-minor-version 3))
-  (eval-after-load "bytecomp"
-    '(add-to-list 'byte-compile-not-obsolete-vars
-                  'font-lock-beginning-of-syntax-function))
-  ;; tramp-compat.el clobbers this variable!
-  (eval-after-load "tramp-compat"
-    '(add-to-list 'byte-compile-not-obsolete-vars
-                  'font-lock-beginning-of-syntax-function)))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;; FIX for mumamo's annoying warning messages ;;;;;;;;;;;;;;;;
+;; ;; Mumamo is making emacs 23.3 freak out:
+;; (when (and (equal emacs-major-version 24)
+;;            (equal emacs-minor-version 2))
+;;   (eval-after-load "bytecomp"
+;;     '(add-to-list 'byte-compile-not-obsolete-vars
+;;                   'font-lock-beginning-of-syntax-function))
+;;   ;; tramp-compat.el clobbers this variable!
+;;   (eval-after-load "tramp-compat"
+;;     '(add-to-list 'byte-compile-not-obsolete-vars
+;;                   'font-lock-beginning-of-syntax-function)))
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; we hate tabs!
 (setq c-default-style "linux"
@@ -46,8 +55,7 @@
 (global-hl-line-mode 1)
 (set-face-background 'hl-line "#383830")
 
-;; Text mode is happier than Fundamental mode
-(setq default-major-mode 'text-mode)
+(setq default-major-mode 'text-mode)    ; set text-mode as default mode
 
 ;; Enable clipboard functionality
 (setq x-select-enable-clipboard t)
@@ -60,41 +68,29 @@
 (defalias 'replace-query-regexp 'query-replace-regexp)
 (defalias 'replace-query-regexp-eval 'query-replace-regexp-eval)
 
-(require 'color-theme-chocolate-rain)
-(color-theme-chocolate-rain)
-
-;; (global-set-key (kbd "M-p") 'backward-paragraph)
-;; (global-set-key (kbd "M-n") 'forward-paragraph)
-
 ;; windmove: awesome key bindings for moving around windows
-(global-set-key [M-left] 'windmove-left)          ; move to left window
-(global-set-key [M-right] 'windmove-right)        ; move to right window
-(global-set-key [M-up] 'windmove-up)              ; move to upper window
-(global-set-key [M-down] 'windmove-down)          ; move to downer window
+(global-set-key [M-left]    'windmove-left)
+(global-set-key [M-right]   'windmove-right)
+(global-set-key [M-up]      'windmove-up)
+(global-set-key [M-down]    'windmove-down)
 
 ;; buffer-move: key bindings
-(require 'buffer-move)
 (global-set-key (kbd "<C-S-up>")     'buf-move-up)
 (global-set-key (kbd "<C-S-down>")   'buf-move-down)
 (global-set-key (kbd "<C-S-left>")   'buf-move-left)
 (global-set-key (kbd "<C-S-right>")  'buf-move-right)
 
-;; framemove: movement between multiple frames
-(require 'framemove)
-
 (global-set-key (kbd "C-x x") 'mark-whole-buffer)
-
 (global-set-key (kbd "C-S-w") 'toggle-truncate-lines)
 (global-set-key (kbd "M-r") 'revert-buffer)
 
-;(global-set-key (kbd "C-c C-t") 'c-toggle-hungry-state)
+;; (global-set-key (kbd "C-c C-t") 'c-toggle-hungry-state)
 
 ;; redefine C-h (help) as C-x h and define backspace as C-h
+(keyboard-translate ?\C-h ?\C-?)
 (global-set-key [?\C-h] 'delete-backward-char)
 (global-set-key [?\C-x ?h] 'help-command)
 
-
-(keyboard-translate ?\C-h ?\C-?)                  ; assign backspace's abilities to C-h
 (global-set-key [(meta h)] 'backward-kill-word)   ; this new key binding replaces mark-paragraph
 
 (setq inhibit-splash-screen t)          ; Disable splash screen
@@ -102,52 +98,15 @@
 (delete-selection-mode t)               ; Enable C-D to delete selected text
 (transient-mark-mode t)                 ; Enable typing to replace selected text
 
-(require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
-
-(require 'ido)
 (ido-mode t)
 
 (setq frame-title-format "%b - emacs")
 (put 'upcase-region 'disabled nil)
 
-;; Set default window size
-(defun set-frame-size-according-to-resolution ()
-  (interactive)
-  (if window-system
-      (progn
-        ;; use 180 char wide window for largeish displays
-        ;; and smaller 90 column windows for smaller displays
-        (if (> (x-display-pixel-width) 1280)
-            (add-to-list 'default-frame-alist (cons 'width 190))
-          (add-to-list 'default-frame-alist (cons 'width 90)))
-        (add-to-list 'default-frame-alist 
-                     (cons 'height 77)))))
-
-;; Function: Set frame width
-(defun set-frame-width-interactive (arg)
-   (interactive "p")
-   (set-frame-width (selected-frame) arg))
-
-;; Function: Set frame height
-(defun set-frame-height-interactive (arg)
-   (interactive "p")
-   (set-frame-height (selected-frame) arg))
-
-(defun init ()
-  (interactive)
-  (add-to-list 'default-frame-alist (cons 'width 185))
-  (add-to-list 'default-frame-alist (cons 'height 73))
-  (set-frame-width-interactive 185)
-  (set-frame-height-interactive 73)
-  (server-start) )
-
 (size-indication-mode)                    ; turn on size indication mode
 (scroll-bar-mode -1)                      ; disable scrollbars
 (menu-bar-mode -1)                        ; disable menu bar
-
-;; get intermittent messages to stop typing
-;; (type-break-mode)
 
 (setq enable-recursive-minibuffers t)     ; allow recursive editing in minibuffer
 (split-window-horizontally)               ; two windows at startup
@@ -173,11 +132,12 @@
       smtpmail-smtp-service 587
       smtpmail-local-domain "abstratti.com")
 
+;; variables
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(comment-multi-line t)
  '(comment-style (quote extra-line))
@@ -191,35 +151,18 @@
  '(tab-width 2)
  '(tool-bar-mode nil))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "#080808" :foreground "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 88 :width normal :foundry "unknown" :family "Liberation Mono")))))
 
+;; Let's now perform last initialization steps
+(interactive)
+(add-to-list 'default-frame-alist (cons 'width 185))
+(add-to-list 'default-frame-alist (cons 'height 73))
+(set-frame-width-interactive 185)
+(set-frame-height-interactive 73)
+(server-start)
 
-;; Begin dedicated window block
-(defadvice pop-to-buffer (before cancel-other-window first)
-  (ad-set-arg 1 nil))
-
-(ad-activate 'pop-to-buffer)
-
-;; Toggle window dedication
-(defun toggle-window-dedicated ()
-  "Toggle whether the current active window is dedicated or not"
-  (interactive)
-  (message
-   (if (let (window (get-buffer-window (current-buffer)))
-         (set-window-dedicated-p window 
-                                 (not (window-dedicated-p window))))
-       "Window '%s' is dedicated"
-     "Window '%s' is normal")
-   (current-buffer)))
-
-;; Press [pause] key in each window you want to "freeze"
-(global-set-key [pause] 'toggle-window-dedicated)
-;; End dedicated window block
-
-
-;; Let's now initialise this thing!
-(init)
+(provide 'conf-common)

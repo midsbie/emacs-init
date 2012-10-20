@@ -75,23 +75,24 @@
 (global-set-key [M-down]    'windmove-down)
 
 ;; buffer-move: key bindings
-(global-set-key (kbd "<C-S-up>")     'buf-move-up)
-(global-set-key (kbd "<C-S-down>")   'buf-move-down)
-(global-set-key (kbd "<C-S-left>")   'buf-move-left)
-(global-set-key (kbd "<C-S-right>")  'buf-move-right)
+(global-set-key (kbd "<C-S-up>")      'buf-move-up)
+(global-set-key (kbd "<C-S-down>")    'buf-move-down)
+(global-set-key (kbd "<C-S-left>")    'buf-move-left)
+(global-set-key (kbd "<C-S-right>")   'buf-move-right)
 
-(global-set-key (kbd "C-x x") 'mark-whole-buffer)
-(global-set-key (kbd "C-S-w") 'toggle-truncate-lines)
-(global-set-key (kbd "M-r") 'revert-buffer)
+(global-set-key (kbd "C-x x")         'mark-whole-buffer)
+(global-set-key (kbd "C-S-w")         'toggle-truncate-lines)
+(global-set-key (kbd "M-r")           'revert-buffer)
 
 ;; (global-set-key (kbd "C-c C-t") 'c-toggle-hungry-state)
 
 ;; redefine C-h (help) as C-x h and define backspace as C-h
 (keyboard-translate ?\C-h ?\C-?)
-(global-set-key [?\C-h] 'delete-backward-char)
-(global-set-key [?\C-x ?h] 'help-command)
+(global-set-key (kbd "C-h")           'delete-backward-char)
+(global-set-key (kbd "C-x h")         'help)
 
-(global-set-key [(meta h)] 'backward-kill-word)   ; this new key binding replaces mark-paragraph
+;; this new key binding replaces mark-paragraph
+(global-set-key (kbd "M-h")           'backward-kill-word)   
 
 (setq inhibit-splash-screen t)          ; Disable splash screen
 (setq initial-scratch-message nil)      ; Disable startup message
@@ -104,12 +105,12 @@
 (setq frame-title-format "%b - emacs")
 (put 'upcase-region 'disabled nil)
 
-(size-indication-mode)                    ; turn on size indication mode
-(scroll-bar-mode -1)                      ; disable scrollbars
-(menu-bar-mode -1)                        ; disable menu bar
+(size-indication-mode)                  ; turn on size indication mode
+(scroll-bar-mode -1)                    ; disable scrollbars
+(menu-bar-mode -1)                      ; disable menu bar
 
-(setq enable-recursive-minibuffers t)     ; allow recursive editing in minibuffer
-(split-window-horizontally)               ; two windows at startup
+(setq enable-recursive-minibuffers t)   ; allow recursive editing in minibuffer
+(split-window-horizontally)             ; two windows at startup
 
 ;; Setup NNTP newsgroups
 (setq gnus-select-method '(nntp "eunews.blocknews.net")
@@ -126,7 +127,10 @@
 
 (setq message-send-mail-function 'smtpmail-send-it
       smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
-      smtpmail-auth-credentials '(("smtp.gmail.com" 587 "miguel.a.guedes@gmail.com" nil))
+      smtpmail-auth-credentials '(("smtp.gmail.com"
+                                   587
+                                   "miguel.a.guedes@gmail.com"
+                                   nil))
       smtpmail-default-smtp-server "smtp.gmail.com"
       smtpmail-smtp-server "smtp.gmail.com"
       smtpmail-smtp-service 587
@@ -163,6 +167,10 @@
 (add-to-list 'default-frame-alist (cons 'height 73))
 (set-frame-width-interactive 185)
 (set-frame-height-interactive 73)
-(server-start)
+
+;; Start server if it isn't running yet
+(if (and (fboundp 'server-running-p) 
+         (not (server-running-p)))
+    (server-start))
 
 (provide 'conf-common)

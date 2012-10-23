@@ -17,30 +17,33 @@
 
 (semantic-add-system-include "/usr/include/boost/"          'c++-mode)
 (semantic-add-system-include "/usr/include/glib-2.0/"       'c++-mode)
-(semantic-add-system-include "/usr/include/glib-2.0/"       'c-mode)
-(semantic-add-system-include "/usr/include/glibmm-2.4/"     'c++-mode)
 (semantic-add-system-include "/usr/include/gtk-3.0/"        'c++-mode)
-(semantic-add-system-include "/usr/include/gtk-3.0/"        'c-mode)
+(semantic-add-system-include "/usr/include/glibmm-2.4/"     'c++-mode)
 (semantic-add-system-include "/usr/include/gtkmm-3.0/"      'c++-mode)
 (semantic-add-system-include "/usr/include/libxml++-2.6/"   'c++-mode)
+
+(semantic-add-system-include "/usr/include/glib-2.0/"       'c-mode)
+(semantic-add-system-include "/usr/include/gtk-3.0/"        'c-mode)
 
 (defun my-semantic-hook ()
   (imenu-add-to-menubar "Semantic"))
 (add-hook 'semantic-init-hooks 'my-semantic-hook)
 
 (defun cedet-hook ()
-  ;; (local-set-key [(control return)] 'semantic-ia-complete-symbol-menu)
-  (local-set-key "\C-c?" 'semantic-ia-complete-symbol)
+  ;; (local-set-key [(control return)]   'semantic-ia-complete-symbol-menu)
+  (local-set-key "\C-c?"            'semantic-ia-complete-symbol)
 
-  (local-set-key "\C-c>" 'semantic-complete-analyze-inline)
-  (local-set-key "\C-c=" 'semantic-decoration-include-visit)
+  (local-set-key "\C-c>"            'semantic-complete-analyze-inline)
+  (local-set-key [(control return)] 'semantic-complete-analyse-inline)
 
-  (local-set-key "\C-cj" 'semantic-ia-fast-jump)
-  (local-set-key "\C-cq" 'semantic-ia-show-doc)
-  (local-set-key "\C-cs" 'semantic-ia-show-summary)
-  (local-set-key "\C-cp" 'semantic-analyze-proto-impl-toggle)
-  ;; (local-set-key (kbd "C-c <left>") 'semantic-tag-folding-fold-block)
-  ;; (local-set-key (kbd "C-c <right>") 'semantic-tag-folding-show-block)
+  (local-set-key "\C-c="            'semantic-decoration-include-visit)
+
+  (local-set-key "\C-cj"            'semantic-ia-fast-jump)
+  (local-set-key "\C-cq"            'semantic-ia-show-doc)
+  (local-set-key "\C-cs"            'semantic-ia-show-summary)
+  (local-set-key "\C-cp"            'semantic-analyze-proto-impl-toggle)
+  ;; (local-set-key (kbd "C-c <left>")   'semantic-tag-folding-fold-block)
+  ;; (local-set-key (kbd "C-c <right>")  'semantic-tag-folding-show-block)
 
   ;; (add-to-list 'ac-sources 'ac-source-semantic)
   )

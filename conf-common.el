@@ -46,11 +46,6 @@
 (setq tab-width 2)
 (setq-default indent-tabs-mode nil)
 
-(add-hook 'java-mode-hook
-          '(lambda ()
-             (make-local-variable 'write-contents-hooks)
-             (add-hook 'write-contents-hooks 'java-mode-untabify)))
-
 ;; Highlighter
 (global-hl-line-mode 1)
 (set-face-background 'hl-line "#383830")
@@ -84,7 +79,7 @@
 (global-set-key (kbd "C-S-w")         'toggle-truncate-lines)
 (global-set-key (kbd "M-r")           'revert-buffer)
 
-;; (global-set-key (kbd "C-c C-t") 'c-toggle-hungry-state)
+;; (global-set-key (kbd "C-c C-t")       'c-toggle-hungry-state)
 
 ;; redefine C-h (help) as C-x h and define backspace as C-h
 (keyboard-translate ?\C-h ?\C-?)

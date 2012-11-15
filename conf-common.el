@@ -5,6 +5,7 @@
 (load-library "./conf-frame-size")
 (load-library "./conf-mail")
 (load-library "./conf-compile")
+(load-library "./conf-x")
 
 (load-library "./buffer-move")
 (load-library "./framemove")
@@ -117,8 +118,6 @@
 (size-indication-mode)                  ; turn on size indication mode
 (global-linum-mode t)
 (scroll-bar-mode -1)                    ; disable scrollbars
-(menu-bar-mode -1)                      ; disable menu bar
-(tool-bar-mode -1)                      ; disable toolbar
 
 (setq-default
  enable-recursive-minibuffers t         ; allow recursive editing in minibuffer
@@ -133,16 +132,6 @@
  tab-width 2)
 
 (setq tab-stop-list (quote (2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 82 84 86 88 90 92 94 96 98 100)))
-
-(custom-set-faces
- '(default ((t (:inherit nil :stipple nil :background "#080808" :foreground "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 88 :width normal :foundry "unknown" :family "Liberation Mono")))))
-
-;; Let's now perform last initialization steps
-(interactive)
-(add-to-list 'default-frame-alist (cons 'width 185))
-(add-to-list 'default-frame-alist (cons 'height 73))
-(set-frame-width-interactive 185)
-(set-frame-height-interactive 73)
 (split-window-horizontally)             ; two windows at startup
 
 ; Start server if it isn't running yet

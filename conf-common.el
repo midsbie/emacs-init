@@ -5,7 +5,6 @@
 (load-library "./conf-frame-size")
 (load-library "./conf-mail")
 (load-library "./conf-compile")
-(load-library "./conf-x")
 
 (load-library "./buffer-move")
 (load-library "./framemove")
@@ -140,3 +139,5 @@
       (message "[server] starting")
       (server-start))
   (message "[server] already started: not starting"))
+
+(load-library "./conf-x")

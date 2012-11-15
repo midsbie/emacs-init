@@ -1,12 +1,24 @@
+;; includes
+(load-library "./libcommon")
+
+(load-library "./conf-cedet")
+(load-library "./conf-frame-size")
+(load-library "./conf-mail")
+(load-library "./conf-compile")
+
+(load-library "./buffer-move")
+(load-library "./framemove")
+(load-library "./dedicated-window")
+
 ;; requires
-(require 'conf-cedet)
-(require 'conf-frame-size)
-(require 'buffer-move)
-(require 'framemove)
 (require 'uniquify)
 (require 'ido)
-(require 'dedicated-window)
+(require 'recentf)
+(require 'server)
 
+;; setup recentf-mode
+(setq recentf-auto-cleanup 'never);
+(recentf-mode 1)
 
 ;; load cc-mode
 (autoload 'awk-mode "cc-mode" nil t)
@@ -40,10 +52,10 @@
 ;;                   'font-lock-beginning-of-syntax-function)))
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; we hate tabs!
+;; set c-mode default style and tabs
 (setq c-default-style "linux"
-      c-basic-offset 2)
-(setq tab-width 2)
+      c-basic-offset 2
+      tab-width 2)
 (setq-default indent-tabs-mode nil)
 
 ;; Highlighter
@@ -53,8 +65,8 @@
 (setq default-major-mode 'text-mode)    ; set text-mode as default mode
 
 ;; Enable clipboard functionality
-(setq x-select-enable-clipboard t)
-(setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
+(setq x-select-enable-clipboard t
+      interprogram-paste-function 'x-cut-buffer-or-selection-value)
 
 ;; ---- Aliases ----
 (defalias 'hscroll-mode 'toggle-truncate-lines)
@@ -75,11 +87,13 @@
 (global-set-key (kbd "<C-S-left>")    'buf-move-left)
 (global-set-key (kbd "<C-S-right>")   'buf-move-right)
 
+;; buffer related
 (global-set-key (kbd "C-x x")         'mark-whole-buffer)
 (global-set-key (kbd "C-S-w")         'toggle-truncate-lines)
 (global-set-key (kbd "M-r")           'revert-buffer)
+(global-set-key (kbd "C-x C-b")       'ibuffer)
 
-;; (global-set-key (kbd "C-c C-t")       'c-toggle-hungry-state)
+(global-set-key (kbd "C-c C-t")       'c-toggle-hungry-state)
 
 ;; redefine C-h (help) as C-x h and define backspace as C-h
 (keyboard-translate ?\C-h ?\C-?)
@@ -89,8 +103,8 @@
 ;; this new key binding replaces mark-paragraph
 (global-set-key (kbd "M-h")           'backward-kill-word)   
 
-(setq inhibit-splash-screen t)          ; Disable splash screen
-(setq initial-scratch-message nil)      ; Disable startup message
+(setq inhibit-splash-screen t           ; Disable splash screen
+      initial-scratch-message nil)      ; Disable startup message
 (delete-selection-mode t)               ; Enable C-D to delete selected text
 (transient-mark-mode t)                 ; Enable typing to replace selected text
 
@@ -101,59 +115,26 @@
 (put 'upcase-region 'disabled nil)
 
 (size-indication-mode)                  ; turn on size indication mode
+(global-linum-mode t)
 (scroll-bar-mode -1)                    ; disable scrollbars
 (menu-bar-mode -1)                      ; disable menu bar
+(tool-bar-mode -1)                      ; disable toolbar
 
-(setq enable-recursive-minibuffers t)   ; allow recursive editing in minibuffer
-(split-window-horizontally)             ; two windows at startup
+(setq-default
+ enable-recursive-minibuffers t         ; allow recursive editing in minibuffer
+ column-number-mode t
+ comment-multi-line t
+ comment-style (quote align)
+ css-electric-brace-behavior nil
+ css-indent-offset 2
+ indent-tabs-mode nil
+ js-indent-level 2
+ standard-indent 2
+ tab-width 2)
 
-;; Setup NNTP newsgroups
-(setq gnus-select-method '(nntp "eunews.blocknews.net")
-      user-full-name "Miguel Guedes"
-      user-mail-address "miguel.a.guedes@gmail.com"
-      nntp-authinfo-file "~/.authinfo"
-      gnus-read-active-file nil)
+(setq tab-stop-list (quote (2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 82 84 86 88 90 92 94 96 98 100)))
 
-(setq gnus-secondary-select-methods
-      '(nnimap "Personal"
-               (nnimap-address "imap.gmail.com")
-               (nnimap-server-port 993)
-               (nnimap-stream ssl)))
-
-(setq message-send-mail-function 'smtpmail-send-it
-      smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
-      smtpmail-auth-credentials '(("smtp.gmail.com"
-                                   587
-                                   "miguel.a.guedes@gmail.com"
-                                   nil))
-      smtpmail-default-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-service 587
-      smtpmail-local-domain "abstratti.com")
-
-;; variables
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(column-number-mode t)
- '(comment-multi-line t)
- '(comment-style (quote extra-line))
- '(css-electric-brace-behavior nil)
- '(css-indent-offset 2)
- '(global-linum-mode t)
- '(indent-tabs-mode nil)
- '(js-indent-level 2)
- '(standard-indent 2)
- '(tab-stop-list (quote (2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 82 84 86 88 90 92 94 96 98 100)))
- '(tab-width 2)
- '(tool-bar-mode nil))
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "#080808" :foreground "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 88 :width normal :foundry "unknown" :family "Liberation Mono")))))
 
 ;; Let's now perform last initialization steps
@@ -162,10 +143,11 @@
 (add-to-list 'default-frame-alist (cons 'height 73))
 (set-frame-width-interactive 185)
 (set-frame-height-interactive 73)
+(split-window-horizontally)             ; two windows at startup
 
-;; Start server if it isn't running yet
-(if (and (fboundp 'server-running-p) 
-         (not (server-running-p)))
-    (server-start))
-
-(provide 'conf-common)
+; Start server if it isn't running yet
+(if (not (server-running-p))
+    (progn
+      (message "[server] starting")
+      (server-start))
+  (message "[server] already started: not starting"))

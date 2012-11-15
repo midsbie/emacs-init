@@ -1,79 +1,74 @@
-(load-file "/usr/src/bzr-cedet/cedet-devel-load.el")
-;; (load-library "cedet")
+(add-to-list 'load-path "~/.emacs.d/")
 
-(semantic-load-enable-excessive-code-helpers)
-(add-to-list 'semantic-default-submodes 'global-semantic-idle-scheduler-mode t)
+;; includes
+(load-file "/usr/src/bzr-cedet/cedet-devel-load.el")
+
+(load-library "/usr/src/bzr-cedet/contrib/eassist")
+(load-library "/usr/src/git-yasnippet/yasnippet")
+(load-library "auto-complete-config")
+(load-library "/usr/src/async/auto-complete-clang-async")
+(load-library "./member-functions")
+
+(require 'libcommon)
+
+;; member-functions
+(autoload 'expand-member-functions "member-functions" "Expand C++ member function declarations" t)
+(add-hook 'c++-mode-hook (lambda () (local-set-key "\C-cx" #'expand-member-functions)))
+
+
+;; eassist
+(add-to-list 'eassist-header-switches '("cxx" "hxx"))
+(add-to-list 'eassist-header-switches '("hxx" "cxx"))
+
+;; yasnippet
+(setq yas/snippet-dirs '("~/.emacs.d/snippets"
+                         "/usr/src/git-yasnippet/snippets/"))
+(yas/global-mode 1)
+
+;; setup Srecoder global mode
+(global-srecode-minor-mode)
+
+;; (semantic-load-enable-excessive-code-helpers)
+;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-scheduler-mode t)
 (add-to-list 'semantic-default-submodes 'global-semanticdb-minor-mode t)
-(add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode t)
-(add-to-list 'semantic-default-submodes 'global-semantic-idle-completions-mode t)
+;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode t)
+;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-completions-mode t)
+(add-to-list 'semantic-default-submodes 'global-cedet-m3-minor-mode t)
 (add-to-list 'semantic-default-submodes 'global-semantic-highlight-func-mode t)
 (add-to-list 'semantic-default-submodes 'global-semantic-decoration-mode t)
 (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode t)
 (add-to-list 'semantic-default-submodes 'global-semantic-mru-bookmark-mode t)
 
-(defun setup-semantic-system-includes ()
-  (semantic-add-system-include "/usr/include/"                      'c++-mode)
-  (semantic-add-system-include "/usr/include/boost/"                'c++-mode)
-  (semantic-add-system-include "/usr/include/glib-2.0/"             'c++-mode)
-  (semantic-add-system-include "/usr/include/gtk-3.0/"              'c++-mode)
-  (semantic-add-system-include "/usr/include/gtk-3.0/gtk/"          'c++-mode)
-  (semantic-add-system-include "/usr/include/gtk-3.0/gdk/"          'c++-mode)
+(defun init-semantic-hook ()
+  ;; (semantic-add-system-include "/usr/include/glib-2.0/"             'c++-mode)
+  ;; (semantic-add-system-include "/usr/include/gtk-3.0/"              'c++-mode)
+
+  ;; (semantic-add-system-include "/usr/include/boost/"                'c++-mode)
   (semantic-add-system-include "/usr/include/glibmm-2.4/"           'c++-mode)
   (semantic-add-system-include "/usr/include/gtkmm-3.0/"            'c++-mode)
+  ;; (semantic-add-system-include "/usr/include/giomm-2.4/"            'c++-mode)
+  ;; (semantic-add-system-include "/usr/include/gdkmm-3.0/"            'c++-mode)
   (semantic-add-system-include "/usr/include/libxml++-2.6/"         'c++-mode)
-  (semantic-add-system-include "/usr/include/libxml++-2.6/libxml++" 'c++-mode)
-  (semantic-add-system-include "/usr/include/qt4/"                  'c++-mode)
 
-  (semantic-add-system-include "/usr/include/"                      'c-mode)
-  (semantic-add-system-include "/usr/include/glib-2.0/"             'c-mode)
-  (semantic-add-system-include "/usr/include/gtk-3.0/"              'c-mode)
-  (semantic-add-system-include "/usr/include/gtk-3.0/gtk/"          'c-mode)
-  (semantic-add-system-include "/usr/include/gtk-3.0/gdk/"          'c-mode)
-  (semantic-add-system-include "/usr/include/libxml2/"              'c-mode)
+  ;; (semantic-add-system-include "/usr/include/glib-2.0/"             'c-mode)
+  ;; (semantic-add-system-include "/usr/include/gtk-3.0/"              'c-mode)
+  ;; (semantic-add-system-include "/usr/include/libxml2/"              'c-mode)
+  (semantic-add-system-include "/usr/include/glibmm-2.4/"           'c-mode)
+  (semantic-add-system-include "/usr/include/gtkmm-3.0/"            'c-mode)
+  (semantic-add-system-include "/usr/include/giomm-2.4/"            'c-mode)
+  (semantic-add-system-include "/usr/include/gdkmm-3.0/"            'c-mode)
+  (semantic-add-system-include "/usr/include/libxml++-2.6/"         'c-mode)
   
-  ;; (semantic-add-system-include "/usr/include/boost/"                'c-mode)
-  ;; (semantic-add-system-include "/usr/include/glibmm-2.4/"           'c-mode)
-  ;; (semantic-add-system-include "/usr/include/gtkmm-3.0/"            'c-mode)
-  ;; (semantic-add-system-include "/usr/include/libxml++-2.6/"         'c-mode)
-  ;; (semantic-add-system-include "/usr/include/libxml++-2.6/libxml++" 'c-mode)
-  
-  (add-to-list 'semantic-lex-c-preprocessor-symbol-file
-               "/usr/include/c++/4.7/x86_64-linux-gnu/bits/c++config.h")
-  (add-to-list 'semantic-lex-c-preprocessor-symbol-file
-               "/usr/include/_G_config.h")
-  (add-to-list 'semantic-lex-c-preprocessor-symbol-file
-               "/usr/include/python2.7/pyconfig.h")
-  (add-to-list 'semantic-lex-c-preprocessor-symbol-file
-               "/usr/include/k3sconfig.h")
-  (add-to-list 'semantic-lex-c-preprocessor-symbol-file
-               "/usr/include/freetype2/freetype/config/ftconfig.h")
-  (add-to-list 'semantic-lex-c-preprocessor-symbol-file
-               "/usr/include/c++/4.7/x86_64-linux-gnu/32/bits/c++config.h")
-  (add-to-list 'semantic-lex-c-preprocessor-symbol-file
-               "/usr/include/mysql/my_config.h")
-  (add-to-list 'semantic-lex-c-preprocessor-symbol-file
-               "/usr/include/gtk-3.0/gdk/gdkconfig.h")
-  (add-to-list 'semantic-lex-c-preprocessor-symbol-file
-               "/usr/include/qt4/Qt/qconfig.h")
-  (add-to-list 'semantic-lex-c-preprocessor-symbol-file
-               "/usr/include/qt4/Qt/qconfig-dist.h")
-  (add-to-list 'semantic-lex-c-preprocessor-symbol-file
-               "/usr/include/qt4/Qt/qglobal.h")
-  
-  (imenu-add-to-menubar "Semantic")
+;;  (imenu-add-to-menubar "Semantic")
   )
 
-(add-hook 'semantic-init-hooks 'setup-semantic-system-includes)
+(add-hook 'semantic-init-hooks 'init-semantic-hook)
 
-(semantic-mode 1)
-(semanticdb-enable-gnu-global-databases 'c-mode)
-(semanticdb-enable-gnu-global-databases 'c++-mode)
-
-(defun cedet-hook ()
-  (local-set-key "\C-c?"            'semantic-ia-complete-symbol)
-
-  (local-set-key "\C-c>"            'semantic-complete-analyze-inline)
+(defun common-cedet-hook ()
+;;  (local-set-key [(control tab)]    'semantic-ia-complete-symbol)
+  (local-set-key [(control tab)]    'ac-complete-clang-async)
   (local-set-key [(control return)] 'semantic-ia-complete-symbol-menu)
+  (local-set-key (kbd "C-.")        'semantic-complete-analyze-inline)
 
   (local-set-key "\C-c="            'semantic-decoration-include-visit)
 
@@ -81,17 +76,36 @@
   (local-set-key "\C-cq"            'semantic-ia-show-doc)
   (local-set-key "\C-cs"            'semantic-ia-show-summary)
   (local-set-key "\C-cp"            'semantic-analyze-proto-impl-toggle)
+  
+  (local-set-key "\C-co"            'eassist-switch-h-cpp)
+  (local-set-key "\C-cm"            'eassist-list-methods)
+  
+  (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+  (setq ac-sources (append '(ac-source-words-in-same-mode-buffers ac-source-yasnippet) ac-sources))
+)
+
+(defun ac-clang-async-hook ()
+  (setq ac-clang-complete-executable "/usr/src/async/clang-complete")
+  (setq ac-clang-cflags (read-lines "~/.emacs.d/clang-async.conf"))
+  (ac-clang-launch-completion-process)
   )
 
-(add-hook 'c-mode-common-hook 'cedet-hook)
-(add-hook 'lisp-mode-hook 'cedet-hook)
-(add-hook 'emacs-lisp-mode-hook 'cedet-hook)
+(defun ac-cedet-hook ()
+  (add-to-list 'ac-sources 'ac-source-clang-async)
+  )  
 
-(defun c-mode-cedet-hook ()
-  ;; (local-set-key "." 'semantic-complete-self-insert)
-  ;; (local-set-key ">" 'semantic-complete-self-insert)
-  )
+(add-hook 'c-mode-common-hook         'ac-clang-async-hook)
+(add-hook 'auto-complete-mode-hook    'ac-cedet-hook)
 
-(add-hook 'c-mode-common-hook 'c-mode-cedet-hook)
+(add-hook 'c-mode-common-hook         'common-cedet-hook)
+(add-hook 'lisp-mode-hook             'common-cedet-hook)
+(add-hook 'emacs-lisp-mode-hook       'common-cedet-hook)
 
-(provide 'conf-cedet)
+(semantic-mode 1)
+
+;; auto-complete
+(setq ac-auto-show-menu    0.1)
+(setq ac-menu-height       30)
+(setq ac-ignore-case       "No")
+(ac-config-default)
+

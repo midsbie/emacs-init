@@ -20,5 +20,3 @@
 (defun set-frame-height-interactive (arg)
   (interactive "p")
   (set-frame-height (selected-frame) arg))
-
-(provide 'conf-frame-size)

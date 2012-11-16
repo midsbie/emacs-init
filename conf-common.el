@@ -58,15 +58,7 @@
       tab-width 2)
 (setq-default indent-tabs-mode nil)
 
-;; Highlighter
-(global-hl-line-mode 1)
-(set-face-background 'hl-line "#383830")
-
 (setq default-major-mode 'text-mode)    ; set text-mode as default mode
-
-;; Enable clipboard functionality
-(setq x-select-enable-clipboard t
-      interprogram-paste-function 'x-cut-buffer-or-selection-value)
 
 ;; ---- Aliases ----
 (defalias 'hscroll-mode 'toggle-truncate-lines)
@@ -111,9 +103,9 @@
 (setq uniquify-buffer-name-style 'forward)
 (ido-mode t)
 
-(setq frame-title-format "%b - emacs")
 (put 'upcase-region 'disabled nil)
 
+(menu-bar-mode -1)                      ; disable menu bar
 (size-indication-mode)                  ; turn on size indication mode
 (global-linum-mode t)
 (scroll-bar-mode -1)                    ; disable scrollbars

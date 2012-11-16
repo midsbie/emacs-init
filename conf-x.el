@@ -19,7 +19,5 @@
   ;; Enable clipboard functionality
   (setq x-select-enable-clipboard t
         interprogram-paste-function 'x-cut-buffer-or-selection-value)
-	
-  (split-window-horizontally)             ; two windows at startup
   )
 

@@ -1,4 +1,4 @@
-(add-to-list 'load-path "~/.emacs.d/")
+(add-to-list 'load-path "/usr/share/emacs/common-lisp/auto-complete")
 
 ;; includes
 (load-file "/usr/src/bzr-cedet/cedet-devel-load.el")

@@ -80,7 +80,7 @@
   (local-set-key "\C-co"            'eassist-switch-h-cpp)
   (local-set-key "\C-cm"            'eassist-list-methods)
   
-  (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+  (add-to-list 'ac-dictionary-directories "/usr/share/emacs/common-lisp/auto-complete/ac-dict")
   (setq ac-sources (append '(ac-source-words-in-same-mode-buffers ac-source-yasnippet) ac-sources))
 )
 

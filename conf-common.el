@@ -4,17 +4,22 @@
 (load-library "./conf-cedet")
 (load-library "./conf-frame-size")
 (load-library "./conf-mail")
-(load-library "./conf-compile")
+(load-library "./conf-build")
 
 (load-library "./buffer-move")
 (load-library "./framemove")
 (load-library "./dedicated-window")
+(load-library "/usr/src/git-fill-column-indicator/fill-column-indicator")
 
 ;; requires
 (require 'uniquify)
 (require 'ido)
 (require 'recentf)
 (require 'server)
+
+
+;; fci-mode
+(setq-default fci-rule-color "gray9")
 
 ;; setup recentf-mode
 (setq recentf-auto-cleanup 'never);
@@ -73,6 +78,14 @@
 (global-set-key [M-up]      'windmove-up)
 (global-set-key [M-down]    'windmove-down)
 
+;; define miscellaneous shortcuts
+(global-set-key [f2]        'shell)
+(global-set-key [f3]        'next-error)
+(global-set-key [S-f3]      'previous-error)
+;; (global-set-key [f4]        'kill-this-buffer)
+;; (global-set-key [S-f4]      'delete-other-windows)
+;; (global-set-key [f6]        'other-window)
+
 ;; buffer-move: key bindings
 (global-set-key (kbd "<C-S-up>")      'buf-move-up)
 (global-set-key (kbd "<C-S-down>")    'buf-move-down)
@@ -88,9 +101,8 @@
 (global-set-key (kbd "C-c C-t")       'c-toggle-hungry-state)
 
 ;; redefine C-h (help) as C-x h and define backspace as C-h
-(keyboard-translate ?\C-h ?\C-?)
 (global-set-key (kbd "C-h")           'delete-backward-char)
-(global-set-key (kbd "C-x h")         'help)
+(global-set-key (kbd "C-x h")         'help-command)
 
 ;; this new key binding replaces mark-paragraph
 (global-set-key (kbd "M-h")           'backward-kill-word)   
@@ -111,7 +123,7 @@
 (scroll-bar-mode -1)                    ; disable scrollbars
 
 (setq-default
- enable-recursive-minibuffers t         ; allow recursive editing in minibuffer
+; enable-recursive-minibuffers t         ; allow recursive editing in minibuffer
  column-number-mode t
  comment-multi-line t
  comment-style (quote align)

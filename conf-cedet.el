@@ -28,7 +28,7 @@
 ;; setup Srecoder global mode
 (global-srecode-minor-mode)
 
-;; (semantic-load-enable-excessive-code-helpers)
+ 
 ;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-scheduler-mode t)
 (add-to-list 'semantic-default-submodes 'global-semanticdb-minor-mode t)
 ;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode t)
@@ -82,6 +82,7 @@
   
   (add-to-list 'ac-dictionary-directories "/usr/share/emacs/common-lisp/auto-complete/ac-dict")
   (setq ac-sources (append '(ac-source-words-in-same-mode-buffers ac-source-yasnippet) ac-sources))
+  (fci-mode)
 )
 
 (defun ac-clang-async-hook ()
@@ -102,6 +103,14 @@
 (add-hook 'emacs-lisp-mode-hook       'common-cedet-hook)
 
 (semantic-mode 1)
+(custom-set-variables
+ '(semantic-decoration-styles
+   (quote (
+           ("semantic-tag-boundary")
+           ("semantic-tag-boundary")
+           ("semantic-decoration-on-includes" . t)
+           ("semantic-decoration-on-protected-members")
+           ("semantic-decoration-on-private-members")))))
 
 ;; auto-complete
 (setq ac-auto-show-menu    0.1)

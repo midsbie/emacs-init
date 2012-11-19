@@ -1,12 +1,16 @@
 (add-to-list 'load-path "/usr/share/emacs/common-lisp/auto-complete")
+(add-to-list 'load-path "/usr/src/bzr-cedet")
+(add-to-list 'load-path "/usr/src/bzr-cedet/contrib")
 
 ;; includes
-(load-file "/usr/src/bzr-cedet/cedet-devel-load.el")
+(load-library "cedet-devel-load")
+(load-library "cedet-contrib-load")
 
 (load-library "/usr/src/bzr-cedet/contrib/eassist")
 (load-library "/usr/src/git-yasnippet/yasnippet")
 (load-library "auto-complete-config")
 (load-library "/usr/src/async/auto-complete-clang-async")
+(load-library "/usr/src/git-php-mode/php-mode")
 (load-library "./member-functions")
 
 (require 'libcommon)
@@ -81,24 +85,31 @@
   (local-set-key "\C-cm"            'eassist-list-methods)
   
   (add-to-list 'ac-dictionary-directories "/usr/share/emacs/common-lisp/auto-complete/ac-dict")
-  (setq ac-sources (append '(ac-source-words-in-same-mode-buffers ac-source-yasnippet) ac-sources))
   (fci-mode)
 )
 
 (defun ac-clang-async-hook ()
-  (setq ac-clang-complete-executable "/usr/src/async/clang-complete")
-  (setq ac-clang-cflags (read-lines "~/.emacs.d/clang-async.conf"))
-  (ac-clang-launch-completion-process)
+  (when (or (string= major-mode "c-mode")
+            (string= major-mode "c++-mode"))
+    (setq ac-clang-complete-executable "/usr/src/async/clang-complete")
+    (setq ac-clang-cflags (read-lines "~/.emacs.d/clang-async.conf"))
+    (ac-clang-launch-completion-process))
   )
 
 (defun ac-cedet-hook ()
-  (add-to-list 'ac-sources 'ac-source-clang-async)
-  )  
+  (if (string= major-mode "php-mode")
+      (add-to-list 'ac-sources 'ac-source-dictionary)
+    (if (or (string= major-mode "c-mode")
+            (string= major-mode "c++-mode"))
+        (add-to-list 'ac-sources 'ac-source-clang-async))
+    )
+  )
 
 (add-hook 'c-mode-common-hook         'ac-clang-async-hook)
 (add-hook 'auto-complete-mode-hook    'ac-cedet-hook)
 
 (add-hook 'c-mode-common-hook         'common-cedet-hook)
+(add-hook 'php-mode-hook              'common-cedet-hook)
 (add-hook 'lisp-mode-hook             'common-cedet-hook)
 (add-hook 'emacs-lisp-mode-hook       'common-cedet-hook)
 

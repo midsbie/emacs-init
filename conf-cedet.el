@@ -3,15 +3,17 @@
 (add-to-list 'load-path "/usr/src/bzr-cedet/contrib")
 
 ;; includes
+;; - cedet
 (load-library "cedet-devel-load")
-(load-library "cedet-contrib-load")
+(load-library "contrib/cedet-contrib-load")
+(load-library "contrib/eassist")
 
-(load-library "/usr/src/bzr-cedet/contrib/eassist")
+;; - misc
 (load-library "/usr/src/git-yasnippet/yasnippet")
 (load-library "auto-complete-config")
 (load-library "/usr/src/async/auto-complete-clang-async")
 (load-library "/usr/src/git-php-mode/php-mode")
-(load-library "./member-functions")
+(load-library "member-functions")
 
 (require 'libcommon)
 

@@ -37,7 +37,7 @@
  
 ;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-scheduler-mode t)
 (add-to-list 'semantic-default-submodes 'global-semanticdb-minor-mode t)
-;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode t)
+(add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode t)
 ;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-completions-mode t)
 (add-to-list 'semantic-default-submodes 'global-cedet-m3-minor-mode t)
 (add-to-list 'semantic-default-submodes 'global-semantic-highlight-func-mode t)
@@ -71,7 +71,7 @@
 (add-hook 'semantic-init-hooks 'init-semantic-hook)
 
 (defun common-cedet-hook ()
-;;  (local-set-key [(control tab)]    'semantic-ia-complete-symbol)
+  (local-set-key [\C-S-iso-lefttab] 'semantic-ia-complete-symbol)
   (local-set-key [(control tab)]    'ac-complete-clang-async)
   (local-set-key [(control return)] 'semantic-ia-complete-symbol-menu)
   (local-set-key (kbd "C-.")        'semantic-complete-analyze-inline)
@@ -99,7 +99,9 @@
   )
 
 (defun ac-cedet-hook ()
-  (if (string= major-mode "php-mode")
+  (if (or (string= major-mode "php-mode")
+          (string= major-mode "js-mode")
+          (string= major-mode "css-mode"))
       (add-to-list 'ac-sources 'ac-source-dictionary)
     (if (or (string= major-mode "c-mode")
             (string= major-mode "c++-mode"))
@@ -112,14 +114,18 @@
 
 (add-hook 'c-mode-common-hook         'common-cedet-hook)
 (add-hook 'php-mode-hook              'common-cedet-hook)
+(add-hook 'css-mode-hook              'common-cedet-hook)
+(add-hook 'js-mode-hook               'common-cedet-hook)
 (add-hook 'lisp-mode-hook             'common-cedet-hook)
 (add-hook 'emacs-lisp-mode-hook       'common-cedet-hook)
+
+(add-hook 'emacs-lisp-mode-hook       'turn-on-eldoc-mode)
+(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 
 (semantic-mode 1)
 (custom-set-variables
  '(semantic-decoration-styles
    (quote (
-           ("semantic-tag-boundary")
            ("semantic-tag-boundary")
            ("semantic-decoration-on-includes" . t)
            ("semantic-decoration-on-protected-members")

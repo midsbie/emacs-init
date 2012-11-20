@@ -8,7 +8,7 @@
 
 (load-library "./buffer-move")
 (load-library "./framemove")
-(load-library "./dedicated-window")
+(load-library "./window-extra")
 (load-library "/usr/src/git-fill-column-indicator/fill-column-indicator")
 
 ;; requires
@@ -48,7 +48,7 @@
 
 ;; windmove: awesome key bindings for moving around windows
 (global-set-key [M-left]        'windmove-left)
-(global-set-key (kbd "C-x p")   'windmove-left)
+(global-set-key (kbd "C-x p")   'other-previous-window)
 (global-set-key [M-right]       'windmove-right)
 (global-set-key [M-up]          'windmove-up)
 (global-set-key [M-down]        'windmove-down)
@@ -98,7 +98,7 @@
 (scroll-bar-mode -1)                    ; disable scrollbars
 
 (setq-default
-; enable-recursive-minibuffers t         ; allow recursive editing in minibuffer
+ enable-recursive-minibuffers t         ; allow recursive editing in minibuffer
  column-number-mode t
  comment-multi-line t
  comment-style (quote align)
@@ -111,6 +111,12 @@
 
 ; set tab-stop positions for C-i
 (setq tab-stop-list (quote (2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 82 84 86 88 90 92 94 96 98 100)))
+
+;; Let's make sure we disable linum-mode when in speedbar-mode
+(defun linum-hook()
+(if (string= major-mode "speedbar-mode")
+    (linum-mode -1)))
+(add-hook 'linum-before-numbering-hook 'linum-hook)
 
 ; Start server if it isn't running yet
 (if (not (server-running-p))

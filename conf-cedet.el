@@ -88,6 +88,7 @@
   
   (add-to-list 'ac-dictionary-directories "/usr/share/emacs/common-lisp/auto-complete/ac-dict")
   (fci-mode)
+  (auto-fill-mode)
 )
 
 (defun ac-clang-async-hook ()
@@ -123,7 +124,7 @@
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 
 (custom-set-variables
- '(semantic-idle-scheduler-idle-time 0.25)
+ '(semantic-idle-scheduler-idle-time 0.5)
  '(semantic-decoration-styles
    (quote (
            ("semantic-tag-boundary")

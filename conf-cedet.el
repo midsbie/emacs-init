@@ -122,14 +122,15 @@
 (add-hook 'emacs-lisp-mode-hook       'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 
-(semantic-mode 1)
 (custom-set-variables
+ '(semantic-idle-scheduler-idle-time 0.25)
  '(semantic-decoration-styles
    (quote (
            ("semantic-tag-boundary")
            ("semantic-decoration-on-includes" . t)
            ("semantic-decoration-on-protected-members")
            ("semantic-decoration-on-private-members")))))
+(semantic-mode 1)
 
 ;; auto-complete
 (setq ac-auto-show-menu    0.1)

@@ -31,32 +31,6 @@
           (lambda () (c-toggle-auto-hungry-state 1)
             (c-toggle-auto-state -1)))
 
-;; nxhtml-mode
-;; (load "nxhtml/autostart.el")
-;; (setq mumamo-background-colors nil)     ;; disable background color changes
-;; (css-color-global-mode)
-
-;; (defun web-mode()
-;;   (interactive)
-;;   (nxhtml-mumamo-mode))
-
-;; (add-to-list 'auto-mode-alist '("\\.inc$" . nxhtml-mumamo-mode))
-;; (add-to-list 'auto-mode-alist '("\\.php$" . nxhtml-mumamo-mode))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;; FIX for mumamo's annoying warning messages ;;;;;;;;;;;;;;;;
-;; ;; Mumamo is making emacs 23.3 freak out:
-;; (when (and (equal emacs-major-version 24)
-;;            (equal emacs-minor-version 2))
-;;   (eval-after-load "bytecomp"
-;;     '(add-to-list 'byte-compile-not-obsolete-vars
-;;                   'font-lock-beginning-of-syntax-function))
-;;   ;; tramp-compat.el clobbers this variable!
-;;   (eval-after-load "tramp-compat"
-;;     '(add-to-list 'byte-compile-not-obsolete-vars
-;;                   'font-lock-beginning-of-syntax-function)))
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 ;; set c-mode default style and tabs
 (setq c-default-style "linux"
       c-basic-offset 2
@@ -73,10 +47,11 @@
 (defalias 'replace-query-regexp-eval 'query-replace-regexp-eval)
 
 ;; windmove: awesome key bindings for moving around windows
-(global-set-key [M-left]    'windmove-left)
-(global-set-key [M-right]   'windmove-right)
-(global-set-key [M-up]      'windmove-up)
-(global-set-key [M-down]    'windmove-down)
+(global-set-key [M-left]        'windmove-left)
+(global-set-key (kbd "C-x p")   'windmove-left)
+(global-set-key [M-right]       'windmove-right)
+(global-set-key [M-up]          'windmove-up)
+(global-set-key [M-down]        'windmove-down)
 
 ;; define miscellaneous shortcuts
 (global-set-key [f2]        'shell)

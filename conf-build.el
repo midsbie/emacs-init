@@ -3,13 +3,17 @@
 (require 'ansi-color)
 
 ;; variable definition
-(defvar build-base-dir "~/prj/clangd/out/src/"
-  "The base directory of the *compilation* window.")
+(defvar build-base-dir nil
+  "The base directory of the active project.")
 
-(defvar build-cmd-build "../../sh/build"
+(defvar build-output-dir nil
+  "The directory where the project will be compiled into, relative to
+  BUILD-BASE-DIR.")
+
+(defvar build-cmd-build "sh/build -p"
   "The command that runs the project's compilation sequence.")
 
-(defvar build-cmd-run "../../sh/run"
+(defvar build-cmd-run "sh/run"
   "The command that runs the project's binary.")
 
 (defvar build-bin-name nil
@@ -39,8 +43,7 @@
   (interactive)
   (if (not (build-gdb-running))
       (progn
-        (cd build-base-dir)
-        (compile build-cmd-build))
+        (compile (concat build-base-dir build-cmd-build)))
     (error "error: not building project as gdb is running"))
   )
 
@@ -57,11 +60,10 @@
     (let ((window (get-buffer-window "*compilation*")))
       (set-window-buffer window (other-buffer)))
     (window-configuration-to-register 99)
-    (cd build-base-dir)
     (gdb (concat
           build-cmd-gdb
           "--args "
-          build-bin-name
+          (concat build-base-dir build-output-dir build-bin-name)
           build-bin-args))
     (if (> gdb-many-windows 0)
         (run-at-time 0.5 nil

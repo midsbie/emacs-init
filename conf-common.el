@@ -84,8 +84,10 @@
 
 (setq inhibit-splash-screen t           ; Disable splash screen
       initial-scratch-message nil)      ; Disable startup message
-(delete-selection-mode t)               ; Enable C-D to delete selected text
-(transient-mark-mode t)                 ; Enable typing to replace selected text
+(delete-selection-mode t)               ; Enable C-D to delete
+                                        ; selected text
+(transient-mark-mode t)                 ; Enable typing to replace
+                                        ; selected text
 
 (setq uniquify-buffer-name-style 'forward)
 (ido-mode t)
@@ -98,7 +100,8 @@
 (scroll-bar-mode -1)                    ; disable scrollbars
 
 (setq-default
- enable-recursive-minibuffers t         ; allow recursive editing in minibuffer
+ enable-recursive-minibuffers t         ; allow recursive editing in
+                                        ; minibuffer
  column-number-mode t
  comment-multi-line t
  comment-style (quote align)
@@ -109,8 +112,14 @@
  standard-indent 2
  tab-width 2)
 
+(c-set-offset 'innamespace 0)           ; set indentation inside
+                                        ; namespaces to nil
+
 ; set tab-stop positions for C-i
-(setq tab-stop-list (quote (2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80 82 84 86 88 90 92 94 96 98 100)))
+(setq tab-stop-list
+      (quote (2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40
+                42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76
+                78 80 82 84 86 88 90 92 94 96 98 100)))
 
 ;; Let's make sure we disable linum-mode when in speedbar-mode
 (defun linum-hook()

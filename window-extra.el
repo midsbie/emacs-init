@@ -25,6 +25,6 @@ selected window, before making the selection. If COUNT is positive,
 skip COUNT backwards. If COUNT is negative, skip COUNT forwards. In
 an interactive call, COUNT is the numeric prefix argument."
   (interactive "p")
-  (other-window (* count -1)))
+  (other-window (* count -1) all-frames))
 
 (provide 'window-extra)

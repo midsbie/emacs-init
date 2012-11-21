@@ -103,12 +103,8 @@
   (if (or (string= major-mode "php-mode")
           (string= major-mode "js-mode")
           (string= major-mode "css-mode"))
-      (add-to-list 'ac-sources 'ac-source-dictionary)
-    (if (or (string= major-mode "c-mode")
-            (string= major-mode "c++-mode"))
-        (add-to-list 'ac-sources 'ac-source-clang-async))
-    )
-  )
+      (add-to-list 'ac-sources 'ac-source-dictionary)))
+
 
 (add-hook 'c-mode-common-hook         'ac-clang-async-hook)
 (add-hook 'auto-complete-mode-hook    'ac-cedet-hook)
@@ -119,12 +115,13 @@
 (add-hook 'js-mode-hook               'common-cedet-hook)
 (add-hook 'lisp-mode-hook             'common-cedet-hook)
 (add-hook 'emacs-lisp-mode-hook       'common-cedet-hook)
+(add-hook 'sh-mode-hook               'common-cedet-hook)
 
 (add-hook 'emacs-lisp-mode-hook       'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 
 (custom-set-variables
- '(semantic-idle-scheduler-idle-time 0.5)
+ '(semantic-idle-scheduler-idle-time 0.6)
  '(semantic-decoration-styles
    (quote (
            ("semantic-tag-boundary")
@@ -138,4 +135,3 @@
 (setq ac-menu-height       30)
 (setq ac-ignore-case       "No")
 (ac-config-default)
-

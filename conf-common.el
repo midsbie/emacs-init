@@ -16,7 +16,8 @@
 (require 'ido)
 (require 'recentf)
 (require 'server)
-
+(require 'paren)
+(require 'highlight-parentheses)
 
 ;; fci-mode
 (setq-default fci-rule-color "gray9")
@@ -28,8 +29,12 @@
 ;; load cc-mode
 (autoload 'awk-mode "cc-mode" nil t)
 (add-hook 'c-mode-common-hook
-          (lambda () (c-toggle-auto-hungry-state 1)
-            (c-toggle-auto-state -1)))
+          (lambda ()
+            (c-toggle-auto-hungry-state 1)
+            (c-toggle-auto-state -1)
+            (c-set-offset 'innamespace 0)           ; set indentation inside
+                                                    ; namespaces to nil
+          ))
 
 ;; set c-mode default style and tabs
 (setq c-default-style "linux"
@@ -88,6 +93,7 @@
                                         ; selected text
 (transient-mark-mode t)                 ; Enable typing to replace
                                         ; selected text
+(electric-indent-mode t)                ; set electric indentation mode
 
 (setq uniquify-buffer-name-style 'forward)
 (ido-mode t)
@@ -98,6 +104,8 @@
 (size-indication-mode)                  ; turn on size indication mode
 (global-linum-mode t)
 (scroll-bar-mode -1)                    ; disable scrollbars
+(show-paren-mode t)                     ; show parenthesis next to
+                                        ; cursor
 
 (setq-default
  enable-recursive-minibuffers t         ; allow recursive editing in
@@ -110,10 +118,9 @@
  indent-tabs-mode nil
  js-indent-level 2
  standard-indent 2
- tab-width 2)
-
-(c-set-offset 'innamespace 0)           ; set indentation inside
-                                        ; namespaces to nil
+ tab-width 2
+ fill-column 80
+)
 
 ; set tab-stop positions for C-i
 (setq tab-stop-list

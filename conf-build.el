@@ -63,8 +63,10 @@
     (gdb (concat
           build-cmd-gdb
           "--args "
-          (concat build-base-dir build-output-dir build-bin-name)
-          build-bin-args))
+          (concat build-base-dir
+                  build-output-dir
+                  build-bin-name)
+          (concat " " build-bin-args)))
     (if (> gdb-many-windows 0)
         (run-at-time 0.5 nil
                      (lambda()

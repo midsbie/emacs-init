@@ -133,7 +133,7 @@
                              (turn-on-flyspell)))
 
 
-; set tab-stop positions for C-i
+;; set tab-stop positions for C-i
 (setq tab-stop-list
       (quote (2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40
                 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76
@@ -145,11 +145,19 @@
     (linum-mode -1)))
 (add-hook 'linum-before-numbering-hook 'linum-hook)
 
-; Start server if it isn't running yet
+;; Start server if it isn't running yet
 (if (not (server-running-p))
     (progn
       (message "[server] starting")
       (server-start))
   (message "[server] already started: not starting"))
+
+;; Following list of buffers shouldn't open a new window
+(setq same-window-buffer-names '("*shell*"
+                                 "*grep*"
+                                 "*compilation*"
+                                 "*mail*"
+                                 "*unsent mail*"
+                                 "*info*"))
 
 (load-library "./conf-x")

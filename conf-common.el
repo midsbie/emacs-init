@@ -4,7 +4,7 @@
 (load-library "./conf-cedet")
 (load-library "./conf-frame-size")
 (load-library "./conf-mail")
-(load-library "./conf-build")
+(load-library "./build")
 
 (load-library "./buffer-move")
 (load-library "./framemove")
@@ -130,7 +130,7 @@
  )
 
 (add-hook 'text-mode-hook '(lambda()
-                             (flyspell-mode)))
+                             (turn-on-flyspell)))
 
 
 ; set tab-stop positions for C-i

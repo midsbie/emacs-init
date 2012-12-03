@@ -18,8 +18,12 @@
 (require 'libcommon)
 
 ;; member-functions
-(autoload 'expand-member-functions "member-functions" "Expand C++ member function declarations" t)
-(add-hook 'c++-mode-hook (lambda () (local-set-key "\C-cx" #'expand-member-functions)))
+(autoload 'expand-member-functions
+  "member-functions"
+  "Expand C++ member function declarations" t)
+(add-hook 'c++-mode-hook
+          (lambda ()
+            (local-set-key "\C-cx" #'expand-member-functions)))
 
 
 ;; eassist
@@ -35,10 +39,12 @@
 (global-srecode-minor-mode)
 
  
-;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-scheduler-mode t)
+;; (add-to-list 'semantic-default-submodes
+;;              'global-semantic-idle-scheduler-mode t)
 (add-to-list 'semantic-default-submodes 'global-semanticdb-minor-mode t)
 (add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode t)
-;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-completions-mode t)
+;; (add-to-list 'semantic-default-submodes
+;;              'global-semantic-idle-completions-mode t)
 (add-to-list 'semantic-default-submodes 'global-cedet-m3-minor-mode t)
 (add-to-list 'semantic-default-submodes 'global-semantic-highlight-func-mode t)
 (add-to-list 'semantic-default-submodes 'global-semantic-decoration-mode t)
@@ -86,12 +92,14 @@
   (local-set-key "\C-co"            'eassist-switch-h-cpp)
   (local-set-key "\C-cm"            'eassist-list-methods)
   
-  (add-to-list 'ac-dictionary-directories "/usr/share/emacs/common-lisp/auto-complete/ac-dict")
+  (add-to-list 'ac-dictionary-directories
+               "/usr/share/emacs/common-lisp/auto-complete/ac-dict")
   (fci-mode)                        ; fill column indicator
   (auto-fill-mode)                  ; auto fill
   (follow-mode t)                   ; allow for easier editing of
                                     ; long buffers
   (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting
+  (flyspell-prog-mode)              ; turn spell check for strings and comments
 )
 
 (defun ac-clang-async-hook ()
@@ -109,8 +117,8 @@
       (add-to-list 'ac-sources 'ac-source-dictionary)))
 
 
-(add-hook 'c-mode-common-hook         'ac-clang-async-hook)
-(add-hook 'auto-complete-mode-hook    'ac-cedet-hook)
+;; (add-hook 'c-mode-common-hook         'ac-clang-async-hook)
+;; (add-hook 'auto-complete-mode-hook    'ac-cedet-hook)
 
 (add-hook 'c-mode-common-hook         'common-cedet-hook)
 (add-hook 'php-mode-hook              'common-cedet-hook)
@@ -138,4 +146,4 @@
 (setq ac-auto-show-menu    0.1)
 (setq ac-menu-height       30)
 (setq ac-ignore-case       "No")
-(ac-config-default)
+;; (ac-config-default)

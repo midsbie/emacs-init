@@ -77,6 +77,8 @@
 (global-set-key (kbd "C-S-w")         'toggle-truncate-lines)
 (global-set-key (kbd "M-r")           'revert-buffer)
 (global-set-key (kbd "C-x C-b")       'ibuffer)
+(global-set-key (kbd "C-x /")         'bury-buffer)
+(global-set-key (kbd "C-x g")         'find-grep)
 
 (global-set-key (kbd "C-c C-t")       'c-toggle-hungry-state)
 
@@ -106,6 +108,11 @@
 (scroll-bar-mode -1)                    ; disable scrollbars
 (show-paren-mode t)                     ; show parenthesis next to
                                         ; cursor
+(setq show-paren-mismatch t)            ; show parenthesis mismatch
+(setq diff-switches '-u)                ; set diff to use unified format
+(setq save-place t)                     ; save position on buffer
+
+(fset 'yes-or-no-p 'y-or-n-p)           ; accept 'y' or 'n' instead of yes/no
 
 (setq-default
  enable-recursive-minibuffers t         ; allow recursive editing in
@@ -120,7 +127,11 @@
  standard-indent 2
  tab-width 2
  fill-column 80
-)
+ )
+
+(add-hook 'text-mode-hook '(lambda()
+                             (flyspell-mode)))
+
 
 ; set tab-stop positions for C-i
 (setq tab-stop-list

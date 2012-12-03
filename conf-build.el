@@ -13,6 +13,9 @@
 (defvar build-cmd-build "sh/build -p"
   "The command that runs the project's compilation sequence.")
 
+(defvar build-cmd-rebuild "sh/build -pr"
+  "Command that fully rebuilds the project.")
+
 (defvar build-cmd-run "sh/run"
   "The command that runs the project's binary.")
 
@@ -44,6 +47,14 @@
   (if (not (build-gdb-running))
       (progn
         (compile (concat build-base-dir build-cmd-build)))
+    (error "error: not building project as gdb is running"))
+  )
+
+(defun build-rebuild()
+  (interactive)
+  (if (not (build-gdb-running))
+      (progn
+        (compile (concat build-base-dir build-cmd-rebuild)))
     (error "error: not building project as gdb is running"))
   )
 
@@ -118,7 +129,8 @@
 
 (add-hook 'c-mode-common-hook
            (lambda ()
-             (local-set-key [f9] 'build-do)) )
+             (local-set-key [f9] 'build-do)
+             (local-set-key [C-f9] 'build-rebuild) )
 
 (defun build-colorize-compilation-buffer ()
   (toggle-read-only)

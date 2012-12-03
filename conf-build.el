@@ -130,7 +130,7 @@
 (add-hook 'c-mode-common-hook
            (lambda ()
              (local-set-key [f9] 'build-do)
-             (local-set-key [C-f9] 'build-rebuild) )
+             (local-set-key [C-f9] 'build-rebuild)))
 
 (defun build-colorize-compilation-buffer ()
   (toggle-read-only)

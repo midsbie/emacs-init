@@ -10,10 +10,10 @@
   "The directory where the project will be compiled into, relative to
   BUILD-BASE-DIR.")
 
-(defvar build-cmd-build "sh/build -p"
+(defvar build-cmd-build "sh/build -pe"
   "The command that runs the project's compilation sequence.")
 
-(defvar build-cmd-rebuild "sh/build -prd"
+(defvar build-cmd-rebuild "sh/build -pre"
   "Command that fully rebuilds the project.")
 
 (defvar build-cmd-run "sh/run"

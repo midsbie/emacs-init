@@ -103,6 +103,11 @@
   (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting
   (flyspell-prog-mode)              ; turn spell check for strings and comments
   (doxymacs-mode)                   ; turn doxymacs on
+
+  ;; Add font-lock for doxymacs support 
+  (add-hook 'font-lock-mode-hook
+            (lambda()
+              (doxymacs-font-lock)))
 )
 
 (defun ac-clang-async-hook ()

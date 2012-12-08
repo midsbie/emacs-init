@@ -154,8 +154,6 @@
 
 ;; Following list of buffers shouldn't open a new window
 (setq same-window-buffer-names '("*shell*"
-                                 "*grep*"
-                                 "*compilation*"
                                  "*mail*"
                                  "*unsent mail*"
                                  "*info*"))

@@ -13,7 +13,7 @@
 (defvar build-cmd-build "sh/build -p"
   "The command that runs the project's compilation sequence.")
 
-(defvar build-cmd-rebuild "sh/build -pr"
+(defvar build-cmd-rebuild "sh/build -prd"
   "Command that fully rebuilds the project.")
 
 (defvar build-cmd-run "sh/run"

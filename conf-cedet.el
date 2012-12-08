@@ -1,4 +1,5 @@
 (add-to-list 'load-path "/usr/share/emacs/common-lisp/auto-complete")
+(add-to-list 'load-path "/usr/share/emacs/common-lisp/doxymacs")
 (add-to-list 'load-path "/usr/src/bzr-cedet")
 (add-to-list 'load-path "/usr/src/bzr-cedet/contrib")
 
@@ -14,6 +15,7 @@
 (load-library "/usr/src/async/auto-complete-clang-async")
 (load-library "/usr/src/git-php-mode/php-mode")
 (load-library "member-functions")
+(load-library "doxymacs/doxymacs")
 
 (require 'libcommon)
 
@@ -100,6 +102,7 @@
                                     ; long buffers
   (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting
   (flyspell-prog-mode)              ; turn spell check for strings and comments
+  (doxymacs-mode)                   ; turn doxymacs on
 )
 
 (defun ac-clang-async-hook ()
@@ -127,6 +130,8 @@
 (add-hook 'lisp-mode-hook             'common-cedet-hook)
 (add-hook 'emacs-lisp-mode-hook       'common-cedet-hook)
 (add-hook 'sh-mode-hook               'common-cedet-hook)
+(add-hook 'makefile-mode-hook         'common-cedet-hook)
+(add-hook 'srecode-template-mode-hook 'common-cedet-hook)
 
 (add-hook 'emacs-lisp-mode-hook       'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)

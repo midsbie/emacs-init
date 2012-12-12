@@ -129,7 +129,10 @@
  fill-column 80
  )
 
+;; let's setup text-mode to our liking
 (add-hook 'text-mode-hook '(lambda()
+                             (fci-mode)
+                             (auto-fill-mode)
                              (turn-on-flyspell)))
 
 

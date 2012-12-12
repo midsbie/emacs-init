@@ -110,10 +110,11 @@
   (follow-mode t)                   ; allow for easier editing of
                                     ; long buffers
   (doxymacs-mode)                   ; turn doxymacs on
-  ;; Add font-lock for doxymacs support 
-  (add-hook 'font-lock-mode-hook
-            (lambda()
-              (doxymacs-font-lock)))
+  
+  ;; Add font-lock for doxymacs support
+;;   (add-hook 'font-lock-mode-hook
+;;             (lambda()
+;;               (doxymacs-font-lock)))
   )
 
 

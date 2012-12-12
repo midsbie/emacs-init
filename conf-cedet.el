@@ -78,6 +78,12 @@
 
 (add-hook 'semantic-init-hooks 'init-semantic-hook)
 
+(defun common-text-hook ()
+  (fci-mode)                        ; fill column indicator
+  (auto-fill-mode)                  ; auto fill
+  (flyspell-mode)                   ; turn spell check on
+  )
+
 (defun common-cedet-hook ()
   (local-set-key [\C-S-iso-lefttab] 'semantic-ia-complete-symbol)
   (local-set-key [(control tab)]    'ac-complete-clang-async)
@@ -96,19 +102,20 @@
   
   (add-to-list 'ac-dictionary-directories
                "/usr/share/emacs/common-lisp/auto-complete/ac-dict")
+
   (fci-mode)                        ; fill column indicator
   (auto-fill-mode)                  ; auto fill
+  (flyspell-prog-mode)              ; turn spell check for strings and comments
+  (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting
   (follow-mode t)                   ; allow for easier editing of
                                     ; long buffers
-  (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting
-  (flyspell-prog-mode)              ; turn spell check for strings and comments
   (doxymacs-mode)                   ; turn doxymacs on
-
   ;; Add font-lock for doxymacs support 
   (add-hook 'font-lock-mode-hook
             (lambda()
               (doxymacs-font-lock)))
-)
+  )
+
 
 (defun ac-clang-async-hook ()
   (when (or (string= major-mode "c-mode")
@@ -137,6 +144,7 @@
 (add-hook 'sh-mode-hook               'common-cedet-hook)
 (add-hook 'makefile-mode-hook         'common-cedet-hook)
 (add-hook 'srecode-template-mode-hook 'common-cedet-hook)
+(add-hook 'log-edit-mode-hook         'common-text-hook)
 
 (add-hook 'emacs-lisp-mode-hook       'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)

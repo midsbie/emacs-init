@@ -46,7 +46,7 @@
 
 ;; ---- Aliases ----
 (defalias 'hscroll-mode 'toggle-truncate-lines)
-;;Alias query functions so all the replace functions start with "replace"!
+;; Alias query functions so all the replace functions start with "replace"!
 (defalias 'replace-query 'query-replace)
 (defalias 'replace-query-regexp 'query-replace-regexp)
 (defalias 'replace-query-regexp-eval 'query-replace-regexp-eval)
@@ -59,10 +59,10 @@
 (global-set-key [M-down]        'windmove-down)
 
 ;; define miscellaneous shortcuts
-(global-set-key [f2]        'shell)
-(global-set-key [f3]        'next-error)
-(global-set-key [S-f3]      'previous-error)
-;; (global-set-key [f4]        'kill-this-buffer)
+(global-set-key [f2]          'shell)
+(global-set-key [f3]          'next-error)
+(global-set-key [S-f3]        'previous-error)
+(global-set-key (kbd "C-x k") 'kill-this-buffer)
 ;; (global-set-key [S-f4]      'delete-other-windows)
 ;; (global-set-key [f6]        'other-window)
 

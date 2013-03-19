@@ -24,6 +24,8 @@
 
 ;; setup recentf-mode
 (setq recentf-auto-cleanup 'never);
+(setq recentf-max-menu-items 25)
+(global-set-key "\C-x\ r" 'recentf-open-files)
 (recentf-mode 1)
 
 ;; load cc-mode
@@ -148,17 +150,34 @@
     (linum-mode -1)))
 (add-hook 'linum-before-numbering-hook 'linum-hook)
 
-;; Start server if it isn't running yet
-(if (not (server-running-p))
-    (progn
-      (message "[server] starting")
-      (server-start))
-  (message "[server] already started: not starting"))
-
 ;; Following list of buffers shouldn't open a new window
 (setq same-window-buffer-names '("*shell*"
                                  "*mail*"
                                  "*unsent mail*"
                                  "*info*"))
 
+;; Start server if it isn't running yet.
+;; NOTE: strangely the call to server-start needs to be issued a few seconds
+;; after emacs has launched.
+(if (not (server-running-p))
+    (run-at-time "2 sec" nil
+                 '(lambda ()
+                    ;; disable 'buffer * still has clients' message shown when
+                    ;; killing buffers spawned by emacsclient
+                    (remove-hook 'kill-buffer-query-functions
+                                 'server-kill-buffer-query-function)
+                    (message "[server] starting")
+                    (server-start)))
+  (message "[server] already started: not starting"))
+
+;; Disable 'buffer * still has clients' message shown when killing buffers
+;; spawned by emacsclient.
+;; NOTE: for some reason the call to remove-hook needs to take place a few
+;; seconds after emacs has launched.
+(run-at-time "3 sec" nil
+             '(lambda ()
+                (remove-hook 'kill-buffer-query-functions
+                             'server-kill-buffer-query-function)))
+
+;; now load X-specific configuration
 (load-library "./conf-x")

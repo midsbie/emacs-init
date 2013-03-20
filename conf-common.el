@@ -146,8 +146,9 @@
 
 ;; Let's make sure we disable linum-mode when in speedbar-mode
 (defun linum-hook()
-(if (string= major-mode "speedbar-mode")
-    (linum-mode -1)))
+  (if (string= major-mode "speedbar-mode")
+      (linum-mode -1)))
+
 (add-hook 'linum-before-numbering-hook 'linum-hook)
 
 ;; Following list of buffers shouldn't open a new window
@@ -156,18 +157,18 @@
                                  "*unsent mail*"
                                  "*info*"))
 
+(defun server-start-timed()
+    (run-at-time "2 sec" nil
+                 '(lambda ()
+                    (message "[server] starting")
+                    (server-start)))
+    )
+
 ;; Start server if it isn't running yet.
 ;; NOTE: strangely the call to server-start needs to be issued a few seconds
 ;; after emacs has launched.
 (if (not (server-running-p))
-    (run-at-time "2 sec" nil
-                 '(lambda ()
-                    ;; disable 'buffer * still has clients' message shown when
-                    ;; killing buffers spawned by emacsclient
-                    (remove-hook 'kill-buffer-query-functions
-                                 'server-kill-buffer-query-function)
-                    (message "[server] starting")
-                    (server-start)))
+    (server-start-timed)
   (message "[server] already started: not starting"))
 
 ;; Disable 'buffer * still has clients' message shown when killing buffers
@@ -178,6 +179,29 @@
              '(lambda ()
                 (remove-hook 'kill-buffer-query-functions
                              'server-kill-buffer-query-function)))
+
+;; Display a warning signal in the mode line when visiting a file with root
+;; privileges.
+(defgroup mode-line-custom nil
+  "Faces used by mode-line-custom."
+  :group 'mode-line-custom
+  :group 'faces)
+
+(defface mode-line-custom-warning-face
+  '((t (:background "dark red" :foreground "white")))
+  "Face used for custom mode line warnings."
+  :group 'mode-line-custom
+  :version "22.1")
+
+(defun root-file-warning ()
+  (when (string-match "^/su\\(do\\)?:" default-directory)
+    (setq mode-line-format
+          (format-mode-line mode-line-format 'mode-line-custom-warning-face))
+    (server-start-timed))
+  )
+          
+(add-hook 'find-file-hook 'root-file-warning)
+(add-hook 'dired-mode-hook 'root-file-warning)
 
 ;; now load X-specific configuration
 (load-library "./conf-x")

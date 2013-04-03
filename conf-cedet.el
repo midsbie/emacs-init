@@ -1,46 +1,23 @@
-(add-to-list 'load-path "/usr/share/emacs/common-lisp/auto-complete")
-(add-to-list 'load-path "/usr/share/emacs/common-lisp/doxymacs")
 (add-to-list 'load-path "/usr/src/bzr-cedet")
 (add-to-list 'load-path "/usr/src/bzr-cedet/contrib")
 
 ;; includes
-;; - cedet
 (load-library "cedet-devel-load")
 (load-library "contrib/cedet-contrib-load")
 (load-library "contrib/eassist")
-
-;; - misc
-(load-library "/usr/src/git-yasnippet/yasnippet")
-(load-library "auto-complete-config")
-(load-library "/usr/src/async/auto-complete-clang-async")
-(load-library "/usr/src/git-php-mode/php-mode")
-(load-library "member-functions")
+;; (load-library "/usr/src/async/auto-complete-clang-async")
 (load-library "doxymacs/doxymacs")
 
-(require 'libcommon)
-
-;; member-functions
-(autoload 'expand-member-functions
-  "member-functions"
-  "Expand C++ member function declarations" t)
-(add-hook 'c++-mode-hook
-          (lambda ()
-            (local-set-key "\C-cx" #'expand-member-functions)))
-
-
+ 
 ;; eassist
 (add-to-list 'eassist-header-switches '("cxx" "hxx"))
 (add-to-list 'eassist-header-switches '("hxx" "cxx"))
 
-;; yasnippet
-(setq yas/snippet-dirs '("~/.emacs.d/snippets"
-                         "/usr/src/git-yasnippet/snippets/"))
-(yas/global-mode 1)
 
 ;; setup Srecoder global mode
 (global-srecode-minor-mode)
 
- 
+
 ;; (add-to-list 'semantic-default-submodes
 ;;              'global-semantic-idle-scheduler-mode t)
 (add-to-list 'semantic-default-submodes 'global-semanticdb-minor-mode t)
@@ -78,12 +55,6 @@
 
 (add-hook 'semantic-init-hooks 'init-semantic-hook)
 
-(defun common-text-hook ()
-  (fci-mode)                        ; fill column indicator
-  (auto-fill-mode)                  ; auto fill
-  (flyspell-mode)                   ; turn spell check on
-  )
-
 (defun common-cedet-hook ()
   (local-set-key [\C-S-iso-lefttab] 'semantic-ia-complete-symbol)
   (local-set-key [(control tab)]    'ac-complete-clang-async)
@@ -102,13 +73,7 @@
   
   (add-to-list 'ac-dictionary-directories
                "/usr/share/emacs/common-lisp/auto-complete/ac-dict")
-
-  (fci-mode)                        ; fill column indicator
-  (auto-fill-mode)                  ; auto fill
-  (flyspell-prog-mode)              ; turn spell check for strings and comments
-  (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting
-  (follow-mode t)                   ; allow for easier editing of
-                                    ; long buffers
+  
   (doxymacs-mode)                   ; turn doxymacs on
   
   ;; Add font-lock for doxymacs support
@@ -145,10 +110,6 @@
 (add-hook 'sh-mode-hook               'common-cedet-hook)
 (add-hook 'makefile-mode-hook         'common-cedet-hook)
 (add-hook 'srecode-template-mode-hook 'common-cedet-hook)
-(add-hook 'log-edit-mode-hook         'common-text-hook)
-
-(add-hook 'emacs-lisp-mode-hook       'turn-on-eldoc-mode)
-(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 
 (semantic-mode 1)
 

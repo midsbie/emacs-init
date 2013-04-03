@@ -1,7 +1,7 @@
 ;; includes
 (load-library "./libcommon")
 
-(load-library "./conf-cedet")
+(load-library "./conf-programming")
 (load-library "./conf-frame-size")
 (load-library "./conf-mail")
 (load-library "./build")
@@ -157,6 +157,9 @@
                                  "*unsent mail*"
                                  "*info*"))
 
+;; Start the server after 2 seconds have elapsed.
+;; NOTE: not used anymore as the server issues have been solved - CEDET was
+;; found to be the culprit.
 (defun server-start-timed()
     (run-at-time "2 sec" nil
                  '(lambda ()
@@ -182,22 +185,17 @@
 
 ;; Display a warning signal in the mode line when visiting a file with root
 ;; privileges.
-(defgroup mode-line-custom nil
-  "Faces used by mode-line-custom."
-  :group 'mode-line-custom
-  :group 'faces)
-
-(defface mode-line-custom-warning-face
-  '((t (:background "dark red" :foreground "white")))
-  "Face used for custom mode line warnings."
-  :group 'mode-line-custom
-  :version "22.1")
-
 (defun root-file-warning ()
   (when (string-match "^/su\\(do\\)?:" default-directory)
-    (setq mode-line-format
-          (format-mode-line mode-line-format 'mode-line-custom-warning-face))
-    (server-start-timed))
+    (face-remap-add-relative
+     'mode-line
+     '(:background "red3" :foreground "white"))
+    (face-remap-add-relative
+     'mode-line-inactive
+     '(:background "red4" :foreground "dark gray"
+                   :box nil))
+;;    (server-start-timed)
+    )
   )
           
 (add-hook 'find-file-hook 'root-file-warning)
@@ -205,3 +203,5 @@
 
 ;; now load X-specific configuration
 (load-library "./conf-x")
+
+(message "Remember to clock-in when you start working")

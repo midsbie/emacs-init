@@ -38,8 +38,8 @@
   (auto-fill-mode)                  ; auto fill
   (flyspell-prog-mode)              ; turn spell check for strings and comments
   (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting
-  (follow-mode t)                   ; allow for easier editing of
-                                    ; long buffers
+;;  (follow-mode t)                   ; allow for easier editing of
+;;                                    ; long buffers
   )
 
 ;; Hooks for commonly used programming modes
@@ -52,7 +52,7 @@
 (add-hook 'sh-mode-hook               'common-programming-hook)
 (add-hook 'makefile-mode-hook         'common-programming-hook)
 (add-hook 'srecode-template-mode-hook 'common-programming-hook)
-(add-hook 'log-edit-mode-hook         'common-atext-hook)
+(add-hook 'log-edit-mode-hook         'common-text-hook)
 
 
 ;; Hooks for lisp and elisp modes

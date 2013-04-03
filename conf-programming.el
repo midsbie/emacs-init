@@ -8,7 +8,7 @@
 (load-library "/usr/src/git-php-mode/php-mode")
 (load-library "member-functions")
 
-;; (load-library "conf-cedet");
+(load-library "conf-cedet");
 
 
 ;; member-functions

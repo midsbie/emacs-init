@@ -1,14 +1,15 @@
-(add-to-list 'load-path "/usr/share/emacs/common-lisp/auto-complete")
+;; (add-to-list 'load-path "/usr/share/emacs/common-lisp/auto-complete")
 (add-to-list 'load-path "/usr/share/emacs/common-lisp/doxymacs")
 
 
 ;; Includes
+(load-library "conf-cedet")
 (load-library "/usr/src/git-yasnippet/yasnippet")
-(load-library "auto-complete-config")
+;; (load-library "auto-complete-config")
 (load-library "/usr/src/git-php-mode/php-mode")
 (load-library "member-functions")
-
-(load-library "conf-cedet");
+(load-library "./build")
+(load-library "doxymacs/doxymacs")
 
 
 ;; member-functions
@@ -25,6 +26,12 @@
                          "/usr/src/git-yasnippet/snippets/"))
 (yas/global-mode 1)
 
+;; auto-complete
+(setq ac-auto-show-menu    0.1)
+(setq ac-menu-height       30)
+(setq ac-ignore-case       "No")
+;; (ac-config-default)
+
 
 (defun common-text-hook ()
   (fci-mode)                        ; fill column indicator
@@ -40,6 +47,11 @@
   (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting
 ;;  (follow-mode t)                   ; allow for easier editing of
 ;;                                    ; long buffers
+  
+;;   (add-to-list 'ac-dictionary-directories
+;;                "/usr/share/emacs/common-lisp/auto-complete/ac-dict")
+  
+  (doxymacs-mode)                   ; turn doxymacs on
   )
 
 ;; Hooks for commonly used programming modes

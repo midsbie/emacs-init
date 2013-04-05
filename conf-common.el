@@ -4,7 +4,6 @@
 (load-library "./conf-programming")
 (load-library "./conf-frame-size")
 (load-library "./conf-mail")
-(load-library "./build")
 
 (load-library "./buffer-move")
 (load-library "./framemove")

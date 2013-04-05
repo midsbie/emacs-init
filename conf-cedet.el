@@ -6,7 +6,6 @@
 (load-library "contrib/cedet-contrib-load")
 (load-library "contrib/eassist")
 ;; (load-library "/usr/src/async/auto-complete-clang-async")
-(load-library "doxymacs/doxymacs")
 
  
 ;; eassist
@@ -57,7 +56,7 @@
 
 (defun common-cedet-hook ()
   (local-set-key [\C-S-iso-lefttab] 'semantic-ia-complete-symbol)
-  (local-set-key [(control tab)]    'ac-complete-clang-async)
+;;  (local-set-key [(control tab)]    'ac-complete-clang-async)
   (local-set-key [(control return)] 'semantic-ia-complete-symbol-menu)
   (local-set-key (kbd "C-.")        'semantic-complete-analyze-inline)
 
@@ -70,11 +69,6 @@
   
   (local-set-key "\C-co"            'eassist-switch-h-cpp)
   (local-set-key "\C-cm"            'eassist-list-methods)
-  
-  (add-to-list 'ac-dictionary-directories
-               "/usr/share/emacs/common-lisp/auto-complete/ac-dict")
-  
-  (doxymacs-mode)                   ; turn doxymacs on
   
   ;; Add font-lock for doxymacs support
 ;;   (add-hook 'font-lock-mode-hook
@@ -111,7 +105,7 @@
 (add-hook 'makefile-mode-hook         'common-cedet-hook)
 (add-hook 'srecode-template-mode-hook 'common-cedet-hook)
 
-(semantic-mode 1)
+(semantic-mode -1)
 
 (custom-set-variables
  '(semantic-idle-scheduler-idle-time 0.6)
@@ -121,9 +115,3 @@
            ("semantic-decoration-on-includes" . t)
            ("semantic-decoration-on-protected-members")
            ("semantic-decoration-on-private-members")))))
-
-;; auto-complete
-(setq ac-auto-show-menu    0.1)
-(setq ac-menu-height       30)
-(setq ac-ignore-case       "No")
-;; (ac-config-default)

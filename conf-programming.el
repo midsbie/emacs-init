@@ -23,7 +23,8 @@
 
 ;; yasnippet
 (setq yas/snippet-dirs '("~/.emacs.d/snippets"
-                         "/usr/src/git-yasnippet/snippets/"))
+                         "/usr/src/git-yasnippet/snippets/"
+                         "/usr/src/git-yasnippet-snippets/"))
 (yas/global-mode 1)
 
 ;; auto-complete
@@ -37,6 +38,7 @@
   (fci-mode)                        ; fill column indicator
   (auto-fill-mode)                  ; auto fill
   (flyspell-mode)                   ; turn spell check on
+  (abbrev-mode -1)                  ; turn abbrev-mode off
   )
 
 (defun common-programming-hook ()
@@ -52,6 +54,7 @@
 ;;                "/usr/share/emacs/common-lisp/auto-complete/ac-dict")
   
   (doxymacs-mode)                   ; turn doxymacs on
+  (abbrev-mode -1)                  ; turn abbrev-mode off
   )
 
 ;; Hooks for commonly used programming modes

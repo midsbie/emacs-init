@@ -23,7 +23,6 @@
 
 ;; yasnippet
 (setq yas/snippet-dirs '("~/.emacs.d/snippets"
-                         "/usr/src/git-yasnippet/snippets/"
                          "/usr/src/git-yasnippet-snippets/"))
 (yas/global-mode 1)
 

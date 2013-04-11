@@ -22,8 +22,7 @@
 
 
 ;; yasnippet
-(setq yas/snippet-dirs '("~/.emacs.d/snippets"
-                         "/usr/src/git-yasnippet-snippets/"))
+(setq yas/snippet-dirs '("~/.emacs.d/snippets"))
 (yas/global-mode 1)
 
 ;; auto-complete
@@ -56,6 +55,11 @@
   (abbrev-mode -1)                  ; turn abbrev-mode off
   )
 
+(defun sh-mode-hook ()
+  (setq sh-basic-offset 2
+        sh-indentation 2))
+  
+
 ;; Hooks for commonly used programming modes
 (add-hook 'c-mode-common-hook         'common-programming-hook)
 (add-hook 'php-mode-hook              'common-programming-hook)
@@ -64,6 +68,7 @@
 (add-hook 'lisp-mode-hook             'common-programming-hook)
 (add-hook 'emacs-lisp-mode-hook       'common-programming-hook)
 (add-hook 'sh-mode-hook               'common-programming-hook)
+(add-hook 'sh-mode-hook               'sh-mode-hook)
 (add-hook 'makefile-mode-hook         'common-programming-hook)
 (add-hook 'srecode-template-mode-hook 'common-programming-hook)
 (add-hook 'log-edit-mode-hook         'common-text-hook)

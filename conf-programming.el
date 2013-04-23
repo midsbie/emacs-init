@@ -45,8 +45,6 @@
   (auto-fill-mode)                  ; auto fill
   (flyspell-prog-mode)              ; turn spell check for strings and comments
   (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting
-;;  (follow-mode t)                   ; allow for easier editing of
-;;                                    ; long buffers
   
 ;;   (add-to-list 'ac-dictionary-directories
 ;;                "/usr/share/emacs/common-lisp/auto-complete/ac-dict")
@@ -58,6 +56,10 @@
 (defun sh-mode-hook ()
   (setq sh-basic-offset 2
         sh-indentation 2))
+
+(defun c++-mode-hook ()
+  (setq comment-start "/*"
+        comment-end   "*/"))
   
 
 ;; Hooks for commonly used programming modes
@@ -72,7 +74,7 @@
 (add-hook 'makefile-mode-hook         'common-programming-hook)
 (add-hook 'srecode-template-mode-hook 'common-programming-hook)
 (add-hook 'log-edit-mode-hook         'common-text-hook)
-
+(add-hook 'c++-mode                   'c++-mode-hook)
 
 ;; Hooks for lisp and elisp modes
 (add-hook 'emacs-lisp-mode-hook       'turn-on-eldoc-mode)

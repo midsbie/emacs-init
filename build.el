@@ -143,9 +143,9 @@
 (global-set-key [f5]      'build-gdb-go);         ; gdb run/continue
 (global-set-key [S-f5]    'build-launch-gdb)      ; run: debug
 (global-set-key [C-f5]    'gud-run)               ; gdb: (re)run
-(global-set-key [f6]      'gud-step)              ; step into
-(global-set-key [f7]      'gud-next)              ; step over
-(global-set-key [C-f7]    'gud-finish)            ; step out
+(global-set-key [f6]      'gud-next)              ; step over
+(global-set-key [f7]      'gud-step)              ; step into
+(global-set-key [S-f7]    'gud-finish)            ; step out
 (global-set-key [f8]      'build-gud-set-break)   ; set breakpoint
 (global-set-key [S-f8]    'build-gud-del-break)   ; del breakpoint
 (global-set-key [C-f8]    'gud-until)             ; run to cursor

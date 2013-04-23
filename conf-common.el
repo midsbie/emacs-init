@@ -27,6 +27,10 @@
 (global-set-key "\C-x\ r" 'recentf-open-files)
 (recentf-mode 1)
 
+;; the following fucks with certain major modes (i.e. yasnippet) and must be
+;; disabled at all times
+(setq mode-require-final-newline nil)
+
 ;; load cc-mode
 (autoload 'awk-mode "cc-mode" nil t)
 (add-hook 'c-mode-common-hook
@@ -96,7 +100,7 @@
                                         ; selected text
 (transient-mark-mode t)                 ; Enable typing to replace
                                         ; selected text
-(electric-indent-mode t)                ; set electric indentation mode
+;(electric-indent-mode t)                ; set electric indentation mode
 
 (setq uniquify-buffer-name-style 'forward)
 (ido-mode t)

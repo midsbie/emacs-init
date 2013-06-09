@@ -50,7 +50,7 @@
     (error "error: not building project as gdb is running"))
   )
 
-(defun build-rebuild()
+(defun build-redo()
   (interactive)
   (if (not (build-gdb-running))
       (progn
@@ -130,7 +130,7 @@
 (add-hook 'c-mode-common-hook
            (lambda ()
              (local-set-key [f9] 'build-do)
-             (local-set-key [C-f9] 'build-rebuild)))
+             (local-set-key [C-f9] 'build-redo)))
 
 (defun build-colorize-compilation-buffer ()
   (toggle-read-only)

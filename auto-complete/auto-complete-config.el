@@ -79,12 +79,12 @@
 ;; gtags
 
 (defface ac-gtags-candidate-face
-  '((t (:background "lightgray" :foreground "navy")))
+  '((t (:inherit ac-candidate-face :foreground "navy")))
   "Face for gtags candidate"
   :group 'auto-complete)
 
 (defface ac-gtags-selection-face
-  '((t (:background "navy" :foreground "white")))
+  '((t (:inherit ac-selection-face :background "navy")))
   "Face for the gtags selected candidate."
   :group 'auto-complete)
 
@@ -102,12 +102,13 @@
 ;; yasnippet
 
 (defface ac-yasnippet-candidate-face
-  '((t (:background "sandybrown" :foreground "black")))
+  '((t (:inherit ac-candidate-face
+                 :background "sandybrown" :foreground "black")))
   "Face for yasnippet candidate."
   :group 'auto-complete)
 
 (defface ac-yasnippet-selection-face
-  '((t (:background "coral3" :foreground "white")))
+  '((t (:inherit ac-selection-face :background "coral3")))
   "Face for the yasnippet selected candidate."
   :group 'auto-complete)
 
@@ -496,17 +497,10 @@
   )
 
 (defun ac-emacs-lisp-mode-setup ()
-  (setq ac-sources (append '(ac-source-features
-                             ac-source-functions
-                             ac-source-yasnippet
-                             ac-source-variables
-                             ac-source-symbols) ac-sources)))
+  (setq ac-sources (append '(ac-source-features ac-source-functions ac-source-yasnippet ac-source-variables ac-source-symbols) ac-sources)))
 
 (defun ac-cc-mode-setup ()
-  (setq ac-sources '(ac-source-clang-async
-                     ac-source-words-in-same-mode-buffers
-                     ac-source-yasnippet))
-  )
+  (setq ac-sources (append '(ac-source-yasnippet ac-source-gtags) ac-sources)))
 
 (defun ac-ruby-mode-setup ())
 
@@ -514,16 +508,12 @@
   (setq ac-sources (append '(ac-source-css-property) ac-sources)))
 
 (defun ac-config-default ()
-  (setq-default ac-sources '(ac-source-abbrev
-                             ac-source-dictionary
-                             ac-source-words-in-same-mode-buffers))
-  
+  (setq-default ac-sources '(ac-source-abbrev ac-source-dictionary ac-source-words-in-same-mode-buffers))
   (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
   (add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
   (add-hook 'ruby-mode-hook 'ac-ruby-mode-setup)
   (add-hook 'css-mode-hook 'ac-css-mode-setup)
   (add-hook 'auto-complete-mode-hook 'ac-common-setup)
-  
   (global-auto-complete-mode t))
 
 (provide 'auto-complete-config)

@@ -148,11 +148,11 @@
                 78 80 82 84 86 88 90 92 94 96 98 100)))
 
 ;; Let's make sure we disable linum-mode when in speedbar-mode
-(defun linum-hook()
+(defun conf-linum-mode-hook()
   (if (string= major-mode "speedbar-mode")
       (linum-mode -1)))
 
-(add-hook 'linum-before-numbering-hook 'linum-hook)
+(add-hook 'linum-before-numbering-hook 'conf-linum-mode-hook)
 
 ;; Following list of buffers shouldn't open a new window
 (setq same-window-buffer-names '("*shell*"

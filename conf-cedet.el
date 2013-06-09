@@ -2,6 +2,7 @@
 (add-to-list 'load-path "/usr/src/bzr-cedet/contrib")
 
 ;; includes
+(load-library "conf-cedet")
 (load-library "cedet-devel-load")
 (load-library "contrib/cedet-contrib-load")
 (load-library "contrib/eassist")

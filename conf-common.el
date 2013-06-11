@@ -49,6 +49,28 @@
 
 (setq default-major-mode 'text-mode)    ; set text-mode as default mode
 
+;; ---- Org mode ----
+(setq org-log-done t
+      org-use-fast-todo-selection t)
+
+(setq org-todo-keyword-faces
+      '(("TODO"  . (:foreground "red" :weight bold))
+        ("NEXT"  . (:foreground "red" :weight bold))
+        ("DONE"  . (:foreground "forest green" :weight bold))
+        ("WAITING"  . (:foreground "orange" :weight bold))
+        ("CANCELLED"  . (:foreground "forest green" :weight bold))
+        ("SOMEDAY"  . (:foreground "orange" :weight bold))
+        ("OPEN"  . (:foreground "red" :weight bold))
+        ("CLOSED"  . (:foreground "forest green" :weight bold))
+        ("ONGOING"  . (:foreground "orange" :weight bold))))
+
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
+        (sequence "WAITING(w@/!)" "|" "CANCELLED(c!/!)")
+        (sequence "SOMEDAY(s!/!)" "|")
+        (sequence "OPEN(O!)" "|" "CLOSED(C!)")
+        (sequence "ONGOING(o!/!)" "|")))
+
 ;; ---- Aliases ----
 (defalias 'hscroll-mode 'toggle-truncate-lines)
 ;; Alias query functions so all the replace functions start with "replace"!
@@ -56,6 +78,7 @@
 (defalias 'replace-query-regexp 'query-replace-regexp)
 (defalias 'replace-query-regexp-eval 'query-replace-regexp-eval)
 
+;; ---- Key bindings ----
 ;; windmove: awesome key bindings for moving around windows
 (global-set-key [M-left]        'windmove-left)
 (global-set-key (kbd "C-x p")   'other-previous-window)

@@ -4,7 +4,6 @@
 ;; Includes
 (load-library "/usr/src/git-yasnippet/yasnippet")
 (load-library "/usr/src/git-php-mode/php-mode")
-(load-library "member-functions")
 (load-library "/usr/src/git-buftoggle/buftoggle")
 (load-library "./build")
 ;; (load-library "doxymacs/doxymacs")

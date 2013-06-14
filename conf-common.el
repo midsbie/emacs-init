@@ -66,7 +66,7 @@
 
 (setq org-todo-keywords
       '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
-        (sequence "WAITING(w@/!)" "|" "CANCELLED(c!/!)")
+        (sequence "WAITING(w@/!)" "|" "CANCELLED(c@/!)")
         (sequence "SOMEDAY(s!/!)" "|")
         (sequence "OPEN(O!)" "|" "CLOSED(C!)")
         (sequence "ONGOING(o!/!)" "|")))

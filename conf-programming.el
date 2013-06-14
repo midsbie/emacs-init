@@ -44,8 +44,8 @@
         sh-indentation 2))
 
 (defun c++-mode-hook ()
-  (setq comment-start "/*"
-        comment-end   "*/"))
+  (setq comment-start "/* "
+        comment-end   " */"))
 
 (defun on-eval-buffer ()
   (interactive)

@@ -1,152 +1,268 @@
+;; build.el --- Assists programmers manage project builds.
+;;
+;; Copyright (C) 2013 Miguel Guedes
+;;
+;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
+;; URL: 
+;; Keywords: completion, convenience
+;; Version: 1.0
+;;
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;;
+;; Comments:
+;;
+;;
+
 ;; requires
 (require 'compile)
 (require 'ansi-color)
 
 ;; variable definition
-(defvar build-base-dir nil
-  "The base directory of the active project.")
+(defgroup build nil
+  "Build."
+  :prefix "bl-")
 
-(defvar build-output-dir nil
-  "The directory where the project will be compiled into, relative to
-  BUILD-BASE-DIR.")
+(defcustom bl-projects
+  '()
+  "List of buildable projects.  Element structure:
 
-(defvar build-cmd-build "sh/build -pe"
-  "The command that runs the project's compilation sequence.")
+< base-dir:string         ; ndx 0
+  output-dir:string       ; ndx 1
+  bin-name:string         ; ndx 2
+  bin-args:string         ; ndx 3
+  cmd-build:string        ; ndx 4
+  cmd-rebuild:string      ; ndx 5
+  cmd-run:string >        ; ndx 6
 
-(defvar build-cmd-rebuild "sh/build -pre"
-  "Command that fully rebuilds the project.")
+BASE-DIR
+An absolute (or expandable) path to the project's base directory.
 
-(defvar build-cmd-run "sh/run"
-  "The command that runs the project's binary.")
+OUTPUT-DIR
+A path to the project's output directory relative to the project's base
+directory.
 
-(defvar build-bin-name nil
-  "The filename of the executable binary." )
+CMD-BUILD
+The command to execute when building the project.
 
-(defvar build-bin-args nil
-  "The parameters to feed to BUILD-BIN-NAME when launching it from within gdb")
+CMD-REBUILD
+The command to execute when rebuilding the project.
 
-(defvar build-cmd-gdb "gdb -i=mi "
-  "The command that invokes gdb, including flags." )
+CMD-RUN
+The command to execute when running the project.
 
-;; various settings
-(setq compilation-disable-input nil)
-(setq compilation-scroll-output t)
-(setq mode-compile-always-save-buffer-p t)
-(setq gdb-many-windows 1)
+BIN-NAME
+The file name of the binary produced by the project, if any.
 
-;; defuns
-(defun build-gdb-running()
+BIN-ARGS
+Arguments to pass on to BIN-NAME when executing it.
+"
+  :type '(repeat symbol))
+
+(defvar bl-default-cmd-build "sh/build"
+  "The default command that builds a project.")
+
+(defvar bl-defeault-cmd-rebuild "sh/build -pre"
+  "Default command that rebuilds a project.")
+
+(defvar bl-default-cmd-gdb "gdb -i=mi "
+  "The default command that invokes gdb, including flags." )
+
+
+;; Setup build
+(setq compilation-disable-input         nil
+      compilation-scroll-output         t
+      mode-compile-always-save-buffer-p t
+      gdb-many-windows                  1)
+
+(add-hook 'compilation-filter-hook 'bl-colorize-compilation-buffer)
+
+;; shortcut definition
+(global-set-key [f5]      'bl-gdb-go);        ; gdb run/continue
+(global-set-key [S-f5]    'bl-launch-gdb)     ; run: debug
+(global-set-key [C-f5]    'bl-run)            ; execute project binary
+(global-set-key [f6]      'gud-next)          ; step over
+(global-set-key [f7]      'gud-step)          ; step into
+(global-set-key [S-f7]    'gud-finish)        ; step out
+(global-set-key [f8]      'bl-gud-set-brkpt)  ; set breakpoint
+(global-set-key [S-f8]    'bl-gud-del-brkpt)  ; del breakpoint
+(global-set-key [C-f8]    'gud-until)         ; run to cursor
+(global-set-key [C-pause] 'gud-stop-subjob)   ; interrupt
+(global-set-key [f9]      'bl-build)          ; build
+(global-set-key [C-f9]    'bl-rebuild)        ; rebuild
+
+
+(defun bl-get-project ()
+  (if (bl-gdb-running-p)
+      (progn
+        (message "error: gdb is currently running")
+        nil)
+    (if (= (length bl-projects) 0)
+        (progn
+          (message "error: no projects defined yet")
+          nil)
+      (let ((file-name (buffer-file-name)))
+        (when file-name
+          (let ((len-file  (length file-name))
+                (pos       '(-1 nil)))
+            (dolist (item bl-projects)
+              (let* ((path (expand-file-name (car item)))
+                     (len-p (length path)))
+                (when (and (>= len-file len-p)
+                           (string= (substring file-name 0 len-p) path))
+                  (when (> len-p (car pos))
+                    (setq pos (list len-p item))))))
+            ;; Return our findings
+            (if (cadr pos)
+                (cadr pos)
+              (message "error: buffer not bound to any project")
+              nil)))))))
+
+(defun bl-gdb-running-p()
+  "Returns t if gdb is found to be running."
   (and (boundp 'gud-comint-buffer)
        gud-comint-buffer
        (buffer-name gud-comint-buffer)
-       (get-buffer-process gud-comint-buffer))
-  )
+       (get-buffer-process gud-comint-buffer)))
 
-(defun build-do()
+(defun bl-path-append(&rest paths)
+  "Appends a list of paths together whilst making sure the
+previous path appended ended with a '/' character."
+  (let ((result (car paths)))
+    (dolist (p (cdr paths))
+      (if (string-match "/$" result)
+          (setq result (concat result p))
+        (setq result (concat result "/" p))))
+    result))
+
+(defun bl-compile(base-dir cmd)
+  "Smartly concatenates BASE-DIR and CMD and starts a compilation
+on the result."
+  (if (not cmd)
+      (message "error: no command given")
+    (compile (bl-path-append base-dir cmd))))
+
+(defun bl-build()
+  "Builds the project that the current buffer belongs to."
   (interactive)
-  (if (not (build-gdb-running))
-      (progn
-        (compile (concat build-base-dir build-cmd-build)))
-    (error "error: not building project as gdb is running"))
-  )
+  (let ((project (bl-get-project)))
+    (when project
+      (let ((cmd (nth 4 project)))      ; cmd-build
+        (unless cmd
+          (setq cmd bl-default-cmd-build))
+        (bl-compile (car project)       ; base-dir
+                    cmd)))))
 
-(defun build-redo()
+(defun bl-rebuild()
+  "Rebuilds the project that the current buffer belongs to."
   (interactive)
-  (if (not (build-gdb-running))
-      (progn
-        (compile (concat build-base-dir build-cmd-rebuild)))
-    (error "error: not building project as gdb is running"))
-  )
+  (let ((project (bl-get-project)))
+    (when project
+      (let ((cmd (nth 5 project)))      ; cmd-rebuild
+        (unless cmd
+          (setq cmd bl-default-cmd-rebuild))
+        (bl-compile (car project)       ; base-dir
+                    cmd)))))
 
-(defun build-run()
+(defun bl-run()
+  "Executes the project."
   (interactive)
-  (if (not (build-gdb-running))
-      (shell-command build-cmd-run)
-    (error "error: not running binary as gdb is running"))
-  )
+  (let ((project (bl-get-project)))
+    (when project
+      (let ((cmd (nth 6 project)))          ; cmd-run
+        (unless cmd
+          (setq cmd (cadr (cdr project)))   ; bin-name
+          (when cmd
+            (setq cmd (bl-path-append (cadr project)    ; output-dir
+                                      cmd))))
+        (if (not cmd)
+            (message "error: project binary not set")
+          (shell-command (bl-path-append (car project)  ; base-dir
+                                         cmd)))))))
 
-(defun build-on-compilation-finish (buffer status)
-  (remove-hook 'compilation-finish-functions 'build-on-compilation-finish)
-  (when (string-prefix-p "finished" status)
+(defun bl-on-compilation-finish (buffer status)
+  "Invoked when the compilation initiated by `bl-launch-gdb'
+finishes."
+  (remove-hook 'compilation-finish-functions 'bl-on-compilation-finish)
+  (when (and bl-temporary-project
+             (string-prefix-p "finished" status))
     (let ((window (get-buffer-window "*compilation*")))
       (set-window-buffer window (other-buffer)))
     (window-configuration-to-register 99)
     (gdb (concat
-          build-cmd-gdb
+          bl-default-cmd-gdb
           "--args "
-          (concat build-base-dir
-                  build-output-dir
-                  build-bin-name)
-          (concat " " build-bin-args)))
+          (concat (car bl-temporary-project)        ; base-dir
+                  (cadr bl-temporary-project)       ; output-dir
+                  (cadr (cdr bl-temporary-project)) ; bin-name
+                  (concat " " (nth 3 bl-temporary-project))))) ; bin-args
     (if (> gdb-many-windows 0)
         (run-at-time 0.5 nil
                      (lambda()
                        (other-window 2))))
-    (message "gdb started"))
-)
+    (message "gdb started")))
 
-(defun build-gdb-go()
+(defun bl-gdb-go()
+  "Launches gdb if currently not active or sends the 'continue'
+command to gdb."
   (interactive)
-  (if (not (build-gdb-running))
-      (build-launch-gdb)
+  (if (not (bl-gdb-running-p))
+      (bl-launch-gdb)
     (gud-go t)))
 
-(defun build-stop-gdb()
+(defun bl-stop-gdb()
+  "Terminates gdb if currently active."
   (interactive)
-  (when (build-gdb-running)
+  (when (bl-gdb-running-p)
     (let ((proc (get-buffer-process gud-comint-buffer)))
-      (setq gud-overlay-arrow-position nil)
-      (set-process-buffer proc nil)
-      (setq gud-comint-buffer nil)
+      (setq gud-overlay-arrow-position  nil
+            gud-comint-buffer           nil)
+      
+      (set-process-buffer   proc nil)
       (set-process-sentinel proc nil)
+      
       (kill-process proc)
       (kill-process "gdb-inferior")
+      
       (gdb-reset)
       (jump-to-register 99)
-      (message "gdb killed"))
-    )  
-  )
+      (message "gdb killed"))))
 
-(defun build-launch-gdb()
+(defun bl-launch-gdb()
+  "Launches gdb."
   (interactive)
-  (if (not (build-gdb-running))
-      (if (not build-bin-name)
-          (error "error: build-bin-name not given")
-        (progn 
-          (add-hook 'compilation-finish-functions 'build-on-compilation-finish)
-          (build-do)))
-    (build-stop-gdb)
-    )
-  )
+  (let* ((project   (bl-get-project))
+         (bin-name  (cadr (cdr project))))
+    (when project
+      (if (not bin-name)
+          (message "error: project binary not given")
+        (add-hook 'compilation-finish-functions 'bl-on-compilation-finish)
+        (bl-stop-gdb)
+        (bl-build)))))
 
-(defun build-gud-set-break()
+(defun bl-gud-set-brkpt()
+  "Sets breakpoint at point."
   (interactive)
-  (gud-break (point)))
+  (when (bl-gdb-running-p)
+    (gud-brkpt (point))))
 
-(defun build-gud-del-break()
+(defun bl-gud-del-brkpt()
+  "Removes breakpoint at point."
   (interactive)
-  (gud-remove (point)))
+  (when (bl-gdb-running-p)
+    (gud-remove (point))))
 
-(add-hook 'c-mode-common-hook
-           (lambda ()
-             (local-set-key [f9] 'build-do)
-             (local-set-key [C-f9] 'build-redo)))
-
-(defun build-colorize-compilation-buffer ()
+(defun bl-colorize-compilation-buffer ()
   (toggle-read-only)
   (ansi-color-apply-on-region (point-min) (point-max))
   (toggle-read-only))
-
-(add-hook 'compilation-filter-hook 'build-colorize-compilation-buffer)
-
-;; global shortcut definition
-(global-set-key [f5]      'build-gdb-go);         ; gdb run/continue
-(global-set-key [S-f5]    'build-launch-gdb)      ; run: debug
-(global-set-key [C-f5]    'gud-run)               ; gdb: (re)run
-(global-set-key [f6]      'gud-next)              ; step over
-(global-set-key [f7]      'gud-step)              ; step into
-(global-set-key [S-f7]    'gud-finish)            ; step out
-(global-set-key [f8]      'build-gud-set-break)   ; set breakpoint
-(global-set-key [S-f8]    'build-gud-del-break)   ; del breakpoint
-(global-set-key [C-f8]    'gud-until)             ; run to cursor
-(global-set-key [C-pause] 'gud-stop-subjob)       ; interrupt

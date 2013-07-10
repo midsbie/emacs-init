@@ -50,8 +50,7 @@
 (setq default-major-mode 'text-mode)    ; set text-mode as default mode
 
 ;; ---- Org mode ----
-(setq org-log-done t
-      org-use-fast-todo-selection t)
+(setq org-use-fast-todo-selection t)
 
 (setq org-todo-keyword-faces
       '(("TODO"  . (:foreground "red" :weight bold))

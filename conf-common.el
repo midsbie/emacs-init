@@ -43,8 +43,8 @@
 
 ;; set c-mode default style and tabs
 (setq c-default-style "linux"
-      c-basic-offset 2
-      tab-width 2)
+      c-basic-offset  2
+      tab-width       2)
 (setq-default indent-tabs-mode nil)
 
 (setq default-major-mode 'text-mode)    ; set text-mode as default mode

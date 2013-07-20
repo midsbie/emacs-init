@@ -3,7 +3,7 @@
 ;; Copyright (C) 2013 Miguel Guedes
 ;;
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
-;; URL: 
+;; URL:
 ;; Keywords: completion, convenience
 ;; Version: 1.0
 ;;
@@ -69,10 +69,10 @@ Arguments to pass on to BIN-NAME when executing it.
 "
   :type '(repeat symbol))
 
-(defvar bl-default-cmd-build "sh/build"
+(defvar bl-default-cmd-build "sh/build -pe"
   "The default command that builds a project.")
 
-(defvar bl-defeault-cmd-rebuild "sh/build -pre"
+(defvar bl-default-cmd-rebuild "sh/build -pre"
   "Default command that rebuilds a project.")
 
 (defvar bl-default-cmd-gdb "gdb -i=mi "
@@ -227,13 +227,13 @@ command to gdb."
     (let ((proc (get-buffer-process gud-comint-buffer)))
       (setq gud-overlay-arrow-position  nil
             gud-comint-buffer           nil)
-      
+
       (set-process-buffer   proc nil)
       (set-process-sentinel proc nil)
-      
+
       (kill-process proc)
       (kill-process "gdb-inferior")
-      
+
       (gdb-reset)
       (jump-to-register 99)
       (message "gdb killed"))))

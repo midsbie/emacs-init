@@ -7,6 +7,8 @@
 (load-library "multi-mode.el")
 (load-library "git-php-mode/php-mode.el")
 (load-library "./build")
+(load-library "/usr/local/share/omnis/clients/omniscient/omniscient.el")
+(load-library "/usr/local/share/omnis/clients/omniscient/cc-mode.el")
 ;; (load-library "doxymacs/doxymacs")
 
 
@@ -72,7 +74,7 @@
   (abbrev-mode -1)                  ; turn abbrev-mode off
   )
 
-(defun php-programming-hook ()
+(defun common-web-hook ()
   (auto-fill-mode -1)
   (highlight-parentheses-mode)
   (setq tab-width       2
@@ -105,7 +107,8 @@
 (add-hook 'c++-mode-hook              'c-c++-hook)
 (add-hook 'css-mode-hook              'common-programming-hook)
 (add-hook 'js-mode-hook               'common-programming-hook)
-(add-hook 'php-mode-hook              'php-programming-hook)
+(add-hook 'php-mode-hook              'common-web-hook)
+(add-hook 'html-mode-hook             'common-web-hook)
 (add-hook 'lisp-mode-hook             'common-programming-hook)
 (add-hook 'emacs-lisp-mode-hook       'common-programming-hook)
 (add-hook 'sh-mode-hook               'common-programming-hook)

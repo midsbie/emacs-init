@@ -49,6 +49,10 @@
 
 (setq default-major-mode 'text-mode)    ; set text-mode as default mode
 
+;; Setup default browser - currently set to `xdg-open'.
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "xdg-open")
+
 ;; ---- Org mode ----
 (setq org-use-fast-todo-selection t)
 

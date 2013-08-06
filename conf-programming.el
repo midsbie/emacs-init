@@ -4,40 +4,53 @@
 ;; Includes
 (load-library "git-yasnippet/yasnippet")
 (load-library "git-buftoggle/buftoggle")
-(load-library "multi-mode.el")
+(load-library "/usr/src/git-multi-web-mode/multi-web-mode.el")
 (load-library "git-php-mode/php-mode.el")
 (load-library "./build")
 (load-library "/usr/local/share/omnis/clients/omniscient/omniscient.el")
 (load-library "/usr/local/share/omnis/clients/omniscient/cc-mode.el")
 ;; (load-library "doxymacs/doxymacs")
 
+(setq mweb-default-major-mode 'html-mode)
+(setq mweb-tags '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
+                  (js-mode "<script +\\(type=\"text/javascript\"\\|language=\"javascript\"\\)[^>]*>" "</script>")
+                  (css-mode "<style +type=\"text/css\"[^>]*>" "</style>")))
+(setq mweb-filename-extensions '("php" "htm" "html" "ctp"
+                                 "phtml" "php4" "php5"))
+(multi-web-global-mode 1)
 
-;; Setup support for web programming
-(setq magic-mode-alist
-      (append magic-mode-alist '(("<\\?"               . setup-web-mode))))
-(setq magic-mode-alist
-      (append magic-mode-alist '(("../usr/bin/env php" . setup-web-mode))))
-(setq magic-mode-alist
-      (append magic-mode-alist '(("<html"              . setup-web-mode))))
-(setq magic-mode-alist
-      (append magic-mode-alist '(("<head"              . setup-web-mode))))
-(setq magic-mode-alist
-      (append magic-mode-alist '(("<body"              . setup-web-mode))))
-(setq magic-mode-alist
-      (append magic-mode-alist '(("<\\!DOCTYPE html"   . setup-web-mode))))
 
-(defun setup-web-mode()
-  (multi-mode 1
-              'html-mode
-              '("<\?"           php-mode)
-              '("<\?php"        php-mode)
-              '("\?>"           html-mode)
-              '("<script"       js-mode)
-              '("</script>"     html-mode)
-              '("<style"        css-mode)
-              '("</style>"      html-mode)
-              ;;'("\{\"" json-mode)       ; DISABLED
-              ))
+;; NOTE: web programming support via multi-mode is DISABLED while testing is
+;; conducted on the newly found multi-web-mode.
+
+;; (load-library "multi-mode.el")
+
+;; ;; Setup support for web programming
+;; (setq magic-mode-alist
+;;       (append magic-mode-alist '(("<\\?"               . setup-web-mode))))
+;; (setq magic-mode-alist
+;;       (append magic-mode-alist '(("../usr/bin/env php" . setup-web-mode))))
+;; (setq magic-mode-alist
+;;       (append magic-mode-alist '(("<html"              . setup-web-mode))))
+;; (setq magic-mode-alist
+;;       (append magic-mode-alist '(("<head"              . setup-web-mode))))
+;; (setq magic-mode-alist
+;;       (append magic-mode-alist '(("<body"              . setup-web-mode))))
+;; (setq magic-mode-alist
+;;       (append magic-mode-alist '(("<\\!DOCTYPE html"   . setup-web-mode))))
+
+;; (defun setup-web-mode()
+;;   (multi-mode 1
+;;               'html-mode
+;;               '("<\?"           php-mode)
+;;               '("<\?php"        php-mode)
+;;               '("\?>"           html-mode)
+;;               '("<script"       js-mode)
+;;               '("</script>"     html-mode)
+;;               '("<style"        css-mode)
+;;               '("</style>"      html-mode)
+;;               ;;'("\{\"" json-mode)       ; DISABLED
+;;               ))
 
 ;; Deactivate default PHP coding style so our coding style isn't overriden
 (setq php-mode-coding-style nil)

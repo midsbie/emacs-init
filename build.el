@@ -33,6 +33,9 @@
   "Build."
   :prefix "bl-")
 
+(defvar bl-keymap (make-sparse-keymap)
+  "Build mode keymap.")
+
 (defcustom bl-projects
   '()
   "List of buildable projects.  Element structure:
@@ -78,29 +81,63 @@ Arguments to pass on to BIN-NAME when executing it.
 (defvar bl-default-cmd-gdb "gdb -i=mi "
   "The default command that invokes gdb, including flags." )
 
+(defvar bl-compilation-failed-hook nil
+  "List of hooks to call when a compilation failed.")
 
-;; Setup build
-(setq compilation-disable-input         nil
-      compilation-scroll-output         t
-      mode-compile-always-save-buffer-p t
-      gdb-many-windows                  1)
+(defvar bl-compilation-success-hook nil
+  "List of hooks to call when a compilation finishes successfully.")
 
-(add-hook 'compilation-filter-hook 'bl-colorize-compilation-buffer)
+(defvar bl-temporary-project nil)
 
-;; shortcut definition
-(global-set-key [f5]      'bl-gdb-go);        ; gdb run/continue
-(global-set-key [S-f5]    'bl-launch-gdb)     ; run: debug
-(global-set-key [C-f5]    'bl-run)            ; execute project binary
-(global-set-key [f6]      'gud-next)          ; step over
-(global-set-key [f7]      'gud-step)          ; step into
-(global-set-key [S-f7]    'gud-finish)        ; step out
-(global-set-key [f8]      'bl-gud-set-brkpt)  ; set breakpoint
-(global-set-key [S-f8]    'bl-gud-del-brkpt)  ; del breakpoint
-(global-set-key [C-f8]    'gud-until)         ; run to cursor
-(global-set-key [C-pause] 'gud-stop-subjob)   ; interrupt
-(global-set-key [f9]      'bl-build)          ; build
-(global-set-key [C-f9]    'bl-rebuild)        ; rebuild
 
+(define-minor-mode build-mode
+  "Toggle build mode."
+  :lighter " B"
+  :keymap bl-keymap
+  :group 'build
+  (if build-mode
+      (progn
+        ;; Setup build
+        (setq compilation-disable-input         nil
+              compilation-scroll-output         t
+              mode-compile-always-save-buffer-p t
+              gdb-many-windows                  1)
+
+        (add-hook 'compilation-filter-hook 'bl-colorize-compilation-buffer)
+        
+        (define-key bl-keymap [f5]      'bl-gdb-go);        ; gdb run/continue
+        (define-key bl-keymap [S-f5]    'bl-launch-gdb)     ; run: debug
+        (define-key bl-keymap [C-f5]    'bl-run)            ; execute project
+                                                            ; binary
+        (define-key bl-keymap [f6]      'gud-next)          ; step over
+        (define-key bl-keymap [f7]      'gud-step)          ; step into
+        (define-key bl-keymap [S-f7]    'gud-finish)        ; step out
+        (define-key bl-keymap [f8]      'bl-gud-set-brkpt)  ; set breakpoint
+        (define-key bl-keymap [S-f8]    'bl-gud-del-brkpt)  ; del breakpoint
+        (define-key bl-keymap [C-f8]    'gud-until)         ; run to cursor
+        (define-key bl-keymap [C-pause] 'gud-stop-subjob)   ; interrupt
+        (define-key bl-keymap [f9]      'bl-build)          ; build
+        (define-key bl-keymap [C-f9]    'bl-rebuild)        ; rebuild
+        )
+
+    ;; Uninstall mode
+    (remove-hook 'compilation-filter-hook 'bl-colorize-compilation-buffer)
+    
+    (define-key bl-keymap [f5]      nil)
+    (define-key bl-keymap [S-f5]    nil)
+    (define-key bl-keymap [C-f5]    nil)
+    (define-key bl-keymap [f6]      nil)
+    (define-key bl-keymap [f7]      nil)
+    (define-key bl-keymap [S-f7]    nil)
+    (define-key bl-keymap [f8]      nil)
+    (define-key bl-keymap [S-f8]    nil)
+    (define-key bl-keymap [C-f8]    nil)
+    (define-key bl-keymap [C-pause] nil)
+    (define-key bl-keymap [f9]      nil)
+    (define-key bl-keymap [C-f9]    nil)))
+
+
+(define-globalized-minor-mode global-build-mode build-mode build-mode)
 
 (defun bl-get-project ()
   (if (bl-gdb-running-p)
@@ -150,17 +187,19 @@ previous path appended ended with a '/' character."
 on the result."
   (if (not cmd)
       (message "error: no command given")
+    (bl-setup-on-compilation-finish)
     (compile (bl-path-append base-dir cmd))))
 
-(defun bl-build()
+(defun bl-build(&optional project)
   "Builds the project that the current buffer belongs to."
   (interactive)
-  (let ((project (bl-get-project)))
-    (when project
-      (let ((cmd (nth 4 project)))      ; cmd-build
+  (let ((prj))
+    (setf prj (or project (bl-get-project)))
+    (when prj
+      (let ((cmd (nth 4 prj)))          ; cmd-build
         (unless cmd
           (setq cmd bl-default-cmd-build))
-        (bl-compile (car project)       ; base-dir
+        (bl-compile (car prj)           ; base-dir
                     cmd)))))
 
 (defun bl-rebuild()
@@ -190,27 +229,20 @@ on the result."
           (shell-command (bl-path-append (car project)  ; base-dir
                                          cmd)))))))
 
+(defun bl-setup-on-compilation-finish ()
+  "Sets up the defun bl-on-compilation-finish to receive notifications from
+finished compilations."
+  (add-hook 'compilation-finish-functions 'bl-on-compilation-finish))
+
 (defun bl-on-compilation-finish (buffer status)
   "Invoked when the compilation initiated by `bl-launch-gdb'
 finishes."
   (remove-hook 'compilation-finish-functions 'bl-on-compilation-finish)
-  (when (and bl-temporary-project
-             (string-prefix-p "finished" status))
+  (if (not (string-prefix-p "finished" status))
+      (run-hooks 'bl-compilation-failed-hook)
     (let ((window (get-buffer-window "*compilation*")))
       (set-window-buffer window (other-buffer)))
-    (window-configuration-to-register 99)
-    (gdb (concat
-          bl-default-cmd-gdb
-          "--args "
-          (concat (car bl-temporary-project)        ; base-dir
-                  (cadr bl-temporary-project)       ; output-dir
-                  (cadr (cdr bl-temporary-project)) ; bin-name
-                  (concat " " (nth 3 bl-temporary-project))))) ; bin-args
-    (if (> gdb-many-windows 0)
-        (run-at-time 0.5 nil
-                     (lambda()
-                       (other-window 2))))
-    (message "gdb started")))
+    (run-hooks 'bl-compilation-success-hook)))
 
 (defun bl-gdb-go()
   "Launches gdb if currently not active or sends the 'continue'
@@ -246,9 +278,26 @@ command to gdb."
     (when project
       (if (not bin-name)
           (message "error: project binary not given")
-        (add-hook 'compilation-finish-functions 'bl-on-compilation-finish)
+        (add-hook 'bl-compilation-success 'bl--launch-gdb-hook)
         (bl-stop-gdb)
-        (bl-build)))))
+        (bl-build project)))))
+
+(defun bl--launch-gdb-hook ()
+  "Internal hook.  Launches gdb after a compilation was successful."
+  (when bl-temporary-project
+    (window-configuration-to-register 99)
+    (gdb (concat
+          bl-default-cmd-gdb
+          "--args "
+          (concat (car bl-temporary-project)                    ; base-dir
+                  (cadr bl-temporary-project)                   ; output-dir
+                  (cadr (cdr bl-temporary-project))             ; bin-name
+                  (concat " " (nth 3 bl-temporary-project)))))  ; bin-args
+    (if (> gdb-many-windows 0)
+        (run-at-time 0.5 nil
+                     (lambda()
+                       (other-window 2))))
+    (message "gdb started")))
 
 (defun bl-gud-set-brkpt()
   "Sets breakpoint at point."

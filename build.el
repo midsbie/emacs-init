@@ -36,41 +36,42 @@
 (defvar bl-keymap (make-sparse-keymap)
   "Build mode keymap.")
 
-(defcustom bl-projects
+(defstruct bl-project
+  base-dir
+  output-dir
+  bin-name
+  bin-args
+  cmd-build
+  cmd-rebuild
+  cmd-run)
+  ;; Structure that holds information about a project.
+  ;; Information includes:
+  ;;
+  ;;  BASE-DIR:string
+  ;;  An absolute (or expandable) path to the project's base directory.
+  ;;  
+  ;;  OUTPUT-DIR:string
+  ;;  A path to the project's output directory relative to the project's base
+  ;;  directory.
+  ;;  
+  ;;  BIN-NAME:string
+  ;;  The file name of the binary produced by the project, if any.
+  ;;  
+  ;;  BIN-ARGS:string
+  ;;  Arguments to pass on to BIN-NAME when executing it.
+  ;;  
+  ;;  CMD-BUILD:string
+  ;;  The command to execute when building the project.
+  ;;  
+  ;;  CMD-REBUILD:string
+  ;;  The command to execute when rebuilding the project.
+  ;;  
+  ;;  CMD-RUN:string
+  ;;  The command to execute when running the project.
+
+(defvar bl-projects
   '()
-  "List of buildable projects.  Element structure:
-
-< base-dir:string         ; ndx 0
-  output-dir:string       ; ndx 1
-  bin-name:string         ; ndx 2
-  bin-args:string         ; ndx 3
-  cmd-build:string        ; ndx 4
-  cmd-rebuild:string      ; ndx 5
-  cmd-run:string >        ; ndx 6
-
-BASE-DIR
-An absolute (or expandable) path to the project's base directory.
-
-OUTPUT-DIR
-A path to the project's output directory relative to the project's base
-directory.
-
-CMD-BUILD
-The command to execute when building the project.
-
-CMD-REBUILD
-The command to execute when rebuilding the project.
-
-CMD-RUN
-The command to execute when running the project.
-
-BIN-NAME
-The file name of the binary produced by the project, if any.
-
-BIN-ARGS
-Arguments to pass on to BIN-NAME when executing it.
-"
-  :type '(repeat symbol))
+  "List of registered buildable projects.")
 
 (defvar bl-default-cmd-build "sh/build -pe"
   "The default command that builds a project.")
@@ -87,7 +88,7 @@ Arguments to pass on to BIN-NAME when executing it.
 (defvar bl-compilation-success-hook nil
   "List of hooks to call when a compilation finishes successfully.")
 
-(defvar bl-temporary-project nil)
+(defvar bl-active-project nil)
 
 
 (define-minor-mode build-mode
@@ -153,7 +154,8 @@ Arguments to pass on to BIN-NAME when executing it.
           (let ((len-file  (length file-name))
                 (pos       '(-1 nil)))
             (dolist (item bl-projects)
-              (let* ((path (expand-file-name (car item)))
+              (print item)
+              (let* ((path (expand-file-name (bl-project-base-dir item)))
                      (len-p (length path)))
                 (when (and (>= len-file len-p)
                            (string= (substring file-name 0 len-p) path))
@@ -196,10 +198,10 @@ on the result."
   (let ((prj))
     (setf prj (or project (bl-get-project)))
     (when prj
-      (let ((cmd (nth 4 prj)))          ; cmd-build
+      (let ((cmd (bl-project-cmd-build prj)))
         (unless cmd
           (setq cmd bl-default-cmd-build))
-        (bl-compile (car prj)           ; base-dir
+        (bl-compile (bl-project-base-dir prj)
                     cmd)))))
 
 (defun bl-rebuild()
@@ -207,10 +209,10 @@ on the result."
   (interactive)
   (let ((project (bl-get-project)))
     (when project
-      (let ((cmd (nth 5 project)))      ; cmd-rebuild
+      (let ((cmd (bl-project-cmd-rebuild project)))
         (unless cmd
           (setq cmd bl-default-cmd-rebuild))
-        (bl-compile (car project)       ; base-dir
+        (bl-compile (bl-project-base-dir project) 
                     cmd)))))
 
 (defun bl-run()
@@ -218,15 +220,15 @@ on the result."
   (interactive)
   (let ((project (bl-get-project)))
     (when project
-      (let ((cmd (nth 6 project)))          ; cmd-run
+      (let ((cmd (bl-project-cmd-run project)))
         (unless cmd
-          (setq cmd (cadr (cdr project)))   ; bin-name
+          (setq cmd (bl-project-bin-name project))
           (when cmd
-            (setq cmd (bl-path-append (cadr project)    ; output-dir
+            (setq cmd (bl-path-append (bl-project-output-dir project)
                                       cmd))))
         (if (not cmd)
             (message "error: project binary not set")
-          (shell-command (bl-path-append (car project)  ; base-dir
+          (shell-command (bl-path-append (bl-project-base-dir project)
                                          cmd)))))))
 
 (defun bl-setup-on-compilation-finish ()
@@ -240,8 +242,6 @@ finishes."
   (remove-hook 'compilation-finish-functions 'bl-on-compilation-finish)
   (if (not (string-prefix-p "finished" status))
       (run-hooks 'bl-compilation-failed-hook)
-    (let ((window (get-buffer-window "*compilation*")))
-      (set-window-buffer window (other-buffer)))
     (run-hooks 'bl-compilation-success-hook)))
 
 (defun bl-gdb-go()
@@ -274,7 +274,7 @@ command to gdb."
   "Launches gdb."
   (interactive)
   (let* ((project   (bl-get-project))
-         (bin-name  (cadr (cdr project))))
+         (bin-name  (bl-project-bin-name project)))
     (when project
       (if (not bin-name)
           (message "error: project binary not given")
@@ -284,15 +284,17 @@ command to gdb."
 
 (defun bl--launch-gdb-hook ()
   "Internal hook.  Launches gdb after a compilation was successful."
-  (when bl-temporary-project
+  (when bl-active-project
+    (let ((window (get-buffer-window "*compilation*")))
+      (set-window-buffer window (other-buffer)))
     (window-configuration-to-register 99)
     (gdb (concat
           bl-default-cmd-gdb
           "--args "
-          (concat (car bl-temporary-project)                    ; base-dir
-                  (cadr bl-temporary-project)                   ; output-dir
-                  (cadr (cdr bl-temporary-project))             ; bin-name
-                  (concat " " (nth 3 bl-temporary-project)))))  ; bin-args
+          (concat (bl-project-base-dir bl-active-project)
+                  (bl-project-output-dir bl-active-project)
+                  (bl-project-bin-name bl-active-project)
+                  (concat " " (bl-project-bin-args bl-active-project)))))
     (if (> gdb-many-windows 0)
         (run-at-time 0.5 nil
                      (lambda()

@@ -4,9 +4,9 @@
 ;; Includes
 (load-library "git-yasnippet/yasnippet")
 (load-library "git-buftoggle/buftoggle")
-(load-library "multi-mode.el")
-(load-library "git-php-mode/php-mode.el")
-(load-library "./build")
+(load-library "multi-mode")
+(load-library "git-php-mode/php-mode")
+(load-library "git-build.el/build")
 (load-library "/usr/local/share/omnis/clients/omniscient/omniscient.el")
 (load-library "/usr/local/share/omnis/clients/omniscient/cc-mode.el")
 ;; (load-library "doxymacs/doxymacs")

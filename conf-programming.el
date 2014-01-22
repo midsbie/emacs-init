@@ -2,17 +2,24 @@
 (add-to-list 'load-path "/usr/src")
 
 ;; Includes
-(load-library "git-yasnippet/yasnippet")
-(load-library "git-buftoggle/buftoggle")
+;; - local
 (load-library "multi-mode")
-(load-library "git-php-mode/php-mode")
-(load-library "git-build.el/build")
-(load-library "/usr/local/share/omnis/clients/omniscient/omniscient.el")
-(load-library "/usr/local/share/omnis/clients/omniscient/cc-mode.el")
 ;; (load-library "doxymacs/doxymacs")
 
-;; (load-library "/usr/src/git-multi-web-mode/multi-web-mode.el")
+;; - using `load-path'
+(load-library "git-yasnippet/yasnippet")
+(load-library "git-buftoggle/buftoggle")
+(load-library "git-php-mode/php-mode")
+(load-library "git-build.el/build")
 
+;; - omnis
+(add-to-list 'load-path "/usr/local/share/omnis/clients/")
+(load-library "omniscient/omniscient.el")
+(load-library "omniscient/cc-mode.el")
+
+;; DISABLED: Multi web mode
+;; (load-library "/usr/src/git-multi-web-mode/multi-web-mode.el")
+;; 
 ;; (setq mweb-default-major-mode 'html-mode)
 ;; (setq mweb-tags '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
 ;;                   (js-mode "<script +\\(type=\"text/javascript\"\\|language=\"javascript\"\\)[^>]*>" "</script>")
@@ -21,8 +28,7 @@
 ;;                                  "phtml" "php4" "php5"))
 ;; (multi-web-global-mode 1)
 
-
-;; Setup support for web programming
+;; Multi mode: setup support for web programming
 (setq magic-mode-alist
       (append magic-mode-alist '(("<\\?"               . setup-web-mode))))
 (setq magic-mode-alist
@@ -66,6 +72,7 @@
 (add-to-list 'buftoggle-pairs-alist '("cxx" "hxx"))
 (add-to-list 'buftoggle-pairs-alist '("hxx" "cxx"))
 
+;; Setup hooks so major modes are customised.
 (defun common-text-hook ()
   (fci-mode)                        ; fill column indicator
   (auto-fill-mode)                  ; auto fill
@@ -78,7 +85,7 @@
   (auto-fill-mode)                  ; auto fill
   (flyspell-prog-mode)              ; turn spell check for strings and comments
   (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting
-;;   (setq c-auto-newline t)           ; set electricity on
+;; (setq c-auto-newline t)           ; set electricity on
 
 ;; (doxymacs-mode)                   ; turn doxymacs on
   (abbrev-mode -1)                  ; turn abbrev-mode off

@@ -1,4 +1,3 @@
-;; (add-to-list 'load-path "/usr/share/emacs/common-lisp/doxymacs")
 (add-to-list 'load-path "/usr/src")
 
 ;; Includes
@@ -10,7 +9,7 @@
 (load-library "yasnippet.git/yasnippet")
 (load-library "buftoggle.git/buftoggle")
 (load-library "php-mode.git/php-mode")
-(load-library "build.el.git/build")
+(load-library "builder.git/builder")
 
 ;; - omnis
 (add-to-list 'load-path "/usr/local/share/omnis/clients/")
@@ -74,14 +73,14 @@
 
 ;; Setup hooks so major modes are customised.
 (defun common-text-hook ()
-  (fci-mode)                        ; fill column indicator
+  (enable-fci-mode)                 ; fill column indicator
   (auto-fill-mode)                  ; auto fill
   (flyspell-mode)                   ; turn spell check on
   (abbrev-mode -1)                  ; turn abbrev-mode off
   )
 
 (defun common-programming-hook ()
-  (fci-mode)                        ; fill column indicator
+  (enable-fci-mode)                 ; fill column indicator
   (auto-fill-mode)                  ; auto fill
   (flyspell-prog-mode)              ; turn spell check for strings and comments
   (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting

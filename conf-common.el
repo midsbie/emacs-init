@@ -18,6 +18,10 @@
 (require 'paren)
 (require 'highlight-parentheses)
 
+;; enable useful commands
+(put 'narrow-to-region  'disabled nil)
+(put 'erase-buffer      'disabled nil)
+
 ;; fci-mode
 (setq-default fci-rule-color "gray9")
 
@@ -167,7 +171,7 @@
 
 ;; let's setup text-mode to our liking
 (add-hook 'text-mode-hook '(lambda()
-                             (fci-mode)
+                             (enable-fci-mode)
                              (auto-fill-mode)
                              (turn-on-flyspell)))
 
@@ -231,7 +235,16 @@
 ;;    (server-start-timed)
     )
   )
-          
+
+;; Workaround for fci-mode.  Don't enable fci-mode if emacs version is 24.3
+;; since a bug was introduced affecting cursor navigation.
+(defun enable-fci-mode ()
+  (interactive)
+  (if (and (eq emacs-major-version 24)
+           (eq emacs-minor-version 3))
+      (fci-mode -1)
+    (fci-mode)))
+
 (add-hook 'find-file-hook   'root-file-warning)
 (add-hook 'dired-mode-hook  'root-file-warning)
 

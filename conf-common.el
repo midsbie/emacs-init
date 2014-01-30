@@ -135,13 +135,13 @@
 
 (menu-bar-mode -1)                      ; disable menu bar
 (size-indication-mode)                  ; turn on size indication mode
-(global-linum-mode t)
+(global-linum-mode t)                   ; display line numbers in left margin
 (scroll-bar-mode -1)                    ; disable scrollbars
-(show-paren-mode t)                     ; show parenthesis next to
-                                        ; cursor
-(setq show-paren-mismatch t)            ; show parenthesis mismatch
-(setq diff-switches '-u)                ; set diff to use unified format
-(setq save-place t)                     ; save position on buffer
+(show-paren-mode t)                     ; show parenthesis next to cursor
+
+(setq show-paren-mismatch t             ; show parenthesis mismatch
+      diff-switches       '-u           ; set diff to use unified format
+      save-place          t)            ; save position on buffer
 
 (fset 'yes-or-no-p 'y-or-n-p)           ; accept 'y' or 'n' instead of yes/no
 
@@ -159,6 +159,11 @@
  tab-width 2
  fill-column 80
  )
+
+;; customise ANSI colours for shell-mode
+(setq ansi-color-names-vector ["black" "red" "lawn green" "yellow" "cornflower blue"
+                               "magenta" "cyan" "white"]
+      ansi-color-map          (ansi-color-make-color-map))
 
 ;; let's setup text-mode to our liking
 (add-hook 'text-mode-hook '(lambda()
@@ -227,8 +232,8 @@
     )
   )
           
-(add-hook 'find-file-hook 'root-file-warning)
-(add-hook 'dired-mode-hook 'root-file-warning)
+(add-hook 'find-file-hook   'root-file-warning)
+(add-hook 'dired-mode-hook  'root-file-warning)
 
 ;; now load X-specific configuration
 (load-library "./conf-x")

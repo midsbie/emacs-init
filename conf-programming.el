@@ -1,5 +1,3 @@
-(add-to-list 'load-path "/usr/src")
-
 ;; Includes
 ;; - local
 (load-library "multi-mode")

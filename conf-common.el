@@ -1,4 +1,6 @@
 ;; includes
+(add-to-list 'load-path "/usr/src")
+
 (load-library "./libcommon")
 
 (load-library "./conf-programming")
@@ -8,7 +10,8 @@
 (load-library "./buffer-move")
 (load-library "./framemove")
 (load-library "./window-extra")
-(load-library "/usr/src/fill-column-indicator.git/fill-column-indicator")
+(load-library "fill-column-indicator.git/fill-column-indicator")
+(load-library "timeclox.git/timeclox")
 
 ;; requires
 (require 'uniquify)
@@ -256,21 +259,7 @@
              '(lambda ()
                 (message "init took %s" (emacs-init-time))))
 
-(defun remember-clock-in ()
-  "Echoes a reminder to clock in every 60 minutes."
-  (let* ((clocked-in (timeclock-currently-in-p))
-         (timeout (if clocked-in "10 min" "1 min")))
-    (unless (or clocked-in
-                executing-kbd-macro
-                cursor-in-echo-area
-                (eq (selected-window) (minibuffer-window)))
-      (message "%s %s %s %s"
-               (propertize "You haven't yet clocked in."
-                           'face '(foreground-color . "red"))
-               "Use"
-               (propertize "`timeclock-in'"
-                           'face 'font-lock-keyword-face)
-               "to start."))
-    (run-at-time timeout nil 'remember-clock-in)))
-
-(run-at-time "1 min" nil 'remember-clock-in)
+(run-at-time "10 sec" nil
+             '(lambda ()
+                (unless global-timeclox-mode
+                  (global-timeclox-mode 1))))

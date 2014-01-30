@@ -11,8 +11,10 @@
 
 ;; - omnis
 (add-to-list 'load-path "/usr/local/share/omnis/clients/")
-(load-library "omniscient/omniscient.el")
-(load-library "omniscient/cc-mode.el")
+
+(when (file-exists-p "/usr/src/omniscient/omniscient.el")
+  (load-library "omniscient/omniscient.el")
+  (load-library "omniscient/cc-mode.el"))
 
 ;; DISABLED: Multi web mode
 ;; (load-library "/usr/src/multi-web-mode.git/multi-web-mode.el")

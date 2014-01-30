@@ -251,4 +251,26 @@
 ;; now load X-specific configuration
 (load-library "./conf-x")
 
-(message "Remember to clock-in when you start working")
+;; Show how long it took to initialise emacs after 6 seconds
+(run-at-time "6 sec" nil
+             '(lambda ()
+                (message "init took %s" (emacs-init-time))))
+
+(defun remember-clock-in ()
+  "Echoes a reminder to clock in every 60 minutes."
+  (let* ((clocked-in (timeclock-currently-in-p))
+         (timeout (if clocked-in "10 min" "1 min")))
+    (unless (or clocked-in
+                executing-kbd-macro
+                cursor-in-echo-area
+                (eq (selected-window) (minibuffer-window)))
+      (message "%s %s %s %s"
+               (propertize "You haven't yet clocked in."
+                           'face '(foreground-color . "red"))
+               "Use"
+               (propertize "`timeclock-in'"
+                           'face 'font-lock-keyword-face)
+               "to start."))
+    (run-at-time timeout nil 'remember-clock-in)))
+
+(run-at-time "1 min" nil 'remember-clock-in)

@@ -8,7 +8,7 @@
 (load-library "./buffer-move")
 (load-library "./framemove")
 (load-library "./window-extra")
-(load-library "/usr/src/git-fill-column-indicator/fill-column-indicator")
+(load-library "/usr/src/fill-column-indicator.git/fill-column-indicator")
 
 ;; requires
 (require 'uniquify)

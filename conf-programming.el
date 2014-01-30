@@ -7,10 +7,10 @@
 ;; (load-library "doxymacs/doxymacs")
 
 ;; - using `load-path'
-(load-library "git-yasnippet/yasnippet")
-(load-library "git-buftoggle/buftoggle")
-(load-library "git-php-mode/php-mode")
-(load-library "git-build.el/build")
+(load-library "yasnippet.git/yasnippet")
+(load-library "buftoggle.git/buftoggle")
+(load-library "php-mode.git/php-mode")
+(load-library "build.el.git/build")
 
 ;; - omnis
 (add-to-list 'load-path "/usr/local/share/omnis/clients/")
@@ -18,7 +18,7 @@
 (load-library "omniscient/cc-mode.el")
 
 ;; DISABLED: Multi web mode
-;; (load-library "/usr/src/git-multi-web-mode/multi-web-mode.el")
+;; (load-library "/usr/src/multi-web-mode.git/multi-web-mode.el")
 ;; 
 ;; (setq mweb-default-major-mode 'html-mode)
 ;; (setq mweb-tags '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")

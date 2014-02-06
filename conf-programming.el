@@ -8,6 +8,7 @@
 (load-library "buftoggle.git/buftoggle")
 (load-library "php-mode.git/php-mode")
 (load-library "builder.git/builder")
+(load-library "vcx.git/vcx")
 
 ;; - omnis
 (add-to-list 'load-path "/usr/local/share/omnis/clients/")
@@ -62,6 +63,8 @@
 ;; (setq auto-mode-alist (append '(("\\.js$"   . js-mode))
 ;;                               auto-mode-alist ))
 
+;; VCx
+(global-vcx-mode 1)
 
 ;; yasnippet
 (setq yas/snippet-dirs '("~/.emacs.d/snippets"))

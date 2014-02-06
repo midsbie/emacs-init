@@ -235,7 +235,6 @@
      'mode-line-inactive
      '(:background "red4" :foreground "dark gray"
                    :box nil))
-;;    (server-start-timed)
     )
   )
 
@@ -248,8 +247,7 @@
       (fci-mode -1)
     (fci-mode)))
 
-(add-hook 'find-file-hook   'root-file-warning)
-(add-hook 'dired-mode-hook  'root-file-warning)
+(add-hook 'after-change-major-mode-hook 'root-file-warning)
 
 ;; now load X-specific configuration
 (load-library "./conf-x")

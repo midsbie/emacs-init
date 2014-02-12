@@ -1,5 +1,5 @@
 ;; Includes
-;; - local
+;; - from packages:
 (load-library "multi-mode")
 ;; (load-library "doxymacs/doxymacs")
 
@@ -8,7 +8,7 @@
 (load-library "builder.git/builder")
 (load-library "vcx.git/vcx")
 
-;; - requires
+;; - using requires
 (require 'yasnippet)
 (require 'php-mode)
 
@@ -19,7 +19,7 @@
   (load-library "omniscient/cc-mode.el"))
 
 ;; DISABLED: Multi web mode
-;; (load-library "/usr/src/multi-web-mode.git/multi-web-mode.el")
+;; (require 'multi-web-mode)
 ;; 
 ;; (setq mweb-default-major-mode 'html-mode)
 ;; (setq mweb-tags '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")

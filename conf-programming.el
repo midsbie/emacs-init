@@ -4,16 +4,17 @@
 ;; (load-library "doxymacs/doxymacs")
 
 ;; - using `load-path'
-(load-library "yasnippet.git/yasnippet")
 (load-library "buftoggle.git/buftoggle")
-(load-library "php-mode.git/php-mode")
 (load-library "builder.git/builder")
 (load-library "vcx.git/vcx")
 
-;; - omnis
-(add-to-list 'load-path "/usr/local/share/omnis/clients/")
+;; - requires
+(require 'yasnippet)
+(require 'php-mode)
 
-(when (file-exists-p "/usr/src/omniscient/omniscient.el")
+;; - omnis
+(when (file-exists-p "/usr/local/share/omnis/clients/omniscient/omniscient.el")
+  (add-to-list 'load-path "/usr/local/share/omnis/clients/")
   (load-library "omniscient/omniscient.el")
   (load-library "omniscient/cc-mode.el"))
 

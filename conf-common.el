@@ -1,25 +1,35 @@
 ;; includes
 (add-to-list 'load-path "/usr/src")
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/packages")
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/elpa")
 
-(load-library "./libcommon")
-
-(load-library "./conf-programming")
-(load-library "./conf-frame-size")
-(load-library "./conf-mail")
-
-(load-library "./buffer-move")
-(load-library "./framemove")
-(load-library "./window-extra")
-(load-library "fill-column-indicator.git/fill-column-indicator")
-(load-library "timeclox.git/timeclox")
+;; setup and load ELPA packages
+(require 'package)
+(setq package-user-dir "/usr/share/emacs/site-lisp/elpa")
+(package-initialize)
 
 ;; requires
+;; - core:
 (require 'uniquify)
 (require 'ido)
 (require 'recentf)
 (require 'server)
 (require 'paren)
+
+;; - from ELPA:
+(require 'buffer-move)
+(require 'fill-column-indicator)
 (require 'highlight-parentheses)
+
+;; common
+(load-library "common/libcommon")
+(load-library "common/conf-programming")
+(load-library "common/conf-frame-size")
+(load-library "common/conf-mail")
+(load-library "common/window-extra")
+
+;; /usr/src
+(load-library "timeclox.git/timeclox")
 
 ;; enable useful commands
 (put 'narrow-to-region  'disabled nil)
@@ -29,7 +39,7 @@
 (setq-default fci-rule-color "gray9")
 
 ;; setup recentf-mode
-(setq recentf-auto-cleanup    'never);
+(setq recentf-auto-cleanup    'never
       recentf-max-menu-items  25)
 
 (global-set-key "\C-x\ r" 'recentf-open-files)
@@ -258,7 +268,7 @@
 (add-hook 'after-change-major-mode-hook 'root-file-warning)
 
 ;; now load X-specific configuration
-(load-library "./conf-x")
+(load-library "common/conf-x")
 
 ;; Show how long it took to initialise emacs after 6 seconds
 (run-at-time "6 sec" nil

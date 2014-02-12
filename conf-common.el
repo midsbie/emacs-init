@@ -29,8 +29,9 @@
 (setq-default fci-rule-color "gray9")
 
 ;; setup recentf-mode
-(setq recentf-auto-cleanup 'never);
-(setq recentf-max-menu-items 25)
+(setq recentf-auto-cleanup    'never);
+      recentf-max-menu-items  25)
+
 (global-set-key "\C-x\ r" 'recentf-open-files)
 (recentf-mode 1)
 
@@ -58,7 +59,7 @@
 
 ;; Setup default browser - currently set to `xdg-open'.
 (setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "xdg-open")
+      browse-url-generic-program  "xdg-open")
 
 ;; ---- Org mode ----
 (setq org-use-fast-todo-selection t)
@@ -161,16 +162,16 @@
 (setq-default
  enable-recursive-minibuffers t         ; allow recursive editing in
                                         ; minibuffer
- column-number-mode t
- comment-multi-line t
- comment-style (quote multi)
- css-electric-brace-behavior nil
- css-indent-offset 2
- indent-tabs-mode nil
- js-indent-level 2
- standard-indent 2
- tab-width 2
- fill-column 80
+ column-number-mode           t
+ comment-multi-line           t
+ comment-style                (quote multi)
+ css-electric-brace-behavior  nil
+ css-indent-offset            2
+ indent-tabs-mode             nil
+ js-indent-level              2
+ standard-indent              2
+ tab-width                    2
+ fill-column                  80
  )
 
 ;; customise ANSI colours for shell-mode
@@ -253,6 +254,7 @@
       (fci-mode -1)
     (fci-mode)))
 
+;; Change mode line background colour if file being edited as root.
 (add-hook 'after-change-major-mode-hook 'root-file-warning)
 
 ;; now load X-specific configuration

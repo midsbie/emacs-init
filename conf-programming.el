@@ -83,7 +83,7 @@
   (abbrev-mode -1)                  ; turn abbrev-mode off
   )
 
-(defun common-programming-hook ()
+(defun common-initialise-programming ()
   (enable-fci-mode)                 ; fill column indicator
   (auto-fill-mode)                  ; auto fill
   (flyspell-prog-mode)              ; turn spell check for strings and comments
@@ -94,20 +94,20 @@
   (abbrev-mode -1)                  ; turn abbrev-mode off
   )
 
-(defun common-web-hook ()
+(defun common-initialise-web ()
   (auto-fill-mode -1)
   (highlight-parentheses-mode)
   (setq tab-width       2
         c-basic-offset  2))
 
-(defun c-c++-hook()
+(defun initialise-c-c++()
   (local-set-key "\C-co" 'buftoggle))
 
-(defun sh-mode-hook ()
+(defun initialise-sh-mode ()
   (setq sh-basic-offset 2
         sh-indentation 2))
 
-(defun c++-mode-hook ()
+(defun initialise-c++-mode ()
   (setq comment-start "/* "
         comment-end   " */"))
 
@@ -116,27 +116,31 @@
   (eval-buffer)
   (message "buffer eval'ed"))
 
-(defun common-elisp-mode ()
+(defun initialise-elisp-mode ()
   (local-set-key (kbd "C-c C-e")  'on-eval-buffer)
   (turn-on-eldoc-mode))
 
+(defun initialise-php-mode ()
+  (flymake-php-load))
+
 ;; Hooks for commonly used programming modes
-(add-hook 'c-mode-common-hook         'common-programming-hook)
-(add-hook 'c++-mode-hook              'c++-mode-hook)
-(add-hook 'c-mode-common-hook         'c-c++-hook)
-(add-hook 'c++-mode-hook              'c-c++-hook)
-(add-hook 'css-mode-hook              'common-programming-hook)
-(add-hook 'js-mode-hook               'common-programming-hook)
-(add-hook 'php-mode-hook              'common-web-hook)
-(add-hook 'html-mode-hook             'common-web-hook)
-(add-hook 'lisp-mode-hook             'common-programming-hook)
-(add-hook 'emacs-lisp-mode-hook       'common-programming-hook)
-(add-hook 'sh-mode-hook               'common-programming-hook)
-(add-hook 'sh-mode-hook               'sh-mode-hook)
-(add-hook 'makefile-mode-hook         'common-programming-hook)
-(add-hook 'srecode-template-mode-hook 'common-programming-hook)
-(add-hook 'log-edit-mode-hook         'common-text-hook)
+(add-hook 'c-mode-common-hook         'common-initialise-programming)
+(add-hook 'common-c++-mode-hook       'initialise-c++-mode)
+(add-hook 'c-mode-common-hook         'initialise-c-c++)
+(add-hook 'common-c++-mode-hook       'initialise-c-c++)
+(add-hook 'lisp-mode-hook             'common-initialise-programming)
+(add-hook 'emacs-lisp-mode-hook       'common-initialise-programming)
+(add-hook 'sh-mode-hook               'common-initialise-programming)
+(add-hook 'sh-mode-hook               'initialise-sh-mode)
+(add-hook 'makefile-mode-hook         'common-initialise-programming)
+(add-hook 'log-edit-mode-hook         'initialise-common-text)
+;; - web
+(add-hook 'css-mode-hook              'common-initialise-programming)
+(add-hook 'js-mode-hook               'common-initialise-programming)
+(add-hook 'php-mode-hook              'common-initialise-web)
+(add-hook 'php-mode-hook              'initialise-php-mode)
+(add-hook 'html-mode-hook             'common-initialise-web)
 
 ;; Eldoc support
-(add-hook 'emacs-lisp-mode-hook       'common-elisp-mode)
-(add-hook 'lisp-interaction-mode-hook 'common-elisp-mode)
+(add-hook 'emacs-lisp-mode-hook       'initialise-elisp-mode)
+(add-hook 'lisp-interaction-mode-hook 'initialise-elisp-mode)

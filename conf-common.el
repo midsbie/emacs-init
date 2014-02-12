@@ -49,10 +49,10 @@
           ))
 
 ;; set c-mode default style and tabs
-(setq c-default-style "linux"
-      c-basic-offset  2
-      tab-width       2)
-(setq-default indent-tabs-mode nil)
+(setq-default c-default-style   "linux"
+              c-basic-offset    2
+              tab-width         2
+              indent-tabs-mode  nil)
 
 (setq default-major-mode 'text-mode)    ; set text-mode as default mode
 
@@ -80,6 +80,12 @@
         (sequence "SOMEDAY(s!/!)" "|")
         (sequence "OPEN(O!)" "|" "CLOSED(C!)")
         (sequence "ONGOING(o!/!)" "|")))
+
+;; Turn on indent and visual line modes by default
+(add-hook 'org-mode-hook '(lambda ()
+                            (org-indent-mode 1)
+                            (visual-line-mode)
+                            (auto-fill-mode -1)))
 
 ;; ---- Aliases ----
 (defalias 'hscroll-mode 'toggle-truncate-lines)
@@ -157,7 +163,7 @@
                                         ; minibuffer
  column-number-mode t
  comment-multi-line t
- comment-style (quote align)
+ comment-style (quote multi)
  css-electric-brace-behavior nil
  css-indent-offset 2
  indent-tabs-mode nil

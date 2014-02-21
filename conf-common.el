@@ -1,4 +1,4 @@
-;; includes
+;; ----- Includes
 (add-to-list 'load-path "/usr/src")
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/packages")
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/elpa")
@@ -21,7 +21,7 @@
 (require 'fill-column-indicator)
 (require 'highlight-parentheses)
 
-;; common
+;; common includes:
 (load-library "common/libcommon")
 (load-library "common/conf-programming")
 (load-library "common/conf-frame-size")
@@ -31,47 +31,7 @@
 ;; /usr/src
 (load-library "timeclox.git/timeclox")
 
-;; enable useful commands
-(put 'narrow-to-region  'disabled nil)
-(put 'erase-buffer      'disabled nil)
-
-;; fci-mode
-(setq-default fci-rule-color "gray9")
-
-;; setup recentf-mode
-(setq recentf-auto-cleanup    'never
-      recentf-max-menu-items  25)
-
-(global-set-key "\C-x\ r" 'recentf-open-files)
-(recentf-mode 1)
-
-;; the following fucks with certain major modes (i.e. yasnippet) and must be
-;; disabled at all times
-(setq mode-require-final-newline nil)
-
-;; load cc-mode
-(autoload 'awk-mode "cc-mode" nil t)
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (c-toggle-auto-hungry-state 1)
-            (c-toggle-auto-state -1)
-            (c-set-offset 'innamespace 0)           ; set indentation inside
-                                                    ; namespaces to nil
-          ))
-
-;; set c-mode default style and tabs
-(setq-default c-default-style   "linux"
-              c-basic-offset    2
-              tab-width         2
-              indent-tabs-mode  nil)
-
-(setq default-major-mode 'text-mode)    ; set text-mode as default mode
-
-;; Setup default browser - currently set to `xdg-open'.
-(setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program  "xdg-open")
-
-;; ---- Org mode ----
+;; ----- Org mode
 (setq org-use-fast-todo-selection t)
 
 (setq org-todo-keyword-faces
@@ -98,14 +58,14 @@
                             (visual-line-mode)
                             (auto-fill-mode -1)))
 
-;; ---- Aliases ----
+;; ----- Aliases
 (defalias 'hscroll-mode 'toggle-truncate-lines)
 ;; Alias query functions so all the replace functions start with "replace"!
 (defalias 'replace-query 'query-replace)
 (defalias 'replace-query-regexp 'query-replace-regexp)
 (defalias 'replace-query-regexp-eval 'query-replace-regexp-eval)
 
-;; ---- Key bindings ----
+;; ----- Key bindings
 ;; windmove: awesome key bindings for moving around windows
 (global-set-key [M-left]        'windmove-left)
 (global-set-key (kbd "C-x p")   'other-previous-window)
@@ -144,18 +104,44 @@
 ;; this new key binding replaces mark-paragraph
 (global-set-key (kbd "M-h")           'backward-kill-word)   
 
-(setq inhibit-splash-screen t           ; Disable splash screen
+;; ----- Settings
+(setq inhibit-splash-screen   t         ; Disable splash screen
       initial-scratch-message nil)      ; Disable startup message
 (delete-selection-mode t)               ; Enable C-D to delete
                                         ; selected text
 (transient-mark-mode t)                 ; Enable typing to replace
                                         ; selected text
-;(electric-indent-mode t)                ; set electric indentation mode
 
 (setq uniquify-buffer-name-style 'forward)
 (ido-mode t)
 
 (put 'upcase-region 'disabled nil)
+
+
+;; enable useful commands
+(put 'narrow-to-region  'disabled nil)
+(put 'erase-buffer      'disabled nil)
+
+;; fci-mode
+(setq-default fci-rule-color "gray9")
+
+;; setup recentf-mode
+(setq recentf-auto-cleanup    'never
+      recentf-max-menu-items  25)
+
+(global-set-key "\C-x\ r" 'recentf-open-files)
+(recentf-mode 1)
+
+;; the following fucks with certain major modes (i.e. yasnippet) and must be
+;; disabled at all times
+(setq mode-require-final-newline nil)
+
+;; set text-mode as default mode
+(setq default-major-mode 'text-mode)
+
+;; Setup default browser - currently set to `xdg-open'.
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program  "xdg-open")
 
 (menu-bar-mode -1)                      ; disable menu bar
 (size-indication-mode)                  ; turn on size indication mode
@@ -175,10 +161,7 @@
  column-number-mode           t
  comment-multi-line           t
  comment-style                (quote multi)
- css-electric-brace-behavior  nil
- css-indent-offset            2
  indent-tabs-mode             nil
- js-indent-level              2
  standard-indent              2
  tab-width                    2
  fill-column                  80
@@ -189,25 +172,11 @@
                                "magenta" "cyan" "white"]
       ansi-color-map          (ansi-color-make-color-map))
 
-;; let's setup text-mode to our liking
-(add-hook 'text-mode-hook '(lambda()
-                             (enable-fci-mode)
-                             (auto-fill-mode)
-                             (turn-on-flyspell)))
-
-
 ;; set tab-stop positions for C-i
 (setq tab-stop-list
       (quote (2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40
                 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76
                 78 80 82 84 86 88 90 92 94 96 98 100)))
-
-;; Let's make sure we disable linum-mode when in speedbar-mode
-(defun conf-linum-mode-hook()
-  (if (string= major-mode "speedbar-mode")
-      (linum-mode -1)))
-
-(add-hook 'linum-before-numbering-hook 'conf-linum-mode-hook)
 
 ;; Following list of buffers shouldn't open a new window
 (setq same-window-buffer-names '("*shell*"
@@ -215,9 +184,56 @@
                                  "*unsent mail*"
                                  "*info*"))
 
+;; ----- Defuns used by conf files
+;; Workaround for fci-mode.  Don't enable fci-mode if emacs version is 24.3
+;; since a bug was introduced affecting cursor navigation.
+(defun enable-fci-mode ()
+  (interactive)
+  (if (and (eq emacs-major-version 24)
+           (eq emacs-minor-version 3))
+      (fci-mode -1)
+    (fci-mode)))
+
+;; ----- Setup customisation of major modes.
+(defun initialise-common-text ()
+  (enable-fci-mode)                 ; fill column indicator
+  (auto-fill-mode)                  ; auto fill
+  (flyspell-mode)                   ; turn spell check on
+  (abbrev-mode -1)                  ; turn abbrev-mode off
+  )
+
+(add-hook 'text-mode-hook 'initialise-common-text)
+
+;; Display a warning signal in the mode line when visiting a file with root
+;; privileges.
+(defun root-file-warning ()
+  (when (string-match "^/su\\(do\\)?:" default-directory)
+    (face-remap-add-relative
+     'mode-line
+     '(:background "red3" :foreground "white"))
+    (face-remap-add-relative
+     'mode-line-inactive
+     '(:background "red4" :foreground "dark gray"
+                   :box nil))
+    )
+  )
+
+;; Change mode line background colour if file being edited as root.
+(add-hook 'after-change-major-mode-hook 'root-file-warning)
+
+;; Let's make sure we disable linum-mode when in speedbar-mode
+(defun initialise-linum-mode()
+  (if (string= major-mode "speedbar-mode")
+      (linum-mode -1)))
+
+(add-hook 'linum-before-numbering-hook 'initialise-linum-mode)
+
+;; ----- Load configurations specific to the environment
+(load-library "common/conf-x")
+(load-library "common/conf-term")
+
+;; ----- Setup delayed initialisations
 ;; Start the server after 2 seconds have elapsed.
-;; NOTE: not used anymore as the server issues have been solved - CEDET was
-;; found to be the culprit.
 (defun server-start-timed()
     (run-at-time "2 sec" nil
                  '(lambda ()
@@ -241,40 +257,12 @@
                 (remove-hook 'kill-buffer-query-functions
                              'server-kill-buffer-query-function)))
 
-;; Display a warning signal in the mode line when visiting a file with root
-;; privileges.
-(defun root-file-warning ()
-  (when (string-match "^/su\\(do\\)?:" default-directory)
-    (face-remap-add-relative
-     'mode-line
-     '(:background "red3" :foreground "white"))
-    (face-remap-add-relative
-     'mode-line-inactive
-     '(:background "red4" :foreground "dark gray"
-                   :box nil))
-    )
-  )
-
-;; Workaround for fci-mode.  Don't enable fci-mode if emacs version is 24.3
-;; since a bug was introduced affecting cursor navigation.
-(defun enable-fci-mode ()
-  (interactive)
-  (if (and (eq emacs-major-version 24)
-           (eq emacs-minor-version 3))
-      (fci-mode -1)
-    (fci-mode)))
-
-;; Change mode line background colour if file being edited as root.
-(add-hook 'after-change-major-mode-hook 'root-file-warning)
-
-;; now load X-specific configuration
-(load-library "common/conf-x")
-
 ;; Show how long it took to initialise emacs after 6 seconds
 (run-at-time "6 sec" nil
              '(lambda ()
                 (message "init took %s" (emacs-init-time))))
 
+;; Setup global timeclox mode to turn on after 10 seconds
 (run-at-time "10 sec" nil
              '(lambda ()
                 (unless global-timeclox-mode

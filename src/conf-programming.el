@@ -5,8 +5,8 @@
 
 ;; - using `load-path'
 (load-library "buftoggle.git/buftoggle")
-(load-library "builder.git/builder")
-(load-library "vcx.git/vcx")
+(load-library "builder.git/src/builder")
+(load-library "vcx.git/src/vcx")
 
 ;; - using requires
 (require 'yasnippet)

@@ -3,9 +3,16 @@
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/packages")
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/elpa")
 
-;; setup and load ELPA packages
+;; setup and load ELPA packages (and others)
 (require 'package)
 (setq package-user-dir "/usr/share/emacs/site-lisp/elpa")
+
+;; add additional archives
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/"))
+(add-to-list 'package-archives
+             '("org" . "http://orgmode.org/elpa/"))
+
 (package-initialize)
 
 ;; requires
@@ -29,9 +36,14 @@
 (load-library "common/window-extra")
 
 ;; /usr/src
-(load-library "timeclox.git/timeclox")
-
+(load-library "timeclox.git/src/timeclox")
+y
 ;; ----- Org mode
+;; load git version, if it exists
+(when (file-exists-p "/usr/src/org-mode.git/lisp/org-loaddefs.el")
+  (add-to-list 'load-path "/usr/src/org-mode.git/lisp")
+  (load-library "org-loaddefs.el"))
+
 (setq org-use-fast-todo-selection t)
 
 (setq org-todo-keyword-faces

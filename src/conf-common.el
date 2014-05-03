@@ -29,15 +29,15 @@
 (require 'highlight-parentheses)
 
 ;; common includes:
-(load-library "common/libcommon")
-(load-library "common/conf-programming")
-(load-library "common/conf-frame-size")
-(load-library "common/conf-mail")
-(load-library "common/window-extra")
+(load-library "init/libcommon")
+(load-library "init/conf-programming")
+(load-library "init/conf-frame-size")
+(load-library "init/conf-mail")
+(load-library "init/window-extra")
 
 ;; /usr/src
 (load-library "timeclox.git/src/timeclox")
-y
+
 ;; ----- Org mode
 ;; load git version, if it exists
 (when (file-exists-p "/usr/src/org-mode.git/lisp/org-loaddefs.el")
@@ -241,8 +241,8 @@ y
 (add-hook 'linum-before-numbering-hook 'initialise-linum-mode)
 
 ;; ----- Load configurations specific to the environment
-(load-library "common/conf-x")
-(load-library "common/conf-term")
+(load-library "init/conf-x")
+(load-library "init/conf-term")
 
 ;; ----- Setup delayed initialisations
 ;; Start the server after 2 seconds have elapsed.

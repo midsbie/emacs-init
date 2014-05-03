@@ -1,4 +1,4 @@
-;; libcommonl --- Collection of useful defuns loaded by conf-common.el .
+;; libcommon --- Collection of useful defuns.
 ;;
 ;; Copyright (C) 2014 Miguel Guedes
 ;;
@@ -21,7 +21,7 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;;
 ;; Comments:
-;;
+;; Used by init.el.
 ;;
 
 

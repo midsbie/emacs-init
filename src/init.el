@@ -53,7 +53,6 @@
 ;; - from ELPA:
 (require 'buffer-move)
 (require 'fill-column-indicator)
-(require 'highlight-parentheses)
 
 ;; common includes:
 (load-library "init/libcommon")

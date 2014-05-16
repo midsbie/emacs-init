@@ -38,6 +38,7 @@
 ;; - using requires
 (require 'yasnippet)
 (require 'php-mode)
+(require 'highlight-parentheses)
 
 ;; load cc-mode
 (autoload 'awk-mode "cc-mode" nil t)    ; Unsure why we want this?
@@ -149,18 +150,12 @@
   (setq comment-start "/* "
         comment-end   " */"))
 
-(defun on-eval-buffer ()
-  (interactive)
-  (eval-buffer)
-  (message "buffer eval'ed"))
-
 (defun initialise-elisp-mode ()
-  (local-set-key (kbd "C-c C-e")  'on-eval-buffer)
+  (local-set-key (kbd "C-c C-e")  'do-eval-buffer)
   (turn-on-eldoc-mode))
 
 (defun initialise-php-mode ()
-  (flymake-php-load)
-  (auto-fill-mode 1))                   ; re-enable auto-fill-mode
+  (flymake-php-load))
 
 (defun initialise-js-mode-hook ()
   (setq-default js-indent-level 2))
@@ -168,6 +163,13 @@
 (defun initialise-css-mode-hook ()
   (setq-default  css-electric-brace-behavior  nil
                  css-indent-offset            2))
+
+;; Defun invoked after pressing C-c C-e (see `initialise-elisp-mode').
+;; Evals the current buffer and displays a message.
+(defun do-eval-buffer ()
+  (interactive)
+  (eval-buffer)
+  (message "buffer eval'ed"))
 
 ;; Hooks for commonly used programming modes
 (add-hook 'c-mode-common-hook         'initialise-common-programming)
@@ -185,7 +187,6 @@
 (add-hook 'css-mode-hook              'initialise-css-mode)
 (add-hook 'js-mode-hook               'initialise-common-programming)
 (add-hook 'js-mode-hook               'initialise-js-mode)
-(add-hook 'php-mode-hook              'initialise-common-web)
 (add-hook 'php-mode-hook              'initialise-php-mode)
 (add-hook 'html-mode-hook             'initialise-common-web)
 

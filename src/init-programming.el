@@ -120,9 +120,9 @@
   (auto-fill-mode)                  ; auto fill
   (flyspell-prog-mode)              ; turn spell check for strings and comments
   (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting
-;; (setq c-auto-newline t)           ; set electricity on
+;; (setq c-auto-newline t)             ; set electricity on
 
-;; (doxymacs-mode)                   ; turn doxymacs on
+;; (doxymacs-mode)                     ; turn doxymacs on
   (abbrev-mode -1)                  ; turn abbrev-mode off
   )
 
@@ -159,7 +159,8 @@
   (turn-on-eldoc-mode))
 
 (defun initialise-php-mode ()
-  (flymake-php-load))
+  (flymake-php-load)
+  (auto-fill-mode 1))                   ; re-enable auto-fill-mode
 
 (defun initialise-js-mode-hook ()
   (setq-default js-indent-level 2))

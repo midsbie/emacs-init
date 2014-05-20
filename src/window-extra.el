@@ -1,4 +1,4 @@
-;; window-extra.el --- Utility functions for manipulating windows
+;; window-extra.el --- Utility functions for manipulating windows and buffers
 ;;
 ;; Copyright (C) 2014 Miguel Guedes
 ;;
@@ -67,5 +67,18 @@ argument."
   (save-selected-window
     (other-window (* count 1) all-frames)
     (kill-buffer)))
+
+(defun bury-other-buffer (count &optional all-frames)
+  "Select next window and bury buffer associated with it.
+
+COUNT specified the number of windows to skip, starting with the
+selected window, before making the selection. If COUNT is
+positive, skip COUNT forwards. If COUNT is negative, skip COUNT
+backwards. In an interactive call, COUNT is the numeric prefix
+argument."
+  (interactive "p")
+  (save-selected-window
+    (other-window (* count 1) all-frames)
+    (bury-buffer)))
 
 (provide 'window-extra)

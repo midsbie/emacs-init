@@ -39,5 +39,19 @@ With a prefix arg, INSERT it into the buffer."
   (funcall (if insert 'insert 'message)
            (format-time-string "%a, %d %b %Y %T %Z" (current-time))))
 
+(defun warn-when-root-visits-file ()
+  "Display the mode line with a red background when visiting a file with root
+privileges."
+  (when (string-match "^/su\\(do\\)?:" default-directory)
+    (face-remap-add-relative
+     'mode-line
+     '(:background "red3" :foreground "white"))
+    (face-remap-add-relative
+     'mode-line-inactive
+     '(:background "red4" :foreground "dark gray"
+                   :box nil))
+    )
+  )
+
 
 (provide 'libcommon)

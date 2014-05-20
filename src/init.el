@@ -103,20 +103,19 @@
 (defalias 'replace-query-regexp-eval 'query-replace-regexp-eval)
 
 ;; ----- Key bindings
-;; windmove: awesome key bindings for moving around windows
+;; Awesome key bindings for moving around and manipulating windows.
 (global-set-key [M-left]        'windmove-left)
-(global-set-key (kbd "C-x p")   'other-previous-window)
 (global-set-key [M-right]       'windmove-right)
 (global-set-key [M-up]          'windmove-up)
 (global-set-key [M-down]        'windmove-down)
+(global-set-key (kbd "C-x p")   'other-previous-window)
+(global-set-key (kbd "C-x 4 k") 'kill-other-buffer)
 
-;; define miscellaneous shortcuts
+;; Define miscellaneous shortcuts.
 (global-set-key [f2]          'shell)
 (global-set-key [f3]          'next-error)
 (global-set-key [S-f3]        'previous-error)
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
-;; (global-set-key [S-f4]      'delete-other-windows)
-;; (global-set-key [f6]        'other-window)
 
 ;; buffer-move: key bindings
 (global-set-key (kbd "<C-S-up>")      'buf-move-up)
@@ -241,22 +240,8 @@
 
 (add-hook 'text-mode-hook 'initialise-common-text)
 
-;; Display a warning signal in the mode line when visiting a file with root
-;; privileges.
-(defun root-file-warning ()
-  (when (string-match "^/su\\(do\\)?:" default-directory)
-    (face-remap-add-relative
-     'mode-line
-     '(:background "red3" :foreground "white"))
-    (face-remap-add-relative
-     'mode-line-inactive
-     '(:background "red4" :foreground "dark gray"
-                   :box nil))
-    )
-  )
-
 ;; Change mode line background colour if file being edited as root.
-(add-hook 'after-change-major-mode-hook 'root-file-warning)
+(add-hook 'after-change-major-mode-hook 'warn-when-root-visits-file)
 
 ;; Let's make sure we disable linum-mode when in speedbar-mode
 (defun initialise-linum-mode()

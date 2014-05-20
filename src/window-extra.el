@@ -47,11 +47,25 @@
 
 (defun other-previous-window (count &optional all-frames)
   "Select previous window in inverse cyclic ordering of windows.
-COUNT specified the number of windows to skip, starting with the
+
+COUNT specifies the number of windows to skip, starting with the
 selected window, before making the selection. If COUNT is positive,
 skip COUNT backwards. If COUNT is negative, skip COUNT forwards. In
 an interactive call, COUNT is the numeric prefix argument."
   (interactive "p")
   (other-window (* count -1) all-frames))
+
+(defun kill-other-buffer (count &optional all-frames)
+  "Select next window and kill buffer associated with it.
+
+COUNT specified the number of windows to skip, starting with the
+selected window, before making the selection. If COUNT is
+positive, skip COUNT forwards. If COUNT is negative, skip COUNT
+backwards. In an interactive call, COUNT is the numeric prefix
+argument."
+  (interactive "p")
+  (save-selected-window
+    (other-window (* count 1) all-frames)
+    (kill-buffer)))
 
 (provide 'window-extra)

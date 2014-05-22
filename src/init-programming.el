@@ -157,10 +157,10 @@
 (defun initialise-php-mode ()
   (flymake-php-load))
 
-(defun initialise-js-mode-hook ()
+(defun initialise-js-mode ()
   (setq-default js-indent-level 2))
 
-(defun initialise-css-mode-hook ()
+(defun initialise-css-mode ()
   (setq-default  css-electric-brace-behavior  nil
                  css-indent-offset            2))
 

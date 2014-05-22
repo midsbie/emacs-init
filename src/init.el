@@ -82,6 +82,10 @@
         ("CLOSED"  . (:foreground "forest green" :weight bold))
         ("ONGOING"  . (:foreground "orange" :weight bold))))
 
+;; (setq org-todo-keywords
+;;       '((sequence "TODO(t)" "IN-PROGRESS(p!)" "WAIT(w@/!)"
+;;                   "|"
+;;                   "DONE(d!)" "CANCELED(c@)")))
 (setq org-todo-keywords
       '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
         (sequence "WAITING(w@/!)" "|" "CANCELLED(c@/!)")

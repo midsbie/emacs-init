@@ -45,4 +45,4 @@
       smtpmail-default-smtp-server "smtp.gmail.com"
       smtpmail-smtp-server "smtp.gmail.com"
       smtpmail-smtp-service 587
-      smtpmail-local-domain "abstratti.com")
+      smtpmail-local-domain "miguelguedes.org")

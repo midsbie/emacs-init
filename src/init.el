@@ -61,7 +61,8 @@
 (load-library "init/window-extra")
 
 ;; /usr/src
-(load-library "timeclox.git/src/timeclox")
+;; DISABLED loading timeclox-mode as now using Project Hamster.
+;; (load-library "timeclox.git/src/timeclox")
 
 ;; ----- Org mode
 ;; load git version, if it exists

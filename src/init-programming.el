@@ -158,11 +158,13 @@
   (flymake-php-load))
 
 (defun initialise-js-mode ()
-  (setq-default js-indent-level 2))
+  (setq-default js-indent-level 2)
+  (flymake-jslint-load))
 
 (defun initialise-css-mode ()
   (setq-default  css-electric-brace-behavior  nil
-                 css-indent-offset            2))
+                 css-indent-offset            2)
+  (flymake-css-load))
 
 ;; Defun invoked after pressing C-c C-e (see `initialise-elisp-mode').
 ;; Evals the current buffer and displays a message.

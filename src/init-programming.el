@@ -115,6 +115,9 @@
 ;; Note: can't be inside php-mode initialisation defun.
 (setq php-mode-coding-style nil)
 
+;; Set default product when on `sql-mode'
+(setq sql-product 'mysql)
+
 ;; -----  Setup customisation of major modes.
 (defun initialise-common-programming ()
   (enable-fci-mode)                 ; fill column indicator

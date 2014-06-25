@@ -53,12 +53,30 @@
 ;; - from ELPA:
 (require 'buffer-move)
 (require 'fill-column-indicator)
+(require 'anzu)
+(require 'browse-kill-ring)
+(require 'visual-regexp)
+(require 'ace-jump-mode)
 
 ;; common includes:
 (load-library "init/libcommon")
 (load-library "init/init-programming")
 (load-library "init/init-mail")
 (load-library "init/window-extra")
+
+;; Load anzu's global mode
+(global-anzu-mode)
+
+;; Setup browse-kill-ring
+(global-set-key "\C-cy" 'browse-kill-ring)
+
+;; Setup ace-jump-mode
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+(define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
+
+;; Setup visual-regexp
+(define-key global-map (kbd "C-c r") 'vr/replace)
+(define-key global-map (kbd "C-c q") 'vr/query-replace)
 
 ;; /usr/src
 ;; DISABLED loading timeclox-mode as now using Project Hamster.
@@ -186,7 +204,7 @@
       browse-url-generic-program  "xdg-open")
 
 (menu-bar-mode -1)                      ; disable menu bar
-(size-indication-mode)                  ; turn on size indication mode
+;; (size-indication-mode)                  ; turn on size indication mode
 (global-linum-mode t)                   ; display line numbers in left margin
 (scroll-bar-mode -1)                    ; disable scrollbars
 (show-paren-mode t)                     ; show parenthesis next to cursor

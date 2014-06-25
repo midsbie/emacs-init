@@ -35,7 +35,7 @@
 (load-library "builder.git/src/builder")
 (load-library "vcx.git/src/vcx")
 
-;; - using requires
+;; - from ELPA:
 (require 'yasnippet)
 (require 'php-mode)
 (require 'highlight-parentheses)

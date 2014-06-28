@@ -118,12 +118,20 @@
                             (visual-line-mode)
                             (auto-fill-mode -1)))
 
+(global-set-key (kbd "C-c a a")  'org-agenda-list)
+(global-set-key (kbd "C-c a t")  'org-todo-list)
+
+(custom-set-variables
+ '(org-agenda-window-setup (quote current-window))) 
+
+
 ;; ----- Aliases
 (defalias 'hscroll-mode 'toggle-truncate-lines)
 ;; Alias query functions so all the replace functions start with "replace"!
 (defalias 'replace-query 'query-replace)
 (defalias 'replace-query-regexp 'query-replace-regexp)
 (defalias 'replace-query-regexp-eval 'query-replace-regexp-eval)
+
 
 ;; ----- Key bindings
 ;; Awesome key bindings for moving around and manipulating windows.
@@ -164,7 +172,8 @@
 ;; this new key binding replaces mark-paragraph
 (global-set-key (kbd "M-h")           'backward-kill-word)   
 
-;; ----- Settings
+
+;; ----- Miscellaneous settings
 (setq inhibit-splash-screen   t         ; Disable splash screen
       initial-scratch-message nil)      ; Disable startup message
 (delete-selection-mode t)               ; Enable C-D to delete
@@ -243,6 +252,7 @@
                                  "*mail*"
                                  "*unsent mail*"
                                  "*info*"))
+
 
 ;; ----- Defuns used by conf files
 ;; Workaround for fci-mode.  Don't enable fci-mode if emacs version is 24.3

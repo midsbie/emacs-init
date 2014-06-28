@@ -194,7 +194,7 @@
 ;; fci-mode
 (setq-default fci-rule-color "gray9")
 
-;; setup recentf-mode
+;; recentf-mode
 (setq recentf-auto-cleanup    'never
       recentf-max-menu-items  25)
 
@@ -202,13 +202,13 @@
 (recentf-mode 1)
 
 ;; the following fucks with certain major modes (i.e. yasnippet) and must be
-;; disabled at all times
+;; disabled at ALL times
 (setq mode-require-final-newline nil)
 
 ;; set text-mode as default mode
 (setq default-major-mode 'text-mode)
 
-;; Setup default browser - currently set to `xdg-open'.
+;; set default browser - currently set to `xdg-open'.
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program  "xdg-open")
 
@@ -247,11 +247,14 @@
                 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76
                 78 80 82 84 86 88 90 92 94 96 98 100)))
 
-;; Following list of buffers shouldn't open a new window
+;; following list of buffers shouldn't open a new window
 (setq same-window-buffer-names '("*shell*"
                                  "*mail*"
                                  "*unsent mail*"
                                  "*info*"))
+
+;; timeclock
+(set-variable 'timeclock-workday 36000)
 
 
 ;; ----- Defuns used by conf files

@@ -40,6 +40,7 @@
 (require 'php-mode)
 (require 'highlight-parentheses)
 (require 'js2-mode)
+(require 'flymake-jshint)
 
 ;; set up js2-mode
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
@@ -216,7 +217,7 @@
 
 (defun initialise-js2-mode ()
   (setq-default js-indent-level 2)
-  (flymake-jslint-load))
+  (flymake-jshint-load))
 
 (defun initialise-css-mode ()
   (setq-default  css-electric-brace-behavior  nil

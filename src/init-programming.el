@@ -217,7 +217,14 @@
 
 (defun initialise-js2-mode ()
   (setq-default js-indent-level 2)
-  (flymake-jshint-load))
+  (flymake-jshint-load)
+
+  (local-set-key [f3]
+                 (lambda ()
+                   (interactive)
+                   (unless (and next-error-function
+                                (not (string= (type-of (js2-next-error)) "string")))
+                     (flymake-goto-next-error)))))
 
 (defun initialise-css-mode ()
   (setq-default  css-electric-brace-behavior  nil

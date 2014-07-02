@@ -39,6 +39,60 @@
 (require 'yasnippet)
 (require 'php-mode)
 (require 'highlight-parentheses)
+(require 'js2-mode)
+
+;; set up js2-mode
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+
+;; The following snippet fixes a number of annoying issues with js2-mode.
+;; 
+;; 1) continued expressions aren't automatically indented, such as:
+;; 
+;; this
+;; .method()    // not indented automatically
+;;
+;; We fix it by invoking `indent-for-tab-command' whenever the character '.' is
+;; typed and the user is presently in a continued expression.
+;;
+;; 2) closing curly braces '}' aren't automatically indented, as illustrated
+;; below:
+;; 
+;; function foo()
+;; {
+;;   // logic
+;;   }    // not indented automatically
+;;
+;; 3) case statements aren't automatically indented:
+;;
+;; switch(expression) {
+;;   case condition:    // not indented automatically
+;; }
+(add-hook 'js2-mode-hook
+          (lambda ()
+            (interactive)
+            (local-set-key "."
+                           (lambda ()
+                             (interactive)
+                             (insert-char ?.)
+                             (when (js2-continued-expression-p)
+                               (indent-for-tab-command))))
+
+            (local-set-key "}"
+                           (lambda ()
+                             (interactive)
+                             (insert-char ?})
+                             (when (js2-arglist-close)
+                               (indent-for-tab-command))))
+
+            (local-set-key ":"
+                           (lambda ()
+                             (interactive)
+                             (insert-char ?:)
+                             (save-excursion
+                               (beginning-of-line)
+                               (when (looking-at "\s*case\s+")
+                                 (indent-for-tab-command)))))))
+
 
 ;; load cc-mode
 (autoload 'awk-mode "cc-mode" nil t)    ; Unsure why we want this?

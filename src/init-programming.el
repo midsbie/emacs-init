@@ -107,10 +107,6 @@
               ;;'("\{\"" json-mode)       ; DISABLED
               ))
 
-;; Apparently there are potential issues with emacs attempting to set js2-mode
-;; for .js files.  Switch to the old js-mode instead.
-;; (setq auto-mode-alist (append '(("\\.js$"   . js-mode))
-;;                               auto-mode-alist ))
 
 ;; ----- Various settings
 ;; VCx

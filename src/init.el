@@ -71,12 +71,12 @@
 (global-set-key "\C-cy" 'browse-kill-ring)
 
 ;; Setup ace-jump-mode
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
-(define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
+(global-set-key (kbd "C-c SPC") 'ace-jump-mode)
+(global-set-key (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
 
 ;; Setup visual-regexp
-(define-key global-map (kbd "C-c r") 'vr/replace)
-(define-key global-map (kbd "C-c q") 'vr/query-replace)
+(global-set-key (kbd "C-c r") 'vr/replace)
+(global-set-key (kbd "C-c q") 'vr/query-replace)
 
 ;; /usr/src
 ;; DISABLED loading timeclox-mode as now using Project Hamster.
@@ -88,7 +88,9 @@
   (add-to-list 'load-path "/usr/src/org-mode.git/lisp")
   (load-library "org-loaddefs.el"))
 
-(setq org-use-fast-todo-selection t)
+(setq org-use-fast-todo-selection t
+      org-directory               "~/documents/org"
+      org-default-notes-file      (concat org-directory "/notes.org"))
 
 (setq org-todo-keyword-faces
       '(("TODO"  . (:foreground "red" :weight bold))
@@ -101,10 +103,14 @@
         ("CLOSED"  . (:foreground "forest green" :weight bold))
         ("ONGOING"  . (:foreground "orange" :weight bold))))
 
+(setq org-clock-persist 'history)
+(org-clock-persistence-insinuate)
+
 (setq org-todo-keywords
       '((sequence "TODO(t)" "IN-PROGRESS(p!)" "WAIT(w@/!)"
                   "|"
                   "DONE(d!)" "CANCELED(c@)")))
+
 ;; (setq org-todo-keywords
 ;;       '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
 ;;         (sequence "WAITING(w@/!)" "|" "CANCELLED(c@/!)")
@@ -118,8 +124,9 @@
                             (visual-line-mode)
                             (auto-fill-mode -1)))
 
-(global-set-key (kbd "C-c a a")  'org-agenda-list)
-(global-set-key (kbd "C-c a t")  'org-todo-list)
+(global-set-key (kbd "C-c a a")   'org-agenda-list)
+(global-set-key (kbd "C-c a t")   'org-todo-list)
+(global-set-key (kbd "C-c c")     'org-capture)
 
 (custom-set-variables
  '(org-agenda-window-setup (quote current-window))) 

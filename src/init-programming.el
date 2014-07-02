@@ -214,7 +214,7 @@
 (defun initialise-php-mode ()
   (flymake-php-load))
 
-(defun initialise-js-mode ()
+(defun initialise-js2-mode ()
   (setq-default js-indent-level 2)
   (flymake-jslint-load))
 
@@ -244,8 +244,8 @@
 ;; - web
 (add-hook 'css-mode-hook              'initialise-common-programming)
 (add-hook 'css-mode-hook              'initialise-css-mode)
-(add-hook 'js-mode-hook               'initialise-common-programming)
-(add-hook 'js-mode-hook               'initialise-js-mode)
+(add-hook 'js2-mode-hook              'initialise-common-programming)
+(add-hook 'js2-mode-hook              'initialise-js2-mode)
 (add-hook 'php-mode-hook              'initialise-php-mode)
 (add-hook 'html-mode-hook             'initialise-common-web)
 

@@ -294,9 +294,24 @@
 
 (add-hook 'linum-before-numbering-hook 'initialise-linum-mode)
 
+;; Set our preferred window arrangement after the `desktop' library successfully
+;; loads a desktop configuration.
+(add-hook 'desktop-after-read-hook
+          '(lambda ()
+             (let ((windows (- (/ (frame-width) 80) 1)))
+               (dotimes (n windows)
+                 (split-window-right))
+               (balance-windows)
+               (dotimes (n windows)
+                 (other-window 1)
+                 (bury-buffer))
+               (other-window 1))))
+
+
 ;; ----- Load configurations specific to the environment
 (load-library "init/init-x")
 (load-library "init/init-term")
+
 
 ;; ----- Setup delayed initialisations
 ;; Start the server after 2 seconds have elapsed.

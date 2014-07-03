@@ -170,7 +170,9 @@
 
 (defun initialise-javascript ()
   (flymake-jshint-load)
-  (electric-indent-mode))
+  (electric-indent-mode)
+  (setq comment-start "/* "
+        comment-end   " */"))
 
 (defun initialise-js2-mode ()
   ;; Following snippet adds responsive logic that indents the current line

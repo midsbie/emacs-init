@@ -44,19 +44,7 @@
 
 ;; set up js2-mode
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-
-;; Following snippet adds responsive logic that indents the current line
-;; whenever the dot character (.) is typed on a continued expression.
-(add-hook 'js2-mode-hook
-          (lambda ()
-            (interactive)
-            
-            (local-set-key "."
-                           (lambda ()
-                             (interactive)
-                             (insert-char ?.)
-                             (when (js2-continued-expression-p)
-                               (indent-for-tab-command))))))
+(setq-default js2-basic-offset  2)
 
 
 ;; load cc-mode
@@ -120,11 +108,18 @@
 (add-to-list 'buftoggle-pairs-alist '("cxx" "hxx"))
 (add-to-list 'buftoggle-pairs-alist '("hxx" "cxx"))
 
-;; set c-mode default style and tabs
-(setq-default c-default-style   "linux"
-              c-basic-offset    2
-              tab-width         2
-              indent-tabs-mode  nil)
+;; default settings
+(setq-default
+ ;; c-mode and derived modes default style and tabs
+ c-default-style   "linux"
+ c-basic-offset    2
+ tab-width         2
+ indent-tabs-mode  nil
+ ;; javascript
+ js-indent-level   2
+ ;; sh
+ sh-basic-offset 2
+ sh-indentation 2)
 
 ;; Deactivate default PHP coding style so our coding style isn't overriden
 ;; Note: can't be inside php-mode initialisation defun.
@@ -160,63 +155,73 @@
                                         ; nil
   )
 
-(defun initialise-sh-mode ()
-  (setq sh-basic-offset 2
-        sh-indentation 2))
+(defun initialise-sh ())
 
-(defun initialise-c++-mode ()
+(defun initialise-c++ ()
   (setq comment-start "/* "
         comment-end   " */"))
 
-(defun initialise-elisp-mode ()
+(defun initialise-elisp ()
   (local-set-key (kbd "C-c C-e")  'do-eval-buffer)
   (turn-on-eldoc-mode))
 
-(defun initialise-php-mode ()
+(defun initialise-php ()
   (flymake-php-load))
 
-(defun initialise-js2-mode ()
-  (setq-default js-indent-level 2)
+(defun initialise-javascript ()
   (flymake-jshint-load)
-  (electric-indent-mode)
+  (electric-indent-mode))
+
+(defun initialise-js2-mode ()
+  ;; Following snippet adds responsive logic that indents the current line
+  ;; whenever the dot character (.) is typed on a continued expression.
+  (local-set-key "."
+                 '(lambda ()
+                   (interactive)
+                   (insert-char ?.)
+                   (when (js2-continued-expression-p)
+                     (indent-for-tab-command))))
+
   (local-set-key [f3]
-                 (lambda ()
+                 '(lambda ()
                    (interactive)
                    (unless (and next-error-function
                                 (not (string= (type-of (js2-next-error)) "string")))
                      (flymake-goto-next-error)))))
+  
 
-(defun initialise-css-mode ()
+(defun initialise-css ()
   (setq-default  css-electric-brace-behavior  nil
                  css-indent-offset            2)
   (flymake-css-load))
 
-;; Defun invoked after pressing C-c C-e (see `initialise-elisp-mode').
+;; Defun invoked after pressing C-c C-e (see `initialise-elisp').
 ;; Evals the current buffer and displays a message.
 (defun do-eval-buffer ()
   (interactive)
   (eval-buffer)
-  (message "buffer eval'ed"))
+  (message "buffer evaluated"))
 
 ;; Hooks for commonly used programming modes
 (add-hook 'c-mode-common-hook         'initialise-common-programming)
 (add-hook 'c-mode-common-hook         'initialise-c-c++)
-(add-hook 'common-c++-mode-hook       'initialise-c++-mode)
+(add-hook 'common-c++-mode-hook       'initialise-c++)
 (add-hook 'common-c++-mode-hook       'initialise-c-c++)
 (add-hook 'lisp-mode-hook             'initialise-common-programming)
 (add-hook 'emacs-lisp-mode-hook       'initialise-common-programming)
 (add-hook 'sh-mode-hook               'initialise-common-programming)
-(add-hook 'sh-mode-hook               'initialise-sh-mode)
+(add-hook 'sh-mode-hook               'initialise-sh)
 (add-hook 'makefile-mode-hook         'initialise-common-programming)
 (add-hook 'log-edit-mode-hook         'initialise-common-text)
 ;; - web
 (add-hook 'css-mode-hook              'initialise-common-programming)
-(add-hook 'css-mode-hook              'initialise-css-mode)
+(add-hook 'css-mode-hook              'initialise-css)
 (add-hook 'js2-mode-hook              'initialise-common-programming)
+(add-hook 'js2-mode-hook              'initialise-javascript)
 (add-hook 'js2-mode-hook              'initialise-js2-mode)
-(add-hook 'php-mode-hook              'initialise-php-mode)
+(add-hook 'php-mode-hook              'initialise-php)
 (add-hook 'html-mode-hook             'initialise-common-web)
 
 ;; Eldoc support
-(add-hook 'emacs-lisp-mode-hook       'initialise-elisp-mode)
-(add-hook 'lisp-interaction-mode-hook 'initialise-elisp-mode)
+(add-hook 'emacs-lisp-mode-hook       'initialise-elisp)
+(add-hook 'lisp-interaction-mode-hook 'initialise-elisp)

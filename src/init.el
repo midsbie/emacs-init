@@ -169,6 +169,7 @@
 (global-set-key (kbd "C-x /")         'bury-buffer)
 (global-set-key (kbd "C-x 4 k")       'kill-other-buffer)
 (global-set-key (kbd "C-x 4 /")       'bury-other-buffer)
+(global-set-key (kbd "C-x +")         'rearrange-desktop)
 
 (global-set-key (kbd "C-c C-t")       'c-toggle-hungry-state)
 

@@ -81,4 +81,19 @@ argument."
     (other-window (* count 1) all-frames)
     (bury-buffer)))
 
+(defun rearrange-desktop ()
+  "Rearrange the desktop by creating as many windows as possible that hold at
+least 85 characters. Acts on the current frame."
+  (interactive)
+  (dotimes (n (- (length (window-list)) 1))
+    (delete-window (cadr (window-list))))
+  (let ((count (- (/ (frame-width) 85) 1)))
+    (dotimes (n count)
+      (split-window-right))
+    (balance-windows)
+    (dotimes (n count)
+      (other-window 1)
+      (bury-buffer))
+    (other-window 1)))
+
 (provide 'window-extra)

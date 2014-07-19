@@ -142,17 +142,17 @@
 
 ;; ----- Key bindings
 ;; Awesome key bindings for moving around and manipulating windows.
-(global-set-key [M-left]        'windmove-left)
-(global-set-key [M-right]       'windmove-right)
-(global-set-key [M-up]          'windmove-up)
-(global-set-key [M-down]        'windmove-down)
-(global-set-key (kbd "C-x p")   'other-previous-window)
+(global-set-key [M-left]              'windmove-left)
+(global-set-key [M-right]             'windmove-right)
+(global-set-key [M-up]                'windmove-up)
+(global-set-key [M-down]              'windmove-down)
+(global-set-key (kbd "C-x p")         'other-previous-window)
 
 ;; Define miscellaneous shortcuts.
-(global-set-key [f2]          'shell)
-(global-set-key [f3]          'next-error)
-(global-set-key [S-f3]        'previous-error)
-(global-set-key (kbd "C-x k") 'kill-this-buffer)
+(global-set-key [f2]                  'shell)
+(global-set-key [f3]                  'next-error)
+(global-set-key [S-f3]                'previous-error)
+(global-set-key (kbd "C-x k")         'kill-this-buffer)
 
 ;; buffer-move: key bindings
 (global-set-key (kbd "<C-S-up>")      'buf-move-up)
@@ -192,12 +192,10 @@
 (setq uniquify-buffer-name-style 'forward)
 (ido-mode t)
 
-(put 'upcase-region 'disabled nil)
-
-
 ;; enable useful commands
 (put 'narrow-to-region  'disabled nil)
 (put 'erase-buffer      'disabled nil)
+(put 'upcase-region     'disabled nil)
 
 ;; fci-mode
 (setq-default fci-rule-color "gray9")

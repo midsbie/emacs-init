@@ -132,7 +132,8 @@
                            (with-current-buffer buffer
                              (and buffer-file-name
                                   (string= major-mode "org-mode"))))
-                       (buffer-list))))
+                       (buffer-list)))
+  (org-agenda-kill-all-agenda-buffers))
 
 (global-set-key (kbd "C-c a a")   'org-agenda-list)
 (global-set-key (kbd "C-c a t")   'org-todo-list)

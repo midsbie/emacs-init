@@ -124,9 +124,20 @@
                             (visual-line-mode)
                             (auto-fill-mode -1)))
 
+(defun org-kill-all-buffers ()
+  "Kill all org-mode buffers."
+  (interactive)
+  (mapc 'kill-buffer 
+        (remove-if-not #'(lambda(buffer)
+                           (with-current-buffer buffer
+                             (and buffer-file-name
+                                  (string= major-mode "org-mode"))))
+                       (buffer-list))))
+
 (global-set-key (kbd "C-c a a")   'org-agenda-list)
 (global-set-key (kbd "C-c a t")   'org-todo-list)
 (global-set-key (kbd "C-c c")     'org-capture)
+(global-set-key (kbd "C-x K o")   'org-kill-all-buffers)
 
 (custom-set-variables
  '(org-agenda-window-setup (quote current-window))) 

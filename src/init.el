@@ -131,7 +131,9 @@
         (remove-if-not #'(lambda(buffer)
                            (with-current-buffer buffer
                              (and buffer-file-name
-                                  (string= major-mode "org-mode"))))
+                                  (or
+                                   (string= major-mode "calendar-mode")
+                                   (string= major-mode "org-mode")))))
                        (buffer-list)))
   (org-agenda-kill-all-agenda-buffers)
   (when (called-interactively-p 'interactive)

@@ -42,6 +42,9 @@
 (require 'js2-mode)
 (require 'flymake-jshint)
 
+;; Various settings
+(setq change-log-default-name "CHANGELOG")
+
 ;; set up js2-mode
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (setq-default js2-basic-offset  2)

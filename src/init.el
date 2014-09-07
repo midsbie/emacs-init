@@ -198,7 +198,9 @@
 
 ;; ----- Miscellaneous settings
 (setq inhibit-splash-screen   t         ; Disable splash screen
-      initial-scratch-message nil)      ; Disable startup message
+      initial-scratch-message nil       ; Disable startup message
+      password-cache-expiry   nil)      ; Disable password cache expiration
+
 (delete-selection-mode t)               ; Enable C-D to delete
                                         ; selected text
 (transient-mark-mode t)                 ; Enable typing to replace

@@ -111,6 +111,9 @@
 (add-to-list 'buftoggle-pairs-alist '("cxx" "hxx"))
 (add-to-list 'buftoggle-pairs-alist '("hxx" "cxx"))
 
+;; scss-mode
+(setq scss-sass-command "scss")
+
 ;; default settings
 (setq-default
  ;; c-mode and derived modes default style and tabs

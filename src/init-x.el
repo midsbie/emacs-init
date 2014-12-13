@@ -82,4 +82,5 @@
 	interprogram-paste-function 'x-cut-buffer-or-selection-value)
 
   (split-window-horizontally)             ; two windows at startup
+  (setq speedbar-use-images nil)          ; do not use icons in speedbar-mode
   )

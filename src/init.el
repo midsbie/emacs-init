@@ -335,6 +335,9 @@
 				       (left-fringe . 0)
 				       )))
 
+;; Enable `dired-find-alternate-file' command.
+(put 'dired-find-alternate-file 'disabled nil)
+
 
 ;; ----- Load configurations specific to the environment
 (load-library "init/init-x")

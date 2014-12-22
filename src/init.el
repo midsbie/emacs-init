@@ -324,6 +324,18 @@
                (other-window 1))))
 
 
+;; Configure `speedbar-mode'
+;; The only difference at this point is that its width has been doubled to 40 chars.
+(custom-set-variables '(speedbar-frame-parameters '((minibuffer . nil)
+				       (width . 40)
+				       (border-width . 0)
+				       (menu-bar-lines . 0)
+				       (tool-bar-lines . 0)
+				       (unsplittable . t)
+				       (left-fringe . 0)
+				       )))
+
+
 ;; ----- Load configurations specific to the environment
 (load-library "init/init-x")
 (load-library "init/init-term")

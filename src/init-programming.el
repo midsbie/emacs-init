@@ -204,6 +204,7 @@
 (defun initialise-css ()
   (setq-default  css-electric-brace-behavior  nil
                  css-indent-offset            2)
+  (auto-fill-mode -1)
   (flymake-css-load))
 
 ;; Defun invoked after pressing C-c C-e (see `initialise-elisp').

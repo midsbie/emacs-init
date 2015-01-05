@@ -279,6 +279,9 @@
 ;; timeclock
 (set-variable 'timeclock-workday 36000)
 
+;; calendar
+(setq calendar-week-start-day 1)        ; set calendar's week start day to
+                                        ; Monday and not Sunday, as by default.
 
 ;; ----- Defuns used by conf files
 ;; Workaround for fci-mode.  Don't enable fci-mode if emacs version is 24.3

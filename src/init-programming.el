@@ -110,6 +110,8 @@
 ;; buftoggle
 (add-to-list 'buftoggle-pairs-alist '("cxx" "hxx"))
 (add-to-list 'buftoggle-pairs-alist '("hxx" "cxx"))
+(add-to-list 'buftoggle-pairs-alist '("cxx" "h"  ))
+(add-to-list 'buftoggle-pairs-alist '("h"   "cxx"))
 
 ;; scss-mode
 (setq scss-sass-command "scss")

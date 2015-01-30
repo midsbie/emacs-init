@@ -219,8 +219,7 @@
 ;; Hooks for commonly used programming modes
 (add-hook 'c-mode-common-hook         'initialise-common-programming)
 (add-hook 'c-mode-common-hook         'initialise-c-c++)
-(add-hook 'common-c++-mode-hook       'initialise-c++)
-(add-hook 'common-c++-mode-hook       'initialise-c-c++)
+(add-hook 'c++-mode-hook              'initialise-c++)
 (add-hook 'lisp-mode-hook             'initialise-common-programming)
 (add-hook 'emacs-lisp-mode-hook       'initialise-common-programming)
 (add-hook 'sh-mode-hook               'initialise-common-programming)

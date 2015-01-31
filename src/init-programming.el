@@ -161,7 +161,8 @@
                                         ; nil
   )
 
-(defun initialise-sh ())
+(defun initialise-sh ()
+  (auto-fill-mode -1))
 
 (defun initialise-c++ ()
   (setq comment-start "/* "

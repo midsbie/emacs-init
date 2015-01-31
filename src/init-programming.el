@@ -108,10 +108,8 @@
 (yas/global-mode 1)
 
 ;; buftoggle
-(add-to-list 'buftoggle-pairs-alist '("cxx" "hxx"))
-(add-to-list 'buftoggle-pairs-alist '("hxx" "cxx"))
-(add-to-list 'buftoggle-pairs-alist '("cxx" "h"  ))
-(add-to-list 'buftoggle-pairs-alist '("h"   "cxx"))
+(add-to-list 'buftoggle-pairs-alist '("cxx" "hxx" "hpp" "hh" "h"))
+(add-to-list 'buftoggle-pairs-alist '("hxx" "cxx" "cpp" "cc"))
 
 ;; scss-mode
 (setq scss-sass-command "scss")

@@ -3,7 +3,7 @@
 ;; Copyright (C) 2014 Miguel Guedes
 ;;
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
-;; URL: 
+;; URL:
 ;; Keywords: init
 ;; Version: 1.0
 ;;
@@ -21,7 +21,7 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;;
 ;; Comments:
-;; 
+;;
 ;;
 
 
@@ -62,7 +62,7 @@
 ;; ----- Web
 ;; DISABLED: Multi web mode
 ;; (require 'multi-web-mode)
-;; 
+;;
 ;; (setq mweb-default-major-mode 'html-mode)
 ;; (setq mweb-tags '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
 ;;                   (js-mode "<script +\\(type=\"text/javascript\"\\|language=\"javascript\"\\)[^>]*>" "</script>")
@@ -143,6 +143,8 @@
 
 ;; (doxymacs-mode)                     ; turn doxymacs on
   (abbrev-mode -1)                  ; turn abbrev-mode off
+  ;; Delete all trailing whitespace before saving
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
   )
 
 (defun initialise-common-web ()
@@ -199,7 +201,7 @@
                    (unless (and next-error-function
                                 (not (string= (type-of (js2-next-error)) "string")))
                      (flymake-goto-next-error)))))
-  
+
 
 (defun initialise-css ()
   (setq-default  css-electric-brace-behavior  nil

@@ -126,6 +126,7 @@
  ;; sh
  sh-basic-offset    2
  sh-indentation     2
+ show-trailing-whitespace   t
  php-mode-coding-style      'drupal
  php-lineup-cascaded-calls  t)
 
@@ -152,7 +153,7 @@
 
 (defun initialise-c-c++()
   (local-set-key "\C-co" 'buftoggle)
-  
+
   (c-toggle-auto-hungry-state 1)
   (c-toggle-auto-state -1)
   (c-set-offset 'innamespace 0)         ; set indentation inside namespaces to

@@ -174,6 +174,8 @@
   (turn-on-eldoc-mode))
 
 (defun initialise-php ()
+  (setq comment-start "/* "
+        comment-end   " */")
   (flymake-php-load))
 
 (defun initialise-javascript ()

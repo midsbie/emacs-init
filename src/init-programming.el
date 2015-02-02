@@ -126,7 +126,6 @@
  ;; sh
  sh-basic-offset    2
  sh-indentation     2
- show-trailing-whitespace   t
  php-mode-coding-style      'drupal
  php-lineup-cascaded-calls  t)
 
@@ -145,6 +144,7 @@
   (abbrev-mode -1)                  ; turn abbrev-mode off
   ;; Delete all trailing whitespace before saving
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
+  (setq show-trailing-whitespace  t)
   )
 
 (defun initialise-common-web ()

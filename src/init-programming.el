@@ -117,19 +117,17 @@
 ;; default settings
 (setq-default
  ;; c-mode and derived modes default style and tabs
- c-default-style   "linux"
- c-basic-offset    2
- tab-width         2
- indent-tabs-mode  nil
+ c-default-style    "linux"
+ c-basic-offset     2
+ tab-width          2
+ indent-tabs-mode   nil
  ;; javascript
- js-indent-level   2
+ js-indent-level    2
  ;; sh
- sh-basic-offset 2
- sh-indentation 2)
-
-;; Deactivate default PHP coding style so our coding style isn't overriden
-;; Note: can't be inside php-mode initialisation defun.
-(setq php-mode-coding-style nil)
+ sh-basic-offset    2
+ sh-indentation     2
+ php-mode-coding-style      'drupal
+ php-lineup-cascaded-calls  t)
 
 ;; Set default product when on `sql-mode'
 (setq sql-product 'mysql)

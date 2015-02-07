@@ -145,6 +145,7 @@
   ;; Delete all trailing whitespace before saving
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
   (setq show-trailing-whitespace  t)
+  (subword-mode 1)
   )
 
 (defun initialise-common-web ()

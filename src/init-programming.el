@@ -153,6 +153,7 @@
 
 ;; -----  Setup customisation of major modes.
 (defun initialise-common-programming ()
+  "Initialise modes related programming."
   (enable-fci-mode)                 ; fill column indicator
   (auto-fill-mode)                  ; auto fill
   (flyspell-prog-mode)              ; turn spell check for strings and comments
@@ -179,12 +180,14 @@
   )
 
 (defun initialise-common-web ()
+  "Initialise modes related to web development."
   (auto-fill-mode -1)
   (highlight-parentheses-mode)
   (setq tab-width       2
         c-basic-offset  2))
 
 (defun initialise-c-c++()
+  "Initialise modes related to C and C++ development."
   (local-set-key "\C-co" 'buftoggle)
 
   (c-toggle-auto-hungry-state 1)
@@ -192,23 +195,28 @@
   )
 
 (defun initialise-sh ()
+  "Initialise modes related to shell scripting development."
   (auto-fill-mode -1))
 
 (defun initialise-c++ ()
+  "Initialise modes related to C++ development."
   (setq comment-start "/* "
         comment-end   " */"))
 
 (defun initialise-elisp ()
+  "Initialise modes related to ELISP development."
   (local-set-key (kbd "C-x C-k")  'do-eval-buffer)
   (turn-on-eldoc-mode))
 
 (defun initialise-php ()
+  "Initialise modes related to PHP development."
   (setq comment-start "/* "
         comment-end   " */")
   (eldoc-mode 1)
   (php-eldoc-enable))
 
 (defun initialise-javascript ()
+  "Initialise modes related to Javascript development."
   (electric-indent-mode)
   (setq comment-start "/* "
         comment-end   " */")
@@ -217,8 +225,10 @@
   (local-set-key (kbd "M-e") 'c-end-of-statement))
 
 (defun initialise-js2-mode ()
-  "Add responsive logic to indent the current line whenever the
-dot character (.) is typed on a continued expression."
+  "Customise js2-mode.
+In particular, add responsive logic to indent the current line
+whenever the dot character (.) is typed on a continued
+expression."
   (local-set-key "."  '(lambda ()
                    (interactive)
                    (insert-char ?.)
@@ -235,6 +245,7 @@ dot character (.) is typed on a continued expression."
 
 
 (defun initialise-css ()
+  "Initialise modes related to CSS development."
   (setq-default  css-electric-brace-behavior  nil
                  css-indent-offset            2)
   (auto-fill-mode -1)

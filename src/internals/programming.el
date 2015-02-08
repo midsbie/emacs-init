@@ -58,6 +58,11 @@
                                   (label                 . 0)
                                   (statement-cont        . +)))))
 
+;; No clean-ups.  May prove useful in chaotically formatted code.
+(c-add-style "default-bland"
+            '("default"
+              (c-cleanup-list . nil)))
+
 ;; OpenBSD style.
 (c-add-style "openbsd"
              '("bsd"

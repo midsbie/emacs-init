@@ -41,9 +41,6 @@
 (require 'js2-mode)
 (require 'flycheck)
 (require 'auto-complete-config)
-
-;; Various settings
-(setq change-log-default-name "CHANGELOG")
 (require 'web-mode)
 
 ;; auto-complete mode
@@ -57,8 +54,6 @@
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (setq-default js2-basic-offset  2)
 
-;; create a fake awk-mode based on cc-mode
-(autoload 'awk-mode "cc-mode" nil t)
 ;; html-mode
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
@@ -68,9 +63,13 @@
   (load-library "omniscient/omniscient.el")
   (load-library "omniscient/cc-mode.el"))
 
-
-
 ;; ----- Various settings
+;; Various settings
+(setq change-log-default-name "CHANGELOG")
+
+;; create a fake awk-mode based on cc-mode
+(autoload 'awk-mode "cc-mode" nil t)
+
 ;; yasnippet
 (setq yas/snippet-dirs '("~/.emacs.d/snippets"))
 (yas/global-mode 1)

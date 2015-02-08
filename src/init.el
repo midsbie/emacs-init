@@ -224,6 +224,7 @@
 (put 'narrow-to-region  'disabled nil)
 (put 'erase-buffer      'disabled nil)
 (put 'upcase-region     'disabled nil)
+(put 'downcase-region   'disabled nil)
 
 ;; fci-mode
 (setq-default fci-rule-color "gray9")

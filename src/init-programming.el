@@ -58,11 +58,10 @@
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (setq-default js2-basic-offset  2)
 
+;; create a fake awk-mode based on cc-mode
+(autoload 'awk-mode "cc-mode" nil t)
 
-;; load cc-mode
-(autoload 'awk-mode "cc-mode" nil t)    ; Unsure why we want this?
-
-;; - omnis
+;; omnis
 (when (file-exists-p "/usr/local/share/omnis/clients/omniscient/omniscient.el")
   (add-to-list 'load-path "/usr/local/share/omnis/clients/")
   (load-library "omniscient/omniscient.el")

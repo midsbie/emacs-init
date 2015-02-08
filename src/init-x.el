@@ -1,12 +1,11 @@
-;; init-x.el --- Initialisation sequence when run within X
-;;
+;;; init-x.el --- Initialisation sequence when run within X
+
 ;; Copyright (C) 2014 Miguel Guedes
-;;
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
-;; URL: 
+;; URL:
 ;; Keywords: init
 ;; Version: 1.0
-;;
+
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
@@ -19,31 +18,39 @@
 ;;
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
-;;
-;; Comments:
-;; 
-;;
+
+;;; Commentary:
+
+;;; Code:
+
+(require 'speedbar)
 
 ;; Set default window size
 (defun set-frame-size-according-to-resolution ()
+  "Set the active frame's size according to the screen's
+resolution.  Frame size is set to 190 characters wide if the
+display width is larger than 1280, otherwise it is set to 90
+characters wide."
   (interactive)
   (if window-system
       (progn
-        ;; use 180 char wide window for largeish displays
+        ;; use 190 char wide window for largeish displays
         ;; and smaller 90 column windows for smaller displays
         (if (> (x-display-pixel-width) 1280)
             (add-to-list 'default-frame-alist (cons 'width 190))
           (add-to-list 'default-frame-alist (cons 'width 90)))
-        (add-to-list 'default-frame-alist 
+        (add-to-list 'default-frame-alist
                      (cons 'height 77)))))
 
 ;; Function: Set current frame width
 (defun set-current-frame-width (arg)
+  "Set the active frame's width to ARG."
   (interactive "p")
   (set-frame-width (selected-frame) arg))
 
 ;; Function: Set current frame height
 (defun set-current-frame-height (arg)
+  "Set the active frame's height to ARG."
   (interactive "p")
   (set-frame-height (selected-frame) arg))
 
@@ -65,14 +72,14 @@
    '(rst-level-1-face ((t (:weight bold))) t)
    '(rst-level-2-face ((t (:weight bold))) t)
    '(rst-level-3-face ((t (:weight extra-bold))) t))
-  
+
   ;; Let's now perform last initialization steps
   (add-to-list 'default-frame-alist (cons 'width 185))
   (add-to-list 'default-frame-alist (cons 'height 73))
-  
+
   (set-current-frame-width 185)
   (set-current-frame-height 73)
-  
+
   ;; Highlighter
   (global-hl-line-mode 1)
   (set-face-background 'hl-line "#383830")
@@ -85,3 +92,5 @@
   (split-window-horizontally)             ; two windows at startup
   (setq speedbar-use-images nil)          ; do not use icons in `speedbar-mode'
   )
+
+;;; init-x.el ends here

@@ -1,12 +1,11 @@
-;; init-cedet.el --- Initialisation of CEDET
-;;
+;;; init-cedet.el --- Initialisation of CEDET
+
 ;; Copyright (C) 2014 Miguel Guedes
-;;
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
-;; URL: 
+;; URL:
 ;; Keywords: init
 ;; Version: 1.0
-;;
+
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
@@ -19,10 +18,10 @@
 ;;
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
-;;
-;; Comments:
-;; 
-;;
+
+;;; Commentary:
+
+;;; Code:
 
 
 (add-to-list 'load-path "/usr/src/cedet.bzr")
@@ -34,7 +33,7 @@
 (load-library "contrib/eassist")
 ;; (load-library "/usr/src/async/auto-complete-clang-async")
 
- 
+
 ;; eassist
 (add-to-list 'eassist-header-switches '("cxx" "hxx"))
 (add-to-list 'eassist-header-switches '("hxx" "cxx"))
@@ -75,7 +74,7 @@
   (semantic-add-system-include "/usr/include/giomm-2.4/"            'c-mode)
   (semantic-add-system-include "/usr/include/gdkmm-3.0/"            'c-mode)
   (semantic-add-system-include "/usr/include/libxml++-2.6/"         'c-mode)
-  
+
 ;;  (imenu-add-to-menubar "Semantic")
   )
 
@@ -93,10 +92,10 @@
   (local-set-key "\C-cq"            'semantic-ia-show-doc)
   (local-set-key "\C-cs"            'semantic-ia-show-summary)
   (local-set-key "\C-cp"            'semantic-analyze-proto-impl-toggle)
-  
+
   (local-set-key "\C-co"            'eassist-switch-h-cpp)
   (local-set-key "\C-cm"            'eassist-list-methods)
-  
+
   ;; Add font-lock for doxymacs support
 ;;   (add-hook 'font-lock-mode-hook
 ;;             (lambda()
@@ -142,3 +141,6 @@
            ("semantic-decoration-on-includes" . t)
            ("semantic-decoration-on-protected-members")
            ("semantic-decoration-on-private-members")))))
+
+
+;;; init-cedet.el ends here

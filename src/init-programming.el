@@ -1,12 +1,11 @@
-;; init-programming.el --- Initialisation of programming related features
-;;
+;;; init-programming.el --- Initialisation of programming related features
+
 ;; Copyright (C) 2014 Miguel Guedes
-;;
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:
 ;; Keywords: init
 ;; Version: 1.0
-;;
+
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
@@ -19,11 +18,10 @@
 ;;
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
-;;
-;; Comments:
-;;
-;;
 
+;;; Commentary:
+
+;;; Code:
 
 ;; ----- Includes
 ;; - from packages:
@@ -241,3 +239,5 @@
 ;; Eldoc support
 (add-hook 'emacs-lisp-mode-hook       'initialise-elisp)
 (add-hook 'lisp-interaction-mode-hook 'initialise-elisp)
+
+;;; init-programming.el ends here

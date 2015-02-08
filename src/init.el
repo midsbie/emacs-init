@@ -1,12 +1,11 @@
-;; init.el --- Master emacs initialisation file
-;;
+;;; init.el --- Master emacs initialisation file
+
 ;; Copyright (C) 2014 Miguel Guedes
-;;
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
-;; URL: 
+;; URL:
 ;; Keywords: init
 ;; Version: 1.0
-;;
+
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
@@ -20,9 +19,9 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;;
-;; Comments:
-;; 
-;;
+;;; Commentary:
+
+;;; Code:
 
 
 ;; ----- Includes
@@ -30,7 +29,7 @@
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/packages")
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/elpa")
 
-;; setup and load ELPA packages (and others)
+;; setup and load ELPA packages (and others) first and foremost
 (require 'package)
 (setq package-user-dir "/usr/share/emacs/site-lisp/elpa")
 
@@ -127,7 +126,7 @@
 (defun org-kill-all-buffers ()
   "Kill all org-mode buffers."
   (interactive)
-  (mapc 'kill-buffer 
+  (mapc 'kill-buffer
         (remove-if-not #'(lambda(buffer)
                            (with-current-buffer buffer
                              (or
@@ -144,7 +143,7 @@
 (global-set-key (kbd "C-x K o")   'org-kill-all-buffers)
 
 (custom-set-variables
- '(org-agenda-window-setup (quote current-window))) 
+ '(org-agenda-window-setup (quote current-window)))
 
 
 ;; ----- Aliases
@@ -193,7 +192,7 @@
 (global-set-key (kbd "C-x h")         'help-command)
 
 ;; this new key binding replaces mark-paragraph
-(global-set-key (kbd "M-h")           'backward-kill-word)   
+(global-set-key (kbd "M-h")           'backward-kill-word)
 
 
 ;; ----- Miscellaneous settings
@@ -382,3 +381,5 @@
              '(lambda ()
                 (unless global-timeclox-mode
                   (global-timeclox-mode 1))))
+
+;;; init.el ends here

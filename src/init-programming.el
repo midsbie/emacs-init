@@ -245,7 +245,9 @@
 
 (defun initialise-php ()
   (setq comment-start "/* "
-        comment-end   " */"))
+        comment-end   " */")
+  (eldoc-mode 1)
+  (php-eldoc-enable))
 
 (defun initialise-javascript ()
   (electric-indent-mode)
@@ -256,10 +258,9 @@
   (local-set-key (kbd "M-e") 'c-end-of-statement))
 
 (defun initialise-js2-mode ()
-  ;; Following snippet adds responsive logic that indents the current line
-  ;; whenever the dot character (.) is typed on a continued expression.
-  (local-set-key "."
-                 '(lambda ()
+  "Add responsive logic to indent the current line whenever the
+dot character (.) is typed on a continued expression."
+  (local-set-key "."  '(lambda ()
                    (interactive)
                    (insert-char ?.)
                    (when (js2-continued-expression-p)
@@ -278,6 +279,8 @@
   (setq-default  css-electric-brace-behavior  nil
                  css-indent-offset            2)
   (auto-fill-mode -1)
+  (eldoc-mode 1)
+  (css-eldoc-enable)
   )
 
 ;; Defun invoked after pressing C-c C-e (see `initialise-elisp').

@@ -1,11 +1,9 @@
-;; init-term.el --- Initialisation sequence when run from the terminal
+;;; auto-complete.el --- Configures `auto-complete-mode'
 
-;; Copyright (C) 2014 Miguel Guedes
+;; Copyright (C) 2015  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
-;; URL:
-;; Keywords: init
-;; Version: 1.0
+;; Keywords: tools
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -22,13 +20,16 @@
 
 ;;; Commentary:
 
+;;
+
 ;;; Code:
 
-(require 'linum)
+(require 'auto-complete-config)
 
-;; Fix "stuck" fringe by adding a space between line number and actual content
-(unless (eq window-system 'x)
-  (setq linum-format "%d "))
+(ac-config-default)
+(global-auto-complete-mode)
 
+(define-key ac-menu-map (kbd "C-n") 'ac-next)
+(define-key ac-menu-map (kbd "C-p") 'ac-previous)
 
-;;; init-term.el ends here
+;;; auto-complete.el ends here

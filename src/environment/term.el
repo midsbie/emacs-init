@@ -1,9 +1,10 @@
-;;; init-mail.el --- Initialisation of mail
+;;; term.el --- Initialisation sequence when run from the terminal
 
 ;; Copyright (C) 2014 Miguel Guedes
+
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:
-;; Keywords: init
+;; Keywords: tools
 ;; Version: 1.0
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -23,26 +24,11 @@
 
 ;;; Code:
 
-(require 'gnus)
-(require 'message)
-(require 'smtpmail)
+(require 'linum)
 
-;; Setup NNTP newsgroups
-(setq gnus-select-method '(nntp "eunews.blocknews.net")
-      user-full-name "Miguel Guedes"
-      user-mail-address "miguel.a.guedes@gmail.com")
+;; Fix "stuck" fringe by adding a space between line number and actual content
+(unless (eq window-system 'x)
+  (setq linum-format "%d "))
 
-;; Setup
-(setq gnus-select-method ;; gnus-secondary-select-methods
-      '(nnimap "Personal"
-               (nnimap-address "imap.gmail.com")
-               (nnimap-server-port 993)
-               (nnimap-stream ssl)))
 
-(setq message-send-mail-function 'smtpmail-send-it
-      smtpmail-default-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-service 587
-      smtpmail-local-domain "miguelguedes.org")
-
-;;; init-mail.el ends here
+;;; term.el ends here

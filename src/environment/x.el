@@ -1,9 +1,10 @@
-;;; init-x.el --- Initialisation sequence when run within X
+;;; x.el --- Initialisation sequence when run within X
 
-;; Copyright (C) 2014 Miguel Guedes
+;; Copyright (C) 2014-2015 Miguel Guedes
+
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:
-;; Keywords: init
+;; Keywords: tools
 ;; Version: 1.0
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -93,4 +94,4 @@ characters wide."
   (setq speedbar-use-images nil)          ; do not use icons in `speedbar-mode'
   )
 
-;;; init-x.el ends here
+;;; x.el ends here

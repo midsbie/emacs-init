@@ -207,6 +207,10 @@
 
 (setq uniquify-buffer-name-style 'forward)
 
+;; Set higher threshold before GC kicks in. Changing this setting seems to make
+;; emacs snappier for some specific workflows.
+(setq gc-cons-threshold 20000000)
+
 ;; ido-mode related
 (require 'flx-ido)
 (ido-mode 1)

@@ -26,7 +26,10 @@
 
 (require 'yasnippet)
 
-(setq yas/snippet-dirs '("~/.emacs.d/snippets"))
+(add-to-list 'yas/snippet-dirs '("~/.emacs.d/snippets"))
+
+(global-set-key (kbd "C-x y") 'yas/visit-snippet-file)
+
 (yas/global-mode 1)
 
 ;;; yasnippet.el ends here

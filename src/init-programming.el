@@ -42,11 +42,19 @@
 (require 'highlight-parentheses)
 (require 'js2-mode)
 (require 'flymake-jshint)
+(require 'auto-complete-config)
 
 ;; Various settings
 (setq change-log-default-name "CHANGELOG")
 
-;; set up js2-mode
+;; auto-complete mode
+(ac-config-default)
+(global-auto-complete-mode)
+
+(define-key ac-menu-map (kbd "C-n") 'ac-next)
+(define-key ac-menu-map (kbd "C-p") 'ac-previous)
+
+;; js2-mode
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (setq-default js2-basic-offset  2)
 

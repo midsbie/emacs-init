@@ -65,7 +65,7 @@
                                         ; minibuffer
  column-number-mode           t
  comment-multi-line           t
- comment-style                (quote multi)
+ comment-style                'multi
  indent-tabs-mode             nil
  standard-indent              2
  tab-width                    2

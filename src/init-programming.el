@@ -201,14 +201,22 @@
                                     ; flyspell from messing with
                                     ; auto-complete-mode
   (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting
-;; (setq c-auto-newline t)             ; set electricity on
-
-;; (doxymacs-mode)                     ; turn doxymacs on
   (abbrev-mode -1)                  ; turn abbrev-mode off
+  (subword-mode 1)
+
+  ;; `c-auto-newline' was previously disabled and done so for a reason. Have
+  ;; just tested it and seemed fine whilst editing a C source file but may not
+  ;; work well on all major modes. If that's the case then it needs activation
+  ;; on a per major-mode basis. However, if it needs to be disabled altogether,
+  ;; please explain why for future reference.
+  (setq c-auto-newline t)
+
   ;; Delete all trailing whitespace before saving
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
-  (setq show-trailing-whitespace  t)
-  (subword-mode 1)
+; (setq show-trailing-whitespace t)
+
+  ;; The following disabled:
+; (doxymacs-mode)                    ; turn doxymacs on
   )
 
 (defun initialise-common-web ()

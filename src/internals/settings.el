@@ -28,8 +28,7 @@
       initial-scratch-message nil       ; Disable startup message
       password-cache-expiry   nil)      ; Disable password cache expiration
 
-(delete-selection-mode t)               ; Enable C-D to delete
-                                        ; selected text
+(delete-selection-mode t)               ; Enable C-D to delete selected text
 (transient-mark-mode t)                 ; Enable typing to replace
                                         ; selected text
 
@@ -61,8 +60,7 @@
 (fset 'yes-or-no-p 'y-or-n-p)           ; accept 'y' or 'n' instead of yes/no
 
 (setq-default
- enable-recursive-minibuffers t         ; allow recursive editing in
-                                        ; minibuffer
+ enable-recursive-minibuffers t         ; allow recursive editing in minibuffer
  column-number-mode           t
  comment-multi-line           t
  comment-style                'multi

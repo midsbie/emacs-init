@@ -34,7 +34,6 @@
 ;; - using `load-path'
 (load-library "buftoggle.git/buftoggle")
 (load-library "builder.git/src/builder")
-(load-library "vcx.git/src/vcx")
 
 ;; - from ELPA:
 (require 'yasnippet)
@@ -108,9 +107,6 @@
 
 
 ;; ----- Various settings
-;; VCx
-(global-vcx-mode 1)
-
 ;; yasnippet
 (setq yas/snippet-dirs '("~/.emacs.d/snippets"))
 (yas/global-mode 1)

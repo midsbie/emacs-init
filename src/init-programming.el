@@ -41,7 +41,7 @@
 (require 'php-mode)
 (require 'highlight-parentheses)
 (require 'js2-mode)
-(require 'flymake-jshint)
+(require 'flycheck)
 (require 'auto-complete-config)
 
 ;; Various settings
@@ -173,8 +173,21 @@
  ;; sh
  sh-basic-offset    2
  sh-indentation     2
+ ;; php
  php-mode-coding-style      'drupal
  php-lineup-cascaded-calls  t)
+
+;; flycheck
+(global-flycheck-mode 1)
+
+;; + in c/c++ modes
+(setq flycheck-cppcheck-checks '("all")
+      flycheck-c/c++-clang-executable "true") ; disable clang since we use omnis
+
+;; + in php mode
+(setq flycheck-php-phpmd-executable "phpmd"
+      flycheck-phpmd-rulesets '("cleancode" "codesize" "controversial"
+                                "design" "naming" "unusedcode"))
 
 ;; Set default product when on `sql-mode'
 (setq sql-product 'mysql)
@@ -184,6 +197,9 @@
   (enable-fci-mode)                 ; fill column indicator
   (auto-fill-mode)                  ; auto fill
   (flyspell-prog-mode)              ; turn spell check for strings and comments
+  (ac-flyspell-workaround)          ; this defun must be executed to prevent
+                                    ; flyspell from messing with
+                                    ; auto-complete-mode
   (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting
 ;; (setq c-auto-newline t)             ; set electricity on
 
@@ -221,11 +237,9 @@
 
 (defun initialise-php ()
   (setq comment-start "/* "
-        comment-end   " */")
-  (flymake-php-load))
+        comment-end   " */"))
 
 (defun initialise-javascript ()
-  (flymake-jshint-load)
   (electric-indent-mode)
   (setq comment-start "/* "
         comment-end   " */")
@@ -247,15 +261,16 @@
                  '(lambda ()
                    (interactive)
                    (unless (and next-error-function
-                                (not (string= (type-of (js2-next-error)) "string")))
-                     (flymake-goto-next-error)))))
+                                (not (string= (type-of (js2-next-error))
+                                              "string")))
+                     (flycheck-next-error)))))
 
 
 (defun initialise-css ()
   (setq-default  css-electric-brace-behavior  nil
                  css-indent-offset            2)
   (auto-fill-mode -1)
-  (flymake-css-load))
+  )
 
 ;; Defun invoked after pressing C-c C-e (see `initialise-elisp').
 ;; Evals the current buffer and displays a message.

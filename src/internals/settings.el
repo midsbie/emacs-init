@@ -55,7 +55,8 @@
 ; (size-indication-mode)                  ; turn on size indication mode
 
 (scroll-bar-mode -1)                    ; disable scrollbars
-(setq diff-switches       '-u)          ; set diff to use unified format
+(setq diff-switches         '-u         ; set diff to use unified format
+      echo-keystrokes       0.1)        ; show keystrokes as they're happen
 
 (fset 'yes-or-no-p 'y-or-n-p)           ; accept 'y' or 'n' instead of yes/no
 

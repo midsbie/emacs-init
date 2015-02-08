@@ -28,7 +28,6 @@
 (require 'cl-lib)
 
 ;; - from packages:
-(load-library "multi-mode")
 ;; (load-library "doxymacs/doxymacs")
 
 ;; - using `load-path'
@@ -45,6 +44,7 @@
 
 ;; Various settings
 (setq change-log-default-name "CHANGELOG")
+(require 'web-mode)
 
 ;; auto-complete mode
 (ac-config-default)
@@ -59,6 +59,8 @@
 
 ;; create a fake awk-mode based on cc-mode
 (autoload 'awk-mode "cc-mode" nil t)
+;; html-mode
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
 ;; omnis
 (when (file-exists-p "/usr/local/share/omnis/clients/omniscient/omniscient.el")
@@ -66,44 +68,6 @@
   (load-library "omniscient/omniscient.el")
   (load-library "omniscient/cc-mode.el"))
 
-;; ----- Web
-;; DISABLED: Multi web mode
-;; (require 'multi-web-mode)
-;;
-;; (setq mweb-default-major-mode 'html-mode)
-;; (setq mweb-tags '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
-;;                   (js-mode "<script +\\(type=\"text/javascript\"\\|language=\"javascript\"\\)[^>]*>" "</script>")
-;;                   (css-mode "<style +type=\"text/css\"[^>]*>" "</style>")))
-;; (setq mweb-filename-extensions '("php" "htm" "html" "ctp"
-;;                                  "phtml" "php4" "php5"))
-;; (multi-web-global-mode 1)
-
-;; Multi mode: setup support for web programming
-(setq magic-mode-alist
-      (append magic-mode-alist '(("<\\?"               . setup-web-mode))))
-(setq magic-mode-alist
-      (append magic-mode-alist '(("../usr/bin/env php" . setup-web-mode))))
-(setq magic-mode-alist
-      (append magic-mode-alist '(("<html"              . setup-web-mode))))
-(setq magic-mode-alist
-      (append magic-mode-alist '(("<head"              . setup-web-mode))))
-(setq magic-mode-alist
-      (append magic-mode-alist '(("<body"              . setup-web-mode))))
-(setq magic-mode-alist
-      (append magic-mode-alist '(("<\\!DOCTYPE html"   . setup-web-mode))))
-
-(defun setup-web-mode()
-  (multi-mode 1
-              'html-mode
-              '("<\?"           php-mode)
-              '("<\?php"        php-mode)
-              '("\?>"           html-mode)
-              '("<script"       js-mode)
-              '("</script>"     html-mode)
-              '("<style"        css-mode)
-              '("</style>"      html-mode)
-              ;;'("\{\"" json-mode)       ; DISABLED
-              ))
 
 
 ;; ----- Various settings

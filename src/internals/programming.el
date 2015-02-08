@@ -59,6 +59,7 @@
                                   (statement-cont        . +)))))
 
 ;; No clean-ups.  May prove useful in chaotically formatted code.
+;; NOTE: don't forget to also turn off `c-auto-newline'!
 (c-add-style "default-bland"
             '("default"
               (c-cleanup-list . nil)))

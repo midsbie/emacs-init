@@ -261,7 +261,7 @@ This command should only be used with ELISP."
   (interactive)
   (cl-block inner
       (cond
-       ((or (eq major-mode 'emacs-elisp-mode)
+       ((or (eq major-mode 'emacs-lisp-mode)
             (eq major-mode 'lisp-interaction-mode))
         (eval-buffer))
        (t (message "unsupported mode: %s" major-mode)

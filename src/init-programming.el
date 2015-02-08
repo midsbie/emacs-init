@@ -24,6 +24,9 @@
 ;;; Code:
 
 ;; ----- Includes
+;; - internal
+(require 'cl-lib)
+
 ;; - from packages:
 (load-library "multi-mode")
 ;; (load-library "doxymacs/doxymacs")
@@ -169,7 +172,7 @@
         comment-end   " */"))
 
 (defun initialise-elisp ()
-  (local-set-key (kbd "C-c C-e")  'do-eval-buffer)
+  (local-set-key (kbd "C-x C-k")  'do-eval-buffer)
   (turn-on-eldoc-mode))
 
 (defun initialise-php ()
@@ -213,9 +216,18 @@
 ;; Defun invoked after pressing C-c C-e (see `initialise-elisp').
 ;; Evals the current buffer and displays a message.
 (defun do-eval-buffer ()
+  "Evaluate the current buffer.
+This command should only be used with ELISP."
   (interactive)
-  (eval-buffer)
-  (message "buffer evaluated"))
+  (cl-block inner
+      (cond
+       ((or (eq major-mode 'emacs-elisp-mode)
+            (eq major-mode 'lisp-interaction-mode))
+        (eval-buffer))
+       (t (message "unsupported mode: %s" major-mode)
+          (cl-return-from inner)))
+
+    (message "buffer evaluated")))
 
 ;; Hooks for commonly used programming modes
 (add-hook 'c-mode-common-hook         'initialise-common-programming)

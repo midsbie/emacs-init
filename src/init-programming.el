@@ -122,11 +122,50 @@
 ;; scss-mode
 (setq scss-sass-command "scss")
 
+;; Default coding style.
+(c-add-style "default"
+            '("linux"
+              (c-recognize-knr-p . nil)
+              (c-basic-offset  . 2)
+              (indent-tabs-mode . nil)
+              (c-comment-only-line-offset . 0)
+              (c-syntactic-indentation-in-macros . nil)
+              (c-hanging-braces-alist . ((brace-list-open)
+                                         (brace-entry-open)
+                                         (substatement-open after)
+                                         (block-close . c-snug-do-while)
+                                         (arglist-cont-nonempty)))
+              (c-cleanup-list . (brace-else-brace
+                                 brace-elseif-brace
+                                 brace-catch-brace
+                                 empty-defun-braces
+                                 one-liner-defun
+                                 defun-close-semi
+                                 space-before-funcall
+                                 compact-empty-funcall))
+
+              (c-offsets-alist . ((innamespace           . 0)
+                                  (statement-block-intro . +)
+                                  (knr-argdecl-intro     . 0)
+                                  (substatement-open     . 0)
+                                  (substatement-label    . 0)
+                                  (label                 . 0)
+                                  (statement-cont        . +)))))
+
+;; OpenBSD style.
+(c-add-style "openbsd"
+             '("bsd"
+               (c-backspace-function . delete-backward-char)
+               (c-syntactic-indentation-in-macros . nil)
+               (c-tab-always-indent . nil)
+               (c-hanging-braces-alist (block-close . c-snug-do-while))
+               (c-offsets-alist (arglist-cont-nonempty . *)
+                                (statement-cont . *))
+               (indent-tabs-mode . t)))
+
 ;; default settings
 (setq-default
- ;; c-mode and derived modes default style and tabs
- c-default-style    "linux"
- c-basic-offset     2
+ c-default-style    "default"           ; own default style
  tab-width          2
  indent-tabs-mode   nil
  ;; javascript
@@ -167,8 +206,6 @@
 
   (c-toggle-auto-hungry-state 1)
   (c-toggle-auto-state -1)
-  (c-set-offset 'innamespace 0)         ; set indentation inside namespaces to
-                                        ; nil
   )
 
 (defun initialise-sh ()

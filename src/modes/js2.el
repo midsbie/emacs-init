@@ -30,7 +30,6 @@
 (setq-default js2-basic-offset  2)
 
 (add-hook 'js2-mode-hook  'init-common-programming)
-(add-hook 'js2-mode-hook  'init-javascript)
 (add-hook 'js2-mode-hook  'init-js2-mode)
 
 (defun init-js2-mode ()

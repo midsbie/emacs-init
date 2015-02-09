@@ -26,10 +26,19 @@
 
 (require 'yasnippet)
 
-(add-to-list 'yas/snippet-dirs '("~/.emacs.d/snippets"))
+(setq yas/snippet-dirs "~/.emacs.d/snippets")
 
 (global-set-key (kbd "C-x y") 'yas/visit-snippet-file)
 
 (yas/global-mode 1)
+
+(defun yas/c++/get-header-extension ()
+  "Guess appropriate extension for header file.
+Assumes currently open file is a C++ implementation source file."
+  (let ((ext (file-name-extension (buffer-file-name))))
+    (cond
+     ((string= ext "cxx") "hxx")
+     ((string= ext "C") "H")
+     (t "h"))))
 
 ;;; yasnippet.el ends here

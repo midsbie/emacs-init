@@ -28,7 +28,8 @@
 
 (setq yas/snippet-dirs "~/.emacs.d/snippets")
 
-(global-set-key (kbd "C-x y") 'yas/visit-snippet-file)
+(define-key yas-minor-mode-map (kbd "C-x y") 'yas/visit-snippet-file)
+(define-key yas-minor-mode-map [backtab]     'yas-expand)
 
 (yas/global-mode 1)
 

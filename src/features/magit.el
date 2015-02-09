@@ -28,4 +28,8 @@
 
 (global-set-key (kbd "C-c C-g") 'magit-status)
 
+(add-to-list 'git-commit-mode-hook 'init-magit-commit-mode)
+
+(defun init-magit-commit-mode ()
+  (set-fill-column 72))
 ;;; magit.el ends here

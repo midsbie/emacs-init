@@ -37,8 +37,8 @@
 In particular, add responsive logic to indent the current line
 whenever the dot character (.) is typed on a continued
 expression."
-  (setq comment-start "/*"
-        comment-end   "*/")
+  (setq comment-start "/* "
+        comment-end   " */")
 
   (local-set-key "."  '(lambda ()
                    (interactive)

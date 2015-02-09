@@ -47,7 +47,7 @@
                                  empty-defun-braces
                                  one-liner-defun
                                  defun-close-semi
-                                 space-before-funcall
+;;                               space-before-funcall
                                  compact-empty-funcall))
               (c-hanging-semi&comma-criteria . ((lambda () 'stop)))
               (c-offsets-alist . ((innamespace           . 0)

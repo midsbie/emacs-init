@@ -49,7 +49,7 @@
                                  defun-close-semi
                                  space-before-funcall
                                  compact-empty-funcall))
-
+              (c-hanging-semi&comma-criteria . ((lambda () 'stop)))
               (c-offsets-alist . ((innamespace           . 0)
                                   (statement-block-intro . +)
                                   (knr-argdecl-intro     . 0)
@@ -57,6 +57,14 @@
                                   (substatement-label    . 0)
                                   (label                 . 0)
                                   (statement-cont        . +)))))
+
+;; TODO: Investigate how to make the following work with
+;; `c-hanging-semi&comma-criteria above.  Tried and failed to get it to work and
+;; in the end simply disabled newline on semi.
+;;
+;;                . (c-semi&comma-no-newlines-for-oneline-inliners
+;;                   c-semi&comma-inside-parenlist
+;;                   c-semi&comma-no-newlines-before-nonblanks))
 
 ;; No clean-ups.  May prove useful in chaotically formatted code.
 ;; NOTE: don't forget to also turn off `c-auto-newline'!

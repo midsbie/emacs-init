@@ -29,7 +29,4 @@
 (ac-config-default)
 (global-auto-complete-mode)
 
-(define-key ac-menu-map (kbd "C-n") 'ac-next)
-(define-key ac-menu-map (kbd "C-p") 'ac-previous)
-
 ;;; auto-complete.el ends here

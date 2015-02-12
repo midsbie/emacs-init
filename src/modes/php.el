@@ -26,7 +26,7 @@
 
 (require 'php-mode)
 
-(setq-default php-mode-coding-style      'drupal
+(setq-default php-mode-coding-style      'default ; DISABLED: drupal
               php-lineup-cascaded-calls  t)
 
 (defun init-php-mode ()

@@ -25,6 +25,9 @@
 ;;; Code:
 
 (defun set-context (context)
+  "Set the active context of this Emacs instance.
+CONTEXT is a string containing the context to use.  The context is then shown in
+Emacs frame title."
   (interactive "sContext name: ")
   (setq frame-title-format (concat context " - %b - emacs")))
 

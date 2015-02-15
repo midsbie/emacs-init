@@ -29,12 +29,16 @@
 (setq-default php-mode-coding-style      'default ; DISABLED: drupal
               php-lineup-cascaded-calls  t)
 
+(c-add-style "default-php"
+             '("drupal"))
+
 (defun init-php-mode ()
   "Initialise modes related to PHP development."
   (setq comment-start "/* "
         comment-end   " */")
   (eldoc-mode 1)
-  (php-eldoc-enable))
+  (php-eldoc-enable)
+  (c-set-style "default-php"))
 
 (add-hook 'php-mode-hook 'init-php-mode)
 

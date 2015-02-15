@@ -67,7 +67,7 @@
  indent-tabs-mode             nil
  standard-indent              2
  tab-width                    2
- fill-column                  80
+ fill-column                  79
  )
 
 ;; Set tab-stop positions for C-i

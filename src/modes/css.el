@@ -31,10 +31,19 @@
 
 (defun init-css ()
   "Initialise modes related to CSS development."
-  (setq-default  css-electric-brace-behavior  nil
-                 css-indent-offset            2)
+  (setq-default css-indent-offset            2)
   (auto-fill-mode -1)
   (eldoc-mode 1)
-  (css-eldoc-enable))
+  (css-eldoc-enable)
+
+  (local-set-key "}"  '(lambda ()
+                   (interactive)
+                   (insert-char ?})
+                   (indent-for-tab-command)))
+
+  (local-set-key ";"  '(lambda ()
+                   (interactive)
+                   (insert-char ?;)
+                   (indent-for-tab-command)))))
 
 ;;; css.el ends here

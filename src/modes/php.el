@@ -27,7 +27,9 @@
 (require 'php-mode)
 
 (setq-default php-mode-coding-style      'default ; DISABLED: drupal
-              php-lineup-cascaded-calls  t)
+              php-lineup-cascaded-calls  t
+              flycheck-phpmd-rulesets    '("cleancode" "codesize" "unusedcode"
+                                           "design"))
 
 (c-add-style "default-php"
              '("drupal"))
@@ -38,7 +40,9 @@
         comment-end   " */")
   (eldoc-mode 1)
   (php-eldoc-enable)
-  (c-set-style "default-php"))
+  (c-set-style "default-php")
+  (c-toggle-auto-newline -1)
+  )
 
 (add-hook 'php-mode-hook 'init-php-mode)
 

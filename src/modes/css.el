@@ -43,7 +43,7 @@
 
   (local-set-key ";"  '(lambda ()
                    (interactive)
-                   (insert-char ?;)
-                   (indent-for-tab-command)))))
+                   (insert-char ?\;)
+                   (indent-for-tab-command))))
 
 ;;; css.el ends here

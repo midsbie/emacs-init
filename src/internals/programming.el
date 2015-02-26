@@ -137,6 +137,7 @@
   "Initialise modes related to web development."
   (auto-fill-mode -1)
   (highlight-parentheses-mode)
+  (subword-mode)
   (setq tab-width       2
         c-basic-offset  2))
 

@@ -30,7 +30,7 @@
 
 (defun init-go ()
   "Initialise modes related to Go development."
-  init-common-programming
+  (init-common-programming)
   (go-eldoc-setup)
   (add-hook 'before-save-hook 'gofmt-before-save)
 

@@ -110,7 +110,10 @@
   ;; work well on all major modes. If that's the case then it needs activation
   ;; on a per major-mode basis. However, if it needs to be disabled altogether,
   ;; please explain why for future reference.
-  (setq c-auto-newline t)
+  ;;
+  ;; Update: disabled because it turns out to be too intrusive when editing
+  ;; code.  It (mostly) works fine when writing new code though.
+  (setq c-auto-newline nil)
 
   ;; Delete all trailing whitespace before saving
   (add-hook 'before-save-hook 'delete-trailing-whitespace)

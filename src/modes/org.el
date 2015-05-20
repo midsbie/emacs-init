@@ -56,11 +56,17 @@
 ;;         (sequence "OPEN(O!)" "|" "CLOSED(C!)")
 ;;         (sequence "ONGOING(o!/!)" "|")))
 
-;; Turn on indent and visual line modes by default
-(add-hook 'org-mode-hook '(lambda ()
-                            (org-indent-mode 1)
-                            (visual-line-mode)
-                            (auto-fill-mode -1)))
+
+(add-hook 'org-mode-hook 'init-org)
+
+(defun init-org ()
+  ;; Turn on indent and visual line modes by default
+  (org-indent-mode 1)
+  (visual-line-mode)
+  (auto-fill-mode -1)
+
+  ;; Remaps
+  (local-set-key (kbd "M-h") 'backward-kill-word))
 
 (defun org-kill-all-buffers ()
   "Kill all `org-mode' buffers."

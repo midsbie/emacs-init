@@ -41,11 +41,17 @@
   (if (not (string-match "go" compile-command))
       (set (make-local-variable 'compile-command)
            "go build -v && go test -v && go vet"))
+
+  (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
+  (local-set-key (kbd "C-c i")   'go-goto-imports)
+  (local-set-key (kbd "M-.")     'go-jump)
   )
 
-(let ((file "$GOPATH/src/code.google.com/p/go.tools/cmd/oracle/oracle.el"))
+;; Attempt to load Go Oracle.
+(let ((file (concat (getenv "GOPATH")
+                    "/src/code.google.com/p/go.tools/cmd/oracle/oracle.el")))
   (if (not (file-exists-p file))
-      (message "Go oracle not found")
+      (message "info: go oracle not found and will be unavailable")
     (load file)
     (add-hook 'go-mode-hook 'go-oracle-mode)))
 

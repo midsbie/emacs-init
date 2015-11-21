@@ -92,6 +92,8 @@ characters wide."
   ;; `when'
   (split-window-horizontally)             ; two windows at startup
   (setq speedbar-use-images nil)          ; do not use icons in `speedbar-mode'
+
+  (tooltip-mode -1)                       ; disable tooltips
   )
 
 ;;; x.el ends here

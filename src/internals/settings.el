@@ -82,4 +82,17 @@
                                  "*unsent mail*"
                                  "*info*"))
 
+;; Do not create lock files and place backup files in a `backups` directory.
+(setq create-lockfiles nil)
+
+(setq backup-directory-alist `(("." . "~/.backups"))
+      backup-by-copying t
+      delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t)
+
+;; Revert buffer if file associated with it changes outside of emacs.
+(global-auto-revert-mode 1)
+
 ;;; settings.el ends here

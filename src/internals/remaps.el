@@ -57,4 +57,9 @@
 ;; Replace mark-paragraph
 (global-set-key (kbd "M-h")           'backward-kill-word)
 
+;; Ensure that C-left is bound to M-b and C-right to M-f so that keys work
+;; consistently when subword-mode is active.
+(setf (global-key-binding (kbd "C-<left>")) (kbd "M-b")
+      (global-key-binding (kbd "C-<right>")) (kbd "M-f"))
+
 ;;; remaps.el ends here

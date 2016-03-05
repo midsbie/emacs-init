@@ -24,11 +24,11 @@
 
 ;;; Code:
 
-(require 'linum)
-
-;; Fix "stuck" fringe by adding a space between line number and actual content
-(unless (eq window-system 'x)
-  (setq linum-format "%d "))
+(eval-after-load 'linum
+  '(progn
+     ;; Fix "stuck" fringe by adding a space between line number and actual content
+     (unless (eq window-system 'x)
+       (setq linum-format "%d "))))
 
 
 ;;; term.el ends here

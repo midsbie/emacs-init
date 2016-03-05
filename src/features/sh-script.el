@@ -24,16 +24,16 @@
 
 ;;; Code:
 
-(require 'sh-script)
+(eval-after-load 'sh-script
+  '(progn
+     (setq-default  sh-basic-offset    2
+                    sh-indentation     2)
 
-(setq-default  sh-basic-offset    2
-               sh-indentation     2)
+     (defun init-sh-script ()
+       "Initialise modes related to shell scripting development."
+       (auto-fill-mode -1))
 
-(defun init-sh-script ()
-  "Initialise modes related to shell scripting development."
-  (auto-fill-mode -1))
-
-(add-hook 'sh-mode-hook 'init-common-programming)
-(add-hook 'sh-mode-hook 'init-sh-script)
+     (add-hook 'sh-mode-hook 'init-common-programming)
+     (add-hook 'sh-mode-hook 'init-sh-script)))
 
 ;;; sh-script.el ends here

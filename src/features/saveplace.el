@@ -26,6 +26,6 @@
 
 (require 'saveplace)
 
-(setq save-place t)                     ; save position on buffer
+(setq-default save-place t)             ; save position in buffer
 
 ;;; saveplace.el ends here

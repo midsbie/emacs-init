@@ -24,8 +24,6 @@
 
 ;;; Code:
 
-(require 'speedbar)
-
 ;; Set default window size
 (defun set-frame-size-according-to-resolution ()
   "Set the active frame's size according to the screen's

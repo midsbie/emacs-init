@@ -24,8 +24,7 @@
 
 ;;; Code:
 
-(require 'uniquify)
-
-(setq uniquify-buffer-name-style 'forward)
+(eval-after-load 'uniquify
+  '(setq uniquify-buffer-name-style 'forward))
 
 ;;; uniquify.el ends here

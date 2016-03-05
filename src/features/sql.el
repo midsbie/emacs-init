@@ -24,8 +24,7 @@
 
 ;;; Code:
 
-(require 'sql)
-
-(setq sql-product 'mysql)
+(eval-after-load 'sql
+  '(setq sql-product 'mysql))
 
 ;;; sql.el ends here

@@ -1,6 +1,6 @@
 ;;; mail.el --- Initialisation of mail related features
 
-;; Copyright (C) 2014-2015 Miguel Guedes
+;; Copyright (C) 2014-2016 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:
@@ -24,27 +24,25 @@
 
 ;;; Code:
 
-(require 'gnus)
-(require 'message)
-(require 'smtpmail)
-
 ;; NNTP newsgroups
-(setq gnus-select-method '(nntp "eunews.blocknews.net")
-      user-full-name "Miguel Guedes"
-      user-mail-address "miguel.a.guedes@gmail.com")
-
-;; Gnus
-(setq gnus-select-method ;; gnus-secondary-select-methods
-      '(nnimap "Personal"
-               (nnimap-address "imap.gmail.com")
-               (nnimap-server-port 993)
-               (nnimap-stream ssl)))
+(eval-after-load 'gnus
+  '(progn
+     (setq gnus-select-method '(nntp "eunews.blocknews.net")
+           gnus-select-method ;; gnus-secondary-select-methods
+           '(nnimap "Personal"
+                    (nnimap-address "imap.gmail.com")
+                    (nnimap-server-port 993)
+                    (nnimap-stream ssl)))
+     ))
 
 ;; SMTP
-(setq message-send-mail-function 'smtpmail-send-it
-      smtpmail-default-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-service 587
-      smtpmail-local-domain "miguelguedes.org")
+(eval-after-load 'message
+  '(setq message-send-mail-function 'smtpmail-send-it))
+
+(eval-after-load 'smtpmail
+  '(setq smtpmail-default-smtp-server "smtp.gmail.com"
+         smtpmail-smtp-server "smtp.gmail.com"
+         smtpmail-smtp-service 587
+         smtpmail-local-domain "miguelguedes.org"))
 
 ;;; mail.el ends here

@@ -24,10 +24,9 @@
 
 ;;; Code:
 
-(require 'eldoc)
-
-(set-face-attribute 'eldoc-highlight-function-argument nil
-                    :underline t ; :foreground "green"
-                    :weight 'bold)
+(eval-after-load 'eldoc
+  '(set-face-attribute 'eldoc-highlight-function-argument nil
+                       :underline t ; :foreground "green"
+                       :weight 'bold))
 
 ;;; eldoc.el ends here

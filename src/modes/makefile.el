@@ -24,8 +24,7 @@
 
 ;;; Code:
 
-(require 'make-mode)
-
-(add-hook 'makefile-mode-hook 'init-common-programming)
+(eval-after-load 'make-mode
+  '(add-hook 'makefile-mode-hook 'init-common-programming))
 
 ;;; makefile.el ends here

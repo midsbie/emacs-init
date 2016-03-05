@@ -24,9 +24,9 @@
 
 ;;; Code:
 
-(require 'visual-regexp)
-
-(global-set-key (kbd "C-c r") 'vr/replace)
-(global-set-key (kbd "C-c q") 'vr/query-replace)
+(eval-after-load 'visual-regexp
+  '(progn
+     (global-set-key (kbd "C-c r") 'vr/replace)
+     (global-set-key (kbd "C-c q") 'vr/query-replace)))
 
 ;;; visual-regexp.el ends here

@@ -24,8 +24,7 @@
 
 ;;; Code:
 
-(require 'neotree)
-
-(setq neo-window-width 50)
+(eval-after-load 'neotree
+  '(setq neo-window-width 50))
 
 ;;; neotree.el ends here

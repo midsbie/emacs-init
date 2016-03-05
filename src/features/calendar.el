@@ -24,9 +24,10 @@
 
 ;;; Code:
 
-(require 'calendar)
-
-(setq calendar-week-start-day 1)        ; set calendar's week start day to
+(eval-after-load 'calendar
+  '(progn
+     (setq calendar-week-start-day 1)   ; set calendar's week start day to
                                         ; Monday and not Sunday, as by default.
+     ))
 
 ;;; calendar.el ends here

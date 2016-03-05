@@ -24,16 +24,16 @@
 
 ;;; Code:
 
-(require 'js2-mode)
-
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
 (add-to-list 'auto-mode-alist '("\\.react.js\\'" . js2-jsx-mode))
 
-(setq-default js2-basic-offset  2)
+(eval-after-load "js2-mode"
+  '(progn
+     (setq-default js2-basic-offset  2)
 
-(add-hook 'js2-mode-hook  'init-common-programming)
-(add-hook 'js2-mode-hook  'init-js2-mode)
+     (add-hook 'js2-mode-hook  'init-common-programming)
+     (add-hook 'js2-mode-hook  'init-js2-mode)))
 
 (defun init-js2-mode ()
   "Customise js2-mode.
@@ -44,22 +44,31 @@ expression."
         comment-end   " */")
 
   (local-set-key "."  '(lambda ()
-                   (interactive)
-                   (insert-char ?.)
-                   (when (js2-continued-expression-p)
-                     (indent-for-tab-command))))
+                         (interactive)
+                         (insert-char ?.)
+                         (when (js2-continued-expression-p)
+                           (indent-for-tab-command))))
 
   (local-set-key "}"  '(lambda ()
-                   (interactive)
-                   (insert-char ?})
-                   (indent-for-tab-command)))
+                         (interactive)
+                         (insert-char ?})
+                         (indent-for-tab-command)))
 
+  ;; TODO: we should be replacing the default behaviour of the F3 key.
   (local-set-key [f3]
                  '(lambda ()
-                   (interactive)
-                   (unless (and next-error-function
-                                (not (string= (type-of (js2-next-error))
-                                              "string")))
-                     (flycheck-next-error)))))
+                    (interactive)
+                    (unless (and next-error-function
+                                 (not (string= (type-of (js2-next-error))
+                                               "string")))
+                      (flycheck-next-error))))
+
+  ;; from: https://github.com/Wilfred/flymake-jshint.el/issues/1
+  (setq-local jshint-configuration-path
+              (expand-file-name ".jshintrc"
+                                (locate-dominating-file
+                                 default-directory ".jshintrc")))
+  (flymake-jshint-load)
+  )
 
 ;;; js2.el ends here

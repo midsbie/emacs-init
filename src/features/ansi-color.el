@@ -24,10 +24,13 @@
 
 ;;; Code:
 
-(require 'ansi-color)
+;;(require 'ansi-color)
 
-(setq ansi-color-names-vector ["black" "red" "lawn green" "yellow" "cornflower blue"
-                               "magenta" "cyan" "white"]
-      ansi-color-map          (ansi-color-make-color-map))
+(eval-after-load 'ansi-color
+  '(progn
+     ;; TODO: this is being eval'ed more than once.
+     (setq ansi-color-names-vector ["black" "red" "lawn green" "yellow"
+                                    "cornflower blue" "magenta" "cyan" "white"]
+           ansi-color-map          (ansi-color-make-color-map))))
 
 ;;; ansi-color.el ends here

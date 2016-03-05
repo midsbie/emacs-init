@@ -24,40 +24,47 @@
 
 ;;; Code:
 
-(require 'org)
+(eval-after-load 'org
+  '(progn
+     (setq org-use-fast-todo-selection t
+           org-directory               "~/documents/org"
+           org-default-notes-file      (concat org-directory "/notes.org"))
 
-(setq org-use-fast-todo-selection t
-      org-directory               "~/documents/org"
-      org-default-notes-file      (concat org-directory "/notes.org"))
+     (setq org-todo-keyword-faces
+           '(("TODO"  . (:foreground "red" :weight bold))
+             ("NEXT"  . (:foreground "red" :weight bold))
+             ("DONE"  . (:foreground "forest green" :weight bold))
+             ("WAITING"  . (:foreground "orange" :weight bold))
+             ("CANCELLED"  . (:foreground "forest green" :weight bold))
+             ("SOMEDAY"  . (:foreground "orange" :weight bold))
+             ("OPEN"  . (:foreground "red" :weight bold))
+             ("CLOSED"  . (:foreground "forest green" :weight bold))
+             ("ONGOING"  . (:foreground "orange" :weight bold))))
 
-(setq org-todo-keyword-faces
-      '(("TODO"  . (:foreground "red" :weight bold))
-        ("NEXT"  . (:foreground "red" :weight bold))
-        ("DONE"  . (:foreground "forest green" :weight bold))
-        ("WAITING"  . (:foreground "orange" :weight bold))
-        ("CANCELLED"  . (:foreground "forest green" :weight bold))
-        ("SOMEDAY"  . (:foreground "orange" :weight bold))
-        ("OPEN"  . (:foreground "red" :weight bold))
-        ("CLOSED"  . (:foreground "forest green" :weight bold))
-        ("ONGOING"  . (:foreground "orange" :weight bold))))
+     (setq org-clock-persist 'history)
+     (org-clock-persistence-insinuate)
 
-(setq org-clock-persist 'history)
-(org-clock-persistence-insinuate)
+     (setq org-todo-keywords
+           '((sequence "TODO(t)" "IN-PROGRESS(p!)" "WAIT(w@/!)"
+                       "|"
+                       "DONE(d!)" "CANCELED(c@)")))
 
-(setq org-todo-keywords
-      '((sequence "TODO(t)" "IN-PROGRESS(p!)" "WAIT(w@/!)"
-                  "|"
-                  "DONE(d!)" "CANCELED(c@)")))
+     ;; (setq org-todo-keywords
+     ;;       '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
+     ;;         (sequence "WAITING(w@/!)" "|" "CANCELLED(c@/!)")
+     ;;         (sequence "SOMEDAY(s!/!)" "|")
+     ;;         (sequence "OPEN(O!)" "|" "CLOSED(C!)")
+     ;;         (sequence "ONGOING(o!/!)" "|")))
 
-;; (setq org-todo-keywords
-;;       '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
-;;         (sequence "WAITING(w@/!)" "|" "CANCELLED(c@/!)")
-;;         (sequence "SOMEDAY(s!/!)" "|")
-;;         (sequence "OPEN(O!)" "|" "CLOSED(C!)")
-;;         (sequence "ONGOING(o!/!)" "|")))
+     (add-hook 'org-mode-hook 'init-org)
 
+     (global-set-key (kbd "C-c a a")   'org-agenda-list)
+     (global-set-key (kbd "C-c a t")   'org-todo-list)
+     (global-set-key (kbd "C-c c")     'org-capture)
+     (global-set-key (kbd "C-x K o")   'org-kill-all-buffers)
 
-(add-hook 'org-mode-hook 'init-org)
+     (custom-set-variables
+      '(org-agenda-window-setup (quote current-window)))))
 
 (defun init-org ()
   ;; Turn on indent and visual line modes by default
@@ -81,13 +88,5 @@
                        (buffer-list)))
   (when (called-interactively-p 'interactive)
     (message "Killed all org-mode buffers")))
-
-(global-set-key (kbd "C-c a a")   'org-agenda-list)
-(global-set-key (kbd "C-c a t")   'org-todo-list)
-(global-set-key (kbd "C-c c")     'org-capture)
-(global-set-key (kbd "C-x K o")   'org-kill-all-buffers)
-
-(custom-set-variables
- '(org-agenda-window-setup (quote current-window)))
 
 ;;; org.el ends here

@@ -24,13 +24,13 @@
 
 ;;; Code:
 
-(require 'shell)
-
-;; The following comint filter meant to suppress garbage output by
-;; nodejs/npm/bower.
-(add-to-list
-         'comint-preoutput-filter-functions
-         (lambda(output)
-           (replace-regexp-in-string "\\[\\??[0-9]+[hlAGK]\n?" "" output)))
+(eval-after-load 'shell
+  '(progn
+     ;; The following comint filter meant to suppress garbage output by
+     ;; nodejs/npm/bower.
+     (add-to-list
+      'comint-preoutput-filter-functions
+      (lambda(output)
+        (replace-regexp-in-string "\\[\\??[0-9]+[hlAGK]\n?" "" output)))))
 
 ;;; shell.el ends here

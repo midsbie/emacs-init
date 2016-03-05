@@ -24,15 +24,16 @@
 
 ;;; Code:
 
-(require 'php-mode)
+(eval-after-load 'php-mode
+  '(progn
 
-(setq-default php-mode-coding-style      'default ; DISABLED: drupal
-              php-lineup-cascaded-calls  t
-              flycheck-phpmd-rulesets    '("cleancode" "codesize" "unusedcode"
-                                           "design"))
+     (setq-default php-mode-coding-style      'default ; DISABLED: drupal
+                   php-lineup-cascaded-calls  t
+                   flycheck-phpmd-rulesets
+                     '("cleancode" "codesize" "unusedcode" "design"))
 
-(c-add-style "default-php"
-             '("drupal"))
+     (c-add-style "default-php" '("drupal"))
+     (add-hook 'php-mode-hook 'init-php-mode)))
 
 (defun init-php-mode ()
   "Initialise modes related to PHP development."
@@ -41,9 +42,6 @@
   (eldoc-mode 1)
   (php-eldoc-enable)
   (c-set-style "default-php")
-  (c-toggle-auto-newline -1)
-  )
-
-(add-hook 'php-mode-hook 'init-php-mode)
+  (c-toggle-auto-newline -1))
 
 ;;; php.el ends here

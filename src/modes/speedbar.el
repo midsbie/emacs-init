@@ -24,14 +24,14 @@
 
 ;;; Code:
 
-(require 'speedbar)
-
-(setq speedbar-frame-parameters '((minibuffer . nil)
-                                  (width . 40)
-                                  (border-width . 0)
-                                  (menu-bar-lines . 0)
-                                  (tool-bar-lines . 0)
-                                  (unsplittable . t)
-                                  (left-fringe . 0)))
+(eval-after-load 'speedbar
+  '(progn
+     (setq speedbar-frame-parameters '((minibuffer . nil)
+                                       (width . 40)
+                                       (border-width . 0)
+                                       (menu-bar-lines . 0)
+                                       (tool-bar-lines . 0)
+                                       (unsplittable . t)
+                                       (left-fringe . 0)))))
 
 ;;; speedbar.el ends here

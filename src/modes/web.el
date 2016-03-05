@@ -24,16 +24,16 @@
 
 ;;; Code:
 
-(require 'web-mode)
+(eval-after-load 'web-mode
+  '(progn
+     (add-hook 'web-mode-hook  'init-web-mode)
+     (add-hook 'web-mode-hook  'init-common-web)))
 
 (defun init-web-mode ()
   "Initialise `web-mode'."
   (setq web-mode-markup-indent-offset 2
         web-mode-css-indent-offset    2
         web-mode-code-indent-offset   2))
-
-(add-hook 'web-mode-hook  'init-web-mode)
-(add-hook 'web-mode-hook  'init-common-web)
 
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 

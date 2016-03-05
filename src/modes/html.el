@@ -24,8 +24,7 @@
 
 ;;; Code:
 
-(require 'sgml-mode)
-
-(add-hook 'html-mode-hook 'init-common-web)
+(eval-after-load 'sgml-mode
+  '(add-hook 'html-mode-hook 'init-common-web))
 
 ;;; html.el ends here

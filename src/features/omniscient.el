@@ -24,10 +24,11 @@
 
 ;;; Code:
 
-(let ((path "/usr/local/share/omnis/clients/omniscient"))
-  (when (file-exists-p (concat path "/omniscient.el"))
-    (load-library (concat path "/omniscient.el"))
-    (load-library (concat path "/cc-mode.el"))
-    (global-omniscient-mode)))
+;; TODO: disabled as unused.
+;; (let ((path "/usr/local/share/omnis/clients/omniscient"))
+;;   (when (file-exists-p (concat path "/omniscient.el"))
+;;     (load-library (concat path "/omniscient.el"))
+;;     (load-library (concat path "/cc-mode.el"))
+;;     (global-omniscient-mode)))
 
 ;;; omniscient.el ends here

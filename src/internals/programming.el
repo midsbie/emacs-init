@@ -25,8 +25,6 @@
 ;;; Code:
 
 (require 'cl-lib)
-(require 'cc-mode)
-(require 'highlight-parentheses)
 
 ;; Own custom default style
 (c-add-style "default"

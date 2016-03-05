@@ -24,10 +24,7 @@
 
 ;;; Code:
 
-(require 'ace-jump-mode)
-
 (global-set-key (kbd "C-c SPC") 'ace-jump-mode)
 (global-set-key (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
-
 
 ;;; ace-jump.el ends here

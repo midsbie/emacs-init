@@ -24,8 +24,6 @@
 
 ;;; Code:
 
-(require 'browse-kill-ring)
-
 (global-set-key "\C-cy" 'browse-kill-ring)
 
 ;;; browse-kill-ring.el ends here

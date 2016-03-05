@@ -24,18 +24,29 @@
 
 ;;; Code:
 
-(require 'go-autocomplete)
+(eval-after-load 'go-mode
+  '(progn
+     (add-hook 'go-mode-hook  'init-go)
 
-(add-hook 'go-mode-hook  'init-go)
+     ;; Use goimports instead of go-fmt
+     (setq-default gofmt-command "goimports")
+
+     ;; Attempt to load Go Oracle.
+     (let ((file (concat (getenv "GOPATH")
+                         "/src/code.google.com/p/go.tools/cmd/oracle/oracle.el")))
+       (if (not (file-exists-p file))
+           (message "info: go oracle not found and will be unavailable")
+         (load file)
+         (add-hook 'go-mode-hook 'go-oracle-mode)))))
 
 (defun init-go ()
   "Initialise modes related to Go development."
+  (unless (boundp 'go-autocomplete)
+    (load-library 'go-autocomplete))
+
   (init-common-programming)
   (go-eldoc-setup)
   (add-hook 'before-save-hook 'gofmt-before-save)
-
-  ;; Use goimports instead of go-fmt
-  (setq gofmt-command "goimports")
 
   ;; Customize compile command to run go build
   (if (not (string-match "go" compile-command))
@@ -44,15 +55,6 @@
 
   (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
   (local-set-key (kbd "C-c i")   'go-goto-imports)
-  (local-set-key (kbd "M-.")     'go-jump)
-  )
-
-;; Attempt to load Go Oracle.
-(let ((file (concat (getenv "GOPATH")
-                    "/src/code.google.com/p/go.tools/cmd/oracle/oracle.el")))
-  (if (not (file-exists-p file))
-      (message "info: go oracle not found and will be unavailable")
-    (load file)
-    (add-hook 'go-mode-hook 'go-oracle-mode)))
+  (local-set-key (kbd "M-.")     'go-jump))
 
 ;;; go.el ends here

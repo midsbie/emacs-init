@@ -24,15 +24,15 @@
 
 ;;; Code:
 
-(require 'lisp-mode)
+(eval-after-load 'lisp-mode
+  '(progn
+     (add-hook 'lisp-mode-hook             'init-common-programming)
+     (add-hook 'lisp-mode-hook             'init-elisp)
 
-(add-hook 'lisp-mode-hook             'init-common-programming)
-(add-hook 'lisp-mode-hook             'init-elisp)
+     (add-hook 'emacs-lisp-mode-hook       'init-common-programming)
+     (add-hook 'emacs-lisp-mode-hook       'init-elisp)
 
-(add-hook 'emacs-lisp-mode-hook       'init-common-programming)
-(add-hook 'emacs-lisp-mode-hook       'init-elisp)
-
-(add-hook 'lisp-interaction-mode-hook 'init-common-programming)
-(add-hook 'lisp-interaction-mode-hook 'init-elisp)
+     (add-hook 'lisp-interaction-mode-hook 'init-common-programming)
+     (add-hook 'lisp-interaction-mode-hook 'init-elisp)))
 
 ;;; lisp.el ends here

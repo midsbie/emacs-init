@@ -24,10 +24,8 @@
 
 ;;; Code:
 
-(require 'add-log)
-(require 'log-edit)
-
-(setq change-log-default-name "CHANGELOG")
+(eval-after-load 'add-log
+  '(setq change-log-default-name "CHANGELOG"))
 
 (add-hook 'log-edit-mode-hook 'init-common-text)
 

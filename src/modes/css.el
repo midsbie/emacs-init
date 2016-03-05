@@ -24,13 +24,12 @@
 
 ;;; Code:
 
-(require 'css-mode)
-
 (add-hook 'css-mode-hook  'init-common-programming)
 (add-hook 'css-mode-hook  'init-css)
 
 (defun init-css ()
   "Initialise modes related to CSS development."
+  (print "INIT CSS")
   (setq-default css-indent-offset            2)
   (auto-fill-mode -1)
   (eldoc-mode 1)

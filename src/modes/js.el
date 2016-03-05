@@ -25,7 +25,6 @@
 ;;; Code:
 
 ;; DISABLED. Using `js2-mode' instead.
-;; (require 'js)
 
 ;; (defun init-js-mode ()
 ;;   "Initialise modes related to Javascript development."

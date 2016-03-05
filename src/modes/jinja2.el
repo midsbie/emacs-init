@@ -24,11 +24,13 @@
 
 ;;; Code:
 
-(add-hook 'jinja2-mode-hook  'init-jinja2)
+(eval-after-load 'jinja2
+  '(progn
+     (add-hook 'jinja2-mode-hook  'init-jinja2)
 
-(defun init-jinja2 ()
-  "Initialise the jinja2 mode."
-  )
+     (defun init-jinja2 ()
+       "Initialise the jinja2 mode."
+       )))
 
 (add-to-list 'auto-mode-alist '("\\.j2?\\'" . jinja2-mode))
 

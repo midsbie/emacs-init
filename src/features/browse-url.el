@@ -24,10 +24,10 @@
 
 ;;; Code:
 
-(require 'browse-url)
-
-;; set default browser - currently set to `xdg-open'.
-(setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program  "xdg-open")
+(eval-after-load 'browse-url
+  '(progn
+     ;; set default browser - currently set to `xdg-open'.
+     (setq browse-url-browser-function 'browse-url-generic
+           browse-url-generic-program  "xdg-open")))
 
 ;;; browse-url.el ends here

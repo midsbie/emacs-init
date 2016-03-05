@@ -24,8 +24,7 @@
 
 ;;; Code:
 
-(require 'scss-mode)
-
-(setq scss-sass-command "scss")
+(eval-after-load 'scss-mode
+  '(setq scss-sass-command "scss"))
 
 ;;; scss.el ends here

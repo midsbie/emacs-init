@@ -24,17 +24,21 @@
 
 ;;; Code:
 
-(require 'flycheck)
+(eval-after-load 'flycheck
+  '(progn
+     ;; + in c/c++ modes
+     (setq flycheck-cppcheck-checks '("all")
+           flycheck-c/c++-clang-executable "true") ; disable clang since we use omnis
+
+     ;; + in php mode
+     (setq flycheck-php-phpmd-executable "phpmd"
+           flycheck-phpmd-rulesets '("cleancode" "codesize" "controversial"
+                                     "design" "naming" "unusedcode"))
+
+     (add-hook 'flyspell-mode-hook 'init-flyspell-mode)
+     (defun init-flyspell-mode()
+       (local-unset-key (kbd "C-;")))))
 
 (global-flycheck-mode 1)
-
-;; + in c/c++ modes
-(setq flycheck-cppcheck-checks '("all")
-      flycheck-c/c++-clang-executable "true") ; disable clang since we use omnis
-
-;; + in php mode
-(setq flycheck-php-phpmd-executable "phpmd"
-      flycheck-phpmd-rulesets '("cleancode" "codesize" "controversial"
-                                "design" "naming" "unusedcode"))
 
 ;;; flycheck.el ends here

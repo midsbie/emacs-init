@@ -24,6 +24,7 @@
 
 ;;; Code:
 
+;; TODO: what can we do to auto-load this library?
 (load-library "buftoggle.git/buftoggle")
 
 (add-to-list 'buftoggle-pairs-alist '("cxx" "hxx" "hpp" "hh" "h"))

@@ -8,16 +8,4 @@ Emacs' initialisation files.
 
 * How to use
 
-Here's how I've installed it on my system:
-
-1. =cd /usr/src=
-   
-2. =git clone git@github.com:miguel-guedes/emacs-init emacs-init.git=
-   
-3. =cd ../share/emacs/site-lisp=
-
-4. =sudo ln -s /usr/src/emacs-init/src init=
-
-5. Edit =~/.emacs= and simply include the line:
-   
-   =(load-library "init/init")=
+After ensuring the source files are in Emacs' load path, edit your =~/.emacs= and simply load the `init.el` file (in `src`).

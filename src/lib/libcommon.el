@@ -27,7 +27,7 @@
 
 ;; Taken verbatim from: http://www.emacswiki.org/emacs/DotEmacsModular
 (defun load-directory (directory)
-  "Load recursively all `.el' files in DIRECTORY."
+  "Load recursively all `.el' files in DIRECTORY without the extension."
   (dolist (element (directory-files-and-attributes directory nil nil nil))
     (let* ((path (car element))
            (fullpath (concat directory "/" path))

@@ -36,8 +36,8 @@
                                      "design" "naming" "unusedcode"))
 
      (add-hook 'flyspell-mode-hook 'init-flyspell-mode)
-     (defun init-flyspell-mode()
-       (local-unset-key (kbd "C-;")))))
+     ;; Deactivate annoying correction of previous misspelled error, by default.
+     (define-key flyspell-mode-map (kbd "C-;") nil)))
 
 (global-flycheck-mode 1)
 

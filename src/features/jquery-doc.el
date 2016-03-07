@@ -1,4 +1,4 @@
-;;; css.el --- Configures `css-mode'
+;;; jquery-doc.el --- Configures the `jquery-doc' package
 
 ;; Copyright (C) 2015  Miguel Guedes
 

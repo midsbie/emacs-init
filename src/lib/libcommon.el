@@ -53,6 +53,14 @@ With a prefix arg, INSERT it into the buffer."
   (funcall (if insert 'insert 'message)
            (format-time-string "%a, %d %b %Y %T %Z" (current-time))))
 
+(defun run-or-load (mode func)
+  "Execute FUNC after major mode MODE loaded.
+Checks that the major mode MODE has been loaded before invoking FUNC.  If it
+hasn't been loaded, `load-library' is invoked before FUNC is finally executed."
+  (unless (fboundp mode)
+    (load-library (symbol-name mode)))
+  (call-interactively func))
+
 
 (provide 'libcommon)
 

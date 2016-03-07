@@ -24,24 +24,8 @@
 
 ;;; Code:
 
-(add-hook 'css-mode-hook  'init-common-programming)
-(add-hook 'css-mode-hook  'init-css)
+(eval-after-load 'js2-mode
+  '(progn
+     (add-hook 'js2-mode-hook 'jquery-doc-setup)))
 
-(defun init-css ()
-  "Initialise modes related to CSS development."
-  (setq-default css-indent-offset            2)
-  (auto-fill-mode -1)
-  (eldoc-mode 1)
-  (css-eldoc-enable)
-
-  (local-set-key "}"  '(lambda ()
-                   (interactive)
-                   (insert-char ?})
-                   (indent-for-tab-command)))
-
-  (local-set-key ";"  '(lambda ()
-                   (interactive)
-                   (insert-char ?\;)
-                   (indent-for-tab-command))))
-
-;;; css.el ends here
+;;; jquery-doc.el ends here

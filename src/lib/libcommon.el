@@ -53,13 +53,22 @@ With a prefix arg, INSERT it into the buffer."
   (funcall (if insert 'insert 'message)
            (format-time-string "%a, %d %b %Y %T %Z" (current-time))))
 
-(defun run-or-load (mode func)
-  "Execute FUNC after major mode MODE loaded.
-Checks that the major mode MODE has been loaded before invoking FUNC.  If it
-hasn't been loaded, `load-library' is invoked before FUNC is finally executed."
-  (unless (fboundp mode)
-    (load-library (symbol-name mode)))
+(defun run-or-load (func library)
+  "Execute FUNC or load LIBRARY if FUNC not defined.
+Checks that the defun FUNC has been loaded before invoking it.  If it
+hasn't been loaded, LIBRARY is loaded via a call to `load-library'."
+  (message "checking: %s" (or (and (fboundp func) "YES") "NO") )
+  (unless (fboundp func)
+    (load-library (symbol-name library)))
   (call-interactively func))
+
+(defmacro t-run-or-load (func library)
+  "Return a lambda that can be attached to a key handler or similar handlers.
+See documentation of `run-or-load' for a description of the FUNC
+and LIBRARY variables."
+  `(lambda()
+     (interactive)
+     (run-or-load ,func ,library)))
 
 
 (provide 'libcommon)

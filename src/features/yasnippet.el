@@ -24,19 +24,24 @@
 
 ;;; Code:
 
-(require 'yasnippet)
+(global-set-key [backtab] (t-run-or-load 'yas-expand 'yasnippet))
 
-(setq yas/snippet-dirs "~/.emacs.d/snippets")
+(eval-after-load 'yasnippet
+  '(progn
+     ;; Unset the global key defined above.
+     (global-set-key [backtab] nil)
 
-(yas/global-mode 1)
+     (setq yas/snippet-dirs "~/.emacs.d/snippets")
 
-(define-key yas-minor-mode-map (kbd "C-x y") 'yas/visit-snippet-file)
-(define-key yas-minor-mode-map [backtab]     'yas-expand)
+     (yas/global-mode 1)
 
-;; Strangely, just redefining one of the variations below won't work.
-(define-key yas-minor-mode-map [(tab)]        nil)
-(define-key yas-minor-mode-map (kbd "TAB")    nil)
-(define-key yas-minor-mode-map (kbd "<tab>") nil)
+     (define-key yas-minor-mode-map (kbd "C-x y") 'yas/visit-snippet-file)
+     (define-key yas-minor-mode-map [backtab]     'yas-expand)
+
+     ;; Strangely, just redefining one of the variations below won't work.
+     (define-key yas-minor-mode-map [(tab)]        nil)
+     (define-key yas-minor-mode-map (kbd "TAB")    nil)
+     (define-key yas-minor-mode-map (kbd "<tab>") nil)))
 
 (defun yas/c++/get-header-extension ()
   "Guess appropriate extension for header file.

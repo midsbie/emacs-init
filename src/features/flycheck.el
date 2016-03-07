@@ -35,10 +35,12 @@
            flycheck-phpmd-rulesets '("cleancode" "codesize" "controversial"
                                      "design" "naming" "unusedcode"))
 
-     (add-hook 'flyspell-mode-hook 'init-flyspell-mode)
-     ;; Deactivate annoying correction of previous misspelled error, by default.
-     (define-key flyspell-mode-map (kbd "C-;") nil)))
+     (add-hook 'flyspell-mode-hook 'init-flyspell-mode)))
 
 (global-flycheck-mode 1)
+
+(defun init-flyspell-mode()
+  ;; Deactivate annoying correction of previous misspelled error, by default.
+  (define-key flyspell-mode-map (kbd "C-;") nil))
 
 ;;; flycheck.el ends here

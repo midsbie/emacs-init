@@ -30,7 +30,15 @@
 
 (eval-after-load "js2-mode"
   '(progn
-     (setq-default js2-basic-offset  2)
+     (setq-default js2-basic-offset    2
+
+                   ;; FIXME: disabled because it is supposed to be set via the
+                   ;; `customize-group' defun.
+                   ;; js2-bounce-indent-p t
+
+                   js2-include-browser-externs t
+                   js2-include-node-externs    t
+                   )
 
      (add-hook 'js2-mode-hook  'init-common-programming)
      (add-hook 'js2-mode-hook  'init-js2-mode)))
@@ -54,6 +62,10 @@ expression."
                          (insert-char ?})
                          (indent-for-tab-command)))
 
+  ;; Bounce indenting support.
+  (local-set-key [C-tab]           'js2-indent-bounce)
+  (local-set-key [C-S-iso-lefttab] 'js2-indent-bounce-backward)
+
   ;; TODO: we should be replacing the default behaviour of the F3 key.
   (local-set-key [f3]
                  '(lambda ()
@@ -69,6 +81,32 @@ expression."
                                 (locate-dominating-file
                                  default-directory ".jshintrc")))
   (flymake-jshint-load)
+  (load-jshint-globals)
   )
+
+(defun load-jshint-globals (&optional file)
+  "Load the `globals` section in the project's .jshintrc file.
+
+The `globals` section is then appended to the buffer local
+`js2-additional-externs' list.
+
+If FILE is not specified, `jshint-configuration-path' is used instead."
+  (unless file
+    (setq file jshint-configuration-path))
+  (when (and (eq major-mode 'js2-mode) file)
+    (let ((globals nil))
+      (with-temp-buffer
+        (insert-file-contents file)
+        (when (search-forward-regexp "\"globals\"\s*:\s*{\s*\\([^}]+\\)\s*}"
+                                     nil t)
+          (let ((matches (split-string (match-string 1) ",")))
+            (dolist (elt matches)
+              (when (string-match "^\s*\"\\([^\"]+\\)\"\s*:\s*\\([a-z]+\\)" elt 0)
+                (let ((name (match-string 1 elt))
+                      (value (match-string 2 elt)))
+                  (when (string= value "true")
+                    (push name globals))))))))
+      (setq js2-additional-externs (append js2-additional-externs globals))
+      (delete-dups js2-additional-externs))))
 
 ;;; js2.el ends here

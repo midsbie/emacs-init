@@ -27,8 +27,9 @@
 (eval-after-load 'flycheck
   '(progn
      ;; + in c/c++ modes
-     (setq flycheck-cppcheck-checks '("all")
-           flycheck-c/c++-clang-executable "true") ; disable clang since we use omnis
+     (setq flycheck-cppcheck-checks        '("all")
+           flycheck-c/c++-clang-executable "true") ; disable clang since we use
+                                                   ; omnis
 
      ;; + in php mode
      (setq flycheck-php-phpmd-executable "phpmd"

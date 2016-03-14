@@ -93,7 +93,8 @@ The `globals` section is then appended to the buffer local
 If FILE is not specified, `jshint-configuration-path' is used instead."
   (unless file
     (setq file jshint-configuration-path))
-  (when (and (eq major-mode 'js2-mode) file)
+  (when (and (or (eq major-mode 'js2-mode)
+                 (eq major-mode 'js2-jsx-mode)) file)
     (let ((globals nil))
       (with-temp-buffer
         (insert-file-contents file)

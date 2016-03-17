@@ -31,6 +31,9 @@
      ;; Use goimports instead of go-fmt
      (setq-default gofmt-command "goimports")
 
+     ;; Load go autocomplete
+     (load-library "go-autocomplete")
+
      ;; Attempt to load Go Oracle.
      (let ((file (concat (getenv "GOPATH")
                          "/src/code.google.com/p/go.tools/cmd/oracle/oracle.el")))
@@ -41,9 +44,6 @@
 
 (defun init-go ()
   "Initialise modes related to Go development."
-  (unless (boundp 'go-autocomplete)
-    (load-library 'go-autocomplete))
-
   (init-common-programming)
   (go-eldoc-setup)
   (add-hook 'before-save-hook 'gofmt-before-save)

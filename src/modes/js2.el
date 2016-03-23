@@ -75,11 +75,12 @@ expression."
                                                "string")))
                       (flycheck-next-error))))
 
-  ;; from: https://github.com/Wilfred/flymake-jshint.el/issues/1
-  (setq-local jshint-configuration-path
-              (expand-file-name ".jshintrc"
-                                (locate-dominating-file
-                                 default-directory ".jshintrc")))
+  ;; Only set path to the dominating .jshintrc if one actually was found.
+  (let* ((loc (locate-dominating-file
+               default-directory ".jshintrc")))
+    ;; from: https://github.com/Wilfred/flymake-jshint.el/issues/1
+    (setq-local jshint-configuration-path
+                (and loc (expand-file-name ".jshintrc" loc))))
   (flymake-jshint-load)
   (load-jshint-globals)
   )

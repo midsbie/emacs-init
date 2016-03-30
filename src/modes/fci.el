@@ -45,14 +45,11 @@
   "Suspend fci-mode while popups are visible."
   (when (not emacsinit/fci-mode-suppressed)
     (set (make-local-variable 'emacsinit/fci-mode-suppressed) fci-mode)
-    (print emacsinit/fci-mode-suppressed)
     (when fci-mode
       (turn-off-fci-mode))))
 
 (defadvice popup-delete (after restore-fci-mode activate)
   "Restore fci-mode when all popups have closed."
-  (print popup-instances)
-  (print emacsinit/fci-mode-suppressed)
   (when (and (not popup-instances) emacsinit/fci-mode-suppressed)
     (setq emacsinit/fci-mode-suppressed nil)
     (turn-on-fci-mode)))

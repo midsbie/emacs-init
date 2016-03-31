@@ -25,6 +25,8 @@
 ;;; Code:
 
 (eval-after-load 'neotree
-  '(setq neo-window-width 50))
+  '(progn
+     (setq neo-window-width 50
+           neo-smart-open   t)))
 
 ;;; neotree.el ends here

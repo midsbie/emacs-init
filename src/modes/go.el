@@ -29,14 +29,24 @@
      (add-hook 'go-mode-hook  'init-go)
 
      ;; Use goimports instead of go-fmt
-     (setq-default gofmt-command "goimports")
+     ;;
+     ;; Note that this requires the executable `goimports' to be locatable in
+     ;; the path.  goimports can be found at:
+     ;; https://godoc.org/golang.org/x/tools/cmd/goimports
+     (if (executable-find "goimports")
+         (setq-default gofmt-command "goimports")
+       (message "info: goimports not found and will be unavailable"))
 
      ;; Load go autocomplete
      (load-library "go-autocomplete")
 
      ;; Attempt to load Go Oracle.
-     (let ((file (concat (getenv "GOPATH")
-                         "/src/code.google.com/p/go.tools/cmd/oracle/oracle.el")))
+     ;;
+     ;; Note that this requires the `oracle.el' to be found in the directory
+     ;; specified below.  oracle can be found at:
+     ;; https://godoc.org/golang.org/x/tools/cmd/oracle
+     (let ((file (expand-file-name
+                  "~/go/src/golang.org/x/tools/cmd/oracle/oracle.el")))
        (if (not (file-exists-p file))
            (message "info: go oracle not found and will be unavailable")
          (load file)
@@ -51,7 +61,7 @@
   ;; Customize compile command to run go build
   (if (not (string-match "go" compile-command))
       (set (make-local-variable 'compile-command)
-           "go build -v && go test -v && go vet"))
+           "go build -v"))              ; removed: "&& go test -v && go vet"
 
   (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
   (local-set-key (kbd "C-c i")   'go-goto-imports)

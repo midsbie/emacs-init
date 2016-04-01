@@ -49,8 +49,7 @@
                   "~/go/src/golang.org/x/tools/cmd/oracle/oracle.el")))
        (if (not (file-exists-p file))
            (message "info: go oracle not found and will be unavailable")
-         (load file)
-         (add-hook 'go-mode-hook 'go-oracle-mode)))))
+         (load file)))))
 
 (defun init-go ()
   "Initialise modes related to Go development."

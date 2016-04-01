@@ -95,16 +95,5 @@
 ;; Revert buffer if file associated with it changes outside of emacs.
 (global-auto-revert-mode 1)
 
-;; From 24.3 onwards, the behaviours of the RET and C-j keys were swapped.  We
-;; don't like that.
-(when (and (>= emacs-major-version 24)
-           (>= emacs-minor-version 3))
-  ;; NOTE: this doesn't seem to affect the RET key for whatever reason.  It
-  ;; does restore the old C-j behaviour though.
-  (keyboard-translate ?\^M ?\C-j)
-  (keyboard-translate ?\C-m ?\C-j)
-  (keyboard-translate ?\C-j 13))
-
-
 
 ;;; settings.el ends here

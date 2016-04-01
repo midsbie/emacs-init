@@ -113,6 +113,15 @@
   ;; code.  It (mostly) works fine when writing new code though.
   (setq c-auto-newline nil)
 
+  ;; From 24.3 onwards, the behaviours of the RET and C-j keys were swapped.  We
+  ;; don't like that.
+  (when (and (>= emacs-major-version 24)
+             (>= emacs-minor-version 3))
+    (local-set-key (kbd "RET") 'electric-newline-and-maybe-indent)
+    (local-set-key (kbd "C-j") 'newline)
+    )
+
+
   ;; Delete all trailing whitespace before saving
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 ; (setq show-trailing-whitespace t)

@@ -27,6 +27,7 @@
 (eval-after-load 'neotree
   '(progn
      (setq neo-window-width 50
-           neo-smart-open   t)))
+           neo-smart-open   t
+           neo-theme        "nerd")))
 
 ;;; neotree.el ends here

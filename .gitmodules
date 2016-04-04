@@ -1,0 +1,3 @@
+[submodule "elpa"]
+	path = elpa
+	url = /usr/src/emacs-elpa.git/

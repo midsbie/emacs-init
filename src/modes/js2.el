@@ -30,6 +30,8 @@
 
 (eval-after-load "js2-mode"
   '(progn
+     (require 'js-comint)
+
      (setq-default js2-basic-offset    2
 
                    ;; FIXME: disabled because it is supposed to be set via the
@@ -74,6 +76,13 @@ expression."
                                  (not (string= (type-of (js2-next-error))
                                                "string")))
                       (flycheck-next-error))))
+
+  ;; Set cool keyboard shortcuts to work in conjunction with `js-comint'.
+  (local-set-key "\C-x\C-e" 'js-send-last-sexp)
+  (local-set-key "\C-\M-x" 'js-send-last-sexp-and-go)
+  (local-set-key "\C-cb" 'js-send-buffer)
+  (local-set-key "\C-c\C-b" 'js-send-buffer-and-go)
+  (local-set-key "\C-cl" 'js-load-file-and-go)
 
   ;; Only set path to the dominating .jshintrc if one actually was found.
   (let* ((loc (locate-dominating-file

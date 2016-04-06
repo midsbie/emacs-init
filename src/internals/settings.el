@@ -95,5 +95,15 @@
 ;; Revert buffer if file associated with it changes outside of emacs.
 (global-auto-revert-mode 1)
 
+;; From 24.3 onwards, the behaviours of the RET and C-j keys were swapped.  We
+;; don't like that.
+(when (and (>= emacs-major-version 24)
+           (>= emacs-minor-version 3))
+  (add-hook 'find-file-hook
+            '(lambda()
+               (local-set-key (kbd "RET") 'electric-newline-and-maybe-indent)
+               (local-set-key (kbd "C-j") 'newline))))
+
+
 
 ;;; settings.el ends here

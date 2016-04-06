@@ -95,8 +95,8 @@
   "Initialise modes related programming."
   (enable-fci-mode)                 ; fill column indicator
   (auto-fill-mode)                  ; auto fill
-  (flyspell-prog-mode)              ; turn spell check for strings and comments
-  (ac-flyspell-workaround)          ; this defun must be executed to prevent
+;;(flyspell-prog-mode)              ; turn spell check for strings and comments
+;;(ac-flyspell-workaround)          ; this defun must be executed to prevent
                                     ; flyspell from messing with
                                     ; auto-complete-mode
   (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting

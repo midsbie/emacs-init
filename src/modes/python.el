@@ -26,10 +26,28 @@
 
 (eval-after-load "python-mode"
   '(progn
-     (add-hook 'python-mode-hook  'init-common-programming)
-     (add-hook 'python-mode-hook  'init-python-mode)))
+     (require 'pylint)
+     
+     (add-hook 'python-mode-hook 'init-common-programming)
+     (add-hook 'python-mode-hook 'init-python-mode)
+     (add-hook 'python-mode-hook 'pylint-add-menu-items)
+     (add-hook 'python-mode-hook 'pylint-add-key-bindings)))
+
+;; Defaults
+(setq-default python-indent-offset 4)
 
 (defun init-python-mode ()
-  "Customise python-mode.")
+  "Customise python-mode."
+  (py-autopep8-enable-on-save))
 
 ;;; python.el ends here
+
+
+
+
+
+
+
+
+
+

@@ -95,10 +95,14 @@
   "Initialise modes related programming."
   (enable-fci-mode)                 ; fill column indicator
   (auto-fill-mode)                  ; auto fill
-;;(flyspell-prog-mode)              ; turn spell check for strings and comments
+
+  ;; NOTE: we are explicitly disabling `flyspell-mode' since it suffers from
+  ;; very annoying, intrusive issues that actually impede development.
+  (flyspell-prog-mode -1)           ; turn spell check for strings and comments
 ;;(ac-flyspell-workaround)          ; this defun must be executed to prevent
                                     ; flyspell from messing with
-                                    ; auto-complete-mode
+                                        ; auto-complete-mode
+
   (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting
   (abbrev-mode -1)                  ; turn abbrev-mode off
   (subword-mode 1)

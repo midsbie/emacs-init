@@ -26,15 +26,6 @@
 
 ;; Set our preferred window arrangement after successfully loading a desktop
 ;; configuration.
-(add-hook 'desktop-after-read-hook
-          '(lambda ()
-             (let ((windows (- (/ (frame-width) 80) 1)))
-               (dotimes (n windows)
-                 (split-window-right))
-               (balance-windows)
-               (dotimes (n windows)
-                 (other-window 1)
-                 (bury-buffer))
-               (other-window 1))))
+(add-hook 'desktop-after-read-hook 'rearrange-desktop)
 
 ;;; desktop.el ends here

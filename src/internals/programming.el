@@ -98,7 +98,7 @@
 
   ;; NOTE: we are explicitly disabling `flyspell-mode' since it suffers from
   ;; very annoying, intrusive issues that actually impede development.
-  (flyspell-prog-mode -1)           ; turn spell check for strings and comments
+  (flyspell-mode -1)                ; turn spell check for strings and comments
 ;;(ac-flyspell-workaround)          ; this defun must be executed to prevent
                                     ; flyspell from messing with
                                         ; auto-complete-mode

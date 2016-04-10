@@ -30,9 +30,13 @@
 
 ;; Add all known minor modes to `desktop-minor-mode-table' to prevent
 ;; `desktop-save' from saving the minor modes associated with each file.
-(add-hook 'find-file-hook
-          '(lambda()
-             (loop for mode in minor-mode-list do
-                   (add-to-list 'desktop-minor-mode-table (list mode nil)))))
+(add-hook 'find-file-hook 'desktop--update-minor-mode-table)
+
+(unless (boundp 'desktop-minor-mode-table)
+  (setq desktop-minor-mode-table nil))
+
+(defun desktop--update-minor-mode-table()
+  (loop for mode in minor-mode-list do
+        (add-to-list 'desktop-minor-mode-table (list mode nil))))
 
 ;;; desktop.el ends here

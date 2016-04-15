@@ -24,6 +24,10 @@
 
 ;;; Code:
 
+(add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.react.js\\'" . web-mode))
+
 (eval-after-load 'web-mode
   '(progn
      (add-hook 'web-mode-hook  'init-web-mode)

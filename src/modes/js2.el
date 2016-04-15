@@ -24,9 +24,11 @@
 
 ;;; Code:
 
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
-(add-to-list 'auto-mode-alist '("\\.react.js\\'" . js2-jsx-mode))
+;; NOTE: disabled for the time being since there are numerous issues related to
+;; parsing JSX files.  Currently using `web-mode' instead.
+;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+;; (add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
+;; (add-to-list 'auto-mode-alist '("\\.react.js\\'" . js2-jsx-mode))
 
 (eval-after-load "js2-mode"
   '(progn

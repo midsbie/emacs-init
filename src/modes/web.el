@@ -48,6 +48,15 @@
   (local-set-key "}"  '(lambda ()
                          (interactive)
                          (insert-char ?})
-                         (indent-for-tab-command))))
+                         (indent-for-tab-command)))
+
+  ;; TODO: `fci-mode' seems to be somehow messing with the indentation when
+  ;; `newline' is invoked.  Invoking `indent-for-tab-command' immediately after
+  ;; seems to fix the issue for now.  Remove fix when `web-mode' and `fci-mode'
+  ;; play well together.
+  (local-set-key (kbd "C-j") '(lambda ()
+                                (interactive)
+                                (newline)
+                                (indent-for-tab-command))))
 
 ;;; web.el ends here

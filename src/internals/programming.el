@@ -143,11 +143,14 @@
 
 (defun init-common-web ()
   "Initialise modes related to web development."
+  (enable-fci-mode)                 ; fill column indicator
   (auto-fill-mode -1)
   (highlight-parentheses-mode)
   (subword-mode 1)
   (setq tab-width       2
-        c-basic-offset  2))
+        c-basic-offset  2)
+
+  (setq programming-buffer t))
 
 ;; Defun invoked after pressing C-x C-k (see `init-elisp').
 ;; Evals the current buffer and displays a message.

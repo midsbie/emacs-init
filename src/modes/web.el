@@ -27,18 +27,27 @@
 (add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.react.js\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
 (eval-after-load 'web-mode
   '(progn
      (add-hook 'web-mode-hook  'init-web-mode)
-     (add-hook 'web-mode-hook  'init-common-web)))
+     (add-hook 'web-mode-hook  'init-common-web)
+
+     (local-set-key "."  '(lambda ()
+                            (interactive)
+                            (insert-char ?.)
+                            (indent-for-tab-command)))
+
+     (local-set-key "}"  '(lambda ()
+                            (interactive)
+                            (insert-char ?})
+                            (indent-for-tab-command)))))
 
 (defun init-web-mode ()
   "Initialise `web-mode'."
   (setq web-mode-markup-indent-offset 2
         web-mode-css-indent-offset    2
         web-mode-code-indent-offset   2))
-
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
 ;;; web.el ends here

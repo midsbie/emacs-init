@@ -32,22 +32,22 @@
 (eval-after-load 'web-mode
   '(progn
      (add-hook 'web-mode-hook  'init-web-mode)
-     (add-hook 'web-mode-hook  'init-common-web)
-
-     (local-set-key "."  '(lambda ()
-                            (interactive)
-                            (insert-char ?.)
-                            (indent-for-tab-command)))
-
-     (local-set-key "}"  '(lambda ()
-                            (interactive)
-                            (insert-char ?})
-                            (indent-for-tab-command)))))
+     (add-hook 'web-mode-hook  'init-common-web)))
 
 (defun init-web-mode ()
   "Initialise `web-mode'."
   (setq web-mode-markup-indent-offset 2
         web-mode-css-indent-offset    2
-        web-mode-code-indent-offset   2))
+        web-mode-code-indent-offset   2)
+
+  (local-set-key "."  '(lambda ()
+                         (interactive)
+                         (insert-char ?.)
+                         (indent-for-tab-command)))
+
+  (local-set-key "}"  '(lambda ()
+                         (interactive)
+                         (insert-char ?})
+                         (indent-for-tab-command))))
 
 ;;; web.el ends here

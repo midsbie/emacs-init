@@ -31,10 +31,15 @@
            flycheck-c/c++-clang-executable "true") ; disable clang since we use
                                                    ; omnis
 
-     ;; + in php mode
+     ;; + in `php-mode'
      (setq flycheck-php-phpmd-executable "phpmd"
            flycheck-phpmd-rulesets '("cleancode" "codesize" "controversial"
                                      "design" "naming" "unusedcode"))
+
+     ;; + in `web-mode'
+     (flycheck-add-mode 'html-tidy 'web-mode)
+     (flycheck-add-mode 'css-csslint 'web-mode)
+     (flycheck-add-mode 'javascript-eslint 'web-mode)
 
      (add-hook 'flyspell-mode-hook 'init-flyspell-mode)))
 

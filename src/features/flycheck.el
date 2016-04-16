@@ -36,9 +36,17 @@
            flycheck-phpmd-rulesets '("cleancode" "codesize" "controversial"
                                      "design" "naming" "unusedcode"))
 
+     ;; Disable jshint since we prefer eslint.
+     (setq-default flycheck-disabled-checkers
+                   (append flycheck-disabled-checkers '(javascript-jshint)))
+
      ;; + in `web-mode'
-     (flycheck-add-mode 'html-tidy 'web-mode)
-     (flycheck-add-mode 'css-csslint 'web-mode)
+     ;; NOTE: htmltidy and csslint have been disabled since flycheck does not
+     ;; support more than one linter per major mode; specifically, all the
+     ;; defined linters per major mode are executed regardless of the actual
+     ;; file type.
+;;      (flycheck-add-mode 'html-tidy 'web-mode)
+;;      (flycheck-add-mode 'css-csslint 'web-mode)
      (flycheck-add-mode 'javascript-eslint 'web-mode)
 
      (add-hook 'flyspell-mode-hook 'init-flyspell-mode)))

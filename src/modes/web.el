@@ -48,6 +48,14 @@
   (local-set-key "}"  '(lambda ()
                          (interactive)
                          (insert-char ?})
-                         (indent-for-tab-command))))
+                         (indent-for-tab-command)))
+
+  ;; Disable `flycheck-mode' for buffers where the eslint checker does not
+  ;; apply and would produce false positives.
+  (let ((ext (file-name-extension (buffer-file-name))))
+    (cond ((string-match "^\\(css\\|html\\|less\\)$" ext)
+           (message "warn: flycheck-mode disabled")
+           (flycheck-mode -1))))
+  )
 
 ;;; web.el ends here

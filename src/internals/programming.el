@@ -143,7 +143,8 @@
 
 (defun init-common-web ()
   "Initialise modes related to web development."
-  (enable-fci-mode)                 ; fill column indicator
+  ;; Unfortunately, `fci-mode' does not play well with `web-mode'.
+  (fci-mode -1)
   (auto-fill-mode -1)
   (highlight-parentheses-mode)
   (subword-mode 1)

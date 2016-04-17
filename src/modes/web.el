@@ -50,6 +50,10 @@
                          (insert-char ?})
                          (indent-for-tab-command)))
 
+  ;; javascript: make case indentation at the same level as the parent switch
+  ;; statement.
+  (add-to-list 'web-mode-indentation-params '("case-extra-offset" . nil))
+
   ;; Disable `flycheck-mode' for buffers where the eslint checker does not
   ;; apply and would produce false positives.
   (let ((ext (file-name-extension (buffer-file-name))))

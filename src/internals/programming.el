@@ -152,7 +152,8 @@
   (setq tab-width       2
         c-basic-offset  2)
 
-  (setq programming-buffer t))
+  (setq programming-buffer t)
+  (apply-editor-workarounds))
 
 ;; Defun invoked after pressing C-x C-k (see `init-elisp').
 ;; Evals the current buffer and displays a message.

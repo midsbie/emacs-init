@@ -126,6 +126,7 @@
 
   ;; The following disabled:
 ; (doxymacs-mode)                    ; turn doxymacs on
+  (apply-editor-workarounds)
   )
 
 (defun init-c-c++()

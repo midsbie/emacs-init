@@ -95,8 +95,6 @@
 ;; Revert buffer if file associated with it changes outside of emacs.
 (global-auto-revert-mode 1)
 
-(add-hook 'after-change-major-mode-hook 'apply-editor-workarounds)
-
 ;; From 24.3 onwards, the behaviours of the RET and C-j keys were swapped.  We
 ;; don't like that.  This defun is supposed to be invoked by mode initialisors,
 ;; in particular the programming ones.

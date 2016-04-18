@@ -126,7 +126,8 @@
 
   ;; The following disabled:
 ; (doxymacs-mode)                    ; turn doxymacs on
-  )
+
+  (apply-editor-workarounds))
 
 (defun init-c-c++()
   "Initialise modes related to C and C++ development."
@@ -151,7 +152,9 @@
   (setq tab-width       2
         c-basic-offset  2)
 
-  (setq programming-buffer t))
+  (setq programming-buffer t)
+  (make-local-variable 'programming-buffer)
+  (apply-editor-workarounds))
 
 ;; Defun invoked after pressing C-x C-k (see `init-elisp').
 ;; Evals the current buffer and displays a message.

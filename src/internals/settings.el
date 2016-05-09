@@ -92,6 +92,9 @@
       kept-old-versions 2
       version-control t)
 
+;; Windows
+(setq-default split-height-threshold 100)
+
 ;; Revert buffer if file associated with it changes outside of emacs.
 (global-auto-revert-mode 1)
 

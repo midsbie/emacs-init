@@ -24,6 +24,10 @@
 
 ;;; Code:
 
+;; FIXME: find way around having to require the speedbar library before
+;; `org-mode' can be loaded.
+(require 'speedbar)
+
 (eval-after-load 'org
   '(progn
      (setq org-use-fast-todo-selection t

@@ -50,6 +50,9 @@
                          (insert-char ?})
                          (indent-for-tab-command)))
 
+  ;; Map the value of `c-basic-offset' to `web-mode-code-indent-offset'.
+  (add-hook 'web-mode-local-vars-hook 'web-mode-local-vars)
+
   ;; javascript: make case indentation at the same level as the parent switch
   ;; statement.
   (add-to-list 'web-mode-indentation-params '("case-extra-offset" . nil))
@@ -61,5 +64,15 @@
            (message "warn: flycheck-mode disabled")
            (flycheck-mode -1))))
   )
+
+(defun web-mode-local-vars ()
+  (when file-local-variables-alist
+    (dolist (elt file-local-variables-alist)
+      (let* ((var (car elt))
+             (val (cdr elt)))
+        (cond ((eq var 'c-basic-offset)
+               (setq web-mode-code-indent-offset val))
+        )))))
+
 
 ;;; web.el ends here

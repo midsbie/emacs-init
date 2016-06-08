@@ -98,6 +98,15 @@
 ;; Revert buffer if file associated with it changes outside of emacs.
 (global-auto-revert-mode 1)
 
+;; Run a MAJORMODE-local-vars-hook when local vars are processed.
+;; From: https://www.emacswiki.org/emacs/LocalVariables
+(add-hook 'hack-local-variables-hook 'run-local-vars-mode-hook)
+(defun run-local-vars-mode-hook ()
+  "Run a hook for the major-mode after the local variables have
+been processed."
+  (run-hooks (intern (concat (symbol-name major-mode) "-local-vars-hook"))))
+
+
 ;; From 24.3 onwards, the behaviours of the RET and C-j keys were swapped.  We
 ;; don't like that.  This defun is supposed to be invoked by mode initialisors,
 ;; in particular the programming ones.

@@ -24,9 +24,12 @@
 
 ;;; Code:
 
-(add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.react.js\\'" . web-mode))
+;; The following are loaded by `js2-mode' instead.  If any issues arise, such
+;; as parsing breakage, manually invoke `web-mode' instead.  Should work fine,
+;; barring multi-line comment support, which is simply awful.
+;; (add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
+;; (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
+;; (add-to-list 'auto-mode-alist '("\\.react.js\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
 (eval-after-load 'web-mode
@@ -50,8 +53,8 @@
                          (insert-char ?})
                          (indent-for-tab-command)))
 
-  ;; Map the value of `c-basic-offset' to `web-mode-code-indent-offset'.
-  (add-hook 'web-mode-local-vars-hook 'web-mode-local-vars)
+  ;; Run hook after local variables loaded.
+  (add-hook 'web-mode-local-vars-hook 'init-web-mode/load-local-vars)
 
   ;; javascript: make case indentation at the same level as the parent switch
   ;; statement.
@@ -65,7 +68,8 @@
            (flycheck-mode -1))))
   )
 
-(defun web-mode-local-vars ()
+(defun init-web-mode/load-local-vars ()
+  "Map the value of `c-basic-offset' to `web-mode-code-indent-offset'."
   (when file-local-variables-alist
     (dolist (elt file-local-variables-alist)
       (let* ((var (car elt))

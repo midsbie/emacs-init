@@ -24,11 +24,9 @@
 
 ;;; Code:
 
-;; NOTE: disabled for the time being since there are numerous issues related to
-;; parsing JSX files.  Currently using `web-mode' instead.
-;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-;; (add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
-;; (add-to-list 'auto-mode-alist '("\\.react.js\\'" . js2-jsx-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
+(add-to-list 'auto-mode-alist '("\\.react.js\\'" . js2-jsx-mode))
 
 (eval-after-load "js2-mode"
   '(progn
@@ -86,6 +84,13 @@ expression."
   (local-set-key "\C-c\C-b" 'js-send-buffer-and-go)
   (local-set-key "\C-cl" 'js-load-file-and-go)
 
+  ;; Customize faces.  For some strange reason, `js2-mode' specifies the
+  ;; default face for the function-call face.  We set it to font-locks's
+  ;; default.
+  (custom-set-faces
+   '(js2-function-call ((t (:inherit font-lock-function-name-face))))
+   '(js2-object-property ((t (:inherit font-lock-variable-name-face)))))
+
   ;; Only set path to the dominating .jshintrc if one actually was found.
   (let* ((loc (locate-dominating-file
                default-directory ".jshintrc")))
@@ -93,10 +98,13 @@ expression."
     (setq-local jshint-configuration-path
                 (and loc (expand-file-name ".jshintrc" loc))))
   (flymake-jshint-load)
-  (load-jshint-globals)
+  (init-js2-mode/load-jshint-globals)
+
+  ;; Run hook after local variables loaded.
+  (add-hook 'js2-mode-local-vars-hook 'init-js2-mode/load-local-vars)
   )
 
-(defun load-jshint-globals (&optional file)
+(defun init-js2-mode/load-jshint-globals (&optional file)
   "Load the `globals` section in the project's .jshintrc file.
 
 The `globals` section is then appended to the buffer local
@@ -121,5 +129,15 @@ If FILE is not specified, `jshint-configuration-path' is used instead."
                     (push name globals))))))))
       (setq js2-additional-externs (append js2-additional-externs globals))
       (delete-dups js2-additional-externs))))
+
+(defun init-js2-mode/load-local-vars ()
+  "Map the value of `c-basic-offset' to `js2-basic-offset'."
+  (when file-local-variables-alist
+    (dolist (elt file-local-variables-alist)
+      (let* ((var (car elt))
+             (val (cdr elt)))
+        (cond ((eq var 'c-basic-offset)
+               (setq js2-basic-offset val))
+        )))))
 
 ;;; js2.el ends here

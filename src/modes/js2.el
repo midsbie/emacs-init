@@ -89,7 +89,9 @@ expression."
   ;; default.
   (custom-set-faces
    '(js2-function-call ((t (:inherit font-lock-function-name-face))))
-   '(js2-object-property ((t (:inherit font-lock-variable-name-face)))))
+   ; The following leads to excessive highlighting; disabled.
+;   '(js2-object-property ((t (:inherit font-lock-variable-name-face))))
+   )
 
   ;; Only set path to the dominating .jshintrc if one actually was found.
   (let* ((loc (locate-dominating-file

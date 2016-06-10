@@ -26,7 +26,7 @@
 
 (eval-after-load 'go-mode
   '(progn
-     (add-hook 'go-mode-hook  'init-go)
+     (add-hook 'go-mode-hook  'init-go-mode)
 
      ;; Use goimports instead of go-fmt
      ;;
@@ -45,13 +45,27 @@
      ;; Note that this requires the `oracle.el' to be found in the directory
      ;; specified below.  oracle can be found at:
      ;; https://godoc.org/golang.org/x/tools/cmd/oracle
+     ;;
+     ;; TODO: it is ugly that we're loading from the home directory.  This
+     ;; should perhaps be in the user's .emacs file.
      (let ((file (expand-file-name
                   "~/go/src/golang.org/x/tools/cmd/oracle/oracle.el")))
        (if (not (file-exists-p file))
            (message "info: go oracle not found and will be unavailable")
-         (load file)))))
+         (load file)))
 
-(defun init-go ()
+     (if (not (executable-find "go"))
+         (error "GOROOT environment variable not set and go\
+ executable not found")
+       (let ((env (shell-command-to-string "go env")))
+         (unless (getenv "GOROOT")
+           (init-go-mode/setenv "GOROOT" env))
+         (unless (getenv "GOPATH")
+           (setenv "GOPATH" (expand-file-name "~/go"))
+           (message "info: set default GOPATH" name))))
+     ))
+
+(defun init-go-mode ()
   "Initialise modes related to Go development."
   (init-common-programming)
   (go-eldoc-setup)
@@ -65,5 +79,12 @@
   (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
   (local-set-key (kbd "C-c i")   'go-goto-imports)
   (local-set-key (kbd "M-.")     'go-jump))
+
+(defun init-go-mode/setenv (name env)
+  "Extract environment variable given by NAME from go's ENV."
+  (if (not (string-match (concat name "=\"\\([^\"]+\\)\"") env))
+      (error (concat "Failed to extract " name))
+    (setenv name (match-string 1 env))
+    (message "info: set %s" name)))
 
 ;;; go.el ends here

@@ -28,8 +28,10 @@
 ;; as parsing breakage, manually invoke `web-mode' instead.  Should work fine,
 ;; barring multi-line comment support, which is simply awful.
 ;; (add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
-;; (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
-;; (add-to-list 'auto-mode-alist '("\\.react.js\\'" . web-mode))
+
+;; React's jsx files are best loaded under web mode.
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.react.js\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
 (eval-after-load 'web-mode

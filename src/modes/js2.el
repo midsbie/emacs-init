@@ -25,8 +25,10 @@
 ;;; Code:
 
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
-(add-to-list 'auto-mode-alist '("\\.react.js\\'" . js2-jsx-mode))
+
+;; Disabled: js2-mode not quite adequate enough to handle React's jsx content.
+;(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
+;(add-to-list 'auto-mode-alist '("\\.react.js\\'" . js2-jsx-mode))
 
 (eval-after-load "js2-mode"
   '(progn

@@ -37,9 +37,6 @@
          (setq-default gofmt-command "goimports")
        (message "info: goimports not found and will be unavailable"))
 
-     ;; Load go autocomplete
-     (load-library "go-autocomplete")
-
      ;; Attempt to load Go Oracle.
      ;;
      ;; Note that this requires the `oracle.el' to be found in the directory
@@ -62,7 +59,18 @@
            (init-go-mode/setenv "GOROOT" env))
          (unless (getenv "GOPATH")
            (setenv "GOPATH" (expand-file-name "~/go"))
-           (message "info: set default GOPATH" name))))
+           (message "info: set default GOPATH: %s" (getenv "GOPATH")))))
+
+     ;; Load go autocomplete
+     (load-library "go-autocomplete")
+
+     ;; Load golint if executable found.  Note that golint is currently
+     ;; expected to have been installed via `go get`.
+     (if (executable-find "golint")
+         (load-library
+          (concat (getenv "GOPATH")
+                  "/src/github.com/golang/lint/misc/emacs/golint.el"))
+       (message "info: golint not found and will be unavailable"))
      ))
 
 (defun init-go-mode ()
@@ -85,6 +93,6 @@
   (if (not (string-match (concat name "=\"\\([^\"]+\\)\"") env))
       (error (concat "Failed to extract " name))
     (setenv name (match-string 1 env))
-    (message "info: set %s" name)))
+    (message "info: set %s: %s" name (getenv name))))
 
 ;;; go.el ends here

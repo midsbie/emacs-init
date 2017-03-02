@@ -40,7 +40,19 @@
   (py-autopep8-enable-on-save)
 
   ;; For some strange reason, C-j does not issue a newline and indent, but RET
-  ;; does.
-  (keyboard-translate ?\^M ?\C-j))
+  ;; does, and it seems electric-mode is to blame for that.
+  (when (fboundp 'electric-indent-mode)
+    (electric-indent-mode -1))p
+
+  ;; The following doesn't work to ensure C-j does the right thing.
+  (define-key python-mode-map (kbd "C-j") 'newline-and-indent)
+  (define-key python-mode-map (kbd "RET") 'newline-indent)
+
+  ;; ... so we're having to resort to using a hack.
+  (run-at-time "1 sec" nil
+    '(lambda()
+      (local-set-key (kbd "C-j") 'newline-and-indent)
+      (local-set-key (kbd "RET") 'newline)))
+)
 
 ;;; python.el ends here

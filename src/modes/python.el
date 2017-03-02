@@ -27,7 +27,7 @@
 (eval-after-load "python-mode"
   '(progn
      (require 'pylint)
-     
+
      (add-hook 'python-mode-hook 'init-common-programming)
      (add-hook 'python-mode-hook 'init-python-mode)
      (add-hook 'python-mode-hook 'pylint-add-menu-items)
@@ -38,16 +38,10 @@
 
 (defun init-python-mode ()
   "Customise python-mode."
-  (py-autopep8-enable-on-save))
+  (py-autopep8-enable-on-save)
+
+  ;; For some strange reason, C-j does not issue a newline and indent, but RET
+  ;; does.
+  (keyboard-translate ?\^M ?\C-j))
 
 ;;; python.el ends here
-
-
-
-
-
-
-
-
-
-

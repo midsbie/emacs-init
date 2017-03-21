@@ -67,7 +67,7 @@ characters wide."
    '(default ((t (:inherit nil :stipple nil :background "#080808" :foreground
                            "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil
                            :underline nil :slant normal :weight normal :height 84 :width normal :foundry
-                           "unknown" :family "Droid Sans Mono"))))
+                           "unknown" :family "DejaVu Sans Mono"))))
    '(rst-level-1-face ((t (:weight bold))) t)
    '(rst-level-2-face ((t (:weight bold))) t)
    '(rst-level-3-face ((t (:weight extra-bold))) t))

@@ -137,6 +137,7 @@ If FILE is not specified, `jshint-configuration-path' is used instead."
 (defun init-js2-mode/load-local-vars ()
   "Map the value of `c-basic-offset' to `js2-basic-offset'."
   (when file-local-variables-alist
+    (make-local-variable 'js2-basic-offset)
     (dolist (elt file-local-variables-alist)
       (let* ((var (car elt))
              (val (cdr elt)))

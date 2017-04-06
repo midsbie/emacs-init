@@ -96,13 +96,14 @@ expression."
    )
 
   ;; Only set path to the dominating .jshintrc if one actually was found.
-  (let* ((loc (locate-dominating-file
-               default-directory ".jshintrc")))
-    ;; from: https://github.com/Wilfred/flymake-jshint.el/issues/1
-    (setq-local jshint-configuration-path
-                (and loc (expand-file-name ".jshintrc" loc))))
-  (flymake-jshint-load)
-  (init-js2-mode/load-jshint-globals)
+  (unless init-suppress-jshint
+    (let* ((loc (locate-dominating-file
+                 default-directory ".jshintrc")))
+      ;; from: https://github.com/Wilfred/flymake-jshint.el/issues/1
+      (setq-local jshint-configuration-path
+                  (and loc (expand-file-name ".jshintrc" loc))))
+    (flymake-jshint-load)
+    (init-js2-mode/load-jshint-globals))
 
   ;; Run hook after local variables loaded.
   (add-hook 'js2-mode-local-vars-hook 'init-js2-mode/load-local-vars)

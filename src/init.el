@@ -76,6 +76,12 @@ Files are only visited if the server hasn't yet been started.")
 
 (package-initialize)
 
+;; This measure is needed to prevent tramp from hanging at startup as it tries
+;; to conduct a strange check on the system's host.
+;;
+;; More information here: https://debbugs.gnu.org/cgi/bugreport.cgi?bug=20015
+(setq tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ConnectTimeout=1 -o ControlPersist=no")
+
 ;; Now safe to load all ELISP source files in directories specified in
 ;; `init-dirs-load'
 (when load-file-name

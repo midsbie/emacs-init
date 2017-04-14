@@ -70,6 +70,16 @@ and LIBRARY variables."
      (interactive)
      (run-or-load ,func ,library)))
 
+(defun kill-current-buffer ()
+  "Simply deletes the currently active buffer.  Overcomes the
+issues that `kill-this-buffer' is sometimes afflicted by where it
+stops working.  This [1] post over on Reddit explains what
+happens.
+
+[1] https://www.reddit.com/r/emacs/comments/64xb3q/killthisbuffer_sometimes_just_stops_working/"
+  (interactive)
+  (kill-buffer (current-buffer)))
+
 
 (provide 'libcommon)
 

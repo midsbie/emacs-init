@@ -35,7 +35,7 @@
 (global-set-key [f2]                  'shell)
 (global-set-key [f3]                  'next-error)
 (global-set-key [S-f3]                'previous-error)
-(global-set-key (kbd "C-x k")         'kill-this-buffer)
+(global-set-key (kbd "C-x k")         'kill-current-buffer)
 
 ;; Buffer-related
 (global-set-key (kbd "C-x x")         'mark-whole-buffer)

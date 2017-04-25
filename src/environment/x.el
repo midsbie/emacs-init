@@ -84,8 +84,8 @@ characters wide."
   (set-face-background 'hl-line "#383830")
 
   ;; Enable clipboard functionality
-  (setq x-select-enable-clipboard t
-	interprogram-paste-function 'x-cut-buffer-or-selection-value)
+  (setq x-select-enable-clipboard   t
+        interprogram-paste-function 'x-cut-buffer-or-selection-value)
 
   ;; `when'
   (split-window-horizontally)             ; two windows at startup

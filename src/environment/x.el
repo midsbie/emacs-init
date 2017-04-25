@@ -92,6 +92,10 @@ characters wide."
   (setq speedbar-use-images nil)          ; do not use icons in `speedbar-mode'
 
   (tooltip-mode -1)                       ; disable tooltips
+
+  ;; Disable mouse on the 'nyx' laptop.
+  (cond ((string= (system-name) "nyx")
+         (global-disable-mouse-mode 1)))
   )
 
 ;;; x.el ends here

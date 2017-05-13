@@ -40,8 +40,9 @@
                    ;; `customize-group' defun.
                    ;; js2-bounce-indent-p t
 
-                   js2-include-browser-externs t
-                   js2-include-node-externs    t
+                   js2-include-browser-externs        t
+                   js2-include-node-externs           t
+                   js2-strict-trailing-comma-warning  nil
                    )
 
      (add-hook 'js2-mode-hook  'init-common-programming)

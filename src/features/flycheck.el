@@ -50,10 +50,13 @@
      ;;      (flycheck-add-mode 'css-csslint 'web-mode)
 
      (flycheck-add-mode 'javascript-eslint 'web-mode)
-     (flycheck-add-mode 'javascript-flow 'web-mode)
 
-     (flycheck-add-next-checker 'javascript-eslint 'javascript-flow)
+     ;; IMPORTANT! Do not mess with the order in which the checkers are added
+     ;; below.  Doing so will result in eslint being somehow overriden or
+     ;; worse.
+     (flycheck-add-mode 'javascript-flow 'web-mode)
      (flycheck-add-next-checker 'javascript-flow 'javascript-flow-coverage)
+     (flycheck-add-next-checker 'javascript-flow 'javascript-eslint)
 
      (add-hook 'flyspell-mode-hook 'init-flyspell-mode)))
 

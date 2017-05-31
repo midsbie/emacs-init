@@ -34,8 +34,7 @@
                                                    ; omnis
 
      ;; + in `php-mode'
-     (setq flycheck-php-phpmd-executable "phpmd"
-           flycheck-phpmd-rulesets '("cleancode" "codesize" "controversial"
+     (setq flycheck-phpmd-rulesets '("cleancode" "codesize" "controversial"
                                      "design" "naming" "unusedcode"))
 
      ;; Disable jshint since we prefer eslint.

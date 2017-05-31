@@ -26,6 +26,8 @@
 
 (eval-after-load 'flycheck
   '(progn
+     (require 'flycheck-flow)
+
      ;; + in c/c++ modes
      (setq flycheck-cppcheck-checks        '("all")
            flycheck-c/c++-clang-executable "true") ; disable clang since we use
@@ -45,13 +47,20 @@
      ;; support more than one linter per major mode; specifically, all the
      ;; defined linters per major mode are executed regardless of the actual
      ;; file type.
-;;      (flycheck-add-mode 'html-tidy 'web-mode)
-;;      (flycheck-add-mode 'css-csslint 'web-mode)
+     ;;      (flycheck-add-mode 'html-tidy 'web-mode)
+     ;;      (flycheck-add-mode 'css-csslint 'web-mode)
+
      (flycheck-add-mode 'javascript-eslint 'web-mode)
+     (flycheck-add-mode 'javascript-flow 'web-mode)
+
+     (flycheck-add-next-checker 'javascript-eslint 'javascript-flow)
+     (flycheck-add-next-checker 'javascript-flow 'javascript-flow-coverage)
 
      (add-hook 'flyspell-mode-hook 'init-flyspell-mode)))
 
+;; Enable flycheck globally.
 (global-flycheck-mode 1)
+
 
 (defun init-flyspell-mode()
   ;; Deactivate annoying correction of previous misspelled error, by default.

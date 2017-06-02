@@ -138,6 +138,12 @@ Files are only visited if the server hasn't yet been started.")
                 (remove-hook 'kill-buffer-query-functions
                              'server-kill-buffer-query-function)))
 
+;; It seems newer Emacs versions automatically enable electric indentation
+;; mode.  Seeing as we don't like that, it is disabled right here.  Should also
+;; be backwards compatible.
+(when (fboundp 'electric-indent-mode)
+  (electric-indent-mode -1))
+
 ;; Show how long it took to initialise emacs after 6 seconds.
 (run-with-idle-timer 6 nil
              '(lambda ()

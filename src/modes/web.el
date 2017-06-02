@@ -36,10 +36,10 @@
 
 (eval-after-load 'web-mode
   '(progn
-     (add-hook 'web-mode-hook  'init-web-mode)
+     (add-hook 'web-mode-hook  'init/web-mode)
      (add-hook 'web-mode-hook  'init-common-web)))
 
-(defun init-web-mode ()
+(defun init/web-mode ()
   "Initialise `web-mode'."
   (setq web-mode-markup-indent-offset 2
         web-mode-css-indent-offset    2
@@ -78,7 +78,16 @@
              (val (cdr elt)))
         (cond ((eq var 'c-basic-offset)
                (setq web-mode-code-indent-offset val))
-        )))))
+              )))))
 
+;; For better jsx syntax-highlighting in web-mode
+;; - courtesy of Patrick @halbtuerke
+;;
+;; Taken from: http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
+(defadvice web-mode-highlight-part (around tweak-jsx activate)
+  (if (equal web-mode-content-type "jsx")
+    (let ((web-mode-enable-part-face nil))
+      ad-do-it)
+    ad-do-it))
 
 ;;; web.el ends here

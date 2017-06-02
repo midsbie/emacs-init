@@ -58,14 +58,30 @@
      (flycheck-add-next-checker 'javascript-flow 'javascript-flow-coverage)
      (flycheck-add-next-checker 'javascript-flow 'javascript-eslint)
 
-     (add-hook 'flyspell-mode-hook 'init-flyspell-mode)))
+     (add-hook 'flyspell-mode-hook 'init-flycheck/on-flyspell-mode)
+     (add-hook 'flycheck-mode-hook 'init-flycheck/use-eslint-from-node-modules)))
 
 ;; Enable flycheck globally.
 (global-flycheck-mode 1)
 
 
-(defun init-flyspell-mode()
-  ;; Deactivate annoying correction of previous misspelled error, by default.
+(defun init-flycheck/on-flyspell-mode()
+  ;; Deactivate annoying correction of previous misspelled error when C-; is hit.
   (define-key flyspell-mode-map (kbd "C-;") nil))
+
+;; Taken from:
+;; http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
+;;
+;; ... which was taken originally from:
+;; https://emacs.stackexchange.com/q/21205/15089
+(defun init-flycheck/use-eslint-from-node-modules ()
+  (let* ((root (locate-dominating-file
+                (or (buffer-file-name) default-directory)
+                "node_modules"))
+         (eslint (and root
+                      (expand-file-name "node_modules/eslint/bin/eslint.js"
+                                        root))))
+    (when (and eslint (file-executable-p eslint))
+      (setq-local flycheck-javascript-eslint-executable eslint))))
 
 ;;; flycheck.el ends here

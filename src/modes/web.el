@@ -68,6 +68,11 @@
     (cond ((string-match "^\\(css\\|html\\|less\\)$" ext)
            (message "warn: flycheck-mode disabled")
            (flycheck-mode -1))))
+
+  ;; Set content type to jsx for source files with "js" or "jsx" suffix.
+  ;; Source: http://cha1tanya.com/2015/06/20/configuring-web-mode-with-jsx.html
+  (setq web-mode-content-types-alist
+        '(("jsx" . "\\.js[x]?\\'")))
   )
 
 (defun init-web-mode/load-local-vars ()

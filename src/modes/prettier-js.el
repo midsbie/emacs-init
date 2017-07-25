@@ -25,13 +25,20 @@
 ;;; Code:
 
 
-(add-hook 'js2-mode-hook 'prettier-js-mode)
-(add-hook 'web-mode-hook 'prettier-js-mode)
+(add-hook 'js2-mode-hook 'init/prettier-js-mode-maybe)
+(add-hook 'web-mode-hook 'init/prettier-js-mode-maybe)
 
 ;; Default parameters to pass to prettier.
 (setq-default prettier-js-args
               '("--single-quote"
                 "--trailing-comma" "es5"
                 "--jsx-bracket-same-line"))
+
+(defvar init/enable-prettier-js-mode)
+(setq init/enable-prettier-js-mode nil)
+
+(defun init/prettier-js-mode-maybe()
+  (when init/enable-prettier-js-mode
+    (prettier-js-mode)))
 
 ;;; pretiter-js.el ends here

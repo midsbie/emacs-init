@@ -108,6 +108,11 @@ expression."
 
   ;; Run hook after local variables loaded.
   (add-hook 'js2-mode-local-vars-hook 'init-js2-mode/load-local-vars)
+
+  ;; Only use the company backends that we actually need.
+  (when (boundp 'company-backend)
+        (set (make-local-variable 'company-backends)
+             '(company-flow company-jquery company-yasnippet company-files)))
   )
 
 (defun init-js2-mode/load-jshint-globals (&optional file)

@@ -24,7 +24,8 @@
 
 ;;; Code:
 
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+;; NOTE: js2-mode is disabled for now!
+;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
 ;; Disabled: js2-mode not quite adequate enough to handle React's jsx content.
 ;(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
@@ -112,7 +113,7 @@ expression."
   ;; Only use the company backends that we actually need.
   (when (boundp 'company-backend)
         (set (make-local-variable 'company-backends)
-             '(company-flow company-jquery company-yasnippet company-files)))
+             '(company-flow company-tern company-yasnippet company-files)))
   )
 
 (defun init-js2-mode/load-jshint-globals (&optional file)

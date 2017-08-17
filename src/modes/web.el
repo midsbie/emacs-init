@@ -24,13 +24,10 @@
 
 ;;; Code:
 
-;; The following are loaded by `js2-mode' instead.  If any issues arise, such
-;; as parsing breakage, manually invoke `web-mode' instead.  Should work fine,
-;; barring multi-line comment support, which is simply awful.
-;; (add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
-
-;; React's jsx files are best loaded under web mode.
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
+;; React's jsx files are best loaded under web mode.  However, we're now
+;; using web-mode as the default mode for all things Javascript.
+(add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.react.js\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
@@ -77,7 +74,8 @@
   ;; Only use the company backends that we actually need.
   (when (boundp 'company-backend)
         (set (make-local-variable 'company-backends)
-             '(company-flow company-yasnippet company-files)))
+             '(company-flow company-tern company-yasnippet company-files))
+        (tern-mode))
   )
 
 (defun init-web-mode/load-local-vars ()

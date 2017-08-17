@@ -25,12 +25,23 @@
 ;;; Code:
 
 (require 'company)
+(require 'company-statistics)
 
-(global-company-mode)
+(add-hook 'after-init-hook
+          '(lambda()
+             (init/company-mode)))
 
-(eval-after-load 'company
-  '(add-to-list 'company-backends 'company-flow))
+(defun init/company-mode()
+  (global-company-mode)
+  (company-statistics-mode)
 
-(define-key company-mode-map (kbd "M-RET") 'company-complete)
+  ; decrease delay before autocompletion popup shows
+  (setq company-idle-delay .3)
+  ; start autocompletion only after typing
+  (setq company-begin-commands '(self-insert-command))
+  (add-to-list 'company-backends 'company-flow))
+
+
+(define-key company-mode-map (kbd "<C-return>") 'company-complete)
 
 ;;; company.el ends here

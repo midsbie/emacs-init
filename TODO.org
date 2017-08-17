@@ -1,0 +1,6 @@
+#+TITLE: TODO
+#+AUTHOR: Miguel Guedes
+#+DATE: 17/08/2017
+
+* TODO Purge `auto-complete-mode`
+This must include any references to the mode too.

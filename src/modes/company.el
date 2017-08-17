@@ -24,14 +24,13 @@
 
 ;;; Code:
 
-(require 'company)
-(require 'company-statistics)
-
 (add-hook 'after-init-hook
           '(lambda()
              (init/company-mode)))
 
 (defun init/company-mode()
+  ;; Note that there is no need to require the libraries for the following
+  ;; minor modes.
   (global-company-mode)
   (company-statistics-mode)
 

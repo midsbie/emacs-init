@@ -73,6 +73,11 @@
   ;; Source: http://cha1tanya.com/2015/06/20/configuring-web-mode-with-jsx.html
   (setq web-mode-content-types-alist
         '(("jsx" . "\\.js[x]?\\'")))
+
+  ;; Only use the company backends that we actually need.
+  (when (boundp 'company-backend)
+        (set (make-local-variable 'company-backends)
+             '(company-flow company-yasnippet company-files)))
   )
 
 (defun init-web-mode/load-local-vars ()

@@ -104,7 +104,7 @@
 ;;(flyspell-prog-mode)              ; turn spell check for strings and comments
 ;;(ac-flyspell-workaround)          ; this defun must be executed to prevent
                                     ; flyspell from messing with
-                                        ; auto-complete-mode
+                                    ; auto-complete-mode
 
   (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting
   (abbrev-mode -1)                  ; turn abbrev-mode off

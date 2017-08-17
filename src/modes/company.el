@@ -39,9 +39,10 @@
   (setq company-idle-delay .3)
   ; start autocompletion only after typing
   (setq company-begin-commands '(self-insert-command))
-  (add-to-list 'company-backends 'company-flow))
+  (add-to-list 'company-backends 'company-flow)
+  (define-key company-mode-map (kbd "<C-return>") 'company-complete)
+  )
 
 
-(define-key company-mode-map (kbd "<C-return>") 'company-complete)
 
 ;;; company.el ends here

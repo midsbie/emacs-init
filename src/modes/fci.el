@@ -38,6 +38,22 @@
       (fci-mode -1)
     (fci-mode)))
 
+;; Workaround for `company-mode'.  Disables `fci-mode' if it is currently
+;; active to prevent visual corruption.
+(defvar-local company-fci-mode-on-p nil)
+
+(defun company-turn-off-fci (&rest ignore)
+  (when (boundp 'fci-mode)
+    (setq company-fci-mode-on-p fci-mode)
+    (when fci-mode (fci-mode -1))))
+
+(defun company-maybe-turn-on-fci (&rest ignore)
+  (when company-fci-mode-on-p (fci-mode 1)))
+
+(add-hook 'company-completion-started-hook 'company-turn-off-fci)
+(add-hook 'company-completion-finished-hook 'company-maybe-turn-on-fci)
+(add-hook 'company-completion-cancelled-hook 'company-maybe-turn-on-fci)
+
 ;; Workaround for auto-complete.  Disable fci-mode if pop up created or it will
 ;; lead to visual corruption; re-enable when all popups closed.
 (defvar emacsinit/fci-mode-suppressed nil)

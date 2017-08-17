@@ -8,4 +8,5 @@ Emacs' initialisation files.
 
 * How to use
 
-After ensuring the source files are in Emacs' load path, edit your =~/.emacs= and simply load the =init.el= file (in =src=).
+After ensuring the source files are in Emacs' load path, edit your =~/.emacs=
+and simply load the =init.el= file (in =src=).

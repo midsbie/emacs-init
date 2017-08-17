@@ -1,6 +1,6 @@
 ;;; auto-complete.el --- Configures `auto-complete-mode'
 
-;; Copyright (C) 2015  Miguel Guedes
+;; Copyright (C) 2015-2017  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,9 +24,10 @@
 
 ;;; Code:
 
-(require 'auto-complete-config)
+;; NOTE: `auto-complete-mode` is now disabled by default.
+;; (require 'auto-complete-config)
 
-(ac-config-default)
-(global-auto-complete-mode)
+;; (ac-config-default)
+;; (global-auto-complete-mode)
 
 ;;; auto-complete.el ends here

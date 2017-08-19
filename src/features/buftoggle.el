@@ -25,9 +25,12 @@
 ;;; Code:
 
 ;; TODO: what can we do to auto-load this library?
-(load-library "buftoggle.git/buftoggle")
+(if (not (locate-library "buftoggle.git/buftoggle"))
+    (message "error: buftoggle library not found")
+  (load-library "buftoggle.git/buftoggle")
 
-(add-to-list 'buftoggle-pairs-alist '("cxx" "hxx" "hpp" "hh" "h"))
-(add-to-list 'buftoggle-pairs-alist '("hxx" "cxx" "cpp" "cc"))
+  (add-to-list 'buftoggle-pairs-alist '("cxx" "hxx" "hpp" "hh" "h"))
+  (add-to-list 'buftoggle-pairs-alist '("hxx" "cxx" "cpp" "cc"))
+)
 
 ;;; buftoggle.el ends here

@@ -53,7 +53,11 @@
 (menu-bar-mode -1)                      ; disable menu bar
 ; (size-indication-mode)                  ; turn on size indication mode
 
-(scroll-bar-mode -1)                    ; disable scrollbars
+;; Note that `scroll-bar-mode' doesn't seem to be defined in emacs v24.5.1 and
+;; possibly earlier versions.
+(when (boundp 'scroll-bar-mode)
+  (scroll-bar-mode -1))                 ; disable scrollbars
+
 (setq diff-switches         '-u         ; set diff to use unified format
       echo-keystrokes       0.1)        ; show keystrokes as they're happen
 

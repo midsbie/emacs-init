@@ -36,7 +36,8 @@
   (setq desktop-minor-mode-table nil))
 
 (defun desktop--update-minor-mode-table()
-  (loop for mode in minor-mode-list do
-        (add-to-list 'desktop-minor-mode-table (list mode nil))))
+  (when (boundp 'loop)
+    (loop for mode in minor-mode-list do
+          (add-to-list 'desktop-minor-mode-table (list mode nil)))))
 
 ;;; desktop.el ends here

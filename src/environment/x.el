@@ -89,6 +89,10 @@ characters wide."
 
   (tooltip-mode -1)                       ; disable tooltips
 
+  ;; For some reason, version >25.x seems to activate the horizontal scrollbars.
+  ;; We forcefully disable them here.
+  (horizontal-scroll-bar-mode -1)
+
   ;; Completely disable mouse on the 'nyx' laptop.
   (cond ((string= (system-name) "nyx")
          (global-disable-mouse-mode 1)))

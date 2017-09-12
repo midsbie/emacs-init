@@ -91,7 +91,8 @@ characters wide."
 
   ;; For some reason, version >25.x seems to activate the horizontal scrollbars.
   ;; We forcefully disable them here.
-  (horizontal-scroll-bar-mode -1)
+  (when (boundp 'horizontal-scroll-bar-mode)
+    (horizontal-scroll-bar-mode -1))
 
   ;; Completely disable mouse on the 'nyx' laptop.
   (cond ((string= (system-name) "nyx")

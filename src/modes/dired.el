@@ -24,7 +24,17 @@
 
 ;;; Code:
 
-(require 'dired)
-(require 'dired-x)                      ;force loading of dired-x
+(add-hook 'dired-load-hook
+          (lambda ()
+            (load "dired-x")
+            ;; Set global variables here.  For example:
+            ;; (setq dired-guess-shell-gnutar "gtar")
+            ))
+
+(add-hook 'dired-mode-hook
+          (lambda ()
+            ;; Set buffer-local variables here.  For example:
+            ;; (dired-omit-mode 1)
+            ))
 
 ;;; dired.el ends here

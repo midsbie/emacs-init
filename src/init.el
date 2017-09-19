@@ -24,6 +24,8 @@
 
 ;;; Code:
 
+(require 'cl-lib)
+
 (defgroup init nil
   "Emacs initialisation mechanism."
   :group 'init)
@@ -131,8 +133,6 @@ Files are only visited if the server hasn't yet been started.")
 
 (defun init/post-init ()
   "Perform post-init steps."
-  (load "cl-lib")
-
   ;; Show how long it took to initialise emacs after 3 idle seconds.
   (run-with-idle-timer 3 nil '(lambda ()
                                 (message "init took %s" (emacs-init-time)))))

@@ -1,6 +1,6 @@
 ;;; php.el --- Configures `php-mode'
 
-;; Copyright (C) 2015  Miguel Guedes
+;; Copyright (C) 2015-2017  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -33,9 +33,9 @@
                      '("cleancode" "codesize" "unusedcode" "design"))
 
      (c-add-style "default-php" '("drupal"))
-     (add-hook 'php-mode-hook 'init-php-mode)))
+     (add-hook 'php-mode-hook 'init/php-mode)))
 
-(defun init-php-mode ()
+(defun init/php-mode ()
   "Initialise modes related to PHP development."
   (setq comment-start "/* "
         comment-end   " */")

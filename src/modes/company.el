@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(add-hook 'after-init-hook 'init/company)
+(init/lazy-run 'init/company)
 
 (defun init/company()
   ;; Note that there is no need to require the libraries for the following

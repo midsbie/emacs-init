@@ -1,6 +1,6 @@
 ;;; sh-script.el --- Configures the sh-script feature
 
-;; Copyright (C) 2015  Miguel Guedes
+;; Copyright (C) 2015-2017  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,16 +24,18 @@
 
 ;;; Code:
 
-(eval-after-load 'sh-script
-  '(progn
-     (setq-default  sh-basic-offset    2
-                    sh-indentation     2)
+(eval-after-load 'sh-script '(init/sh-script))
 
-     (defun init-sh-script ()
-       "Initialise modes related to shell scripting development."
-       (auto-fill-mode -1))
+(defun init/sh-script ()
+  "Configure the `sh-script' package."
+  (setq-default  sh-basic-offset    2
+                 sh-indentation     2)
 
-     (add-hook 'sh-mode-hook 'init-common-programming)
-     (add-hook 'sh-mode-hook 'init-sh-script)))
+  (add-hook 'sh-mode-hook 'init/common-programming)
+  (add-hook 'sh-mode-hook 'init/sh-mode))
+
+(defun init/sh-mode ()
+  "Initialise modes related to shell scripting development."
+  (auto-fill-mode -1))
 
 ;;; sh-script.el ends here

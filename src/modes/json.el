@@ -26,16 +26,6 @@
 
 (eval-after-load "json-mode"
   '(progn
-     (add-hook 'json-mode-hook 'init-common-programming)))
+     (add-hook 'json-mode-hook 'init/common-programming)))
 
 ;;; json.el ends here
-
-
-
-
-
-
-
-
-
-

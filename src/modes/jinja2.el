@@ -1,6 +1,6 @@
 ;;; jinja2.el --- Configures `jinja2-mode'
 
-;; Copyright (C) 2015  Miguel Guedes
+;; Copyright (C) 2015-2017  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,14 +24,15 @@
 
 ;;; Code:
 
-(eval-after-load 'jinja2
-  '(progn
-     (add-hook 'jinja2-mode-hook  'init-jinja2)
-
-     (defun init-jinja2 ()
-       "Initialise the jinja2 mode."
-       )))
-
+(eval-after-load 'jinja2 '(init/jinja2))
 (add-to-list 'auto-mode-alist '("\\.j2?\\'" . jinja2-mode))
+
+(defun init/jinja2 ()
+  "Configure the `jinja2' package."
+  (add-hook 'jinja2-mode-hook  'init/jinja2))
+
+(defun init/jinja2-mode ()
+  "Initialise the jinja2 mode."
+  )
 
 ;;; jinja2.el ends here

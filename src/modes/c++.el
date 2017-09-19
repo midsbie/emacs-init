@@ -1,6 +1,6 @@
 ;;; c++.el --- Configures `c++-mode'
 
-;; Copyright (C) 2015  Miguel Guedes
+;; Copyright (C) 2015-2017  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,9 +24,9 @@
 
 ;;; Code:
 
-(add-hook 'c++-mode-hook  'init-c++)
+(add-hook 'c++-mode-hook  'init/c++)
 
-(defun init-c++ ()
+(defun init/c++ ()
   "Initialise modes related to C++ development."
   (setq comment-start "/* "
         comment-end   " */"))

@@ -1,6 +1,6 @@
 ;;; text.el --- Configures `text-mode'
 
-;; Copyright (C) 2015  Miguel Guedes
+;; Copyright (C) 2015-2017  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,14 +24,14 @@
 
 ;;; Code:
 
-(defun init-text-mode ()
+(add-hook 'text-mode-hook 'init/text-mode)
+
+(defun init/text-mode ()
   "Initialise `text-mode'."
   (enable-fci-mode)                 ; fill column indicator
   (auto-fill-mode)                  ; auto fill
   (flyspell-mode)                   ; turn spell check on
   (abbrev-mode -1)                  ; turn abbrev-mode off
   )
-
-(add-hook 'text-mode-hook 'init-text-mode)
 
 ;;; text.el ends here

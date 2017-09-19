@@ -48,7 +48,7 @@
                 js2-strict-trailing-comma-warning  nil
                 )
 
-  (add-hook 'js2-mode-hook  'init-common-programming)
+  (add-hook 'js2-mode-hook  'init/common-programming)
   (add-hook 'js2-mode-hook  'init/js2-mode))
 
 (defun init/js2-mode ()

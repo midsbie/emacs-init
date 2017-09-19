@@ -34,10 +34,12 @@
   (global-linum-mode t)
 
   ;; Let's make sure we disable linum-mode when in speedbar-mode
-  (defun init-linum-mode()
-    (if (string= major-mode "speedbar-mode")
-        (linum-mode -1)))
 
-  (add-hook 'linum-before-numbering-hook 'init-linum-mode))
+  (add-hook 'linum-before-numbering-hook 'init/linum-mode))
+
+(defun init/linum-mode()
+  "Configure the `linum-mode'."
+  (if (string= major-mode "speedbar-mode")
+      (linum-mode -1)))
 
 ;;; linum.el ends here

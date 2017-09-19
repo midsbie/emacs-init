@@ -1,6 +1,6 @@
 ;;; go.el --- Configures `go-mode'
 
-;; Copyright (C) 2015  Miguel Guedes
+;; Copyright (C) 2015-2017  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -26,7 +26,7 @@
 
 (eval-after-load 'go-mode
   '(progn
-     (add-hook 'go-mode-hook  'init-go-mode)
+     (add-hook 'go-mode-hook  'init/go-mode)
 
      ;; Use goimports instead of go-fmt
      ;;
@@ -56,7 +56,7 @@
  executable not found")
        (let ((env (shell-command-to-string "go env")))
          (unless (getenv "GOROOT")
-           (init-go-mode/setenv "GOROOT" env))
+           (init/go/setenv "GOROOT" env))
          (unless (getenv "GOPATH")
            (setenv "GOPATH" (expand-file-name "~/go"))
            (message "info: set default GOPATH: %s" (getenv "GOPATH")))))
@@ -73,9 +73,9 @@
        (message "info: golint not found and will be unavailable"))
      ))
 
-(defun init-go-mode ()
+(defun init/go-mode ()
   "Initialise modes related to Go development."
-  (init-common-programming)
+  (init/common-programming)
   (go-eldoc-setup)
   (add-hook 'before-save-hook 'gofmt-before-save)
 
@@ -88,7 +88,7 @@
   (local-set-key (kbd "C-c i")   'go-goto-imports)
   (local-set-key (kbd "M-.")     'go-jump))
 
-(defun init-go-mode/setenv (name env)
+(defun init/go/setenv (name env)
   "Extract environment variable given by NAME from go's ENV."
   (if (not (string-match (concat name "=\"\\([^\"]+\\)\"") env))
       (error (concat "Failed to extract " name))

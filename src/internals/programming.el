@@ -24,74 +24,76 @@
 
 ;;; Code:
 
-(require 'cl-lib)
+(init/lazy-run 'init/programming)
 
-;; Own custom default style
-(c-add-style "default"
-            '("linux"
-              (c-recognize-knr-p . nil)
-              (c-basic-offset  . 2)
-              (indent-tabs-mode . nil)
-              (c-comment-only-line-offset . 0)
-              (c-syntactic-indentation-in-macros . nil)
-              (c-hanging-braces-alist . ((brace-list-open)
-                                         (brace-entry-open)
-                                         (substatement-open after)
-                                         (block-close . c-snug-do-while)
-                                         (arglist-cont-nonempty)))
-              (c-cleanup-list . (brace-else-brace
-                                 brace-elseif-brace
-                                 brace-catch-brace
-                                 empty-defun-braces
-                                 one-liner-defun
-                                 defun-close-semi
-;;                               space-before-funcall
-                                 compact-empty-funcall))
-              (c-hanging-semi&comma-criteria . ((lambda () 'stop)))
-              (c-offsets-alist . ((innamespace           . 0)
-                                  (statement-block-intro . +)
-                                  (knr-argdecl-intro     . 0)
-                                  (substatement-open     . 0)
-                                  (substatement-label    . 0)
-                                  (label                 . 0)
-                                  (statement-cont        . +)))))
+(defun init/programming ()
+  "Lazily initialise programming modes."
+  ;; Own custom default style
+  (c-add-style "default"
+               '("linux"
+                 (c-recognize-knr-p . nil)
+                 (c-basic-offset  . 2)
+                 (indent-tabs-mode . nil)
+                 (c-comment-only-line-offset . 0)
+                 (c-syntactic-indentation-in-macros . nil)
+                 (c-hanging-braces-alist . ((brace-list-open)
+                                            (brace-entry-open)
+                                            (substatement-open after)
+                                            (block-close . c-snug-do-while)
+                                            (arglist-cont-nonempty)))
+                 (c-cleanup-list . (brace-else-brace
+                                    brace-elseif-brace
+                                    brace-catch-brace
+                                    empty-defun-braces
+                                    one-liner-defun
+                                    defun-close-semi
+                                    ;;                               space-before-funcall
+                                    compact-empty-funcall))
+                 (c-hanging-semi&comma-criteria . ((lambda () 'stop)))
+                 (c-offsets-alist . ((innamespace           . 0)
+                                     (statement-block-intro . +)
+                                     (knr-argdecl-intro     . 0)
+                                     (substatement-open     . 0)
+                                     (substatement-label    . 0)
+                                     (label                 . 0)
+                                     (statement-cont        . +)))))
 
-;; TODO: Investigate how to make the following work with
-;; `c-hanging-semi&comma-criteria above.  Tried and failed to get it to work and
-;; in the end simply disabled newline on semi.
-;;
-;;                . (c-semi&comma-no-newlines-for-oneline-inliners
-;;                   c-semi&comma-inside-parenlist
-;;                   c-semi&comma-no-newlines-before-nonblanks))
+  ;; TODO: Investigate how to make the following work with
+  ;; `c-hanging-semi&comma-criteria above.  Tried and failed to get it to work and
+  ;; in the end simply disabled newline on semi.
+  ;;
+  ;;                . (c-semi&comma-no-newlines-for-oneline-inliners
+  ;;                   c-semi&comma-inside-parenlist
+  ;;                   c-semi&comma-no-newlines-before-nonblanks))
 
-;; No clean-ups.  May prove useful in chaotically formatted code.
-;; NOTE: don't forget to also turn off `c-auto-newline'!
-(c-add-style "default-bland"
-            '("default"
-              (c-cleanup-list . nil)))
+  ;; No clean-ups.  May prove useful in chaotically formatted code.
+  ;; NOTE: don't forget to also turn off `c-auto-newline'!
+  (c-add-style "default-bland"
+               '("default"
+                 (c-cleanup-list . nil)))
 
-;; OpenBSD style.
-(c-add-style "openbsd"
-             '("bsd"
-               (c-backspace-function . delete-backward-char)
-               (c-syntactic-indentation-in-macros . nil)
-               (c-tab-always-indent . nil)
-               (c-hanging-braces-alist (block-close . c-snug-do-while))
-               (c-offsets-alist (arglist-cont-nonempty . *)
-                                (statement-cont . *))
-               (indent-tabs-mode . t)))
+  ;; OpenBSD style.
+  (c-add-style "openbsd"
+               '("bsd"
+                 (c-backspace-function . delete-backward-char)
+                 (c-syntactic-indentation-in-macros . nil)
+                 (c-tab-always-indent . nil)
+                 (c-hanging-braces-alist (block-close . c-snug-do-while))
+                 (c-offsets-alist (arglist-cont-nonempty . *)
+                                  (statement-cont . *))
+                 (indent-tabs-mode . t)))
 
-;; Default settings
-(setq-default c-default-style    "default" ; own default style
-              tab-width          2
-              indent-tabs-mode   nil
-              js-indent-level    2)
+  ;; Default settings
+  (setq-default c-default-style    "default" ; own default style
+                tab-width          2
+                indent-tabs-mode   nil
+                js-indent-level    2)
 
-;; Hooks
-(add-hook 'c-mode-common-hook 'init-common-programming)
-(add-hook 'c-mode-common-hook 'init-c-c++)
+  ;; Hooks
+  (add-hook 'c-mode-common-hook 'init/common-programming)
+  (add-hook 'c-mode-common-hook 'init/c-c++))
 
-(defun init-common-programming ()
+(defun init/common-programming ()
   "Initialise modes related programming."
   (enable-fci-mode)                 ; fill column indicator
   (auto-fill-mode)                  ; auto fill
@@ -129,7 +131,7 @@
 
   (apply-editor-workarounds))
 
-(defun init-c-c++()
+(defun init/c-c++()
   "Initialise modes related to C and C++ development."
   (local-set-key "\C-co" 'buftoggle)
 
@@ -137,12 +139,12 @@
   (c-toggle-auto-state -1)
   )
 
-(defun init-elisp ()
+(defun init/elisp ()
   "Initialise modes related to ELISP development."
   (local-set-key (kbd "C-x C-k")  'do-eval-buffer)
   (turn-on-eldoc-mode))
 
-(defun init-common-web ()
+(defun init/common-web ()
   "Initialise modes related to web development."
   ;; Unfortunately, `fci-mode' does not play well with `web-mode'.
   (fci-mode -1)
@@ -156,7 +158,7 @@
   (make-local-variable 'programming-buffer)
   (apply-editor-workarounds))
 
-;; Defun invoked after pressing C-x C-k (see `init-elisp').
+;; Defun invoked after pressing C-x C-k (see `init/elisp').
 ;; Evals the current buffer and displays a message.
 (defun do-eval-buffer ()
   "Evaluate the current buffer.

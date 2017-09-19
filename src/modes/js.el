@@ -1,6 +1,6 @@
 ;;; js.el --- Configures `js-mode'
 
-;; Copyright (C) 2015  Miguel Guedes
+;; Copyright (C) 2015-2017  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -26,7 +26,7 @@
 
 ;; DISABLED. Using `js2-mode' instead.
 
-;; (defun init-js-mode ()
+;; (defun init/js-mode ()
 ;;   "Initialise modes related to Javascript development."
 ;;   (electric-indent-mode)
 ;;   (setq comment-start "/* "

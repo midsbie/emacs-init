@@ -1,6 +1,6 @@
 ;;; css.el --- Configures `css-mode'
 
-;; Copyright (C) 2015  Miguel Guedes
+;; Copyright (C) 2015-2017  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,10 +24,10 @@
 
 ;;; Code:
 
-(add-hook 'css-mode-hook  'init-common-programming)
-(add-hook 'css-mode-hook  'init-css)
+(add-hook 'css-mode-hook  'init/common-programming)
+(add-hook 'css-mode-hook  'init/css)
 
-(defun init-css ()
+(defun init/css ()
   "Initialise modes related to CSS development."
   (setq-default css-indent-offset            2)
   (auto-fill-mode -1)

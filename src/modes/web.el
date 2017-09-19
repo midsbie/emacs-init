@@ -34,7 +34,7 @@
 (eval-after-load 'web-mode
   '(progn
      (add-hook 'web-mode-hook  'init/web-mode)
-     (add-hook 'web-mode-hook  'init-common-web)))
+     (add-hook 'web-mode-hook  'init/common-web)))
 
 (defun init/web-mode ()
   "Initialise `web-mode'."
@@ -53,7 +53,7 @@
                          (indent-for-tab-command)))
 
   ;; Run hook after local variables loaded.
-  (add-hook 'web-mode-local-vars-hook 'init-web-mode/load-local-vars)
+  (add-hook 'web-mode-local-vars-hook 'init/web/load-local-vars)
 
   ;; javascript: make case indentation at the same level as the parent switch
   ;; statement.
@@ -78,7 +78,7 @@
         (tern-mode))
   )
 
-(defun init-web-mode/load-local-vars ()
+(defun init/web/load-local-vars ()
   "Map the value of `c-basic-offset' to `web-mode-code-indent-offset'."
   (when file-local-variables-alist
     (dolist (elt file-local-variables-alist)

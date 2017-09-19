@@ -1,6 +1,6 @@
 ;;; recentf.el --- Configures `recentf-mode'
 
-;; Copyright (C) 2015  Miguel Guedes
+;; Copyright (C) 2015-2017  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,13 +24,17 @@
 
 ;;; Code:
 
-(require 'recentf)
+(init/lazy-run 'init/recentf)
 
-;; recentf-mode
-(setq recentf-auto-cleanup    'never
-      recentf-max-menu-items  25)
+(defun init/recentf ()
+  "Lazy load the `recentf' package and initialise it."
+  (load "recentf")
 
-(global-set-key "\C-x\ r" 'recentf-open-files)
-(recentf-mode 1)
+  ;; recentf-mode
+  (setq recentf-auto-cleanup    'never
+        recentf-max-menu-items  25)
+
+  (global-set-key "\C-x\ r" 'recentf-open-files)
+  (recentf-mode 1))
 
 ;;; recentf.el ends here

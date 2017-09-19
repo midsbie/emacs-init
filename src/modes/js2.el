@@ -1,6 +1,6 @@
 ;;; js2.el --- Configures `js2-mode'
 
-;; Copyright (C) 2015  Miguel Guedes
+;; Copyright (C) 2015-2017  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -31,25 +31,27 @@
 ;(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
 ;(add-to-list 'auto-mode-alist '("\\.react.js\\'" . js2-jsx-mode))
 
-(eval-after-load "js2-mode"
-  '(progn
-     (require 'js-comint)
+(add-hook 'js2-load-hook 'init/js2)
 
-     (setq-default js2-basic-offset    2
+(defun init/js2 ()
+  "Js2 mode load hook."
+  (load "js-comint")
 
-                   ;; FIXME: disabled because it is supposed to be set via the
-                   ;; `customize-group' defun.
-                   ;; js2-bounce-indent-p t
+  (setq-default js2-basic-offset    2
 
-                   js2-include-browser-externs        t
-                   js2-include-node-externs           t
-                   js2-strict-trailing-comma-warning  nil
-                   )
+                ;; FIXME: disabled because it is supposed to be set via the
+                ;; `customize-group' defun.
+                ;; js2-bounce-indent-p t
 
-     (add-hook 'js2-mode-hook  'init-common-programming)
-     (add-hook 'js2-mode-hook  'init-js2-mode)))
+                js2-include-browser-externs        t
+                js2-include-node-externs           t
+                js2-strict-trailing-comma-warning  nil
+                )
 
-(defun init-js2-mode ()
+  (add-hook 'js2-mode-hook  'init-common-programming)
+  (add-hook 'js2-mode-hook  'init/js2-mode))
+
+(defun init/js2-mode ()
   "Customise js2-mode.
 In particular, add responsive logic to indent the current line
 whenever the dot character (.) is typed on a continued
@@ -105,10 +107,10 @@ expression."
       (setq-local jshint-configuration-path
                   (and loc (expand-file-name ".jshintrc" loc))))
     (flymake-jshint-load)
-    (init-js2-mode/load-jshint-globals))
+    (init/js2/load-jshint-globals))
 
   ;; Run hook after local variables loaded.
-  (add-hook 'js2-mode-local-vars-hook 'init-js2-mode/load-local-vars)
+  (add-hook 'js2-mode-local-vars-hook 'init/js2/load-local-vars)
 
   ;; Only use the company backends that we actually need.
   (when (boundp 'company-backend)
@@ -116,7 +118,7 @@ expression."
              '(company-flow company-tern company-yasnippet company-files)))
   )
 
-(defun init-js2-mode/load-jshint-globals (&optional file)
+(defun init/js2/load-jshint-globals (&optional file)
   "Load the `globals` section in the project's .jshintrc file.
 
 The `globals` section is then appended to the buffer local
@@ -142,7 +144,7 @@ If FILE is not specified, `jshint-configuration-path' is used instead."
       (setq js2-additional-externs (append js2-additional-externs globals))
       (delete-dups js2-additional-externs))))
 
-(defun init-js2-mode/load-local-vars ()
+(defun init/js2/load-local-vars ()
   "Map the value of `c-basic-offset' to `js2-basic-offset'."
   (when file-local-variables-alist
     (make-local-variable 'js2-basic-offset)

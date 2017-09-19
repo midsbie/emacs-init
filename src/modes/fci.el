@@ -24,9 +24,12 @@
 
 ;;; Code:
 
-(require 'fill-column-indicator)
+(init/lazy-run 'init/fci)
 
-(setq-default fci-rule-color "gray9")
+(defun init/fci ()
+  "Lazily load the `fill-column-indicator' package and configure it."
+  (load "fill-column-indicator")
+  (setq-default fci-rule-color "gray9"))
 
 ;; Workaround for fci-mode.  Don't enable fci-mode if emacs version is 24.3
 ;; since a bug was introduced affecting cursor navigation.

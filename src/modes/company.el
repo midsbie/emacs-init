@@ -24,11 +24,9 @@
 
 ;;; Code:
 
-(add-hook 'after-init-hook
-          '(lambda()
-             (init/company-mode)))
+(add-hook 'after-init-hook 'init/company)
 
-(defun init/company-mode()
+(defun init/company()
   ;; Note that there is no need to require the libraries for the following
   ;; minor modes.
   (global-company-mode)
@@ -39,9 +37,7 @@
   ; start autocompletion only after typing
   (setq company-begin-commands '(self-insert-command))
   (add-to-list 'company-backends 'company-flow)
-  (define-key company-mode-map (kbd "<C-return>") 'company-complete)
-  )
-
+  (define-key company-mode-map (kbd "<C-return>") 'company-complete))
 
 
 ;;; company.el ends here

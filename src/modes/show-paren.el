@@ -1,6 +1,6 @@
 ;;; show-paren.el --- Configures the `show-paren-mode'
 
-;; Copyright (C) 2015  Miguel Guedes
+;; Copyright (C) 2015-2017  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,8 +24,12 @@
 
 ;;; Code:
 
-(require 'paren)
+(init/lazy-run 'init/paren)
 
-(show-paren-mode t)                     ; show parenthesis next to cursor
+(defun init/paren ()
+  "Lazily load the `paren' package and initialise it."
+  (load "paren")
+  (show-paren-mode t)                     ; show parenthesis next to cursor
+  )
 
 ;;; show-paren.el ends here

@@ -1,6 +1,6 @@
 ;;; linum.el --- Configures `linum-mode'
 
-;; Copyright (C) 2015  Miguel Guedes
+;; Copyright (C) 2015-2017  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,16 +24,20 @@
 
 ;;; Code:
 
-(require 'linum)
+(init/lazy-run 'init/linum)
 
-;; display line numbers in left margin
-(global-linum-mode t)
+(defun init/linum ()
+  "Lazily load the `linum' package and initialise it."
+  (load "linum")
 
-;; Let's make sure we disable linum-mode when in speedbar-mode
-(defun init-linum-mode()
-  (if (string= major-mode "speedbar-mode")
-      (linum-mode -1)))
+  ;; display line numbers in left margin
+  (global-linum-mode t)
 
-(add-hook 'linum-before-numbering-hook 'init-linum-mode)
+  ;; Let's make sure we disable linum-mode when in speedbar-mode
+  (defun init-linum-mode()
+    (if (string= major-mode "speedbar-mode")
+        (linum-mode -1)))
+
+  (add-hook 'linum-before-numbering-hook 'init-linum-mode))
 
 ;;; linum.el ends here

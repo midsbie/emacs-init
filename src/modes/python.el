@@ -1,6 +1,6 @@
 ;;; python.el --- Configures `python-mode'
 
-;; Copyright (C) 2016  Miguel Guedes
+;; Copyright (C) 2016-2017  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,17 +24,21 @@
 
 ;;; Code:
 
-(require 'pylint)
-
-(add-hook 'python-mode-hook 'init-common-programming)
-(add-hook 'python-mode-hook 'init-python-mode)
-(add-hook 'python-mode-hook 'pylint-add-menu-items)
-(add-hook 'python-mode-hook 'pylint-add-key-bindings)
+(add-hook 'python-load-hook 'init/python)
 
 ;; Defaults
 (setq-default python-indent-offset 4)
 
-(defun init-python-mode ()
+(defun init/python ()
+  "Python mode load hook."
+  (load "pylint")
+
+  (add-hook 'python-mode-hook 'init-common-programming)
+  (add-hook 'python-mode-hook 'init/python-mode)
+  (add-hook 'python-mode-hook 'pylint-add-menu-items)
+  (add-hook 'python-mode-hook 'pylint-add-key-bindings))
+
+(defun init/python-mode ()
   "Customise `python-mode'."
 
   (py-autopep8-enable-on-save)

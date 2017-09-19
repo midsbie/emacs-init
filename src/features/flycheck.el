@@ -24,48 +24,50 @@
 
 ;;; Code:
 
-(eval-after-load 'flycheck
-  '(progn
-     (require 'flycheck-flow)
+;; Load after everything else.
+(init/lazy-run 'init/flycheck)
 
-     ;; + in c/c++ modes
-     (setq flycheck-cppcheck-checks        '("all")
-           flycheck-c/c++-clang-executable "true") ; disable clang since we use
-                                                   ; omnis
+(defun init/flycheck ()
+  "Lazily load `flycheck' and enable it globally."
+  ;; Enable flycheck globally.
+  (global-flycheck-mode 1)
+  (load "flycheck-flow")
 
-     ;; + in `php-mode'
-     (setq flycheck-phpmd-rulesets '("cleancode" "codesize" "controversial"
-                                     "design" "naming" "unusedcode"))
+  ;; + in c/c++ modes
+  (setq flycheck-cppcheck-checks        '("all")
+        flycheck-c/c++-clang-executable "true") ; disable clang since we use
+                                        ; omnis
 
-     ;; Disable jshint since we prefer eslint.
-     (setq-default flycheck-disabled-checkers
-                   (append flycheck-disabled-checkers '(javascript-jshint)))
+  ;; + in `php-mode'
+  (setq flycheck-phpmd-rulesets '("cleancode" "codesize" "controversial"
+                                  "design" "naming" "unusedcode"))
 
-     ;; + in `web-mode'
-     ;; NOTE: htmltidy and csslint have been disabled since flycheck does not
-     ;; support more than one linter per major mode; specifically, all the
-     ;; defined linters per major mode are executed regardless of the actual
-     ;; file type.
-     ;;      (flycheck-add-mode 'html-tidy 'web-mode)
-     ;;      (flycheck-add-mode 'css-csslint 'web-mode)
+  ;; Disable jshint since we prefer eslint.
+  (setq-default flycheck-disabled-checkers
+                (append flycheck-disabled-checkers '(javascript-jshint)))
 
-     (flycheck-add-mode 'javascript-eslint 'web-mode)
+  ;; + in `web-mode'
+  ;; NOTE: htmltidy and csslint have been disabled since flycheck does not
+  ;; support more than one linter per major mode; specifically, all the
+  ;; defined linters per major mode are executed regardless of the actual
+  ;; file type.
+  ;;      (flycheck-add-mode 'html-tidy 'web-mode)
+  ;;      (flycheck-add-mode 'css-csslint 'web-mode)
 
-     ;; IMPORTANT! Do not mess with the order in which the checkers are added
-     ;; below.  Doing so will result in eslint being somehow overriden or
-     ;; worse.
-     (flycheck-add-mode 'javascript-flow 'web-mode)
-     (flycheck-add-next-checker 'javascript-flow 'javascript-flow-coverage)
-     (flycheck-add-next-checker 'javascript-flow 'javascript-eslint)
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
 
-     (add-hook 'flyspell-mode-hook 'init-flycheck/on-flyspell-mode)
-     (add-hook 'flycheck-mode-hook 'init-flycheck/use-eslint-from-node-modules)))
+  ;; IMPORTANT! Do not mess with the order in which the checkers are added
+  ;; below.  Doing so will result in eslint being somehow overriden or
+  ;; worse.
+  (flycheck-add-mode 'javascript-flow 'web-mode)
+  (flycheck-add-next-checker 'javascript-flow 'javascript-flow-coverage)
+  (flycheck-add-next-checker 'javascript-flow 'javascript-eslint)
 
-;; Enable flycheck globally.
-(global-flycheck-mode 1)
+  (add-hook 'flyspell-mode-hook 'init/flycheck/on-flyspell-mode)
+  (add-hook 'flycheck-mode-hook 'init/flycheck/use-eslint-from-node-modules))
 
 
-(defun init-flycheck/on-flyspell-mode()
+(defun init/flycheck/on-flyspell-mode()
   ;; Deactivate annoying correction of previous misspelled error when C-; is hit.
   (define-key flyspell-mode-map (kbd "C-;") nil))
 
@@ -84,7 +86,7 @@
 ;; This function now looks up the full directory tree looking for
 ;; `node_modules` and the eslint binary inside of it, until it hits the
 ;; filesystem root.
-(defun init-flycheck/use-eslint-from-node-modules ()
+(defun init/flycheck/use-eslint-from-node-modules ()
   (let* ((curdir (locate-dominating-file
                 (or (buffer-file-name) default-directory)
                 "node_modules")))

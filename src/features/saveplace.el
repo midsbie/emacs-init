@@ -24,8 +24,12 @@
 
 ;;; Code:
 
-(require 'saveplace)
+(init/lazy-run 'init/saveplace)
 
-(setq-default save-place t)             ; save position in buffer
+(defun init/saveplace ()
+  "Lazily loads and configures the `saveplace' package."
+  (load "saveplace")
+  (setq-default save-place t)             ; save position in buffer
+  )
 
 ;;; saveplace.el ends here

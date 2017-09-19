@@ -1,6 +1,6 @@
 ;;; flx-ido.el --- Configures `flx-ido-mode'
 
-;; Copyright (C) 2015  Miguel Guedes
+;; Copyright (C) 2015-2017  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,15 +24,19 @@
 
 ;;; Code:
 
-(require 'ido)
-(require 'flx-ido)
+(init/lazy-run 'init/ido)
 
-(ido-mode 1)
-(ido-everywhere 1)
-(flx-ido-mode 1)
+(defun init/ido ()
+  "Lazily load and initialise `ido' and associated packages."
+  (load "ido")
+  (load "flx-ido")
 
-;; disable ido faces to see flx highlights.
-(setq ido-enable-flex-matching  t
-      ido-use-faces             nil)
+  (ido-mode 1)
+  (ido-everywhere 1)
+  (flx-ido-mode 1)
+
+  ;; disable ido faces to see flx highlights.
+  (setq ido-enable-flex-matching  t
+        ido-use-faces             nil))
 
 ;;; flx-ido.el ends here

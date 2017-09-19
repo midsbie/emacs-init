@@ -1,6 +1,6 @@
 ;;; anzu.el --- Configures `anzu-mode'
 
-;; Copyright (C) 2015  Miguel Guedes
+;; Copyright (C) 2015-2017  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,9 +24,13 @@
 
 ;;; Code:
 
-(require 'anzu)
+(init/lazy-run 'init/anzu)
 
-;; Load anzu's global mode
-(global-anzu-mode)
+(defun init/anzu ()
+  "Lazily load the `anzu' package and configure it."
+  (load "anzu")
+  ;; Activate anzu's global mode
+  (global-anzu-mode))
+
 
 ;;; anzu.el ends here

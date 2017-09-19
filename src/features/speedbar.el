@@ -1,6 +1,6 @@
-;;; speedbar.el --- Configures the `speedbar-mode'
+;;; speedbar.el --- Configures the `speedbar' package
 
-;; Copyright (C) 2015  Miguel Guedes
+;; Copyright (C) 2015-2017  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,14 +24,19 @@
 
 ;;; Code:
 
-(eval-after-load 'speedbar
-  '(progn
-     (setq speedbar-frame-parameters '((minibuffer . nil)
-                                       (width . 40)
-                                       (border-width . 0)
-                                       (menu-bar-lines . 0)
-                                       (tool-bar-lines . 0)
-                                       (unsplittable . t)
-                                       (left-fringe . 0)))))
+(init/lazy-run 'init/speedbar)
+
+(defun init/speedbar ()
+  "Lazily load the `speedbar' package."
+  ;; This must be done before `org-mode' can be loaded, for some reason.
+  (load "speedbar")
+
+  (setq speedbar-frame-parameters '((minibuffer . nil)
+                                    (width . 40)
+                                    (border-width . 0)
+                                    (menu-bar-lines . 0)
+                                    (tool-bar-lines . 0)
+                                    (unsplittable . t)
+                                    (left-fringe . 0))))
 
 ;;; speedbar.el ends here

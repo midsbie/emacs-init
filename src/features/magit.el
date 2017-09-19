@@ -24,8 +24,6 @@
 
 ;;; Code:
 
-(require 'magit)
-
 (global-set-key (kbd "C-c M") 'magit-status)
 
 ;;; magit.el ends here

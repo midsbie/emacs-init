@@ -24,8 +24,6 @@
 
 ;;; Code:
 
-;;(require 'ansi-color)
-
 (eval-after-load 'ansi-color
   '(progn
      ;; TODO: this is being eval'ed more than once.

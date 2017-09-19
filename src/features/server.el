@@ -29,7 +29,7 @@
 (defun init/server ()
   "Start server after 2 seconds have elapsed but only if it isn't running yet.
 
-Also visits the files in the `init-open-at-startup' list if the
+Also visits the files in the `init/open-at-startup' list if the
 server hasn't yet been started.
 
 Strangely, the call to `server-start' needs to be issued a few
@@ -43,20 +43,6 @@ seconds after Emacs has launched."
     (run-with-idle-timer 1 nil
                          '(lambda ()
                             (message "[server] starting")
-                            (server-start)))
-
-    ;; Load files in `init-open-at-startup' list after a short delay so as
-    ;; enable the user to mutate the `init-open-at-startup' list.
-    (run-with-idle-timer
-     0.1 nil
-     '(lambda ()
-        (dolist (file init-open-at-startup)
-          (if (not (file-exists-p file))
-              (message "%s" (concat "error: file does not exist: " file))
-            (find-file file)
-            (with-current-buffer (current-buffer)
-              (when (eq major-mode 'org-mode)
-                (org-shifttab 2)))
-            (other-window 1)))))))
+                            (server-start)))))
 
 ;;; server.el ends here

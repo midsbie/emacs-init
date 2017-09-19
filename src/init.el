@@ -53,6 +53,7 @@ Files are only visited if the server hasn't yet been started.")
 
 
 (message "[init] starting")
+(add-hook 'after-init-hook 'init/post-init)
 
 ;; set up include paths
 (add-to-list 'load-path "/usr/src")
@@ -118,6 +119,10 @@ Files are only visited if the server hasn't yet been started.")
 (run-with-idle-timer 6 nil
              '(lambda ()
                 (message "init took %s" (emacs-init-time))))
+
+(defun init/post-init ()
+  "Perform post-init steps."
+  (load "cl-lib"))
 
 (message "[init] done.")
 

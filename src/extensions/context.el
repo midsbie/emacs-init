@@ -28,7 +28,11 @@
   "Set the active context of this Emacs instance.
 CONTEXT is a string containing the context to use.  The context is then shown in
 Emacs frame title."
-  (interactive "sContext name: ")
-  (setq frame-title-format (concat context " - %b - emacs")))
+  (interactive "sContext: ")
+
+  (let ((title "%b - emacs"))
+    (when (> (length context) 0)
+      (setq title (concat context " - " title)))
+    (setq frame-title-format title)))
 
 ;;; context.el ends here

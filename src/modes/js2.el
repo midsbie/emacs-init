@@ -100,7 +100,7 @@ expression."
    )
 
   ;; Only set path to the dominating .jshintrc if one actually was found.
-  (unless init-suppress-jshint
+  (unless init/suppress-jshint
     (let* ((loc (locate-dominating-file
                  default-directory ".jshintrc")))
       ;; from: https://github.com/Wilfred/flymake-jshint.el/issues/1

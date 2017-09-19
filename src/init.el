@@ -28,27 +28,27 @@
   "Emacs initialisation mechanism."
   :group 'init)
 
-(defvar init-path-base nil
+(defvar init/path-base nil
   "Absolute path to Emacs' init `src´ directory.
 If nil, `default-directory' is used instead.")
 
-(defvar init-dirs-load '("internals" "features" "modes" "extensions")
+(defvar init/dirs-load '("internals" "features" "modes" "extensions")
   "Directories to automatically load.
 Contains directories to automatically load as part of the
 initialisation process.  Directories must be relative to
-`init-path-base'.")
+`init/path-base'.")
 
-(defvar init-dir-packages "/usr/share/emacs/site-lisp/elpa"
+(defvar init/dir-packages "/usr/share/emacs/site-lisp/elpa"
   "Directory to packages.
 Absolute path to directory containing packages managed by the
 `package' feature.")
 
-(defvar init-open-at-startup nil
+(defvar init/open-at-startup nil
   "List containing files to visit when Emacs finishes loading.
 
 Files are only visited if the server hasn't yet been started.")
 
-(defvar init-suppress-jshint t
+(defvar init/suppress-jshint t
   "When non-nil, causes the jshint linter to be ignored.")
 
 
@@ -66,7 +66,7 @@ Files are only visited if the server hasn't yet been started.")
 (require 'package)
 
 ;; setup and load ELPA packages (and others) first and foremost
-(setq package-user-dir init-dir-packages)
+(setq package-user-dir init/dir-packages)
 
 ;; add additional archives
 (add-to-list 'package-archives
@@ -83,10 +83,10 @@ Files are only visited if the server hasn't yet been started.")
 (setq tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ConnectTimeout=1 -o ControlPersist=no")
 
 ;; Now safe to load all ELISP source files in directories specified in
-;; `init-dirs-load'
+;; `init/dirs-load'
 (when load-file-name
-  (dolist (loading init-dirs-load)
-    (let ((dir-loading (or init-path-base
+  (dolist (loading init/dirs-load)
+    (let ((dir-loading (or init/path-base
                            (concat (file-name-directory load-file-name)
                                    loading))))
       (message "Loading ELISP files in: %s" dir-loading)
@@ -109,20 +109,33 @@ Files are only visited if the server hasn't yet been started.")
                 (remove-hook 'kill-buffer-query-functions
                              'server-kill-buffer-query-function)))
 
+;; Load files in `init/open-at-startup' list after a short delay so as
+;; enable the user to mutate the `init/open-at-startup' list.
+(run-with-idle-timer
+ 0.1 nil
+ '(lambda ()
+    (dolist (file init/open-at-startup)
+      (if (not (file-exists-p file))
+          (message "%s" (concat "error: file does not exist: " file))
+        (find-file file)
+        (with-current-buffer (current-buffer)
+          (when (eq major-mode 'org-mode)
+            (org-shifttab 2)))
+        (other-window 1)))))
+
 ;; It seems newer Emacs versions automatically enable electric indentation
 ;; mode.  Seeing as we don't like that, it is disabled right here.  Should also
 ;; be backwards compatible.
 (when (and (> emacs-major-version 24) (fboundp 'electric-indent-mode))
   (electric-indent-mode -1))
 
-;; Show how long it took to initialise emacs after 6 seconds.
-(run-with-idle-timer 6 nil
-             '(lambda ()
-                (message "init took %s" (emacs-init-time))))
-
 (defun init/post-init ()
   "Perform post-init steps."
-  (load "cl-lib"))
+  (load "cl-lib")
+
+  ;; Show how long it took to initialise emacs after 3 idle seconds.
+  (run-with-idle-timer 3 nil '(lambda ()
+                                (message "init took %s" (emacs-init-time)))))
 
 (message "[init] done.")
 

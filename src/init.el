@@ -54,15 +54,16 @@ Files are only visited if the server hasn't yet been started.")
   "When non-nil, causes the jshint linter to be ignored.")
 
 
-(message "INIT START")
+(message "[init] starting")
 
 ;; set up include paths
 (add-to-list 'load-path "/usr/src")
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/packages")
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/elpa")
 
-;; load our common library and package feature
+;; load our common libraries and the `package' feature
 (load-library "init/lib/libcommon")
+(load-library "init/lib/libinit")
 (require 'package)
 
 ;; setup and load ELPA packages (and others) first and foremost
@@ -149,6 +150,6 @@ Files are only visited if the server hasn't yet been started.")
              '(lambda ()
                 (message "init took %s" (emacs-init-time))))
 
-(message "INIT END")
+(message "[init] done.")
 
 ;;; init.el ends here

@@ -1,0 +1,62 @@
+;;; server.el --- Configuration of Emacs `server' package
+
+;; Copyright (C) 2017  Miguel Guedes
+
+;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
+;; Keywords: tools
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;;
+
+;;; Code:
+
+(init/lazy-run 'init/server)
+
+(defun init/server ()
+  "Start server after 2 seconds have elapsed but only if it isn't running yet.
+
+Also visits the files in the `init-open-at-startup' list if the
+server hasn't yet been started.
+
+Strangely, the call to `server-start' needs to be issued a few
+seconds after Emacs has launched."
+  (load "server")
+
+  (if (server-running-p)
+      (message "[server] already started: not starting")
+
+    ;; Start server after a minor delay.
+    (run-with-idle-timer 1 nil
+                         '(lambda ()
+                            (message "[server] starting")
+                            (server-start)))
+
+    ;; Load files in `init-open-at-startup' list after a short delay so as
+    ;; enable the user to mutate the `init-open-at-startup' list.
+    (run-with-idle-timer
+     0.1 nil
+     '(lambda ()
+        (dolist (file init-open-at-startup)
+          (if (not (file-exists-p file))
+              (message "%s" (concat "error: file does not exist: " file))
+            (find-file file)
+            (with-current-buffer (current-buffer)
+              (when (eq major-mode 'org-mode)
+                (org-shifttab 2)))
+            (other-window 1)))))))
+
+;;; server.el ends here

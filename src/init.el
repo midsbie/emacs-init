@@ -24,7 +24,9 @@
 
 ;;; Code:
 
+(require 'cl)
 (require 'cl-lib)
+(require 'package)
 
 (defgroup init nil
   "Emacs initialisation mechanism."
@@ -65,7 +67,6 @@ Files are only visited if the server hasn't yet been started.")
 ;; load our common libraries and the `package' feature
 (load-library "init/lib/libcommon")
 (load-library "init/lib/libinit")
-(require 'package)
 
 ;; setup and load ELPA packages (and others) first and foremost
 (setq package-user-dir init/dir-packages)

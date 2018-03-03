@@ -91,4 +91,11 @@
   (when (called-interactively-p 'interactive)
     (message "Killed all org-mode buffers")))
 
+
+;; Unfortunately this hack had to be introduced because the ein package
+;; requires org-mode to be available when it loads, which in turn requires
+;; the speedbar package to have been loaded.
+(require 'speedbar)
+(require 'org)
+
 ;;; org.el ends here

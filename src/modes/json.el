@@ -1,6 +1,6 @@
 ;;; json.el --- Configures `json-mode'
 
-;; Copyright (C) 2016  Miguel Guedes
+;; Copyright (C) 2016-2018  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools

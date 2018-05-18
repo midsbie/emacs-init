@@ -1,6 +1,6 @@
 ;;; html.el --- Configures `html-mode'
 
-;; Copyright (C) 2015-2017  Miguel Guedes
+;; Copyright (C) 2015-2018  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools

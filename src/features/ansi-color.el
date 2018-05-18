@@ -1,6 +1,6 @@
 ;;; ansi-color.el --- Customises ANSI color palette
 
-;; Copyright (C) 2015  Miguel Guedes
+;; Copyright (C) 2015-2018  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools

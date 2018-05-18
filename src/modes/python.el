@@ -1,6 +1,6 @@
 ;;; python.el --- Configures `python-mode'
 
-;; Copyright (C) 2016-2017  Miguel Guedes
+;; Copyright (C) 2016-2018  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools

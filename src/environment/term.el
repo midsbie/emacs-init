@@ -1,6 +1,6 @@
 ;;; term.el --- Initialisation sequence when run from the terminal
 
-;; Copyright (C) 2014 Miguel Guedes
+;; Copyright (C) 2014-2018 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:

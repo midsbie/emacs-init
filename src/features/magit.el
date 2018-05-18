@@ -1,6 +1,6 @@
 ;;; magit.el --- Configures the magit feature
 
-;; Copyright (C) 2015  Miguel Guedes
+;; Copyright (C) 2015-2018  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel@miguelguedes.org>
 ;; Keywords: tools

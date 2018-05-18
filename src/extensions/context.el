@@ -1,6 +1,6 @@
 ;;; context.el --- Extensions to help with contextual use of emacs
 
-;; Copyright (C) 2015  Miguel Guedes
+;; Copyright (C) 2015-2018  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel@miguelguedes.org>
 ;; Keywords: tools

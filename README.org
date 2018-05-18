@@ -10,3 +10,35 @@ Emacs' initialisation files.
 
 After ensuring the source files are in Emacs' load path, edit your =~/.emacs=
 and simply load the =init.el= file (in =src=).
+
+* Structure
+Below is a brief explanation of the structure and organisation of the `src`
+source directory.
+
+** environment
+Contains initialisations that are specific to the X graphical and terminal (no
+X) environments.
+
+** features
+Features are packages in Emacs that typically expose various components and
+modules, and do not possess a simple direct association with a major mode.
+These are packages of significant complexity and size.
+
+** modes
+This directory generally includes initialisation specifically for major modes
+but may also target minor modes.
+
+** extensions
+Code can be found in this directory that extends or builds upon Emacs' native
+features, such as hooks, to provide extended functionality.  An example of this
+might be an extension that tweaks the visual look and feel of Emacs' mode line
+when the user is visiting a buffer with root privileges.
+
+** internals
+Contains initialisations for packages or features that are internal to Emacs.
+
+There is some overlap between =extensions= and this directory, which should
+perhaps be looked at in a future refactoring effort.
+
+** lib
+This is simply a repository of code that is shared across emacs-init package.

@@ -29,10 +29,7 @@
 (add-hook 'web-mode-hook 'init/prettier-js-mode-maybe)
 
 ;; Default parameters to pass to prettier.
-(setq-default prettier-js-args
-              '("--single-quote"
-                "--trailing-comma" "es5"
-                "--jsx-bracket-same-line"))
+(setq-default prettier-js-args nil)
 
 (defvar init/enable-prettier-js-mode)
 (setq init/enable-prettier-js-mode nil)

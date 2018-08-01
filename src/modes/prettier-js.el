@@ -24,7 +24,6 @@
 
 ;;; Code:
 
-
 (add-hook 'js2-mode-hook 'init/prettier-js-mode-maybe)
 (add-hook 'web-mode-hook 'init/prettier-js-mode-maybe)
 
@@ -38,4 +37,4 @@
   (when init/enable-prettier-js-mode
     (prettier-js-mode)))
 
-;;; pretiter-js.el ends here
+;;; prettier-js.el ends here

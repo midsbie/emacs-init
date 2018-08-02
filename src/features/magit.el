@@ -24,6 +24,12 @@
 
 ;;; Code:
 
-(global-set-key (kbd "C-c M") 'magit-status)
+(with-eval-after-load 'magit-status
+  (global-set-key (kbd "C-c M") 'magit-status)
+
+  ;; This undoes the advice found in magit-autoloads.el and allows our shortcut
+  ;; to work (see `../internals/remaps.el`).
+  (define-key ido-completion-map (kbd "C-x g") nil)
+  (define-key ido-common-completion-map (kbd "C-x g") nil))
 
 ;;; magit.el ends here

@@ -42,7 +42,7 @@
 (global-set-key (kbd "C-S-w")         'toggle-truncate-lines)
 (global-set-key (kbd "M-r")           'revert-buffer)
 (global-set-key (kbd "C-x C-b")       'ibuffer)
-(global-set-key (kbd "C-x g")         'find-grep)
+(global-set-key (kbd "M-s g")         'find-grep)
 (global-set-key (kbd "C-x /")         'bury-buffer)
 (global-set-key (kbd "C-x 4 k")       'kill-other-buffer)
 (global-set-key (kbd "C-x 4 /")       'bury-other-buffer)

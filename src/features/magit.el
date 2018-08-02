@@ -24,12 +24,21 @@
 
 ;;; Code:
 
-(with-eval-after-load 'magit-status
-  (global-set-key (kbd "C-c M") 'magit-status)
+(require 'magit-status)
 
+(with-eval-after-load 'magit-status
+  ;; magit-status.el sets up C-x g but only after it is first run, however it
+  ;; is desirable for the shortcut to be available immediately.
+  (global-set-key (kbd "C-x g") 'magit-status)
+
+  ;; NOTE: the following is disabled as it causes 'magit-status to not load.
+  ;; Unclear why.
+  ;; --
   ;; This undoes the advice found in magit-autoloads.el and allows our shortcut
   ;; to work (see `../internals/remaps.el`).
-  (define-key ido-completion-map (kbd "C-x g") nil)
-  (define-key ido-common-completion-map (kbd "C-x g") nil))
+  ;(define-key ido-completion-map (kbd "C-x g") 'find-grep)
+  ;(define-key ido-common-completion-map (kbd "C-x g") 'find-grep)
+  )
+
 
 ;;; magit.el ends here

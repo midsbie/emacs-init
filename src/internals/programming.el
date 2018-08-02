@@ -141,7 +141,8 @@
 
 (defun init/elisp ()
   "Initialise modes related to ELISP development."
-  (local-set-key (kbd "C-x C-k")  'do-eval-buffer)
+
+  (define-key emacs-lisp-mode-map (kbd "C-x C-k") 'do-eval-buffer)
   (turn-on-eldoc-mode))
 
 (defun init/common-web ()

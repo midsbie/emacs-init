@@ -84,9 +84,9 @@
       (set (make-local-variable 'compile-command)
            "go build -v"))              ; removed: "&& go test -v && go vet"
 
-  (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
-  (local-set-key (kbd "C-c i")   'go-goto-imports)
-  (local-set-key (kbd "M-.")     'go-jump))
+  (define-key go-mode-map (kbd "C-c C-r") 'go-remove-unused-imports)
+  (define-key go-mode-map (kbd "C-c i")   'go-goto-imports)
+  (define-key go-mode-map (kbd "M-.")     'go-jump))
 
 (defun init/go/setenv (name env)
   "Extract environment variable given by NAME from go's ENV."

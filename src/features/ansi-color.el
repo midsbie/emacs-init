@@ -24,12 +24,15 @@
 
 ;;; Code:
 
-(eval-after-load 'ansi-color '(init/ansi-color))
-
 (defun init/ansi-color ()
   "Lazily initialise the `ansi-color' package."
   (setq ansi-color-names-vector ["black" "red" "lawn green" "yellow"
                                  "cornflower blue" "magenta" "cyan" "white"]
         ansi-color-map          (ansi-color-make-color-map)))
+
+; Moved to after the function declaration so as to avoid potential failures at
+; load time
+(eval-after-load 'ansi-color '(init/ansi-color))
+
 
 ;;; ansi-color.el ends here

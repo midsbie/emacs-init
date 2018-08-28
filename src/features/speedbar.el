@@ -24,6 +24,8 @@
 
 ;;; Code:
 
+;; Note that `features/org.el` requires speedbar, which in turn should cause
+;; our speedbar customisations to kick in.
 (init/lazy-run 'init/speedbar)
 
 (defun init/speedbar ()

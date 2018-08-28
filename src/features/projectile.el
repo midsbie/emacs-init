@@ -24,12 +24,14 @@
 
 ;;; Code:
 
-(eval-after-load 'ido '(init/projectile))
-
 (defun init/projectile ()
   "Lazily initialise the `projectile' package."
     (require 'projectile)
     (projectile-mode)
 )
+
+; This statement was producing an error when placed before the function it
+; invokes, presumable because 'ido may have loaded in some circumstances.
+(eval-after-load 'ido '(init/projectile))
 
 ;;; projectile.el ends here

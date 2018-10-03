@@ -27,9 +27,11 @@
 (require 'magit-status)
 
 (with-eval-after-load 'magit-status
-  ;; magit-status.el sets up C-x g but only after it is first run, however it
+  ;; magit-status.el sets up C-c v but only after it is first run, however it
   ;; is desirable for the shortcut to be available immediately.
-  (global-set-key (kbd "C-x g") 'magit-status)
+  ;;
+  ;; "v" is meant to stand for VERSION control.
+  (global-set-key (kbd "C-c v") 'magit-status)
 
   ;; NOTE: the following is disabled as it causes 'magit-status to not load.
   ;; Unclear why.

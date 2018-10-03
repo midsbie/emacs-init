@@ -24,8 +24,15 @@
 
 ;;; Code:
 
-(global-set-key (kbd "C-x c") 'codesearch-search)
-(global-set-key (kbd "C-x C") 'init/codesearch-update-index)
+;; NOTE: the codesearch package does not seem to work AT ALL if the
+;; byte-compiled binaries are present in its installation directory.  A cryptic
+;; error was being thrown each time any of the functions was executed, which
+;; for future reference was: "Symbol's value as variable is void: G661".  The
+;; solution was to delete all ".elc" files in the codesearch directory in the
+;; emacs-elpa repository.
+(global-set-key (kbd "C-c s g") 'listing-codesearch-search)
+(global-set-key (kbd "C-c s l") 'listing-codesearch-list-directories)
+(global-set-key (kbd "C-c s u") 'init/codesearch-update-index)
 
 (defun init/codesearch-update-index()
   (interactive)

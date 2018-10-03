@@ -30,6 +30,10 @@
     (projectile-mode)
 )
 
+; For some strange reason this now needs to be set otherwise the projectile
+; keymap is not available at all.
+(setq-default projectile-keymap-prefix "")
+
 ; This statement was producing an error when placed before the function it
 ; invokes, presumable because 'ido may have loaded in some circumstances.
 (eval-after-load 'ido '(init/projectile))

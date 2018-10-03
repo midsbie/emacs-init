@@ -29,7 +29,11 @@
 (with-eval-after-load 'magit-status
   ;; magit-status.el sets up C-x g but only after it is first run, however it
   ;; is desirable for the shortcut to be available immediately.
-  (global-set-key (kbd "C-x g") 'magit-status)
+  ;;
+  ;; The following disabled because magit-files.el already exposes three
+  ;; shortcuts, which we favour over ours.
+  ;; (global-set-key (kbd "C-x g") 'magit-status)
+
 
   ;; NOTE: the following is disabled as it causes 'magit-status to not load.
   ;; Unclear why.

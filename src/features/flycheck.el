@@ -64,7 +64,21 @@
   (flycheck-add-next-checker 'javascript-flow 'javascript-eslint)
 
   (add-hook 'flyspell-mode-hook 'init/flycheck/on-flyspell-mode)
-  (add-hook 'flycheck-mode-hook 'init/flycheck/use-eslint-from-node-modules))
+  (add-hook 'flycheck-mode-hook 'init/flycheck/use-eslint-from-node-modules)
+
+  ;; Show the error list in the bottom third of the present buffer's window.
+  ;; The error list can be summoned via `M-x flycheck-list-errors` or
+  ;; `C-c ! l`.
+  ;;
+  ;; Reference:
+  ;; http://www.flycheck.org/en/latest/user/error-list.html#tune-error-list-display
+  (add-to-list 'display-buffer-alist
+               `(,(rx bos "*Flycheck errors*" eos)
+                 (display-buffer-reuse-window
+                  display-buffer-in-side-window)
+                 (side            . bottom)
+                 (reusable-frames . visible)
+                 (window-height   . 0.33))))
 
 
 (defun init/flycheck/on-flyspell-mode()

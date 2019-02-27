@@ -74,8 +74,13 @@
   ;; Only use the company backends that we actually need.
   (when (boundp 'company-backend)
         (set (make-local-variable 'company-backends)
-             '(company-flow company-tern company-yasnippet company-files))
-        (tern-mode))
+             '(company-flow company-yasnippet company-files))
+        ; Was previously loading `company-tern' and tern too as given below:
+        ;
+        ; (set (make-local-variable 'company-backends)
+        ;      '(company-flow company-tern company-yasnippet company-files))
+        ; (tern-mode)
+        )
   )
 
 (defun init/web/load-local-vars ()

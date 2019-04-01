@@ -34,6 +34,8 @@
   ;; shortcuts, which we favour over ours.
   ;; (global-set-key (kbd "C-x g") 'magit-status)
 
+  ;; DON'T ask to save buffers!
+  (setq magit-save-repository-buffers nil)
 
   ;; NOTE: the following is disabled as it causes 'magit-status to not load.
   ;; Unclear why.

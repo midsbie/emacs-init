@@ -28,7 +28,13 @@
   "Lazily initialise the `projectile' package."
     (require 'projectile)
     (projectile-mode)
-)
+
+    ; Binding for invoking `vc-git-grep` when searching within project bounds
+    (global-set-key (kbd "C-c C-p G")  '(lambda ()
+                                          (interactive)
+                                          (call-interactively 'vc-git-grep)
+                                          ))
+    )
 
 ; For some strange reason this now needs to be set otherwise the projectile
 ; keymap is not available at all.

@@ -37,8 +37,11 @@
 (ivy-mode 1)
 
 ;; From: https://www.reddit.com/r/emacs/comments/51lqn9/helm_or_ivy/d7d34il/
-; Let ivy use flx for fuzzy-matching
-(setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
+;;       https://emacs.stackexchange.com/a/36748
+; Let ivy use flx for fuzzy-matching for everything but swiper!
+(setq ivy-re-builders-alist
+      '((swiper . ivy--regex-plus)
+        (t      . ivy--regex-fuzzy)))
 
 ; Use Enter on a directory to navigate into the directory, not open it with dired.
 (define-key ivy-minibuffer-map (kbd "C-m") 'ivy-alt-done)

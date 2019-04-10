@@ -30,6 +30,10 @@
 (require 'counsel)
 
 ;; Activate ivy's global mode
+; Note that we choose not to lazy load this package since it is seen as being
+; of primary importance to the Emacs user experience and should therefore be
+; immediately available as soon as the editor finishes loading is accepting
+; user input.
 (ivy-mode 1)
 
 ;; From: https://www.reddit.com/r/emacs/comments/51lqn9/helm_or_ivy/d7d34il/

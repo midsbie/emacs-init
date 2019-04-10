@@ -26,6 +26,8 @@
 
 (require 'ivy)
 (require 'flx)
+(require 'swiper)
+(require 'counsel)
 
 ;; Activate ivy's global mode
 (ivy-mode 1)

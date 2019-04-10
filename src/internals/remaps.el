@@ -19,6 +19,13 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+;; Documentation can be found at the following locations:
+;;
+;;   * https://oremacs.com/swiper/
+;;
+;; Note that there advanced support for intricate actions in the mini-buffer
+;; involving multiple selections and whatnot.  These are not fully understood
+;; and it might be of interest to look into it at some point in time.
 
 ;;
 
@@ -32,7 +39,8 @@
 (global-set-key (kbd "C-x p")         'other-previous-window)
 
 ;; Define miscellaneous shortcuts.
-(global-set-key [f2]                  'shell)
+; Note that ivy defines some keyboard mappings under F2
+(global-set-key (kbd "<f2> s")        'shell)
 (global-set-key [f3]                  'next-error)
 (global-set-key [S-f3]                'previous-error)
 (global-set-key (kbd "C-x k")         'kill-current-buffer)
@@ -42,11 +50,14 @@
 (global-set-key (kbd "C-S-w")         'toggle-truncate-lines)
 (global-set-key (kbd "M-r")           'revert-buffer)
 (global-set-key (kbd "C-x C-b")       'ibuffer)
-(global-set-key (kbd "C-c g")         'find-grep)
+; C-c g runs counsel-git-grep
+(global-set-key (kbd "C-c G")         'find-grep)
 (global-set-key (kbd "C-x /")         'bury-buffer)
 (global-set-key (kbd "C-x 4 k")       'kill-other-buffer)
 (global-set-key (kbd "C-x 4 /")       'bury-other-buffer)
 (global-set-key (kbd "C-x +")         'rearrange-desktop)
+; Prevents collision with ivy's C-x l
+(global-set-key (kbd "C-x L")         'count-lines-page)
 
 (global-set-key (kbd "C-c C-t")       'c-toggle-hungry-state)
 

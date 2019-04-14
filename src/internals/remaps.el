@@ -40,7 +40,8 @@
 
 ;; Define miscellaneous shortcuts.
 ; Note that ivy defines some keyboard mappings under F2
-(global-set-key (kbd "<f2> s")        'shell)
+; F2 F2 originally invoked: `2C-two-columns'
+(global-set-key (kbd "<f2> <f2>")     'shell)
 (global-set-key [f3]                  'next-error)
 (global-set-key [S-f3]                'previous-error)
 (global-set-key (kbd "C-x k")         'kill-current-buffer)

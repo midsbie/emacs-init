@@ -19,13 +19,22 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+;; Do not forget to also make changes in the ~/.emacs file as it might be
+;; forcefully enabling this (or some other) mode.
+;;
+;;; Log:
+;; xxxxxx React's jsx files are best loaded under web mode.  However, we're now
+;; using web-mode as the default mode for all things Javascript.
+;;
+;; 120519 Noting that `js-mode' and `js-jsx-mode' seem stable at the moment.
+;; Unfortunately, `web-mode' still provides an overall better experience but
+;; the two Emacs native modes should be kept regular under evaluation.
 
 ;;
 
 ;;; Code:
 
-;; React's jsx files are best loaded under web mode.  However, we're now
-;; using web-mode as the default mode for all things Javascript.
+;; Comment out the following code if enabling
 (add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx\?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.react.js\\'" . web-mode))

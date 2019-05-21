@@ -48,7 +48,10 @@
 
 ;; Buffer-related
 (global-set-key (kbd "C-x x")         'mark-whole-buffer)
-(global-set-key (kbd "C-S-w")         'toggle-truncate-lines)
+; Was previously using `truncate-lines` but now using the much more useful
+; visual lines mode:
+;  (global-set-key (kbd "C-S-w")         'toggle-truncate-lines)
+(global-set-key (kbd "C-S-w")         'visual-line-mode)
 (global-set-key (kbd "M-r")           'revert-buffer)
 (global-set-key (kbd "C-x C-b")       'ibuffer)
 ; C-c g runs counsel-git-grep

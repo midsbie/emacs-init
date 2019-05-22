@@ -58,12 +58,17 @@ characters wide."
   (setq frame-title-format "%b - emacs")
   (tool-bar-mode -1)                      ; disable toolbar
 
-  ;; custom faces
+  ;; Set custom faces
+  ; The following call sets the default color of window (buffer) backgrounds,
+  ; as well as some other aspects, such as the default foreground color and
+  ; font.  Note that a theme is NOT in use and we currently rely entirely on
+  ; Emacs' base configuration.
   (custom-set-faces
-   '(default ((t (:inherit nil :stipple nil :background "#080808" :foreground
-                           "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil
-                           :underline nil :slant normal :weight normal :height 84 :width normal :foundry
-                           "unknown" :family "DejaVu Sans Mono"))))
+   '(default ((t (:inherit nil :stipple nil :background "#080808"
+                  :foreground "#dcdccc" :inverse-video nil :box nil
+                  :strike-through nil :overline nil :underline nil
+                  :slant normal :weight normal :height 84 :width normal
+                  :foundry "unknown" :family "DejaVu Sans Mono"))))
    '(rst-level-1-face ((t (:weight bold))) t)
    '(rst-level-2-face ((t (:weight bold))) t)
    '(rst-level-3-face ((t (:weight extra-bold))) t))

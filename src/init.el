@@ -1,6 +1,6 @@
 ;;; init.el --- Master emacs initialisation file
 
-;; Copyright (C) 2014-2018 Miguel Guedes
+;; Copyright (C) 2014-2019 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:
@@ -32,7 +32,7 @@
   "Emacs initialisation mechanism."
   :group 'init)
 
-(defvar init/path-base nil
+(defvar init/path-base (file-name-directory load-file-name)
   "Absolute path to Emacs' init `src´ directory.
 If nil, `default-directory' is used instead.")
 
@@ -42,7 +42,7 @@ Contains directories to automatically load as part of the
 initialisation process.  Directories must be relative to
 `init/path-base'.")
 
-(defvar init/dir-packages "/usr/share/emacs/site-lisp/elpa"
+(defvar init/dir-packages (expand-file-name init/path-base "/elpa")
   "Directory to packages.
 Absolute path to directory containing packages managed by the
 `package' feature.")
@@ -55,6 +55,8 @@ Files are only visited if the server hasn't yet been started.")
 (defvar init/suppress-jshint t
   "When non-nil, causes the jshint linter to be ignored.")
 
+(defun inclusion-path (path)
+  (concat (file-name-as-directory init/path-base) path))
 
 (message "[init] starting")
 (add-hook 'after-init-hook 'init/post-init)
@@ -65,11 +67,11 @@ Files are only visited if the server hasn't yet been started.")
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/elpa")
 
 ;; load our common libraries and the `package' feature
-(load-library "init/lib/libcommon")
-(load-library "init/lib/libinit")
+(load (inclusion-path "lib/libcommon"))
+(load (inclusion-path "lib/libinit"))
 
 ;; setup and load ELPA packages (and others) first and foremost
-(setq package-user-dir init/dir-packages)
+(setq package-user-dir (concat init/dir-packages "../elpa/src"))
 
 ;; add additional archives
 (add-to-list 'package-archives
@@ -89,8 +91,7 @@ Files are only visited if the server hasn't yet been started.")
 ;; `init/dirs-load'
 (when load-file-name
   (dolist (loading init/dirs-load)
-    (let ((dir-loading (or init/path-base
-                           (concat (file-name-directory load-file-name)
+    (let ((dir-loading (or (concat init/path-base
                                    loading))))
       (message "Loading ELISP files in: %s" dir-loading)
       (load-directory dir-loading))))
@@ -98,8 +99,8 @@ Files are only visited if the server hasn't yet been started.")
 ;; Load configurations specific to the environment
 (if window-system
     (cond ((eq window-system 'x)
-           (load "init/environment/x")))
-  (load "init/environment/term"))
+           (load (inclusion-path "environment/x"))))
+  (load (inclusion-path "environment/term")))
 
 ;; ----- Setup delayed initialisations
 ;;

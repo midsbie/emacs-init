@@ -1,6 +1,6 @@
 ;;; libcommon --- Collection of useful defuns
 
-;; Copyright (C) 2014-2018 Miguel Guedes
+;; Copyright (C) 2014-2019 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:
@@ -30,11 +30,11 @@
   "Load recursively all `.el' files in DIRECTORY without the extension."
   (dolist (element (directory-files-and-attributes directory nil nil nil))
     (let* ((path (car element))
-           (fullpath (concat directory "/" path))
+           (fullpath (concat (file-name-as-directory directory) path))
            (isdir (car (cdr element)))
-           (ignore-dir (or (string= path ".") (string= path ".."))))
+           (ignore (or (string= path ".") (string= path ".."))))
       (cond
-       ((and (eq isdir t) (not ignore-dir))
+       ((and (eq isdir t) (not ignore))
         (load-directory fullpath))
        ((and (eq isdir nil) (string= (substring path -3) ".el"))
         (load (file-name-sans-extension fullpath)))))))

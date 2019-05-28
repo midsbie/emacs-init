@@ -63,7 +63,6 @@ Files are only visited if the server hasn't yet been started.")
 
 ;; set up include paths
 (add-to-list 'load-path "/usr/src")
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/packages")
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/elpa")
 
 ;; load our common libraries and the `package' feature

@@ -24,11 +24,15 @@
 
 ;;; Code:
 
+;; The following disabled as it was identified as the cause of strange
+;; behaviour in Emacs 26 whereby opening a file would never occur in the active
+;; window.
+;; --
 ;; Note: I have no idea what the following does.
-(defadvice pop-to-buffer (before cancel-other-window first)
-  (ad-set-arg 1 nil))
-
-(ad-activate 'pop-to-buffer)
+;; (defadvice pop-to-buffer (before cancel-other-window first)
+;;   (ad-set-arg 1 nil))
+;;
+;; (ad-activate 'pop-to-buffer)
 
 ;; Toggle window dedication
 (defun toggle-window-dedicated ()

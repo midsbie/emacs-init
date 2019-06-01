@@ -74,6 +74,10 @@
  fill-column                  79
  )
 
+(setq-default
+ switch-to-buffer-preserve-window-point   nil
+ )
+
 ;; Set tab-stop positions for C-i at two characters wide.
 (let (p)
   (dotimes (i 50)

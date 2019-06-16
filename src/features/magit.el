@@ -27,12 +27,7 @@
 (require 'magit-status)
 
 (with-eval-after-load 'magit-status
-  ;; magit-status.el sets up C-x g but only after it is first run, however it
-  ;; is desirable for the shortcut to be available immediately.
-  ;;
-  ;; The following disabled because magit-files.el already exposes three
-  ;; shortcuts, which we favour over ours.
-  ;; (global-set-key (kbd "C-x g") 'magit-status)
+  (global-set-key (kbd "C-x g") 'magit-status)
 
   ;; DON'T ask to save buffers!
   (setq magit-save-repository-buffers nil)

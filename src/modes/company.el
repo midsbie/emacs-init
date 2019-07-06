@@ -32,10 +32,14 @@
   (global-company-mode)
   (company-statistics-mode)
 
-  ; decrease delay before autocompletion popup shows
+  ;; decrease delay before autocompletion popup shows
   (setq company-idle-delay .3)
-  ; start autocompletion only after typing
+  ;; start autocompletion only after typing
   (setq company-begin-commands '(self-insert-command))
+  ;; Avoid annoying suggestion of ".." when just cd'ing into a directory in
+  ;; shell mode.
+  (setq company-files-exclusions (append company-files-exclusions '("." "..")))
+
   (add-to-list 'company-backends 'company-flow)
   (define-key company-mode-map (kbd "<C-return>") 'company-complete))
 

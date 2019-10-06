@@ -27,7 +27,14 @@
 
 ;;; Code:
 
-;; This is all that is necessary to activate elpy-mode
-(elpy-enable)
+;; This is all that is necessary to activate elpy-mode, as per:
+;; https://elpy.readthedocs.io/en/latest/introduction.html#installation
+;;
+;; elpy is currently disabled due to a weird error that is preventing the
+;; package from being upgraded.  When/if it is finally re-enabled in the
+;; future, it should just work though.
+(if (fboundp 'elpy-enable)
+    (elpy-enable)
+  (message "elpy package not found"))
 
 ;;; elpy.el ends here

@@ -68,6 +68,7 @@ Files are only visited if the server hasn't yet been started.")
 ;; load our common libraries and the `package' feature
 (load (inclusion-path "lib/libcommon"))
 (load (inclusion-path "lib/libinit"))
+(load (inclusion-path "./compat"))
 
 ;; setup and load ELPA packages (and others) first and foremost
 (setq package-user-dir (concat init/dir-packages "../elpa/src"))
@@ -125,12 +126,6 @@ Files are only visited if the server hasn't yet been started.")
           (when (eq major-mode 'org-mode)
             (org-shifttab 2)))
         (other-window 1)))))
-
-;; It seems newer Emacs versions automatically enable electric indentation
-;; mode.  Seeing as we don't like that, it is disabled right here.  Should also
-;; be backwards compatible.
-(when (and (> emacs-major-version 24) (fboundp 'electric-indent-mode))
-  (electric-indent-mode -1))
 
 (defun init/post-init ()
   "Perform post-init steps."

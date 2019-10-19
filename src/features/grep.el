@@ -40,7 +40,11 @@ directory."
     ; the answer at https://stackoverflow.com/a/56853097
     (unless current-prefix-arg
       (setq end " -- :/"))
-    (grep (concat "git --no-pager grep -n -e \"" query "\"" end)))
+
+    (let* ((last-grep-use-null-device grep-use-null-device))
+      (setq grep-use-null-device nil)
+      (grep (concat "git --no-pager grep -n -e \"" query "\"" end))
+      (setq grep-use-null-device last-grep-use-null-device)))
   )
 
 ;;; grep.el ends here

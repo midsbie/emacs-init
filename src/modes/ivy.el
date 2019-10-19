@@ -75,7 +75,9 @@
 ; Ivy-based interface to shell and system tools
 (global-set-key (kbd "C-c c") 'counsel-compile)
 ; (global-set-key (kbd "C-c G") 'counsel-git)
-(global-set-key (kbd "C-c g") 'counsel-git-grep)
+; The following is disabled as it was causing emacs to hang and leak memory.
+; We are now using the custom `git-grep` interactive function instead.
+; (global-set-key (kbd "C-c g") 'counsel-git-grep)
 (global-set-key (kbd "C-c k") 'counsel-ag)
 (global-set-key (kbd "C-x l") 'counsel-locate)
 

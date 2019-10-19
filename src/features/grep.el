@@ -44,8 +44,11 @@ search is conducted.  Otherwise, a case insensitive search is run."
                  end " -- :/")))
 
     (let* ((last-grep-use-null-device grep-use-null-device))
+      ; We must set `grep-use-null-device' to nil or we get a strange error
+      ; involving output redirection to /dev/null
       (setq grep-use-null-device nil)
       (grep (concat "git --no-pager grep -n " args " \"" query "\"" end))
+      ; Restore variable state
       (setq grep-use-null-device last-grep-use-null-device)))
   )
 

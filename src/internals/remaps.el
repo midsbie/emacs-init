@@ -54,7 +54,9 @@
 (global-set-key (kbd "C-S-w")         'visual-line-mode)
 (global-set-key (kbd "M-r")           'revert-buffer)
 (global-set-key (kbd "C-x C-b")       'ibuffer)
-; C-c g runs counsel-git-grep
+; C-c g runs counsel-git-grep but we favour our own version since counsel was
+; found to hang too frequently and cause memory leaks.
+(global-set-key (kbd "C-c g")         'git-grep)
 (global-set-key (kbd "C-c G")         'find-grep)
 (global-set-key (kbd "C-x /")         'bury-buffer)
 (global-set-key (kbd "C-x 4 k")       'kill-other-buffer)

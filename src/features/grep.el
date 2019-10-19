@@ -34,14 +34,14 @@ specified but no number, \"git grep\" is executed from the current working \
 directory.  If \"1\" is specified as the universal argument, a regex \
 search is conducted.  Otherwise, a case insensitive search is run."
   (interactive "sgit grep: ")
-  (print query)
 
   (let ((end "") (args ""))
     ; This gem about the presence of the universal argument was derived from
     ; the answer at https://stackoverflow.com/a/56853097
-    (cond ((eq current-prefix-arg nil) (setq end " -- :/"))
-          ((eq current-prefix-arg 1) (setq args "-e"))
-          (t (setq args "-i")))
+    (cond ((eq current-prefix-arg 1) (setq args "-e"))
+          ((eq current-prefix-arg nil)
+           (setq args "-i"
+                 end " -- :/")))
 
     (let* ((last-grep-use-null-device grep-use-null-device))
       (setq grep-use-null-device nil)

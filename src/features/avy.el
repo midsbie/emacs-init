@@ -1,4 +1,4 @@
-;;; avy.el --- Customises ANSI color palette
+;;; avy.el --- Customises the Avy package
 
 ;; Copyright (C) 2019  Miguel Guedes
 

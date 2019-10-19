@@ -1,4 +1,4 @@
-;;; ace-window.el --- Customises ANSI color palette
+;;; ace-window.el --- Customises Ace Window package
 
 ;; Copyright (C) 2019  Miguel Guedes
 

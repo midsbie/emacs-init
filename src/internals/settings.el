@@ -111,7 +111,6 @@
 This runs after the local variables have been processed."
   (run-hooks (intern (concat (symbol-name major-mode) "-local-vars-hook"))))
 
-
 ;; From 24.3 onwards, the behaviours of the RET and C-j keys were swapped.  We
 ;; don't like that.  This defun is supposed to be invoked by mode initialisors,
 ;; in particular the programming ones.

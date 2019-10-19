@@ -30,20 +30,22 @@
 When executed without the universal \
 argument (\\[universal-argument]), runs \ \"git grep\" from the \
 repository's root directory.  When the universal argument is \
-specified, \"git grep\" is executed from the current working \
-directory."
+specified but no number, \"git grep\" is executed from the current working \
+directory.  If \"1\" is specified as the universal argument, a regex \
+search is conducted.  Otherwise, a case insensitive search is run."
   (interactive "sgit grep: ")
   (print query)
 
-  (let ((end))
+  (let ((end "") (args ""))
     ; This gem about the presence of the universal argument was derived from
     ; the answer at https://stackoverflow.com/a/56853097
-    (unless current-prefix-arg
-      (setq end " -- :/"))
+    (cond ((eq current-prefix-arg nil) (setq end " -- :/"))
+          ((eq current-prefix-arg 1) (setq args "-e"))
+          (t (setq args "-i")))
 
     (let* ((last-grep-use-null-device grep-use-null-device))
       (setq grep-use-null-device nil)
-      (grep (concat "git --no-pager grep -n -e \"" query "\"" end))
+      (grep (concat "git --no-pager grep -n " args " \"" query "\"" end))
       (setq grep-use-null-device last-grep-use-null-device)))
   )
 

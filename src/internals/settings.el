@@ -71,7 +71,7 @@
  indent-tabs-mode             nil
  standard-indent              2
  tab-width                    2
- fill-column                  79
+ fill-column                  init/defaults/fill-column
  )
 
 ;; Set tab-stop positions for C-i at two characters wide.

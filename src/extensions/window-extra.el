@@ -94,7 +94,7 @@ only."
   (interactive)
   (dotimes (n (- (length (window-list)) 1))
     (delete-window (cadr (window-list))))
-  (let* ((length (+ (or fill-column 79) 6))
+  (let* ((length (+ (or fill-column init/defaults/fill-column) 6))
          (count (- (/ (frame-width) length) 1)))
     (dotimes (n count)
       (split-window-right))

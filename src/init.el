@@ -55,6 +55,9 @@ Files are only visited if the server hasn't yet been started.")
 (defvar init/suppress-jshint t
   "When non-nil, causes the jshint linter to be ignored.")
 
+(defconst init/defaults/fill-column 99
+  "Default `fill-column' value.")
+
 (defun inclusion-path (path)
   (concat (file-name-as-directory init/path-base) path))
 

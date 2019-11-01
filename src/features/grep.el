@@ -24,6 +24,13 @@
 
 ;;; Code:
 
+;; Settings
+;; ----------------------------------------
+; Don't ask to save buffers when running `grep-find'
+(setq-default grep-save-buffers nil)
+
+;; Functions
+;; ----------------------------------------
 (defun git-grep (query)
   "Run a grep search for QUERY using git.
 

@@ -27,10 +27,17 @@
 (require 'magit-status)
 
 (with-eval-after-load 'magit-status
+  ; As per installation instructions at: https://github.com/sigma/magit-gh-pulls
+  ;; (require 'magit-gh-pulls)
+  ;; (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
+
   (global-set-key (kbd "C-x g") 'magit-status)
 
-  ;; DON'T ask to save buffers!
+  ; DON'T ask to save buffers!
   (setq magit-save-repository-buffers nil)
+  ; Prevent Emacs' own VC package from managing Git repositories.
+  ; https://magit.vc/manual/magit/Performance.html#The-Built_002dIn-VC-Package
+  (setq vc-handled-backends (delq 'Git vc-handled-backends))
 
   ;; NOTE: the following is disabled as it causes 'magit-status to not load.
   ;; Unclear why.

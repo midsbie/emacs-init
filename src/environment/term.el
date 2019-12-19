@@ -41,7 +41,8 @@
       '(hl-line ((t (:background "color-235" :underline nil)))))
 
      ; Turn highlight one globally (configuration is above)
-     (global-hl-line-mode 1)
+     ; UPDATE: disabled as it was degrading performance
+     ;; (global-hl-line-mode 1)
 
      ; Fix "stuck" fringe by adding a space between line number and actual
      ; content

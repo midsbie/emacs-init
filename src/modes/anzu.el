@@ -24,13 +24,15 @@
 
 ;;; Code:
 
-(init/lazy-run 'init/anzu)
+;; Disabled as not necessary now that Ivy is in use.  Was also found to degrade
+;; performance.
+;; (init/lazy-run 'init/anzu)
 
-(defun init/anzu ()
-  "Lazily load the `anzu' package and configure it."
-  (load "anzu")
-  ;; Activate anzu's global mode
-  (global-anzu-mode))
+;; (defun init/anzu ()
+;;   "Lazily load the `anzu' package and configure it."
+;;   (load "anzu")
+;;   ;; Activate anzu's global mode
+;;   (global-anzu-mode))
 
 
 ;;; anzu.el ends here

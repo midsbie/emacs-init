@@ -81,8 +81,9 @@ characters wide."
   (set-current-frame-height 73)
 
   ;; Highlighter
-  (global-hl-line-mode 1)
-  (set-face-background 'hl-line "#383830")
+  ; UPDATE: disabled as it was seriously degrading performance
+  ; (global-hl-line-mode 1)
+  ; (set-face-background 'hl-line "#383830")
 
   ;; Enable clipboard functionality
   (setq x-select-enable-clipboard   t

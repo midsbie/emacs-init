@@ -29,9 +29,37 @@
 ; Don't ask to save buffers when running `grep-find'
 (setq-default grep-save-buffers nil)
 
+(setq git-grep-find-command '("git --no-pager grep -n  -- :/" . 24))
+
 ;; Functions
 ;; ----------------------------------------
-(defun git-grep (query)
+(defun git-grep(command-args)
+  "Run a grep search for QUERY using git.
+
+The arguments specified by COMMAND-ARGS are passed to \"git grep\" without any
+modification.  The user is prompted to customise the arguments passed to git if
+the function is executed as a command.
+
+The suffix \":/\" instructs git to search from the root of the project's
+repository and should be removed if the search is to be conducted from the
+current working directory."
+  (interactive
+   (progn
+     (list (read-shell-command "Run git-grep (like this): "
+                               git-grep-find-command 'grep-find-history))))
+    (let* ((last-grep-use-null-device grep-use-null-device))
+      ; We must set `grep-use-null-device' to nil or we get a strange error
+      ; involving output redirection to /dev/null
+      (setq grep-use-null-device nil)
+      (grep command-args)
+      ; Restore variable state
+      (setq grep-use-null-device last-grep-use-null-device)))
+
+;; Deprecated functions
+;; ----------------------------------------
+;; The following function is kept for the purpose of future reference, in
+;; particular as an illustration of how to use the universal argument.
+(defun git-grep-OLD (query)
   "Run a grep search for QUERY using git.
 
 When executed without the universal \

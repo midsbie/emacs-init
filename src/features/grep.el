@@ -29,7 +29,7 @@
 ; Don't ask to save buffers when running `grep-find'
 (setq-default grep-save-buffers nil)
 
-(setq git-grep-find-command '("git --no-pager grep -n  -- :/" . 24))
+(setq git-grep-find-command '("git --no-pager grep -nP '' -- :/" . 26))
 
 ;; Functions
 ;; ----------------------------------------

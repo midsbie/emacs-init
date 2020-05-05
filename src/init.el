@@ -76,6 +76,9 @@ Files are only visited if the server hasn't yet been started.")
 ;; setup and load ELPA packages (and others) first and foremost
 (setq package-user-dir (concat init/dir-packages "../elpa/src"))
 
+;; Avoid loading byte-compiled packages that are older than the source file.
+(setq load-prefer-newer t)
+
 ;; add additional archives
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/"))

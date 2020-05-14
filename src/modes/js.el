@@ -1,6 +1,6 @@
 ;;; js.el --- Configures `js-mode'
 
-;; Copyright (C) 2015-2018, 2019  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -26,6 +26,11 @@
 ;; 120519 Considered enabling `js-jsx-mode' as it now seems to handle JSX
 ;;        source files correctly and seems faster than `web-mode', however
 ;;        syntax highlighting isn't as good and useful as the latter's.
+;;
+;; 140520 Attempted to switch to `js-mode' and `js-jsx-mode' for all Javascript
+;;        development, as it is faster, more responsive and does not suffer
+;;        from the quirks that `web-mode' does, however syntax highlighting is
+;;        not great.  Staying with web-mode for the time being.
 
 ;;
 
@@ -33,19 +38,19 @@
 
 ;; Uncomment the following code if enabling:
 ;;
-;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js-jsx-mode))
-;; (add-to-list 'auto-mode-alist '("\\.jsx\?\\'" . js-jsx-mode))
-;; (add-to-list 'auto-mode-alist '("\\.react.js\\'" . js-jsx-mode))
-;;
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js-jsx-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\?\\'" . js-jsx-mode))
+(add-to-list 'auto-mode-alist '("\\.react.js\\'" . js-jsx-mode))
+
 ;; (eval-after-load 'js-mode
 ;;   '(progn
-;;      (add-hook 'web-mode-hook  'init/js-mode)
-;;      (add-hook 'web-mode-hook  'init/common-web)))
-;;
+;;      (add-hook 'js-mode-hook  'init/js-mode)
+;;      (add-hook 'js-mode-hook  'init/common-web)))
+
 ;; (eval-after-load 'js-jsx-mode
 ;;   '(progn
-;;      (add-hook 'web-mode-hook  'init/js-mode)
-;;      (add-hook 'web-mode-hook  'init/common-web)))
+;;      (add-hook 'js-jsx-mode-hook  'init/js-mode)
+;;      (add-hook 'js-jsx-mode-hook  'init/common-web)))
 
 (defun init/js-mode ()
   "Initialise modes related to Javascript development."

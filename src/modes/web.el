@@ -1,6 +1,6 @@
 ;;; web.el --- Configures `web-mode'
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -29,12 +29,14 @@
 ;; 120519 Noting that `js-mode' and `js-jsx-mode' seem stable at the moment.
 ;; Unfortunately, `web-mode' still provides an overall better experience but
 ;; the two Emacs native modes should be kept regular under evaluation.
+;;
+;; 140520 Emacs supports JSX natively now, however syntax highlighting is still
+;; not great.  Waiting until v27 and considering building from source.
 
 ;;
 
 ;;; Code:
 
-;; Comment out the following code if enabling
 (add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx\?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.react.js\\'" . web-mode))

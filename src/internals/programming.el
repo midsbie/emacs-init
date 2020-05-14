@@ -148,7 +148,8 @@
 (defun init/common-web ()
   "Initialise modes related to web development."
   ;; Unfortunately, `fci-mode' does not play well with `web-mode'.
-  (fci-mode -1)
+  (when (string= major-mode "web-mode")
+    (fci-mode -1))
   (auto-fill-mode -1)
   (highlight-parentheses-mode)
   (subword-mode 1)

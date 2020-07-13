@@ -19,59 +19,63 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+;; 13/07/20 Remove dependency on go-autocomplete in favour of lsp-server and
+;;          company-mode.
 
 ;;
 
 ;;; Code:
 
-(eval-after-load 'go-mode
-  '(progn
-     (add-hook 'go-mode-hook  'init/go-mode)
+(eval-after-load 'go-mode '(init/after-load/go-mode))
 
-     ;; Use goimports instead of go-fmt
-     ;;
-     ;; Note that this requires the executable `goimports' to be locatable in
-     ;; the path.  goimports can be found at:
-     ;; https://godoc.org/golang.org/x/tools/cmd/goimports
-     (if (executable-find "goimports")
-         (setq-default gofmt-command "goimports")
-       (message "info: goimports not found and will be unavailable"))
+(defun init/after-load/go-mode ()
+  "One-time initialisation sequence for `go-mode'."
+  (add-hook 'go-mode-hook  'init/go-mode)
 
-     ;; Attempt to load Go Oracle.
-     ;;
-     ;; Note that this requires the `oracle.el' to be found in the directory
-     ;; specified below.  oracle can be found at:
-     ;; https://godoc.org/golang.org/x/tools/cmd/oracle
-     ;;
-     ;; TODO: it is ugly that we're loading from the home directory.  This
-     ;; should perhaps be in the user's .emacs file.
-     (let ((file (expand-file-name
-                  "~/go/src/golang.org/x/tools/cmd/oracle/oracle.el")))
-       (if (not (file-exists-p file))
-           (message "info: go oracle not found and will be unavailable")
-         (load file)))
+  ;; Use goimports instead of go-fmt
+  ;;
+  ;; Note that this requires the executable `goimports' to be locatable in
+  ;; the path.  goimports can be found at:
+  ;; https://godoc.org/golang.org/x/tools/cmd/goimports
+  (if (executable-find "goimports")
+      (setq-default gofmt-command "goimports")
+    (message "info: goimports not found and will be unavailable"))
 
-     (if (not (executable-find "go"))
-         (error "GOROOT environment variable not set and go\
+  ;; Attempt to load Go Oracle.
+  ;;
+  ;; Note that this requires the `oracle.el' to be found in the directory
+  ;; specified below.  oracle can be found at:
+  ;; https://godoc.org/golang.org/x/tools/cmd/oracle
+  ;;
+  ;; TODO: it is ugly that we're loading from the home directory.  This
+  ;; should perhaps be in the user's .emacs file.
+  (let ((file (expand-file-name
+               "~/go/src/golang.org/x/tools/cmd/oracle/oracle.el")))
+    (if (not (file-exists-p file))
+        (message "info: go oracle not found and will be unavailable")
+      (load file)))
+
+  (if (not (executable-find "go"))
+      (error "GOROOT environment variable not set and go\
  executable not found")
-       (let ((env (shell-command-to-string "go env")))
-         (unless (getenv "GOROOT")
-           (init/go/setenv "GOROOT" env))
-         (unless (getenv "GOPATH")
-           (setenv "GOPATH" (expand-file-name "~/go"))
-           (message "info: set default GOPATH: %s" (getenv "GOPATH")))))
+    (let ((env (shell-command-to-string "go env")))
+      (unless (getenv "GOROOT")
+        (init/go/setenv "GOROOT" env))
+      (unless (getenv "GOPATH")
+        (setenv "GOPATH" (expand-file-name "~/go"))
+        (message "info: set default GOPATH: %s" (getenv "GOPATH")))))
 
-     ;; Load go autocomplete
-     (load-library "go-autocomplete")
+  ;; Attempt to load go autocomplete
+  (maybe-load-library "go-autocomplete")
 
-     ;; Load golint if executable found.  Note that golint is currently
-     ;; expected to have been installed via `go get`.
-     (if (executable-find "golint")
-         (load-library
-          (concat (getenv "GOPATH")
-                  "/src/github.com/golang/lint/misc/emacs/golint.el"))
-       (message "info: golint not found and will be unavailable"))
-     ))
+  ;; Load golint if executable found.  Note that golint is currently
+  ;; expected to have been installed via `go get`.
+  (if (executable-find "golint")
+      (load-library
+       (concat (getenv "GOPATH")
+               "/src/github.com/golang/lint/misc/emacs/golint.el"))
+    (message "info: golint not found and will be unavailable"))
+  )
 
 (defun init/go-mode ()
   "Initialise modes related to Go development."

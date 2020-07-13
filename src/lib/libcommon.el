@@ -62,6 +62,14 @@ hasn't been loaded, LIBRARY is loaded via a call to `load-library'."
     (load-library (symbol-name library)))
   (call-interactively func))
 
+(defun maybe-load-library (name)
+  "Attempt to load library NAME.
+Produces a message if it was not possible to load the library and
+does not interrupt execution."
+  (condition-case err
+      (load-library (name))
+    (error (princ (format "Failed to load library: %s (reason: %s)" name err)))))
+
 (defmacro t-run-or-load (func library)
   "Return a lambda that can be attached to a key handler or similar handlers.
 See documentation of `run-or-load' for a description of the FUNC

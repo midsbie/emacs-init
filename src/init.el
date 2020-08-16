@@ -24,9 +24,10 @@
 
 ;;; Code:
 
-(require 'cl)
-(require 'cl-lib)
-(require 'package)
+(eval-when-compile
+  (require 'cl)
+  (require 'cl-lib)
+  (require 'package))
 
 (defgroup init nil
   "Emacs initialisation mechanism."
@@ -81,11 +82,12 @@ Files are only visited if the server hasn't yet been started.")
 
 ;; add additional archives
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/"))
+             '("melpa" . "https://stable.melpa.org/packages/"))
 (add-to-list 'package-archives
              '("org" . "http://orgmode.org/elpa/"))
 
 (package-initialize)
+(require 'use-package)
 
 ;; This measure is needed to prevent tramp from hanging at startup as it tries
 ;; to conduct a strange check on the system's host.

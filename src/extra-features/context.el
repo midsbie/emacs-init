@@ -1,6 +1,6 @@
-;;; context.el --- Extensions to help with contextual use of emacs
+;;; context.el --- Custom feature to help with contextual use of emacs
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel@miguelguedes.org>
 ;; Keywords: tools
@@ -26,8 +26,8 @@
 
 (defun set-context (context)
   "Set the active context of this Emacs instance.
-CONTEXT is a string containing the context to use.  The context is then shown in
-Emacs frame title."
+CONTEXT is a string containing the context to use, which is shown
+in Emacs' frame title."
   (interactive "sContext: ")
 
   (let ((title "%b - emacs"))

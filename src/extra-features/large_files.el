@@ -1,6 +1,6 @@
 ;;; large_files.el --- Support for editing of large files
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel@miguelguedes.org>
 ;; Keywords: tools
@@ -25,8 +25,10 @@
 ;;; Code:
 
 (defun init/handle-large-file-hook ()
-  "If a file is over a given size, make the buffer read only and forcefully
-switch to fundamental mode."
+  "Make buffer read-only for large files.
+
+If a file is over a given size, makes the buffer read only and
+forcefully switches to fundamental mode."
   (when (> (buffer-size) (* 1024 1024))
     (setq buffer-read-only t)
     (buffer-disable-undo)

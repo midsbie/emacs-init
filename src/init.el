@@ -37,7 +37,7 @@
   "Absolute path to Emacs' init `src´ directory.
 If nil, `default-directory' is used instead.")
 
-(defvar init/dirs-load '("internals" "features" "extensions" "modes")
+(defvar init/dirs-load '("internals" "features" "extra-features" "modes")
   "Directories to automatically load.
 Contains directories to automatically load as part of the
 initialisation process.  Directories must be relative to

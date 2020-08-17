@@ -24,10 +24,8 @@
 
 ;;; Code:
 
-(init/lazy-run 'init/programming)
-
 (defun init/programming ()
-  "Lazily initialise programming modes."
+  "Initialise programming modes."
   ;; Own custom default style
   (c-add-style "default"
                '("linux"
@@ -175,5 +173,7 @@ This command should only be used with ELISP."
           (cl-return-from inner)))
 
     (message "buffer evaluated")))
+
+(init/programming)
 
 ;;; programming.el ends here

@@ -1,6 +1,6 @@
 ;;; warn_when_root.el --- Change modeline background when acting as root user
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -26,8 +26,10 @@
 
 
 (defun warn-when-root-visits-file ()
-  "Display the mode line with a red background when visiting a
-file with root privileges."
+  "Warn when root user.
+
+Displays the mode line with a red background when visiting a file
+with root privileges."
   (when (string-match "^/su\\(do\\)?:" default-directory)
     (face-remap-add-relative
      'mode-line

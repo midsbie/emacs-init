@@ -121,8 +121,7 @@ and makes RET and C-j work correctly.
 
 It would now seem that version 26.x restores pre-24.3 behaviour."
   (when (and (>= emacs-major-version 24)
-             (>= emacs-minor-version 3)
-             (< emacs-major-version 26))
+             (>= emacs-minor-version 3))
     (local-set-key (kbd "RET") 'electric-newline-and-maybe-indent)
     (local-set-key (kbd "C-j") 'newline)))
 

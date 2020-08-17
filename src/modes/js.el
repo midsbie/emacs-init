@@ -40,9 +40,9 @@
   "Initialise modes related to Javascript development."
 
   (add-hook 'js-mode-hook  'init/js-mode)
-  (add-hook 'js-mode-hook  'init/common-web)
+  (add-hook 'js-mode-hook  'init/common-web-programming)
   (add-hook 'js-jsx-mode-hook  'init/js-mode)
-  (add-hook 'js-jsx-mode-hook  'init/common-web)
+  (add-hook 'js-jsx-mode-hook  'init/common-web-programming)
 
   (electric-indent-mode)
   ;; FIXME: this does not seem to have any effect in JSX mode:

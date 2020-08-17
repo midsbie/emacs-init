@@ -39,6 +39,7 @@
 
 (defun init/web-mode ()
   "Initialise `web-mode'."
+  (init/common-web-programming)
 
   (setq web-mode-markup-indent-offset 2
         web-mode-css-indent-offset    2

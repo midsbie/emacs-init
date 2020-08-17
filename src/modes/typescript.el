@@ -25,6 +25,7 @@
 
 (defun init/ts-tsx-mode ()
   "Initialise modes related to Typescript development."
+  (init/common-web-programming)
   (electric-indent-mode)
 
   (setq-local fill-column 99)

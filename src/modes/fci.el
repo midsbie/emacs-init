@@ -33,8 +33,9 @@
 (defun enable-fci-mode ()
   "Enable `fci-mode'."
   (interactive)
-  (if (and (eq emacs-major-version 24)
-           (eq emacs-minor-version 3))
+  (if (or (string= major-mode "web-mode")
+          (and (eq emacs-major-version 24)
+               (eq emacs-minor-version 3)))
       (fci-mode -1)
     (fci-mode)))
 

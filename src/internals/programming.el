@@ -145,14 +145,14 @@
   (define-key emacs-lisp-mode-map (kbd "C-x C-k") 'do-eval-buffer)
   (turn-on-eldoc-mode))
 
-(defun init/common-web ()
+(defun init/common-web-programming ()
   "Initialise modes related to web development."
   ;; Unfortunately, `fci-mode' does not play well with `web-mode'.
-  (when (string= major-mode "web-mode")
-    (fci-mode -1))
+  (enable-fci-mode)
   (auto-fill-mode -1)
   (highlight-parentheses-mode)
   (subword-mode 1)
+
   (setq tab-width       2
         c-basic-offset  2)
 

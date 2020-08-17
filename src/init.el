@@ -134,8 +134,8 @@ Files are only visited if the server hasn't yet been started.")
 
 (defun init/post-init ()
   "Perform post-init steps."
-  ;; Show how long it took to initialise emacs after 3 idle seconds.
-  (run-with-idle-timer 3 nil '(lambda ()
+  ;; Show how long it took to initialise emacs after 1 idle second.
+  (run-with-idle-timer 1 nil '(lambda ()
                                 (message "init took %s" (emacs-init-time)))))
 
 (message "[init] done.")

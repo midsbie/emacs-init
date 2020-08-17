@@ -24,6 +24,8 @@
 
 ;;; Code:
 
+(setq prettier-js-projects nil)
+
 (defun init/programming ()
   "Initialise programming modes."
   ;; Own custom default style
@@ -156,7 +158,25 @@
 
   (setq programming-buffer t)
   (make-local-variable 'programming-buffer)
-  (apply-editor-workarounds))
+  (apply-editor-workarounds)
+  (enable-prettier-js-mode-maybe))
+
+(defun enable-prettier-js-mode-maybe ()
+  "Turn on `prettier-js-mode' selectively.
+
+Always turns on the prevalent javascript mode in use, regardless.  Note that at
+present the javascript mode must be MANUALLY specified, however we would
+ideally like an automated way of doing this; e.g. by looking for the second
+element in the `auto-mode-alist' associated with `\\.js\\'` extensionsion.
+
+If the file associated with current buffer is located in one of
+the directories in `prettier-js-projects', `prettier-js-mode' is also
+enabled."
+  ; Uncomment one of the following below
+  (dolist (dir prettier-js-projects)
+    (when (file-in-directory-p buffer-file-name dir)
+      (add-node-modules-path)
+      (prettier-js-mode))))
 
 ;; Defun invoked after pressing C-x C-k (see `init/elisp').
 ;; Evals the current buffer and displays a message.

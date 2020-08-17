@@ -1,6 +1,6 @@
 ;;; flycheck.el --- Configures the flycheck feature
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,19 +24,15 @@
 
 ;;; Code:
 
-;; Load after everything else.
-(init/lazy-run 'init/flycheck)
+(defun init/config/flycheck ()
+  "Configure `flycheck'."
 
-(defun init/flycheck ()
-  "Lazily load `flycheck' and enable it globally."
   ;; Enable flycheck globally.
   (global-flycheck-mode 1)
   (load "flycheck-flow")
 
   ;; + in c/c++ modes
-  (setq flycheck-cppcheck-checks        '("all")
-        flycheck-c/c++-clang-executable "true") ; disable clang since we use
-                                        ; omnis
+  (setq flycheck-cppcheck-checks '("all"))
 
   ;; + in `php-mode'
   (setq flycheck-phpmd-rulesets '("cleancode" "codesize" "controversial"
@@ -114,5 +110,9 @@
         (if (and eslint (file-executable-p eslint))
             (setq-local flycheck-javascript-eslint-executable eslint)
           (setq curdir (file-name-directory (directory-file-name curdir))))))))
+
+(use-package flycheck
+  :config
+  (init/config/flycheck))
 
 ;;; flycheck.el ends here

@@ -37,7 +37,7 @@
   "Absolute path to Emacs' init `src´ directory.
 If nil, `default-directory' is used instead.")
 
-(defvar init/dirs-load '("internals" "features" "modes" "extensions")
+(defvar init/dirs-load '("internals" "features" "extensions" "modes")
   "Directories to automatically load.
 Contains directories to automatically load as part of the
 initialisation process.  Directories must be relative to
@@ -123,17 +123,14 @@ Files are only visited if the server hasn't yet been started.")
 
 ;; Load files in `init/open-at-startup' list after a short delay so as
 ;; enable the user to mutate the `init/open-at-startup' list.
-(run-with-idle-timer
- 0.1 nil
- '(lambda ()
-    (dolist (file init/open-at-startup)
-      (if (not (file-exists-p file))
-          (message "%s" (concat "error: file does not exist: " file))
-        (find-file file)
-        (with-current-buffer (current-buffer)
-          (when (eq major-mode 'org-mode)
-            (org-shifttab 2)))
-        (other-window 1)))))
+(dolist (file init/open-at-startup)
+  (if (not (file-exists-p file))
+      (message "%s" (concat "error: file does not exist: " file))
+    (find-file file)
+    (with-current-buffer (current-buffer)
+      (when (eq major-mode 'org-mode)
+        (org-shifttab 2)))
+    (other-window 1)))
 
 (defun init/post-init ()
   "Perform post-init steps."

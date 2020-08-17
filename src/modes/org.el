@@ -24,9 +24,7 @@
 
 ;;; Code:
 
-(eval-after-load 'org '(init/org))
-
-(defun init/org ()
+(defun init/config/org ()
   "Org mode load hook."
   (setq org-use-fast-todo-selection t
         org-directory               "~/documents/org"
@@ -91,11 +89,12 @@
   (when (called-interactively-p 'interactive)
     (message "Killed all org-mode buffers")))
 
-
-;; Unfortunately this hack had to be introduced because the ein package
-;; requires org-mode to be available when it loads, which in turn requires
-;; the speedbar package to have been loaded.
-(require 'speedbar)
-(require 'org)
+(use-package org
+  :mode ("\\.org\\'" . org-mode)
+  ;; Unfortunately this hack had to be introduced because the ein package requires org-mode to be
+  ;; available when it loads, which in turn requires the speedbar package to have been loaded.
+  :after speedbar
+  :config
+  (init/config/org))
 
 ;;; org.el ends here

@@ -36,26 +36,16 @@
 
 ;;; Code:
 
-;; Uncomment the following code if enabling:
-;;
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js-jsx-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx\?\\'" . js-jsx-mode))
-(add-to-list 'auto-mode-alist '("\\.react.js\\'" . js-jsx-mode))
-
-;; (eval-after-load 'js-mode
-;;   '(progn
-;;      (add-hook 'js-mode-hook  'init/js-mode)
-;;      (add-hook 'js-mode-hook  'init/common-web)))
-
-;; (eval-after-load 'js-jsx-mode
-;;   '(progn
-;;      (add-hook 'js-jsx-mode-hook  'init/js-mode)
-;;      (add-hook 'js-jsx-mode-hook  'init/common-web)))
-
-(defun init/js-mode ()
+(defun init/config/js-mode ()
   "Initialise modes related to Javascript development."
+
+  (add-hook 'js-mode-hook  'init/js-mode)
+  (add-hook 'js-mode-hook  'init/common-web)
+  (add-hook 'js-jsx-mode-hook  'init/js-mode)
+  (add-hook 'js-jsx-mode-hook  'init/common-web)
+
   (electric-indent-mode)
-  ; FIXME: this does not seem to have any effect in JSX mode:
+  ;; FIXME: this does not seem to have any effect in JSX mode:
   (setq comment-start "/* "
         comment-end   " */")
 
@@ -63,5 +53,12 @@
 
   (local-set-key (kbd "M-a") 'c-beginning-of-statement)
   (local-set-key (kbd "M-e") 'c-end-of-statement))
+
+;; Uncomment the following code if enabling:
+;;
+(use-package js-mode
+  :mode ("\\.jsx?\\'" . js-jsx-mode)
+  :config
+  (init/config/js-mode))
 
 ;;; js.el ends here

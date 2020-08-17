@@ -24,30 +24,29 @@
 
 ;;; Code:
 
-(eval-after-load 'linum
-  '(progn
-     ; Load an appropriate theme for a terminal and set the background color to
-     ; as close to black as we can.
-     (load-theme 'wombat)
-     (set-background-color "color232")
+(defun init/env/term()
+  ;; Load an appropriate theme for a terminal and set the background color to
+  ;; as close to black as we can.
+  (load-theme 'wombat)
+  (set-background-color "color232")
 
-     ;; Customize faces that turn out not to support a terminal environment.
-     (custom-set-faces
-      ;; custom-set-faces was added by Custom.
-      ;; If you edit it by hand, you could mess it up, so be careful.
-      ;; Your init file should contain only one such instance.
-      ;; If there is more than one, they won't work right.
-      '(magit-section-highlight ((t (:background "color-235"))))
-      '(hl-line ((t (:background "color-235" :underline nil)))))
+  ;; Customize faces that turn out not to support a terminal environment.
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(magit-section-highlight ((t (:background "color-235"))))
+   '(hl-line ((t (:background "color-235" :underline nil)))))
 
-     ; Turn highlight one globally (configuration is above)
-     ; UPDATE: disabled as it was degrading performance
-     ;; (global-hl-line-mode 1)
+  ;; Turn highlight one globally (configuration is above)
+  ;; UPDATE: disabled as it was degrading performance
+  ;; (global-hl-line-mode 1)
 
-     ; Fix "stuck" fringe by adding a space between line number and actual
-     ; content
-     (unless (eq window-system 'x)
-       (setq linum-format "%d "))))
+  ;; Fix "stuck" fringe by adding a space between line number and actual
+  ;; content
+  (setq linum-format "%d "))
 
+(eval-after-load 'linum #'init/env/term)
 
 ;;; term.el ends here

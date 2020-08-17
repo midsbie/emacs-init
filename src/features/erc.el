@@ -1,6 +1,6 @@
 ;;; erc.el --- Customises the ERC module
 
-;; Copyright (C) 2018  Miguel Guedes
+;; Copyright (C) 2018-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: IRC, chat, client, Internet
@@ -24,13 +24,13 @@
 
 ;;; Code:
 
-(eval-after-load 'erc '(init/erc))
-
 (defun init/erc ()
-  "Lazily initialise the `erc' package."
+  "Initialise the `erc' package."
   (setq erc-modules
    (quote (autojoin button completion fill irccontrols list match menu
                     move-to-prompt netsplit networks noncommands notifications
                     readonly ring stamp track))))
+
+(eval-after-load 'erc '(init/erc))
 
 ;;; erc.el ends here

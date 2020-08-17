@@ -24,17 +24,23 @@
 
 ;;; Code:
 
-(add-hook 'js2-mode-hook 'init/prettier-js-mode-maybe)
-(add-hook 'web-mode-hook 'init/prettier-js-mode-maybe)
+(defun init/config/prettier-js()
+  ;; Default parameters to pass to prettier.
+  (setq-default prettier-js-args nil)
 
-;; Default parameters to pass to prettier.
-(setq-default prettier-js-args nil)
-
-(defvar init/enable-prettier-js-mode)
-(setq init/enable-prettier-js-mode nil)
+  (defvar init/enable-prettier-js-mode)
+  (setq init/enable-prettier-js-mode nil))
 
 (defun init/prettier-js-mode-maybe()
   (when init/enable-prettier-js-mode
     (prettier-js-mode)))
+
+(use-package prettier-js
+  :hook ((js-mode . init/prettier-js-mode-maybe)
+         (js-jsx-mode . init/prettier-js-mode-maybe)
+         (js2-mode . init/prettier-js-mode-maybe)
+         (web-mode . init/prettier-js-mode-maybe))
+  :config
+  (init/config/prettier-js))
 
 ;;; prettier-js.el ends here

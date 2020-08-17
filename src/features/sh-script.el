@@ -24,8 +24,6 @@
 
 ;;; Code:
 
-(eval-after-load 'sh-script '(init/sh-script))
-
 (defun init/sh-script ()
   "Configure the `sh-script' package."
   (setq-default  sh-basic-offset    2
@@ -37,5 +35,7 @@
 (defun init/sh-mode ()
   "Initialise modes related to shell scripting development."
   (auto-fill-mode -1))
+
+(eval-after-load 'sh-script '(init/sh-script))
 
 ;;; sh-script.el ends here

@@ -1,6 +1,6 @@
 ;;; lisp.el --- Configures `lisp-mode'
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,15 +24,19 @@
 
 ;;; Code:
 
-(eval-after-load 'lisp-mode
-  '(progn
-     (add-hook 'lisp-mode-hook             'init/common-programming)
-     (add-hook 'lisp-mode-hook             'init/elisp)
+(defun init/config/lisp-mode()
+  (add-hook 'lisp-mode-hook             'init/common-programming)
+  (add-hook 'lisp-mode-hook             'init/elisp)
 
-     (add-hook 'emacs-lisp-mode-hook       'init/common-programming)
-     (add-hook 'emacs-lisp-mode-hook       'init/elisp)
+  (add-hook 'emacs-lisp-mode-hook       'init/common-programming)
+  (add-hook 'emacs-lisp-mode-hook       'init/elisp)
 
-     (add-hook 'lisp-interaction-mode-hook 'init/common-programming)
-     (add-hook 'lisp-interaction-mode-hook 'init/elisp)))
+  (add-hook 'lisp-interaction-mode-hook 'init/common-programming)
+  (add-hook 'lisp-interaction-mode-hook 'init/elisp))
+
+(use-package lisp-mode
+  :mode ("\\.el\\'")
+  :config
+  (init/config/lisp-mode))
 
 ;;; lisp.el ends here

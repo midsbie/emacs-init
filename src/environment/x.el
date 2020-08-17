@@ -53,7 +53,6 @@ characters wide."
   (interactive "p")
   (set-frame-height (selected-frame) arg))
 
-
 (when window-system
   (setq frame-title-format "%b - emacs")
   (tool-bar-mode -1)                      ; disable toolbar

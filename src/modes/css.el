@@ -1,6 +1,6 @@
 ;;; css.el --- Configures `css-mode'
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,9 +24,6 @@
 
 ;;; Code:
 
-(add-hook 'css-mode-hook  'init/common-programming)
-(add-hook 'css-mode-hook  'init/css)
-
 (defun init/css ()
   "Initialise modes related to CSS development."
   (setq-default css-indent-offset            2)
@@ -43,5 +40,11 @@
                    (interactive)
                    (insert-char ?\;)
                    (indent-for-tab-command))))
+
+(use-package css-mode
+  :defer t
+  :config
+  (add-hook 'css-mode-hook  'init/common-programming)
+  (add-hook 'css-mode-hook  'init/css))
 
 ;;; css.el ends here

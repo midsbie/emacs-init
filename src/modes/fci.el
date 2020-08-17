@@ -1,6 +1,6 @@
 ;;; fci.el --- Configures `fci-mode'
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,11 +24,8 @@
 
 ;;; Code:
 
-(init/lazy-run 'init/fci)
-
-(defun init/fci ()
-  "Lazily load the `fill-column-indicator' package and configure it."
-  (load "fill-column-indicator")
+(defun init/config/fci ()
+  "Configure `fill-column-indicator' package."
   (setq-default fci-rule-color "gray9"))
 
 ;; Workaround for fci-mode.  Don't enable fci-mode if emacs version is 24.3
@@ -72,5 +69,10 @@
   (when (and (not popup-instances) emacsinit/fci-mode-suppressed)
     (setq emacsinit/fci-mode-suppressed nil)
     (turn-on-fci-mode)))
+
+(use-package fill-column-indicator
+  :after prog-mode
+  :config
+  (init/config/fci))
 
 ;;; fci.el ends here

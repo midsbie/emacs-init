@@ -1,6 +1,6 @@
 ;;; html.el --- Configures `html-mode'
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,7 +24,9 @@
 
 ;;; Code:
 
-(eval-after-load 'sgml-mode
-  '(add-hook 'html-mode-hook 'init/common-web))
+(use-package sgml-mode
+  :mode ("\\.html?\\'" "\\.xml\\'")
+  :config
+  (add-hook 'html-mode-hook 'init/common-web))
 
 ;;; html.el ends here

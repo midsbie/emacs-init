@@ -37,18 +37,9 @@
 
 ;;; Code:
 
-(add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx\?\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.react.js\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-
-(eval-after-load 'web-mode
-  '(progn
-     (add-hook 'web-mode-hook  'init/web-mode)
-     (add-hook 'web-mode-hook  'init/common-web)))
-
 (defun init/web-mode ()
   "Initialise `web-mode'."
+
   (setq web-mode-markup-indent-offset 2
         web-mode-css-indent-offset    2
         web-mode-code-indent-offset   2)
@@ -108,10 +99,16 @@
 ;; - courtesy of Patrick @halbtuerke
 ;;
 ;; Taken from: http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
-(defadvice web-mode-highlight-part (around tweak-jsx activate)
-  (if (equal web-mode-content-type "jsx")
-    (let ((web-mode-enable-part-face nil))
-      ad-do-it)
-    ad-do-it))
+;;
+;; NOTE: deactivated as it seems to create issues
+;; (defadvice web-mode-highlight-part (around tweak-jsx activate)
+;;   (if (equal web-mode-content-type "jsx")
+;;     (let ((web-mode-enable-part-face nil))
+;;       ad-do-it)
+;;     ad-do-it))
+
+(use-package web-mode
+  :mode ("\\.jsx?\\'" "\\.html?\\'")
+  :hook ((web-mode . init/web-mode)))
 
 ;;; web.el ends here

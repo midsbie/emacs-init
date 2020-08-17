@@ -1,6 +1,6 @@
 ;;; yasnippet.el --- Configures the yasnippet feature
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools, internal
@@ -24,23 +24,6 @@
 
 ;;; Code:
 
-(global-set-key [backtab] (t-run-or-load 'yas-expand 'yasnippet))
-
-(eval-after-load 'yasnippet
-  '(progn
-     ;; Unset the global key defined above.
-     (global-set-key [backtab] nil)
-
-     (yas/global-mode 1)
-
-     (define-key yas-minor-mode-map (kbd "C-x y") 'yas/visit-snippet-file)
-     (define-key yas-minor-mode-map [backtab]     'yas-expand)
-
-     ;; Strangely, just redefining one of the variations below won't work.
-     (define-key yas-minor-mode-map [(tab)]        nil)
-     (define-key yas-minor-mode-map (kbd "TAB")    nil)
-     (define-key yas-minor-mode-map (kbd "<tab>") nil)))
-
 (defun yas/c++/get-header-extension ()
   "Guess appropriate extension for header file.
 Assumes currently open file is a C++ implementation source file."
@@ -49,5 +32,20 @@ Assumes currently open file is a C++ implementation source file."
      ((string= ext "cxx") "hxx")
      ((string= ext "C") "H")
      (t "h"))))
+
+(defun init/yasnippet()
+  (yas/global-mode 1)
+
+  (define-key yas-minor-mode-map (kbd "C-x y") 'yas/visit-snippet-file)
+
+  ;; Strangely, just redefining one of the variations below won't work.
+  (define-key yas-minor-mode-map [(tab)]        nil)
+  (define-key yas-minor-mode-map (kbd "TAB")    nil)
+  (define-key yas-minor-mode-map (kbd "<tab>") nil))
+
+(use-package yasnippet
+  :bind ([backtab] . yas-expand)
+  :config
+  (init/yasnippet))
 
 ;;; yasnippet.el ends here

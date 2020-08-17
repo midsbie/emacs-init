@@ -94,7 +94,7 @@
   (add-hook 'c-mode-common-hook 'init/c-c++))
 
 (defun init/common-programming ()
-  "Initialise modes related programming."
+  "Perform initialisation of aspects common to all programming-related modes."
   (enable-fci-mode)                 ; fill column indicator
   (auto-fill-mode)                  ; auto fill
 

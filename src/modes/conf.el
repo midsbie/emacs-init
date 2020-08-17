@@ -1,6 +1,6 @@
 ;;; conf.el --- Configures `conf-mode'
 
-;; Copyright (C) 2019  Miguel Guedes
+;; Copyright (C) 2019-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,6 +24,9 @@
 
 ;;; Code:
 
-(add-to-list 'auto-mode-alist '("\\.flowconfig?\\'" . conf-mode))
+(use-package conf-mode
+  :defer t
+  :init
+  (add-to-list 'auto-mode-alist '("\\.flowconfig?\\'" . conf-mode)))
 
 ;;; conf.el ends here

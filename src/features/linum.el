@@ -1,6 +1,6 @@
-;;; anzu.el --- Configures `anzu-mode'
+;;; linum.el --- Configures `linum-mode'
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,15 +24,22 @@
 
 ;;; Code:
 
-;; Disabled as not necessary now that Ivy is in use.  Was also found to degrade
-;; performance.
-;; (init/lazy-run 'init/anzu)
+(defun init/linum ()
+  "Lazily load the `linum' package and initialise it."
 
-;; (defun init/anzu ()
-;;   "Lazily load the `anzu' package and configure it."
-;;   (load "anzu")
-;;   ;; Activate anzu's global mode
-;;   (global-anzu-mode))
+  ;; display line numbers in left margin
+  (global-linum-mode t)
 
+  ;; Add hook so we can disable linum-mode when in speedbar-mode
+  (add-hook 'linum-before-numbering-hook 'init/linum-mode))
 
-;;; anzu.el ends here
+(defun init/linum-mode()
+  "Configure the `linum-mode'."
+  (if (string= major-mode "speedbar-mode")
+      (linum-mode -1)))
+
+(use-package linum
+  :config
+  (init/linum))
+
+;;; linum.el ends here

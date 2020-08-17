@@ -1,6 +1,6 @@
 ;;; elpy.el --- Configures `elpy-mode'
 
-;; Copyright (C) 2017-2018  Miguel Guedes
+;; Copyright (C) 2017-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: internal, tools
@@ -27,14 +27,12 @@
 
 ;;; Code:
 
-;; This is all that is necessary to activate elpy-mode, as per:
+;; Installation instructions straight from:
 ;; https://elpy.readthedocs.io/en/latest/introduction.html#installation
-;;
-;; elpy is currently disabled due to a weird error that is preventing the
-;; package from being upgraded.  When/if it is finally re-enabled in the
-;; future, it should just work though.
-(if (fboundp 'elpy-enable)
-    (elpy-enable)
-  (message "elpy package not found"))
+(use-package elpy
+;  :ensure t
+  :defer t
+  :init
+  (advice-add 'python-mode :before 'elpy-enable))
 
 ;;; elpy.el ends here

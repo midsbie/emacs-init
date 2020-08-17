@@ -1,6 +1,6 @@
 ;;; avy.el --- Customises the Avy package
 
-;; Copyright (C) 2019  Miguel Guedes
+;; Copyright (C) 2019-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,20 +24,18 @@
 
 ;;; Code:
 
-(defun init/avy ()
-  "Lazily initialise the `avy' package."
+(defun init/config/avy ()
+  "Configure `avy' package."
   (avy-setup-default)
-
-  (global-set-key (kbd "C-:") 'avy-goto-char)
-  (global-set-key (kbd "C-'") 'avy-goto-char-2)
-  (global-set-key (kbd "M-g f") 'avy-goto-line)
-  (global-set-key (kbd "M-g w") 'avy-goto-word-1)
-  (global-set-key (kbd "C-c C-j") 'avy-resume)
 )
 
-; Moved to after the function declaration so as to avoid potential failures at
-; load time
-(eval-after-load 'avy '(init/avy))
-
+(use-package avy
+  :bind (("C-:" . avy-goto-char)
+         ("C-'" . avy-goto-char-2)
+         ("M-g f" . avy-goto-line)
+         ("M-g w" . avy-goto-word-1)
+         ("C-c C-j" . avy-resume))
+  :config
+  (init/config/avy))
 
 ;;; avy.el ends here

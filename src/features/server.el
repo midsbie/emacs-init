@@ -1,6 +1,6 @@
 ;;; server.el --- Configuration of Emacs `server' package
 
-;; Copyright (C) 2017-2018  Miguel Guedes
+;; Copyright (C) 2017-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,17 +24,14 @@
 
 ;;; Code:
 
-(init/lazy-run 'init/server)
-
 (defun init/server ()
-  "Start server after 2 seconds have elapsed but only if it isn't running yet.
+  "Start Emacs server.
 
 Also visits the files in the `init/open-at-startup' list if the
 server hasn't yet been started.
 
 Strangely, the call to `server-start' needs to be issued a few
 seconds after Emacs has launched."
-  (load "server")
 
   (if (server-running-p)
       (message "[server] already started: not starting")
@@ -44,5 +41,10 @@ seconds after Emacs has launched."
                          '(lambda ()
                             (message "[server] starting")
                             (server-start)))))
+
+(use-package server
+  :after (projectile)
+  :config
+  (init/server))
 
 ;;; server.el ends here

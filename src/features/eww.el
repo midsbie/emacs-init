@@ -1,6 +1,6 @@
-;;; ansi-color.el --- Customises ANSI color palette
+;;; eww.el --- Customises the `eww' package
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,16 +24,8 @@
 
 ;;; Code:
 
-(eval-after-load 'eww '(init/eww))
-
-;; Global key definitions
-(global-set-key (kbd "C-c e g") 'google)
-
-(defun init/eww ()
-  "Lazily initialise the `eww' package.")
-
-;; Extend the eww
-(defun google (search)
+;; The following meant to be exposed as a command; do not prefix the function name.
+(defun google(query)
   "Navigate to Google search within `eww'
 
 Prompts the user for a query string, if not provided, that is constructed as a
@@ -41,6 +33,9 @@ URL that causes `eww' to run and navigate to the Google search page showing
 results for the specified query string."
   (interactive "sQuery string: ")
   (eww (concat "https://google.com/search?q="
-               (mapconcat 'identity (split-string search " ") "+"))))
+               (mapconcat 'identity (split-string query " ") "+"))))
 
-;;; ansi-color.el ends here
+(use-package eww
+  :bind ("C-c e g" . google))
+
+;;; eww.el ends here

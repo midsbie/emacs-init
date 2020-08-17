@@ -24,15 +24,11 @@
 
 ;;; Code:
 
-(add-hook 'python-load-hook 'init/python)
-
 ;; Defaults
 (setq-default python-indent-offset 4)
 
 (defun init/python ()
   "Python mode load hook."
-  (load "pylint")
-
   (add-hook 'python-mode-hook 'init/common-programming)
   (add-hook 'python-mode-hook 'init/python-mode)
   (add-hook 'python-mode-hook 'pylint-add-menu-items)
@@ -53,5 +49,14 @@
       (local-set-key (kbd "C-j") 'newline-and-indent)
       (local-set-key (kbd "RET") 'newline)))
 )
+
+(use-package python-mode
+  :hook ((python-mode . init/common-programming)
+         (python-mode . init/python-mode)
+         (python-mode . pylint-add-menu-items)
+         (python-mode . pylint-add-key-bindings)))
+
+(use-package pylint
+  :after python-mode)
 
 ;;; python.el ends here

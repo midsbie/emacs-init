@@ -1,6 +1,6 @@
 ;;; json.el --- Configures `json-mode'
 
-;; Copyright (C) 2016-2018  Miguel Guedes
+;; Copyright (C) 2016-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,8 +24,12 @@
 
 ;;; Code:
 
-(eval-after-load "json-mode"
-  '(progn
-     (add-hook 'json-mode-hook 'init/common-programming)))
+(defun init/config/json-mode()
+  (add-hook 'json-mode-hook 'init/common-programming))
+
+(use-package json-mode
+  :mode ("\\.json\\'")
+  :config
+  (init/config/json-mode))
 
 ;;; json.el ends here

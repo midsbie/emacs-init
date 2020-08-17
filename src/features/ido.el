@@ -1,6 +1,6 @@
-;;; omniscient.el --- Configures the omniscient feature
+;;; ido.el --- Configures ido and related packages
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,11 +24,35 @@
 
 ;;; Code:
 
-;; TODO: disabled as unused.
-;; (let ((path "/usr/local/share/omnis/clients/omniscient"))
-;;   (when (file-exists-p (concat path "/omniscient.el"))
-;;     (load-library (concat path "/omniscient.el"))
-;;     (load-library (concat path "/cc-mode.el"))
-;;     (global-omniscient-mode)))
+(defun init/ido ()
+  "Initialise `ido' and associated packages."
 
-;;; omniscient.el ends here
+  (ido-mode 1)
+  (ido-everywhere 1)
+  (flx-ido-mode 1)
+
+  ;; disable ido faces to see flx highlights.
+  (setq ido-enable-flex-matching  t
+        ido-use-faces             nil))
+
+(defun init/flx-ido ()
+  "Lazily initialise the `flx-ido' package."
+    (require 'flx-ido)
+    (ido-mode 1)
+    (ido-everywhere 1)
+    (flx-ido-mode 1)
+    ;; disable ido faces to see flx highlights.
+    (setq ido-enable-flex-matching t)
+    (setq ido-use-faces nil)
+)
+
+(use-package ido
+  :config
+  (init/ido))
+
+(use-package flx-ido
+  :after ido
+  :config
+  (init/flx-ido))
+
+;;; ido.el ends here

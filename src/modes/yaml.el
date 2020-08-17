@@ -1,6 +1,6 @@
 ;;; yaml.el --- Configures `yaml-mode'
 
-;; Copyright (C) 2019  Miguel Guedes
+;; Copyright (C) 2019-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: internal, tools
@@ -24,6 +24,7 @@
 
 ;;; Code:
 
-(add-to-list 'auto-mode-alist '("\\.eslintrc\\'" . yaml-mode))
+(use-package yaml-mode
+  :mode ("\\.eslintrc\\'"))
 
 ;;; yaml.el ends here

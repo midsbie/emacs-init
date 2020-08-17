@@ -1,6 +1,6 @@
-;;; show-paren.el --- Configures the `show-paren-mode'
+;;; typescript.el --- Configures `typescript-mode'
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -19,17 +19,21 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-
 ;;
 
 ;;; Code:
 
-(init/lazy-run 'init/paren)
+(defun init/ts-tsx-mode ()
+  "Initialise modes related to Typescript development."
+  (electric-indent-mode)
 
-(defun init/paren ()
-  "Lazily load the `paren' package and initialise it."
-  (load "paren")
-  (show-paren-mode t)                     ; show parenthesis next to cursor
-  )
+  (setq-local fill-column 99)
 
-;;; show-paren.el ends here
+  (local-set-key (kbd "M-a") 'c-beginning-of-statement)
+  (local-set-key (kbd "M-e") 'c-end-of-statement))
+
+(use-package typescript-mode
+  :mode ("\\.tsx?\\'")
+  :hook (typescript-mode . init/ts-tsx-mode))
+
+;; ;;; typescript.el ends here

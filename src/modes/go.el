@@ -1,6 +1,6 @@
 ;;; go.el --- Configures `go-mode'
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -26,9 +26,7 @@
 
 ;;; Code:
 
-(eval-after-load 'go-mode '(init/after-load/go-mode))
-
-(defun init/after-load/go-mode ()
+(defun init/config/go-mode ()
   "One-time initialisation sequence for `go-mode'."
   (add-hook 'go-mode-hook  'init/go-mode)
 
@@ -98,5 +96,10 @@
       (error (concat "Failed to extract " name))
     (setenv name (match-string 1 env))
     (message "info: set %s: %s" name (getenv name))))
+
+(use-package go-mode
+  :mode ("\\.go\\'" )
+  :config
+  (init/config/go-mode))
 
 ;;; go.el ends here

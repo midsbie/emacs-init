@@ -1,6 +1,6 @@
-;;; saveplace.el --- Configures the saveplace feature
+;;; saveplace.el --- Configures the saveplace package
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,12 +24,15 @@
 
 ;;; Code:
 
-(init/lazy-run 'init/saveplace)
-
 (defun init/saveplace ()
-  "Lazily loads and configures the `saveplace' package."
-  (load "saveplace")
+  "Configure the `saveplace' package."
   (setq-default save-place t)             ; save position in buffer
   )
+
+(use-package saveplace
+  ;; The projectile package used as a way of deferring loading
+  :after (projectile)
+  :config
+  (init/saveplace))
 
 ;;; saveplace.el ends here

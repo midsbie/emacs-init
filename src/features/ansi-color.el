@@ -1,6 +1,6 @@
 ;;; ansi-color.el --- Customises ANSI color palette
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -33,6 +33,5 @@
 ; Moved to after the function declaration so as to avoid potential failures at
 ; load time
 (eval-after-load 'ansi-color '(init/ansi-color))
-
 
 ;;; ansi-color.el ends here

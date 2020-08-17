@@ -25,7 +25,7 @@
 ;;; Code:
 
 (defun init/tramp ()
-  "Lazily initialise the `tramp' package."
+  "Initialise the `tramp' package."
 
   ; Invoke by opening /sudo:sudo-zeus:/path/to/file
   (add-to-list 'tramp-default-proxies-alist

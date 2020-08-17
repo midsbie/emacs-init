@@ -1,6 +1,6 @@
-;;; auto-complete.el --- Configures `auto-complete-mode'
+;;; show-paren.el --- Configures the `paren'
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,10 +24,12 @@
 
 ;;; Code:
 
-;; NOTE: `auto-complete-mode` is now disabled by default.
-;; (require 'auto-complete-config)
+(defun init/paren()
+  "Initialises the `paren' package."
+  (show-paren-mode t)                     ; show parenthesis next to cursor
+)
 
-;; (ac-config-default)
-;; (global-auto-complete-mode)
+(use-package paren
+  :hook (prog-mode . init/paren))
 
-;;; auto-complete.el ends here
+;;; show-paren.el ends here

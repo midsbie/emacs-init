@@ -1,6 +1,6 @@
-;;; buftoggle.el --- Configures the buftoggle feature
+;;; recentf.el --- Configures `recentf' package
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,13 +24,18 @@
 
 ;;; Code:
 
-;; TODO: what can we do to auto-load this library?
-(if (not (locate-library "buftoggle.git/buftoggle"))
-    (message "error: buftoggle library not found")
-  (load-library "buftoggle.git/buftoggle")
+(defun init/config/recentf ()
+  "Initialises the `recentf' package."
 
-  (add-to-list 'buftoggle-pairs-alist '("cxx" "hxx" "hpp" "hh" "h"))
-  (add-to-list 'buftoggle-pairs-alist '("hxx" "cxx" "cpp" "cc"))
-)
+  ;; recentf-mode
+  (setq recentf-auto-cleanup    'never
+        recentf-max-menu-items  25)
 
-;;; buftoggle.el ends here
+  (recentf-mode 1))
+
+(use-package recentf
+  :bind ("C-x r" . recentf-open-files)
+  :config
+  (init/config/recentf))
+
+;;; recentf.el ends here

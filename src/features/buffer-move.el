@@ -1,6 +1,6 @@
-;;; buffer-move.el --- Configures the buffer-move feature
+;;; buffer-move.el --- Configures the buf-move feature
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,9 +24,10 @@
 
 ;;; Code:
 
-(global-set-key (kbd "<C-S-up>")      'buf-move-up)
-(global-set-key (kbd "<C-S-down>")    'buf-move-down)
-(global-set-key (kbd "<C-S-left>")    'buf-move-left)
-(global-set-key (kbd "<C-S-right>")   'buf-move-right)
+(use-package buf-move
+  :bind (("<C-S-up>" . buf-move-up)
+         ("<C-S-down>" . buf-move-down)
+         ("<C-S-left>" . buf-move-left)
+         ("<C-S-right>" . buf-move-right)))
 
 ;;; buffer-move.el ends here

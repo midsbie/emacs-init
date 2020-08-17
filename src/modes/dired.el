@@ -1,6 +1,6 @@
 ;;; dired.el --- Configures `dired-mode'
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: internal, tools
@@ -24,17 +24,20 @@
 
 ;;; Code:
 
-(add-hook 'dired-load-hook
-          (lambda ()
-            (load "dired-x")
-            ;; Set global variables here.  For example:
-            ;; (setq dired-guess-shell-gnutar "gtar")
-            ))
+(defun init/dired-load-hook ()
+  (use-package "dired-x")
+  ;; Set global variables here.  For example:
+  ;; (setq dired-guess-shell-gnutar "gtar")
+  )
 
-(add-hook 'dired-mode-hook
-          (lambda ()
-            ;; Set buffer-local variables here.  For example:
-            ;; (dired-omit-mode 1)
-            ))
+(defun init/dired-mode-hook ()
+  ;; Set buffer-local variables here.  For example:
+  ;; (dired-omit-mode 1)
+  )
+
+(use-package dired
+  :config
+  (add-hook 'dired-mode-hook 'init/dired-mode-hook)
+  (add-hook 'dired-load-hook 'init/dired-load-hook))
 
 ;;; dired.el ends here

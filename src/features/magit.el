@@ -24,14 +24,10 @@
 
 ;;; Code:
 
-(require 'magit-status)
-
-(with-eval-after-load 'magit-status
+(defun init/magit()
   ; As per installation instructions at: https://github.com/sigma/magit-gh-pulls
   ;; (require 'magit-gh-pulls)
   ;; (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
-
-  (global-set-key (kbd "C-x g") 'magit-status)
 
   ; DON'T ask to save buffers!
   (setq magit-save-repository-buffers nil)
@@ -48,5 +44,9 @@
   ;(define-key ido-common-completion-map (kbd "C-x g") 'find-grep)
   )
 
+(use-package magit-status
+  :bind ("C-x g" . magit-status)
+  :config
+  (init/magit))
 
 ;;; magit.el ends here

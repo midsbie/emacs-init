@@ -1,6 +1,6 @@
 ;;; ace-window.el --- Customises Ace Window package
 
-;; Copyright (C) 2019  Miguel Guedes
+;; Copyright (C) 2019-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,14 +24,7 @@
 
 ;;; Code:
 
-(defun init/ace-window ()
-  "Lazily initialise the `ace-window' package."
-  (global-set-key (kbd "M-o") 'ace-window)
-)
-
-; Moved to after the function declaration so as to avoid potential failures at
-; load time
-(eval-after-load 'ace-window '(init/ace-window))
-
+(use-package ace-window
+  :bind ("M-o" . ace-window))
 
 ;;; ace-window.el ends here

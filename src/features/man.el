@@ -1,6 +1,6 @@
 ;;; man.el --- Customises man.el
 
-;; Copyright (C) 2018  Miguel Guedes
+;; Copyright (C) 2018-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,11 +24,11 @@
 
 ;;; Code:
 
-(eval-after-load 'man '(init/man))
-
 (defun init/man ()
   "Lazily initialise the `man' package."
   ;; Causes man to open in the current window.
   (setq Man-notify-method 'pushy))
+
+(eval-after-load 'man '(init/man))
 
 ;;; man.el ends here

@@ -1,6 +1,6 @@
 ;;; visual-regexp.el --- Configures the visual-regexp feature
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,7 +24,8 @@
 
 ;;; Code:
 
-(global-set-key (kbd "C-c r") 'vr/replace)
-(global-set-key (kbd "C-c q") 'vr/query-replace)
+(use-package visual-regexp
+  :bind (("C-c r" . vr/replace)
+         ("C-c q" . vr/query-replace)))
 
 ;;; visual-regexp.el ends here

@@ -1,6 +1,6 @@
 ;;; company.el --- Configures `company-mode'
 
-;; Copyright (C) 2017-2018  Miguel Guedes
+;; Copyright (C) 2017-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,8 +24,6 @@
 
 ;;; Code:
 
-(init/lazy-run 'init/company)
-
 (defun init/company()
   ;; Note that there is no need to require the libraries for the following
   ;; minor modes.
@@ -43,5 +41,9 @@
   (add-to-list 'company-backends 'company-flow)
   (define-key company-mode-map (kbd "<C-return>") 'company-complete))
 
+(use-package company
+  :after prog-mode
+  :config
+  (init/company))
 
 ;;; company.el ends here

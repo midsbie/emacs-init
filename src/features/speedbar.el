@@ -1,6 +1,6 @@
 ;;; speedbar.el --- Configures the `speedbar' package
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,15 +24,8 @@
 
 ;;; Code:
 
-;; Note that `features/org.el` requires speedbar, which in turn should cause
-;; our speedbar customisations to kick in.
-(init/lazy-run 'init/speedbar)
-
 (defun init/speedbar ()
-  "Lazily load the `speedbar' package."
-  ;; This must be done before `org-mode' can be loaded, for some reason.
-  (load "speedbar")
-
+  "Initialise `speedbar' package."
   (setq speedbar-frame-parameters '((minibuffer . nil)
                                     (width . 40)
                                     (border-width . 0)
@@ -40,5 +33,10 @@
                                     (tool-bar-lines . 0)
                                     (unsplittable . t)
                                     (left-fringe . 0))))
+
+(use-package speedbar
+  :commands speedbar
+  :config
+  (init/speedbar))
 
 ;;; speedbar.el ends here

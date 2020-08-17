@@ -1,6 +1,6 @@
 ;;; projectile.el --- Initialises the projectile package
 
-;; Copyright (C) 2017-2018  Miguel Guedes
+;; Copyright (C) 2017-2020  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -25,16 +25,8 @@
 ;;; Code:
 
 (defun init/projectile ()
-  "Lazily initialise the `projectile' package."
-    (require 'projectile)
-    (projectile-mode)
-
-    ; Binding for invoking `vc-git-grep` when searching within project bounds
-    (global-set-key (kbd "C-c C-p G")  '(lambda ()
-                                          (interactive)
-                                          (call-interactively 'vc-git-grep)
-                                          ))
-    )
+  "Initialise the `projectile' package."
+    (projectile-mode))
 
 ; For some strange reason this now needs to be set otherwise the projectile
 ; keymap is not available at all.
@@ -42,6 +34,11 @@
 
 ; This statement was producing an error when placed before the function it
 ; invokes, presumable because 'ido may have loaded in some circumstances.
-(eval-after-load 'ido '(init/projectile))
+(use-package projectile
+  :after (ido company)
+  :bind (("C-c C-p d" . projectile-find-dir)
+         ("C-c C-p f" . projectile-find-file))
+  :config
+  (init/projectile))
 
 ;;; projectile.el ends here

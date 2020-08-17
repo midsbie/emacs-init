@@ -1,6 +1,6 @@
 ;;; x.el --- Initialisation sequence when run within X
 
-;; Copyright (C) 2014-2018 Miguel Guedes
+;; Copyright (C) 2014-2020 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:
@@ -66,8 +66,8 @@ characters wide."
    '(default ((t (:inherit nil :stipple nil :background "#080808"
                   :foreground "#dcdccc" :inverse-video nil :box nil
                   :strike-through nil :overline nil :underline nil
-                  :slant normal :weight normal :height 84 :width normal
-                  :foundry "unknown" :family "DejaVu Sans Mono"))))
+                  :slant normal :weight normal :height 75 :width normal
+                  :foundry "unknown" :family "Hack"))))
    '(rst-level-1-face ((t (:weight bold))) t)
    '(rst-level-2-face ((t (:weight bold))) t)
    '(rst-level-3-face ((t (:weight extra-bold))) t))
@@ -88,7 +88,6 @@ characters wide."
   (setq x-select-enable-clipboard   t
         interprogram-paste-function 'x-cut-buffer-or-selection-value)
 
-  ;; `when'
   (split-window-horizontally)             ; two windows at startup
   (setq speedbar-use-images nil)          ; do not use icons in `speedbar-mode'
 

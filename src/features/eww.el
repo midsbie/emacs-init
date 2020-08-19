@@ -24,18 +24,8 @@
 
 ;;; Code:
 
-;; The following meant to be exposed as a command; do not prefix the function name.
-(defun google(query)
-  "Navigate to Google search within `eww'
-
-Prompts the user for a query string, if not provided, that is constructed as a
-URL that causes `eww' to run and navigate to the Google search page showing
-results for the specified query string."
-  (interactive "sQuery string: ")
-  (eww (concat "https://google.com/search?q="
-               (mapconcat 'identity (split-string query " ") "+"))))
-
 (use-package eww
-  :bind ("C-c e g" . google))
+  :bind (("C-c w g" . google)
+         ("C-c w b" . browse-web)))
 
 ;;; eww.el ends here

@@ -41,6 +41,12 @@
   "Initialise `web-mode'."
   (init/common-web-programming)
 
+  (make-local-variable 'web-mode-indentation-params)
+  (make-local-variable 'web-mode-markup-indent-offset)
+  (make-local-variable 'web-mode-css-indent-offset)
+  (make-local-variable 'web-mode-code-indent-offset)
+  (make-local-variable 'web-mode-indent-offset)
+  
   (setq web-mode-markup-indent-offset 2
         web-mode-css-indent-offset    2
         web-mode-code-indent-offset   2)
@@ -84,6 +90,9 @@
         ;      '(company-flow company-tern company-yasnippet company-files))
         ; (tern-mode)
         )
+
+  ;; Fix RET and C-j inverted behaviour
+  (fix-indent-inverted-behaviour)
   )
 
 (defun init/web/load-local-vars ()

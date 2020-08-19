@@ -24,26 +24,51 @@
 
 ;;; Code:
 
-(defun init/company()
-  ;; Note that there is no need to require the libraries for the following
-  ;; minor modes.
-  (global-company-mode)
-  (company-statistics-mode)
+(defun smarter-yas-expand-next-field-complete ()
+  "Try to `yas-expand' and `yas-next-field' at current cursor position.
 
-  ;; decrease delay before autocompletion popup shows
-  (setq company-idle-delay .3)
-  ;; start autocompletion only after typing
-  (setq company-begin-commands '(self-insert-command))
-  ;; Avoid annoying suggestion of ".." when just cd'ing into a directory in
-  ;; shell mode.
-  (setq company-files-exclusions (append company-files-exclusions '("." "..")))
+If failed try to complete the common part with `company-complete-common'"
+  (interactive)
+  (if yas-minor-mode
+      (let ((old-point (point))
+            (old-tick (buffer-chars-modified-tick)))
+        (yas-expand)
+        (when (and (eq old-point (point))
+                   (eq old-tick (buffer-chars-modified-tick)))
+          (ignore-errors (yas-next-field))
+          (when (and (eq old-point (point))
+                     (eq old-tick (buffer-chars-modified-tick)))
+            (company-complete-common))))
+    (company-complete-common)))
 
+;; As per: https://github.com/MatthewZMD/.emacs.d#company-mode
+(use-package company
+  :diminish company-mode
+  :hook ((prog-mode LaTeX-mode latex-mode ess-r-mode) . company-mode)
+  :bind
+  (:map company-active-map
+        ([tab] . smarter-yas-expand-next-field-complete)
+        ("TAB" . smarter-yas-expand-next-field-complete))
+  :custom
+  (company-minimum-prefix-length 1)
+  (company-tooltip-align-annotations t)
+  (company-begin-commands '(self-insert-command))
+  (company-require-match 'never)
+  ;; Don't use company in the following modes
+  (company-global-modes '(not shell-mode eaf-mode))
+  ;; Trigger completion immediately.
+  (company-idle-delay 0.1)
+  ;; Number the candidates (use M-1, M-2 etc to select completions).
+  (company-show-numbers t)
+  :config
+  (unless clangd-p (delete 'company-clang company-backends))
   (add-to-list 'company-backends 'company-flow)
+  (global-company-mode 1)
+  ;; (company-statistics-mode)
   (define-key company-mode-map (kbd "<C-return>") 'company-complete))
 
-(use-package company
-  :after prog-mode
-  :config
-  (init/company))
+(use-package company-lsp
+  :defer t
+  :custom (company-lsp-cache-candidates 'auto))
 
 ;;; company.el ends here

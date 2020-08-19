@@ -104,11 +104,11 @@ Files are only visited if the server hasn't yet been started.")
       (message "Loading ELISP files in: %s" dir-loading)
       (load-directory dir-loading))))
 
+
 ;; Load configurations specific to the environment
-(if window-system
-    (cond ((eq window-system 'x)
-           (load (inclusion-path "environment/x"))))
-  (load (inclusion-path "environment/term")))
+(load (inclusion-path
+       (or (and (display-graphic-p) "environment/x")
+           "environment/term")))
 
 ;; ----- Setup delayed initialisations
 ;;

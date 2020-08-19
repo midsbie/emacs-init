@@ -29,12 +29,36 @@
   (electric-indent-mode)
 
   (setq-local fill-column 99)
+  (setq-local typescript-indent-level 2)
 
   (local-set-key (kbd "M-a") 'c-beginning-of-statement)
   (local-set-key (kbd "M-e") 'c-end-of-statement))
 
+(defun init/tide()
+  "Initialise tide mode."
+  (interactive)
+  (tide-setup)
+
+  (setq-local flycheck-check-syntax-automatically '(save idle-change mode-enabled))
+  (setq-local company-tooltip-align-annotations t)
+
+  (eldoc-mode 1)
+  (tide-hl-identifier-mode 1))
+
 (use-package typescript-mode
-  :mode ("\\.tsx?\\'")
+  :mode (("\\.ts\\'" . typescript-mode)
+         ("\\.tsx\\'" . web-mode))
+  :init
+  (add-hook 'web-mode-hook
+          (lambda ()
+            (when (string-equal "tsx" (file-name-extension buffer-file-name))
+              (init/ts-tsx-mode)
+              (init/tide))))
   :hook (typescript-mode . init/ts-tsx-mode))
 
-;; ;;; typescript.el ends here
+(use-package tide
+  :ensure t
+  :after (typescript-mode company flycheck)
+  :hook (typescript-mode . init/tide))
+
+;;; typescript.el ends here

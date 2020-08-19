@@ -34,7 +34,7 @@
   (add-hook 'lisp-interaction-mode-hook 'init/common-programming)
   (add-hook 'lisp-interaction-mode-hook 'init/elisp))
 
-(use-package lisp-mode
+(use-package emacs-lisp-mode
   :mode ("\\.el\\'")
   :config
   (init/config/lisp-mode))

@@ -147,7 +147,10 @@
 
 (defun init/common-web-programming ()
   "Initialise modes related to web development."
-  ;; Unfortunately, `fci-mode' does not play well with `web-mode'.
+
+  ;; Required below by `enable-prettier-js-mode-maybe'.
+  (require 'add-node-modules-path)
+
   (enable-fci-mode)
   (auto-fill-mode -1)
   (highlight-parentheses-mode)

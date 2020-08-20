@@ -174,12 +174,22 @@ element in the `auto-mode-alist' associated with `\\.js\\'` extensionsion.
 
 If the file associated with current buffer is located in one of
 the directories in `prettier-js-projects', `prettier-js-mode' is also
-enabled."
-  ; Uncomment one of the following below
-  (dolist (dir prettier-js-projects)
-    (when (file-in-directory-p buffer-file-name dir)
-      (add-node-modules-path)
-      (prettier-js-mode))))
+enabled.
+
+The one exception to the rules above is when the file is inside a
+\"node_modules\"."
+  (let* ((path (file-name-directory (directory-file-name  buffer-file-name)))
+         (parent path)
+         (validp t))
+    (while (and (not (string= path "/")) validp)
+      (if (string= (file-name-nondirectory (directory-file-name path)) "node_modules")
+          (setq validp nil)
+        (setq path (file-name-directory (directory-file-name path)))))
+    (when validp
+      (dolist (dir prettier-js-projects)
+        (when (file-in-directory-p buffer-file-name dir)
+          (add-node-modules-path)
+          (prettier-js-mode))))))
 
 ;; Defun invoked after pressing C-x C-k (see `init/elisp').
 ;; Evals the current buffer and displays a message.

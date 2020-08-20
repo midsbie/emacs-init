@@ -59,6 +59,9 @@
 (use-package tide
   :ensure t
   :after (typescript-mode company flycheck)
-  :hook (typescript-mode . init/tide))
+  :hook (typescript-mode . init/tide)
+  :bind
+  (:map tide-mode-map
+        ("C-c C-c" . tide-fix )))
 
 ;;; typescript.el ends here

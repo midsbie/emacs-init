@@ -39,26 +39,22 @@
 (defun init/config/js-mode ()
   "Initialise modes related to Javascript development."
 
-  (add-hook 'js-mode-hook  'init/js-mode)
-  (add-hook 'js-mode-hook  'init/common-web-programming)
-  (add-hook 'js-jsx-mode-hook  'init/js-mode)
-  (add-hook 'js-jsx-mode-hook  'init/common-web-programming)
-
-  (electric-indent-mode)
   ;; FIXME: this does not seem to have any effect in JSX mode:
-  (setq comment-start "/* "
-        comment-end   " */")
-
+  (setq-local comment-start "/* ")
+  (setq-local comment-end   " */")
   (setq-local fill-column 99)
 
-  (local-set-key (kbd "M-a") 'c-beginning-of-statement)
-  (local-set-key (kbd "M-e") 'c-end-of-statement))
+  (electric-indent-mode)
+  (flow-minor-mode 1))
 
 ;; Uncomment the following code if enabling:
 ;;
 (use-package js-mode
-  :mode ("\\.jsx?\\'" . js-jsx-mode)
-  :config
-  (init/config/js-mode))
+  :mode (("\\.js\\'" . js-mode)
+         ("\\.jsx\\'" . js-jsx-mode))
+  :hook (((js-mode js-jsx-mode) . init/config/js-mode)
+         ((js-mode js-jsx-mode) . init/common-web-programming))
+  :bind (("M-a" . c-beginning-of-statement)
+         ("M-e" . c-end-of-statement)))
 
 ;;; js.el ends here

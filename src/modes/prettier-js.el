@@ -24,23 +24,53 @@
 
 ;;; Code:
 
-(defun init/config/prettier-js()
-  ;; Default parameters to pass to prettier.
-  (setq-default prettier-js-args nil)
+(defgroup init/prettier-js-mode nil
+  "Customisations for `prettier-js-mode'."
+  :group 'init
+  :prefix "init/prettier-js-mode")
 
-  (defvar init/enable-prettier-js-mode)
-  (setq init/enable-prettier-js-mode nil))
+(defcustom init/enable-prettier-js-mode nil
+  "Enable `prettier-js-mode'.
 
-(defun init/prettier-js-mode-maybe()
+Specifies whether `prettier-js-mode' should always be enabled in
+all JS/X buffers."
+  :group 'init/prettier-js-mode
+  :type 'boolean)
+
+;; Default parameters to pass to prettier.
+(defcustom init/prettier-js-projects nil
+  "List of projects to enable prettier-js-mode for."
+  :group 'init/prettier-js-mode
+  :type '(repeat string))
+
+(defun enable-prettier-js-mode-maybe ()
+  "Turn on `prettier-js-mode' selectively.
+
+If the file associated with current buffer is contained by one of
+the directories in `init/prettier-js-projects',
+`prettier-js-mode' is also enabled.
+
+The one exception to the rules above is when the file is inside a
+\"node_modules\"."
   (when init/enable-prettier-js-mode
-    (prettier-js-mode)))
+    (prettier-js-mode 1))
+  (unless (and (boundp 'prettier-js-mode) prettier-js-mode)
+    (let* ((path (file-name-directory (directory-file-name  buffer-file-name)))
+           (parent path)
+           (validp t))
+      (while (and (not (string= path "/")) validp)
+        (if (string= (file-name-nondirectory (directory-file-name path)) "node_modules")
+            (setq validp nil)
+          (setq path (file-name-directory (directory-file-name path)))))
+      (when validp
+        (dolist (dir init/prettier-js-projects)
+          (when (file-in-directory-p buffer-file-name dir)
+            (add-node-modules-path)
+            (prettier-js-mode 1)))))))
 
 (use-package prettier-js
-  :hook ((js-mode . init/prettier-js-mode-maybe)
-         (js-jsx-mode . init/prettier-js-mode-maybe)
-         (js2-mode . init/prettier-js-mode-maybe)
-         (web-mode . init/prettier-js-mode-maybe))
-  :config
-  (init/config/prettier-js))
+  :hook ((css-mode scss-mode html-mode
+                   js-mode js2-mode js-jsx-mode typescript-mode web-mode)
+         . enable-prettier-js-mode-maybe))
 
 ;;; prettier-js.el ends here

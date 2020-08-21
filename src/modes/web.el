@@ -61,9 +61,6 @@
                          (insert-char ?})
                          (indent-for-tab-command)))
 
-  ;; Run hook after local variables loaded.
-  (add-hook 'web-mode-local-vars-hook 'init/web/load-local-vars)
-
   ;; javascript: make case indentation at the same level as the parent switch
   ;; statement.
   (add-to-list 'web-mode-indentation-params '("case-extra-offset" . nil))
@@ -95,9 +92,8 @@
   (fix-indent-inverted-behaviour)
 
   ;; Note that we _must_ disable `flow-minor-mode' in the typescript-mode init sequence.
-  (unless (condition-case nil
-            (or typescript-mode tide-mode)
-          (error nil))
+  (unless (or (and (boundp 'typescript-mode) typescript-mode)
+              (and (boundp 'tide-mode) tide-mode))
     (flow-minor-mode 1)))
 
 (defun init/web/load-local-vars ()
@@ -107,8 +103,7 @@
       (let* ((var (car elt))
              (val (cdr elt)))
         (cond ((eq var 'c-basic-offset)
-               (setq web-mode-code-indent-offset val))
-              )))))
+               (setq web-mode-code-indent-offset val)))))))
 
 ;; For better jsx syntax-highlighting in web-mode
 ;; - courtesy of Patrick @halbtuerke
@@ -124,6 +119,7 @@
 
 (use-package web-mode
   :mode ("\\.jsx?\\'" "\\.html?\\'")
-  :hook ((web-mode . init/web-mode)))
+  :hook ((web-mode-local-vars . init/web/load-local-vars)
+         (web-mode . init/web-mode)))
 
 ;;; web.el ends here

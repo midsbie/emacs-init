@@ -45,7 +45,9 @@ C-j that occurs in major modes (e.g. web-mode).
   "Copy sexp at point to kill ring."
   (interactive)
   (let ((sexp (thing-at-point 'sexp 'no-properties)))
-    (kill-new sexp)))
+    (when sexp
+      (kill-new sexp)
+      (message "copied: %s" sexp))))
 
 ;; The following meant to be exposed as a command; do not prefix the function name.
 (defun google(query)

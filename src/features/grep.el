@@ -29,7 +29,7 @@
 ; Don't ask to save buffers when running `grep-find'
 (setq-default grep-save-buffers nil)
 
-(setq git-grep-find-command '("git --no-pager grep -nP '' -- :/" . 26))
+(setq git-grep-find-command '("git --no-pager grep -nP '%SUBJECT%' -- :/" . 26))
 
 ;; Functions
 ;; ----------------------------------------
@@ -45,15 +45,23 @@ repository and should be removed if the search is to be conducted from the
 current working directory."
   (interactive
    (progn
-     (list (read-shell-command "Run git-grep (like this): "
-                               git-grep-find-command 'grep-find-history))))
-    (let* ((last-grep-use-null-device grep-use-null-device))
-      ; We must set `grep-use-null-device' to nil or we get a strange error
-      ; involving output redirection to /dev/null
-      (setq grep-use-null-device nil)
-      (grep command-args)
-      ; Restore variable state
-      (setq grep-use-null-device last-grep-use-null-device)))
+     (let* ((word (get-word-at-point))
+            (command (replace-regexp-in-string
+                       (regexp-quote "%SUBJECT%")
+                       word
+                       (car git-grep-find-command)
+                       t 'literal)))
+       (list (read-shell-command
+              "Run git-grep (like this): "
+              (car (acons command (+ (length word) (cdr git-grep-find-command)) '()))
+              'grep-find-history)))))
+  (let* ((last-grep-use-null-device grep-use-null-device))
+    ;; We must set `grep-use-null-device' to nil or we get a strange error
+    ;; involving output redirection to /dev/null
+    (setq grep-use-null-device nil)
+    (grep command-args)
+    ;; Restore variable state
+    (setq grep-use-null-device last-grep-use-null-device)))
 
 ;; Deprecated functions
 ;; ----------------------------------------

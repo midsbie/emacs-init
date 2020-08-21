@@ -35,9 +35,7 @@ Assumes currently open file is a C++ implementation source file."
 
 (defun yas/get-kill-ring-word (default-label)
   "Return last entry in kill ring if word or DEFAULT-LABEL."
-  (let ((top-entry (current-kill 0 t)))
-    (or (and (not (string-match "[\s]" top-entry)) top-entry)
-        default-label)))
+  (get-kill-ring-word default-label))
 
 (defun init/yasnippet()
   (yas/global-mode 1)

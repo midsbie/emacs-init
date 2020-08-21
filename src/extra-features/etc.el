@@ -41,6 +41,20 @@ C-j that occurs in major modes (e.g. web-mode).
   (local-set-key (kbd "C-j") 'newline-and-indent)
   (local-set-key (kbd "RET") 'newline))
 
+(defun get-word (word &optional default-string)
+  "Return WORD if word, DEFAULT-STRING or \"\"."
+  (or (and word (not (string-match "[\s]" word)) word)
+      (or default-string "")))
+
+(defun get-word-at-point ()
+  "Return word at point or empty string if not word."
+  (get-word (thing-at-point 'sexp 'no-properties)))
+
+(defun get-kill-ring-word (&optional default-string)
+  "Return last entry in kill ring if word or DEFAULT-STRING."
+  (let ((top-entry (current-kill 0 t)))
+    (get-word top-entry default-string)))
+
 (defun copy-sexp-to-kill-ring ()
   "Copy sexp at point to kill ring."
   (interactive)

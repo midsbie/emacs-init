@@ -27,6 +27,9 @@
   "Initialise modes related to Typescript development."
   (init/common-web-programming)
   (electric-indent-mode)
+  ;; Disable flow-minor-mode regardless since there's a chance web-mode may initialise ahead of
+  ;; tide-mode
+  (flow-minor-mode -1)
 
   (setq-local fill-column 99)
   (setq-local typescript-indent-level 2)

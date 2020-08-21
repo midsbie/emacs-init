@@ -46,7 +46,7 @@
   (make-local-variable 'web-mode-css-indent-offset)
   (make-local-variable 'web-mode-code-indent-offset)
   (make-local-variable 'web-mode-indent-offset)
-  
+
   (setq web-mode-markup-indent-offset 2
         web-mode-css-indent-offset    2
         web-mode-code-indent-offset   2)
@@ -93,7 +93,12 @@
 
   ;; Fix RET and C-j inverted behaviour
   (fix-indent-inverted-behaviour)
-  )
+
+  ;; Note that we _must_ disable `flow-minor-mode' in the typescript-mode init sequence.
+  (unless (condition-case nil
+            (or typescript-mode tide-mode)
+          (error nil))
+    (flow-minor-mode 1)))
 
 (defun init/web/load-local-vars ()
   "Map the value of `c-basic-offset' to `web-mode-code-indent-offset'."

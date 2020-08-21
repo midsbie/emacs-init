@@ -94,7 +94,7 @@
   ;; Note that we _must_ disable `flow-minor-mode' in the typescript-mode init sequence.
   (unless (or (and (boundp 'typescript-mode) typescript-mode)
               (and (boundp 'tide-mode) tide-mode))
-    (flow-minor-mode 1)))
+    (flow-minor-enable-automatically)))
 
 (defun init/web/load-local-vars ()
   "Map the value of `c-basic-offset' to `web-mode-code-indent-offset'."

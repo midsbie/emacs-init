@@ -32,7 +32,9 @@
   (add-hook 'emacs-lisp-mode-hook       'init/elisp)
 
   (add-hook 'lisp-interaction-mode-hook 'init/common-programming)
-  (add-hook 'lisp-interaction-mode-hook 'init/elisp))
+  (add-hook 'lisp-interaction-mode-hook 'init/elisp)
+
+  (fix-indent-inverted-behaviour))
 
 (use-package emacs-lisp-mode
   :mode ("\\.el\\'")

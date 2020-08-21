@@ -41,6 +41,12 @@ C-j that occurs in major modes (e.g. web-mode).
   (local-set-key (kbd "C-j") 'newline-and-indent)
   (local-set-key (kbd "RET") 'newline))
 
+(defun copy-sexp-to-kill-ring ()
+  "Copy sexp at point to kill ring."
+  (interactive)
+  (let ((sexp (thing-at-point 'sexp 'no-properties)))
+    (kill-new sexp)))
+
 ;; The following meant to be exposed as a command; do not prefix the function name.
 (defun google(query)
   "Open Google search with QUERY as parameter.

@@ -65,6 +65,9 @@
   :hook (typescript-mode . init/tide)
   :bind
   (:map tide-mode-map
-        ("C-c C-c" . tide-fix )))
+        ("C-c C-c" . tide-fix ))
+  :init
+  (setq tide-server-max-response-length 1024000) ; x10 the default value
+  )
 
 ;;; typescript.el ends here

@@ -34,7 +34,6 @@
 
 (defun fix-indent-inverted-behaviour()
   "Fix RET and C-j inverted newline and indentation behaviour.
-
 This function fixes the inverted indentation behaviour of RET and
 C-j that occurs in major modes (e.g. web-mode).
 "
@@ -63,10 +62,39 @@ C-j that occurs in major modes (e.g. web-mode).
       (kill-new sexp)
       (message "copied: %s" sexp))))
 
+(defun better-next-error ()
+"Go to next error.
+Attempts to jump to the next error as managed by `tide-mode',
+otherwise reverts to the default `next-error' defun."
+  (interactive)
+  (condition-case nil
+      (let ((buf (tide-project-errors-buffer-name)))
+        (with-current-buffer buf
+          (set-window-point
+           (get-buffer-window buf)
+           (tide-find-next-error (point) 1))
+          (tide-goto-error)))
+     (error
+      (next-error))))
+
+(defun better-previous-error ()
+"Go to previous error.
+Attempts to jump to the previous error as managed by `tide-mode',
+otherwise reverts to the default `previous-error' defun."
+  (interactive)
+  (condition-case nil
+      (let ((buf (tide-project-errors-buffer-name)))
+        (with-current-buffer buf
+          (set-window-point
+           (get-buffer-window buf)
+           (tide-find-previous-error (point) 1))
+          (tide-goto-error)))
+     (error
+      (previous-error))))
+
 ;; The following meant to be exposed as a command; do not prefix the function name.
 (defun google(query)
   "Open Google search with QUERY as parameter.
-
 Prompts the user for a query string, if not provided, that is
 constructed as a URL that causes the current browser provider to
 run and navigate to the Google search page showing results for

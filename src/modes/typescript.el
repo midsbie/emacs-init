@@ -63,9 +63,15 @@
   :ensure t
   :after (typescript-mode company flycheck)
   :hook (typescript-mode . init/tide)
-  :bind
-  (:map tide-mode-map
-        ("C-c C-c" . tide-fix ))
+  :bind ((:map tide-mode-map
+               ("C-c t s" . tide-restart-server)
+               ("C-c t S" . tide-kill-server)
+               ("C-c t p" . tide-project-errors)
+               ("C-c C-c" . tide-fix)
+               ("C-c t x" . tide-references)
+               ("C-c t m" . tide-rename-symbol)
+               ("C-c t M" . tide-rename-file)
+               ("C-c t r" . tide-refactor)))
   :init
   (setq tide-server-max-response-length 1024000) ; x10 the default value
   )

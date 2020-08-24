@@ -24,10 +24,6 @@
 
 ;;; Code:
 
-(defun init/projectile ()
-  "Initialise the `projectile' package."
-    (projectile-mode))
-
 ; For some strange reason this now needs to be set otherwise the projectile
 ; keymap is not available at all.
 (setq-default projectile-keymap-prefix "")
@@ -36,9 +32,11 @@
 ; invokes, presumable because 'ido may have loaded in some circumstances.
 (use-package projectile
   :after (ido company)
-  :bind (("C-c C-p d" . projectile-find-dir)
+  ;; Cannot be bound to projectile-mode-map or it won't work
+  :bind (("C-c C-p p" . projectile-switch-project-action)
+         ("C-c C-p d" . projectile-find-dir)
          ("C-c C-p f" . projectile-find-file))
-  :config
-  (init/projectile))
+  :init
+  (projectile-mode))
 
 ;;; projectile.el ends here

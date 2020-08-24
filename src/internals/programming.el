@@ -134,14 +134,7 @@
   (local-set-key "\C-co" 'buftoggle)
 
   (c-toggle-auto-hungry-state 1)
-  (c-toggle-auto-state -1)
-  )
-
-(defun init/elisp ()
-  "Initialise modes related to ELISP development."
-
-  (define-key emacs-lisp-mode-map (kbd "C-x C-k") 'do-eval-buffer)
-  (turn-on-eldoc-mode))
+  (c-toggle-auto-state -1))
 
 (defun init/common-web-programming ()
   "Initialise modes related to web development."

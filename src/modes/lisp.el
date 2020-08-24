@@ -24,12 +24,19 @@
 
 ;;; Code:
 
+(defun init/elisp ()
+  "Initialise modes related to ELISP development."
+
+  (turn-on-eldoc-mode)
+  ;; Must disable electric-indent-mode in the buffer to ensure that C-j behaves as expected.
+  (electric-indent-local-mode -1))
+
 (use-package emacs-lisp-mode
   :mode ("\\.el\\'")
   :hook ((lisp-mode . init/elisp)
          (emacs-lisp-mode . init/elisp)
          (lisp-interaction-mode . init/elisp))
-  :config
-  (fix-indent-inverted-behaviour))
+  :bind (:map emacs-lisp-mode-map
+              ("C-x C-k" . do-eval-buffer)))
 
 ;;; lisp.el ends here

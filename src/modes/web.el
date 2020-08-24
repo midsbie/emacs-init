@@ -21,7 +21,7 @@
 ;;; Commentary:
 ;; Do not forget to also make changes in the ~/.emacs file as it might be
 ;; forcefully enabling this (or some other) mode.
-;;
+
 ;;; Log:
 ;; xxxxxx React's jsx files are best loaded under web mode.  However, we're now
 ;; using web-mode as the default mode for all things Javascript.
@@ -32,8 +32,6 @@
 ;;
 ;; 140520 Emacs supports JSX natively now, however syntax highlighting is still
 ;; not great.  Waiting until v27 and considering building from source.
-
-;;
 
 ;;; Code:
 
@@ -80,15 +78,10 @@
   ;; Only use the company backends that we actually need.
   (when (boundp 'company-backend)
         (set (make-local-variable 'company-backends)
-             '(company-flow company-yasnippet company-files))
-        ; Was previously loading `company-tern' and tern too as given below:
-        ;
-        ; (set (make-local-variable 'company-backends)
-        ;      '(company-flow company-tern company-yasnippet company-files))
-        ; (tern-mode)
-        )
+             '(company-flow company-yasnippet company-files)))
 
-  ;; Note that we _must_ disable `flow-minor-mode' in the typescript-mode init sequence.
+  ;; Note that we _must_ disable `flow-minor-mode' in the typescript-mode/tide-mode init sequence
+  ;; (`./typescript.el`) as it is enabled here by default.
   (unless (or (and (boundp 'typescript-mode) typescript-mode)
               (and (boundp 'tide-mode) tide-mode))
     (flow-minor-enable-automatically)))

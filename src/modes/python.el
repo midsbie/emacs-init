@@ -19,6 +19,10 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+;; Note that for elpy to be used, the following PIP packages must also be installed, as given
+;; below:
+;;
+;; # sudo pip install jedi flake8 autopep8
 
 ;;
 
@@ -28,35 +32,31 @@
 (setq-default python-indent-offset 4)
 
 (defun init/python ()
-  "Python mode load hook."
-  (add-hook 'python-mode-hook 'init/common-programming)
-  (add-hook 'python-mode-hook 'init/python-mode)
-  (add-hook 'python-mode-hook 'pylint-add-menu-items)
-  (add-hook 'python-mode-hook 'pylint-add-key-bindings))
+  "Python mode load hook.")
 
 (defun init/python-mode ()
   "Customise `python-mode'."
 
   (py-autopep8-enable-on-save)
-
-  ;; The following doesn't work to ensure C-j does the right thing.
-  (define-key python-mode-map (kbd "C-j") 'newline-and-indent)
-  (define-key python-mode-map (kbd "RET") 'newline-indent)
-
-  ;; ... so we're having to resort to using a hack.
-  (run-at-time "1 sec" nil
-    '(lambda()
-      (local-set-key (kbd "C-j") 'newline-and-indent)
-      (local-set-key (kbd "RET") 'newline)))
-)
+  (electric-indent-mode 1))
 
 (use-package python-mode
   :hook ((python-mode . init/common-programming)
-         (python-mode . init/python-mode)
          (python-mode . pylint-add-menu-items)
-         (python-mode . pylint-add-key-bindings)))
+         (python-mode . pylint-add-key-bindings)
+         (python-mode . init/python-mode)))
 
 (use-package pylint
   :after python-mode)
+
+;; Installation instructions straight from:
+;; https://elpy.readthedocs.io/en/latest/introduction.html#installation
+(use-package elpy
+  :after python-mode
+  :ensure t
+  :defer t
+  :init
+  (advice-add 'python-mode :before 'elpy-enable))
+
 
 ;;; python.el ends here

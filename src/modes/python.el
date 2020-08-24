@@ -37,8 +37,7 @@
 (defun init/python-mode ()
   "Customise `python-mode'."
 
-  (py-autopep8-enable-on-save)
-  (electric-indent-mode 1))
+  (py-autopep8-enable-on-save))
 
 (use-package python-mode
   :hook ((python-mode . init/common-programming)

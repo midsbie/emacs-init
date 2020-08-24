@@ -44,7 +44,6 @@
   (setq-local comment-end   " */")
   (setq-local fill-column 99)
 
-  (electric-indent-mode)
   (flow-minor-mode 1))
 
 ;; Uncomment the following code if enabling:

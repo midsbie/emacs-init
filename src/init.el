@@ -138,6 +138,8 @@ Files are only visited if the server hasn't yet been started.")
   (run-with-idle-timer 1 nil '(lambda ()
                                 (message "init took %s" (emacs-init-time)))))
 
+;; Enable electric indent mode globally as all major modes support it.
+(electric-indent-mode 1)
 (message "[init] done.")
 
 ;;; init.el ends here

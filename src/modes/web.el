@@ -88,9 +88,6 @@
         ; (tern-mode)
         )
 
-  ;; Fix RET and C-j inverted behaviour
-  (fix-indent-inverted-behaviour)
-
   ;; Note that we _must_ disable `flow-minor-mode' in the typescript-mode init sequence.
   (unless (or (and (boundp 'typescript-mode) typescript-mode)
               (and (boundp 'tide-mode) tide-mode))

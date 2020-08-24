@@ -45,10 +45,4 @@ This is to `put' what `defalias' is to `fset'."
           (setcdr ps (cons symbol (cdr ps))))))
     (put symbol prop val)))
 
-;; It seems newer Emacs versions automatically enable electric indentation
-;; mode.  Seeing as we don't like that, it is disabled right here.  Should also
-;; be backwards compatible.
-(when (and (> emacs-major-version 24) (fboundp 'electric-indent-mode))
-  (electric-indent-mode -1))
-
 ;;; compat.el ends here

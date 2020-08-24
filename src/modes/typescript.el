@@ -26,7 +26,6 @@
 (defun init/ts-tsx-mode ()
   "Initialise modes related to Typescript development."
   (init/common-web-programming)
-  (electric-indent-mode)
   ;; Disable flow-minor-mode regardless since there's a chance web-mode may initialise ahead of
   ;; tide-mode
   (flow-minor-mode -1)

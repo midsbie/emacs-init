@@ -64,16 +64,22 @@ C-j that occurs in major modes (e.g. web-mode).
 
 (defun better-next-error ()
 "Go to next error.
-Attempts to jump to the next error as managed by `tide-mode',
-otherwise reverts to the default `next-error' defun."
+Attempts to jump to the next error as managed by `tide-mode' if
+the active project's error buffer is not visible, otherwise
+reverts to the default `next-error' defun."
   (interactive)
   (condition-case nil
-      (let ((buf (tide-project-errors-buffer-name)))
-        (with-current-buffer buf
-          (set-window-point
-           (get-buffer-window buf)
-           (tide-find-next-error (point) 1))
-          (tide-goto-error)))
+      (or
+       (let* ((win (get-buffer-window (tide-project-errors-buffer-name)))
+             (buf (window-buffer win)))
+         (when buf
+           (with-current-buffer buf
+             (set-window-point
+              (get-buffer-window buf)
+              (tide-find-next-error (point) 1))
+             (tide-goto-error)
+             t)))
+       (next-error))
      (error
       (next-error))))
 

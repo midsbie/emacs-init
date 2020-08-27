@@ -40,7 +40,10 @@
 
   ;; Disable jshint since we prefer eslint.
   (setq-default flycheck-disabled-checkers
-                (append flycheck-disabled-checkers '(javascript-jshint)))
+                (append flycheck-disabled-checkers
+                        '(javascript-jshint
+                          ;; Using `tide-mode' and `javascript-eslint'
+                          typescript-tslint)))
 
   ;; + in `web-mode'
   ;; NOTE: htmltidy and csslint have been disabled since flycheck does not

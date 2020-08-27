@@ -73,7 +73,7 @@
   ;; Set content type to jsx for source files with "js" or "jsx" suffix.
   ;; Source: http://cha1tanya.com/2015/06/20/configuring-web-mode-with-jsx.html
   (setq web-mode-content-types-alist
-        '(("jsx" . "\\.js[x]?\\'")))
+        '(("jsx" . "\\.[tj]s[x]?\\'")))
 
   ;; Only use the company backends that we actually need.
   (when (boundp 'company-backend)

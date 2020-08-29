@@ -147,11 +147,11 @@
   (highlight-parentheses-mode)
   (subword-mode 1)
 
-  (setq tab-width       2
-        c-basic-offset  2)
+  (setq-local fill-column 99)
+  (setq-local tab-width   2)
+  (setq-local c-basic-offset  2)
+  (setq-local programming-buffer t)
 
-  (setq programming-buffer t)
-  (make-local-variable 'programming-buffer)
   (apply-editor-workarounds))
 
 ;; Defun invoked after pressing C-x C-k (see `init/elisp').

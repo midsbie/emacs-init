@@ -40,14 +40,11 @@
   (init/common-web-programming)
 
   (make-local-variable 'web-mode-indentation-params)
-  (make-local-variable 'web-mode-markup-indent-offset)
-  (make-local-variable 'web-mode-css-indent-offset)
-  (make-local-variable 'web-mode-code-indent-offset)
   (make-local-variable 'web-mode-indent-offset)
 
-  (setq web-mode-markup-indent-offset 2
-        web-mode-css-indent-offset    2
-        web-mode-code-indent-offset   2)
+  (setq-local web-mode-markup-indent-offset 2)
+  (setq-local web-mode-css-indent-offset    2)
+  (setq-local web-mode-code-indent-offset   2)
 
   (local-set-key "."  '(lambda ()
                          (interactive)
@@ -72,13 +69,11 @@
 
   ;; Set content type to jsx for source files with "js" or "jsx" suffix.
   ;; Source: http://cha1tanya.com/2015/06/20/configuring-web-mode-with-jsx.html
-  (setq web-mode-content-types-alist
-        '(("jsx" . "\\.[tj]s[x]?\\'")))
+  (setq-local web-mode-content-types-alist '(("jsx" . "\\.[tj]s[x]?\\'")))
 
   ;; Only use the company backends that we actually need.
   (when (boundp 'company-backend)
-        (set (make-local-variable 'company-backends)
-             '(company-flow company-yasnippet company-files)))
+    (setq-local company-backends '(company-flow company-yasnippet company-files)))
 
   ;; Note that we _must_ disable `flow-minor-mode' in the typescript-mode/tide-mode init sequence
   ;; (`./typescript.el`) as it is enabled here by default.
@@ -93,7 +88,7 @@
       (let* ((var (car elt))
              (val (cdr elt)))
         (cond ((eq var 'c-basic-offset)
-               (setq web-mode-code-indent-offset val)))))))
+               (setq-local web-mode-code-indent-offset val)))))))
 
 ;; For better jsx syntax-highlighting in web-mode
 ;; - courtesy of Patrick @halbtuerke

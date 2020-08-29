@@ -30,7 +30,6 @@
   ;; tide-mode
   (flow-minor-mode -1)
 
-  (setq-local fill-column 99)
   (setq-local typescript-indent-level 2)
 
   (local-set-key (kbd "M-a") 'c-beginning-of-statement)

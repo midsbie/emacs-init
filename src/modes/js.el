@@ -44,7 +44,8 @@
   (setq-local comment-end   " */")
   (setq-local fill-column 99)
 
-  (flow-minor-mode 1))
+  (when (flycheck-flow--predicate)
+    (flow-minor-mode 1)))
 
 ;; Uncomment the following code if enabling:
 ;;

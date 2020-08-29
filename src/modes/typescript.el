@@ -23,7 +23,7 @@
 
 ;;; Code:
 
-(defun init/ts-tsx-mode ()
+(defun init/mode/ts-tsx ()
   "Initialise modes related to Typescript development."
   (init/common-web-programming)
   ;; Disable flow-minor-mode regardless since there's a chance web-mode may initialise ahead of
@@ -35,16 +35,16 @@
   (local-set-key (kbd "M-a") 'c-beginning-of-statement)
   (local-set-key (kbd "M-e") 'c-end-of-statement))
 
-(defun init/tide()
+(defun init/mode/tide()
   "Initialise tide mode."
   (interactive)
   (tide-setup)
 
   (setq-local flycheck-check-syntax-automatically '(save idle-change mode-enabled))
-  ;; Enable linter via eslint
+  (setq-local company-tooltip-align-annotations t)
+
   (flycheck-add-next-checker 'tsx-tide 'javascript-eslint)
   (flycheck-add-next-checker 'typescript-tide 'javascript-eslint)
-  (setq-local company-tooltip-align-annotations t)
 
   (eldoc-mode 1)
   (tide-hl-identifier-mode 1))
@@ -56,14 +56,14 @@
   (add-hook 'web-mode-hook
           (lambda ()
             (when (string-equal "tsx" (file-name-extension buffer-file-name))
-              (init/ts-tsx-mode)
-              (init/tide))))
-  :hook (typescript-mode . init/ts-tsx-mode))
+              (init/mode/ts-tsx)
+              (init/mode/tide))))
+  :hook (typescript-mode . init/mode/ts-tsx))
 
 (use-package tide
   :ensure t
   :after (typescript-mode company flycheck)
-  :hook (typescript-mode . init/tide)
+  :hook (typescript-mode . init/mode/tide)
   :bind ((:map tide-mode-map
                ("C-c t s" . tide-restart-server)
                ("C-c t S" . tide-kill-server)

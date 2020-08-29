@@ -79,7 +79,10 @@
   ;; (`./typescript.el`) as it is enabled here by default.
   (unless (or (and (boundp 'typescript-mode) typescript-mode)
               (and (boundp 'tide-mode) tide-mode))
-    (flow-minor-enable-automatically)))
+    (flow-minor-enable-automatically))
+
+  ;; web-mode messes up C-j/RET mechanics even though electric-indent-mode is enabled
+  (apply-editor-workarounds))
 
 (defun init/web/load-local-vars ()
   "Map the value of `c-basic-offset' to `web-mode-code-indent-offset'."

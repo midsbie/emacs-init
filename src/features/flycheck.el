@@ -59,10 +59,10 @@
   ;; IMPORTANT! Do not mess with the order in which the checkers are added
   ;; below.  Doing so will result in eslint being somehow overriden or
   ;; worse.
+  ;; -- Flow
   (flycheck-add-mode 'javascript-flow 'web-mode)
   (flycheck-add-next-checker 'javascript-flow 'javascript-flow-coverage)
   (flycheck-add-next-checker 'javascript-flow 'javascript-eslint)
-  (flycheck-add-next-checker 'flow 'javascript-eslint)
 
   (add-hook 'flyspell-mode-hook 'init/flycheck/on-flyspell-mode)
   (add-hook 'flycheck-mode-hook 'init/flycheck/use-eslint-from-node-modules)
@@ -117,7 +117,7 @@
 
 (use-package flycheck
   :hook ((flycheck-mode . flycheck-popup-tip-mode))
-  :config
+  :init
   (init/config/flycheck))
 
 ;;; flycheck.el ends here

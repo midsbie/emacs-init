@@ -54,6 +54,7 @@
   ;;      (flycheck-add-mode 'css-csslint 'web-mode)
 
   (flycheck-add-mode 'javascript-eslint 'web-mode)
+  (flycheck-add-mode 'javascript-eslint 'typescript-mode)
 
   ;; IMPORTANT! Do not mess with the order in which the checkers are added
   ;; below.  Doing so will result in eslint being somehow overriden or
@@ -61,6 +62,7 @@
   (flycheck-add-mode 'javascript-flow 'web-mode)
   (flycheck-add-next-checker 'javascript-flow 'javascript-flow-coverage)
   (flycheck-add-next-checker 'javascript-flow 'javascript-eslint)
+  (flycheck-add-next-checker 'flow 'javascript-eslint)
 
   (add-hook 'flyspell-mode-hook 'init/flycheck/on-flyspell-mode)
   (add-hook 'flycheck-mode-hook 'init/flycheck/use-eslint-from-node-modules)
@@ -105,7 +107,6 @@
                 "node_modules")))
     (setq-local flycheck-javascript-eslint-executable nil)
     (while (and curdir (not flycheck-javascript-eslint-executable))
-
       (let ((eslint (expand-file-name "node_modules/eslint/bin/eslint.js"
                                       curdir)))
         ;; Setting `flycheck-javascript-eslint-executable' terminates the loop

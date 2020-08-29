@@ -43,7 +43,7 @@
 
   (setq-local flycheck-check-syntax-automatically '(save idle-change mode-enabled))
   ;; Enable linter via eslint
-  (flycheck-add-next-checker 'typescript-tide 'javascript-eslint)
+  (flycheck-add-next-checker 'tsx-tide 'javascript-eslint)
   (setq-local company-tooltip-align-annotations t)
 
   (eldoc-mode 1)

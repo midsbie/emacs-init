@@ -80,11 +80,17 @@ Files are only visited if the server hasn't yet been started.")
 ;; Avoid loading byte-compiled packages that are older than the source file.
 (setq load-prefer-newer t)
 
-;; add additional archives
-(add-to-list 'package-archives
-             '("melpa" . "https://stable.melpa.org/packages/"))
-(add-to-list 'package-archives
-             '("org" . "http://orgmode.org/elpa/"))
+;; Setup package archives
+(setq package-archives
+      '(("GNU ELPA" . "https://elpa.gnu.org/packages/")
+        ("MELPA stable" . "https://stable.melpa.org/packages/")
+        ("MELPA unstable" . "https://melpa.org/packages/")
+        ("ORG" . "http://orgmode.org/elpa/"))
+      package-archive-priorities
+      '(("MELPA stable" . 10)
+        ("ORG" . 10)
+        ("GNU ELPA" . 5)
+        ("MELPA unstable" . 0)))
 
 (package-initialize)
 (require 'use-package)

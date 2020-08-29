@@ -116,6 +116,7 @@
           (setq curdir (file-name-directory (directory-file-name curdir))))))))
 
 (use-package flycheck
+  :hook ((flycheck-mode . flycheck-popup-tip-mode))
   :config
   (init/config/flycheck))
 

@@ -139,7 +139,7 @@
 (defun init/common-web-programming ()
   "Initialise modes related to web development."
 
-  ;; Required below by `enable-prettier-js-mode-maybe'.
+  ;; Required below by `enable-prettier-mode-maybe'.
   (require 'add-node-modules-path)
 
   (enable-fci-mode)

@@ -72,6 +72,7 @@
  standard-indent              2
  tab-width                    2
  fill-column                  init/defaults/fill-column
+ help-window-select           'other    ; focus on help window when spawning
  )
 
 ;; Set tab-stop positions for C-i at two characters wide.

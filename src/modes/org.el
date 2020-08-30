@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(defun init/config/org ()
+(defun init/org-mode ()
   "Org mode load hook."
   (setq org-use-fast-todo-selection t
         org-directory               "~/documents/org"
@@ -56,8 +56,6 @@
   ;;         (sequence "OPEN(O!)" "|" "CLOSED(C!)")
   ;;         (sequence "ONGOING(o!/!)" "|")))
 
-  (add-hook 'org-mode-hook 'init/org-mode)
-
   (global-set-key (kbd "C-c a a")   'org-agenda-list)
   (global-set-key (kbd "C-c a t")   'org-todo-list)
   (global-set-key (kbd "C-c c")     'org-capture)
@@ -66,7 +64,7 @@
   (custom-set-variables
    '(org-agenda-window-setup (quote current-window))))
 
-(defun init/org-mode ()
+(defun init/mode/org ()
   ;; Turn on indent and visual line modes by default
   (org-indent-mode 1)
   (visual-line-mode)
@@ -90,11 +88,13 @@
     (message "Killed all org-mode buffers")))
 
 (use-package org
-  :mode ("\\.org\\'" . org-mode)
+  :hook (org-mode . init/mode/org)
   ;; Unfortunately this hack had to be introduced because the ein package requires org-mode to be
   ;; available when it loads, which in turn requires the speedbar package to have been loaded.
   :after speedbar
+  :init
+  (require 'speedbar)
   :config
-  (init/config/org))
+  (init/org-mode))
 
 ;;; org.el ends here

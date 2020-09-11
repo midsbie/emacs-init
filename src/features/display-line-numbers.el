@@ -1,4 +1,4 @@
-;;; linum.el --- Configures `linum-mode'
+;;; display-line-numbers-mode.el --- Configures `display-line-numbers-mode-mode'
 
 ;; Copyright (C) 2015-2020  Miguel Guedes
 
@@ -20,28 +20,23 @@
 
 ;;; Commentary:
 
-;; [11092020] linum-mode has been deprecated in favour of the faster
-;; `display-line-numbers-mode' introduced in Emacs 26.
+;;
 
 ;;; Code:
 
-(defun init/linum ()
-  "Lazily load the `linum' package and initialise it."
+(defun init/display-line-numbers-mode ()
+  "Lazily load the `display-line-numbers-mode' package and initialise it."
 
   ;; display line numbers in left margin
-  (global-linum-mode t)
+  (global-display-line-numbers-mode t))
 
-  ;; Add hook so we can disable linum-mode when in speedbar-mode
-  (add-hook 'linum-before-numbering-hook 'init/linum-mode))
-
-(defun init/linum-mode()
-  "Configure the `linum-mode'."
+(defun init/display-line-numbers-mode-mode()
+  "Configure the `display-line-numbers-mode-mode'."
   (if (string= major-mode "speedbar-mode")
-      (linum-mode -1)))
+      (display-line-numbers-mode-mode -1)))
 
-;; Disabled in favour of `display-line-numbers-mode'.
-;; (use-package linum
-;;   :config
-;;   (init/linum))
+(use-package display-line-numbers
+  :config
+  (init/display-line-numbers-mode))
 
-;;; linum.el ends here
+;;; display-line-numbers-mode.el ends here

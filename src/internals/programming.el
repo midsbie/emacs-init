@@ -89,7 +89,14 @@
 
   ;; Hooks
   (add-hook 'c-mode-common-hook 'init/common-programming)
-  (add-hook 'c-mode-common-hook 'init/c-c++))
+  (add-hook 'c-mode-common-hook 'init/c-c++)
+
+  ;; Add hooks here to all major modes in which the electric/indent mode does not work correctly
+  (add-hook 'conf-mode-hook 'init/disable-electric-indent))
+
+(defun init/disable-electric-indent()
+  "Disable electric indentation behaviour."
+  (electric-indent-local-mode -1))
 
 (defun init/common-programming ()
   "Perform initialisation of aspects common to all programming-related modes."

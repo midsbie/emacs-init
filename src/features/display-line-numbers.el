@@ -20,7 +20,10 @@
 
 ;;; Commentary:
 
-;;
+;; [17092020] linum-mode reinstated due to unresolved incompatibilities between
+;; linu-numbers-mode and company-mode.  Turns out linum-mode also occupies less
+;; space in the fringe, allowing more text and windows to fit in a single
+;; frame.
 
 ;;; Code:
 
@@ -28,7 +31,10 @@
   "Lazily load the `display-line-numbers-mode' package and initialise it."
 
   ;; display line numbers in left margin
-  (global-display-line-numbers-mode t))
+  ; (global-display-line-numbers-mode t))
+
+  ;; Currently disabled in favour of `linum-mode'.
+  (global-display-line-numbers-mode -1))
 
 (defun init/display-line-numbers-mode-mode()
   "Configure the `display-line-numbers-mode-mode'."

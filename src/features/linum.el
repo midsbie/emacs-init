@@ -22,6 +22,11 @@
 
 ;; [11092020] linum-mode has been deprecated in favour of the faster
 ;; `display-line-numbers-mode' introduced in Emacs 26.
+;;
+;; [17092020] linum-mode reinstated due to unresolved incompatibilities between
+;; linu-numbers-mode and company-mode.  Turns out linum-mode also occupies less
+;; space in the fringe, allowing more text and windows to fit in a single
+;; frame.
 
 ;;; Code:
 
@@ -39,9 +44,8 @@
   (if (string= major-mode "speedbar-mode")
       (linum-mode -1)))
 
-;; Disabled in favour of `display-line-numbers-mode'.
-;; (use-package linum
-;;   :config
-;;   (init/linum))
+(use-package linum
+  :config
+  (init/linum))
 
 ;;; linum.el ends here

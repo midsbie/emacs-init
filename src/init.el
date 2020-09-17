@@ -146,6 +146,8 @@ Files are only visited if the server hasn't yet been started.")
 
 ;; Enable electric indent mode globally as all major modes support it.
 (electric-indent-mode 1)
+;; Make it so lines are truncated by default, rather than wrapped.
+(setq-default truncate-lines t)
 (message "[init] done.")
 
 ;;; init.el ends here

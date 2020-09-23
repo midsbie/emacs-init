@@ -49,7 +49,7 @@
 
 ;; Uncomment the following code if enabling:
 ;;
-(use-package js-mode
+(use-package js
   :mode (("\\.js\\'" . js-mode)
          ("\\.jsx\\'" . js-jsx-mode))
   :hook (((js-mode js-jsx-mode) . init/config/js-mode)

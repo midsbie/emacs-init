@@ -23,6 +23,12 @@
 
 ;;; Code:
 
+(defun init/mode/jsx ()
+  "Initialise typescript mode for JSX."
+  (when (string-equal "tsx" (file-name-extension buffer-file-name))
+    (init/mode/ts-tsx)
+    (init/mode/tide)))
+
 (defun init/mode/ts-tsx ()
   "Initialise modes related to Typescript development."
   (init/common-web-programming)
@@ -51,13 +57,9 @@
 
 (use-package typescript-mode
   :mode (("\\.ts\\'" . typescript-mode)
-         ("\\.tsx\\'" . web-mode))
+         ("\\.tsx\\'" . js-jsx-mode))
   :init
-  (add-hook 'web-mode-hook
-          (lambda ()
-            (when (string-equal "tsx" (file-name-extension buffer-file-name))
-              (init/mode/ts-tsx)
-              (init/mode/tide))))
+  (add-hook 'js-jsx-mode-hook 'init/mode/jsx)
   :hook (typescript-mode . init/mode/ts-tsx))
 
 (use-package tide

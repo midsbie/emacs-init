@@ -87,10 +87,12 @@ Files are only visited if the server hasn't yet been started.")
         ("MELPA unstable" . "https://melpa.org/packages/")
         ("ORG" . "http://orgmode.org/elpa/"))
       package-archive-priorities
-      '(("MELPA stable" . 10)
-        ("ORG" . 10)
-        ("GNU ELPA" . 5)
-        ("MELPA unstable" . 0)))
+      '(
+        ;; MELPA stable disabled as not all packages support stable channel
+        ;; ("MELPA stable" . 10)
+        ("MELPA unstable" . 9)
+        ("ORG" . 6)
+        ("GNU ELPA" . 5)))
 
 (package-initialize)
 (require 'use-package)

@@ -56,6 +56,10 @@
                          (insert-char ?})
                          (indent-for-tab-command)))
 
+  ;; Fix C-left movement causing curly and double quote char to be inserted inside JSX block
+  (local-set-key [C-left] 'backward-word)
+  (local-set-key [C-right] 'forward-word)
+
   ;; javascript: make case indentation at the same level as the parent switch
   ;; statement.
   (add-to-list 'web-mode-indentation-params '("case-extra-offset" . nil))

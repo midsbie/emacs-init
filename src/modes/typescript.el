@@ -57,9 +57,9 @@
 
 (use-package typescript-mode
   :mode (("\\.ts\\'" . typescript-mode)
-         ("\\.tsx\\'" . js-jsx-mode))
+         ("\\.tsx\\'" . web-mode))
   :init
-  (add-hook 'js-jsx-mode-hook 'init/mode/jsx)
+  (add-hook 'web-mode-hook 'init/mode/jsx)
   :hook (typescript-mode . init/mode/ts-tsx))
 
 (use-package tide

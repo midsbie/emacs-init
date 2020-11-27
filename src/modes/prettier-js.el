@@ -69,6 +69,11 @@ The one exception to the rules above is when the file is inside a
             (prettier-mode 1)))))))
 
 (use-package prettier
+  :init
+  ;; Resolve transient hang when saving files.
+  ;; Ref: https://github.com/jscheid/prettier.el/issues/34#issuecomment-657508597
+  (unless (getenv "NODE_PATH")
+    (setenv "NODE_PATH" "/usr/lib/node_modules"))
   :hook ((css-mode scss-mode html-mode
                    js-mode js2-mode js-jsx-mode typescript-mode web-mode)
          . enable-prettier-mode-maybe))

@@ -1,6 +1,6 @@
 ;;; python.el --- Configures `python-mode'
 
-;; Copyright (C) 2016-2018  Miguel Guedes
+;; Copyright (C) 2016-2021  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -19,10 +19,11 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;; Note that for elpy to be used, the following PIP packages must also be installed, as given
-;; below:
+;; Install the following PIP packages to ensure that elpy and flycheck work as expected:
 ;;
-;; # sudo pip install jedi flake8 autopep8
+;; # sudo pip install jedi pylint flake8 autopep8
+;;
+;; Note that fake8 is invoked by pylint (C-c C-v) whereas pylint is used by flycheck.
 
 ;;
 
@@ -37,6 +38,7 @@
 (defun init/python-mode ()
   "Customise `python-mode'."
 
+  (setq-local fill-column 79)
   (py-autopep8-enable-on-save))
 
 (use-package python-mode

@@ -32,7 +32,7 @@
 ; invokes, presumable because 'ido may have loaded in some circumstances.
 (use-package projectile
   :after (ido company)
-  ;; Cannot be bound to projectile-mode-map or it won't work
+  ;; Cannot be bound to `projectile-mode-map' or it won't work
   :bind (("C-c C-p p" . projectile-switch-project-action)
          ("C-c C-p d" . projectile-find-dir)
          ("C-c C-p f" . projectile-find-file))

@@ -39,6 +39,9 @@
   "Customise `python-mode'."
 
   (setq-local fill-column 79)
+  ;; Undoing replacement of projectile's key bindings
+  (define-key elpy-mode-map (kbd "C-c C-p") nil)
+  (define-key elpy-mode-map (kbd "C-c C-n") nil)
   (py-autopep8-enable-on-save))
 
 (use-package python-mode

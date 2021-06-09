@@ -88,7 +88,12 @@
 
   (define-key go-mode-map (kbd "C-c C-r") 'go-remove-unused-imports)
   (define-key go-mode-map (kbd "C-c i")   'go-goto-imports)
-  (define-key go-mode-map (kbd "M-.")     'go-jump))
+  ;; Supporting C-u M-. so jump to def takes place in other window
+  (define-key go-mode-map (kbd "M-.")     '(lambda()
+                                             (interactive)
+                                             (if (consp current-prefix-arg)
+                                                 (godef-jump-other-window (point))
+                                               (godef-jump (point))))))
 
 (defun init/go/setenv (name env)
   "Extract environment variable given by NAME from go's ENV."

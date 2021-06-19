@@ -23,7 +23,7 @@
 
 ;;; Code:
 
-(defun init/mode/jsx ()
+(defun init/mode/tsx ()
   "Initialise typescript mode for JSX."
   (when (string-equal "tsx" (file-name-extension buffer-file-name))
     (init/mode/ts-tsx)
@@ -32,12 +32,8 @@
 (defun init/mode/ts-tsx ()
   "Initialise modes related to Typescript development."
   (init/common-web-programming)
-  ;; Disable flow-minor-mode regardless since there's a chance web-mode may initialise ahead of
-  ;; tide-mode
-  (flow-minor-mode -1)
-
   (setq-local typescript-indent-level 2)
-
+  
   (local-set-key (kbd "M-a") 'c-beginning-of-statement)
   (local-set-key (kbd "M-e") 'c-end-of-statement))
 
@@ -59,7 +55,7 @@
   :mode (("\\.ts\\'" . typescript-mode)
          ("\\.tsx\\'" . web-mode))
   :init
-  (add-hook 'web-mode-hook 'init/mode/jsx)
+  (add-hook 'web-mode-hook 'init/mode/tsx)
   :hook (typescript-mode . init/mode/ts-tsx))
 
 (use-package tide

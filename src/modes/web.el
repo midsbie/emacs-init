@@ -42,9 +42,17 @@
   (make-local-variable 'web-mode-indentation-params)
   (make-local-variable 'web-mode-indent-offset)
 
-  (setq-local web-mode-markup-indent-offset 2)
-  (setq-local web-mode-css-indent-offset    2)
-  (setq-local web-mode-code-indent-offset   2)
+  (setq-local web-mode-markup-indent-offset     2)
+  (setq-local web-mode-css-indent-offset        2)
+  (setq-local web-mode-code-indent-offset       2)
+  (setq-local web-mode-block-padding            2)
+  (setq-local web-mode-comment-style            2)
+  (setq-local web-mode-attr-value-indent-offset 2)
+
+  (setq-local web-mode-css-colorization                 t)
+  (setq-local web-mode-auto-pairs                       t)
+  (setq-local web-mode-comment-keywords                 t)
+  (setq-local web-mode-enable-current-element-highlight t)
 
   (local-set-key "."  '(lambda ()
                          (interactive)
@@ -71,18 +79,15 @@
            (message "warn: flycheck-mode disabled")
            (flycheck-mode -1))))
 
-  ;; Set content type to jsx for source files with "js" or "jsx" suffix.
+  ;; Set content type to jsx for source files with "js", "jsx" or "tsx" suffix.
   ;; Source: http://cha1tanya.com/2015/06/20/configuring-web-mode-with-jsx.html
   (setq-local web-mode-content-types-alist '(("jsx" . "\\.[tj]s[x]?\\'")))
 
-  ;; Only use the company backends that we actually need.
-  (when (boundp 'company-backend)
-    (setq-local company-backends '(company-flow company-yasnippet company-files)))
-
-  ;; Note that we _must_ disable `flow-minor-mode' in the typescript-mode/tide-mode init sequence
-  ;; (`./typescript.el`) as it is enabled here by default.
+  ;; Note that we check for tsx extension to prevent enabling `flow-minor-mode' in typescript-mode
+  ;; because web-mode may initialise ahead in some circumstances.
   (unless (or (and (boundp 'typescript-mode) typescript-mode)
-              (and (boundp 'tide-mode) tide-mode))
+              (and (boundp 'tide-mode) tide-mode)
+              (string-equal "tsx" (file-name-extension buffer-file-name)))
     (flow-minor-enable-automatically))
 
   ;; web-mode messes up C-j/RET mechanics even though electric-indent-mode is enabled

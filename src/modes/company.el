@@ -56,10 +56,11 @@ If failed try to complete the common part with `company-complete-common'"
   (company-require-match 'never)
   ;; Don't use company in the following modes
   (company-global-modes '(not shell-mode eaf-mode))
-  ;; Trigger completion immediately.
-  (company-idle-delay 0.1)
+  ;; Trigger completion immediately (0 is immediate according to docs).
+  (company-idle-delay 0)
   ;; Number the candidates (use M-1, M-2 etc to select completions).
   (company-show-numbers t)
+  (company-tooltip-idle-delay 0.1)
   :config
   (unless clangd-p (delete 'company-clang company-backends))
   (add-to-list 'company-backends 'company-flow)

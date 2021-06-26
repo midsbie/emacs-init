@@ -54,7 +54,14 @@ characters wide."
   (set-frame-height (selected-frame) arg))
 
 (when window-system
-  (setq frame-title-format "%b - emacs")
+  ;; Dynamically setting active project name.
+  ;; From: https://emacs.stackexchange.com/a/35443
+  (setq frame-title-format '((:eval
+                              (let ((project-name (projectile-project-name)))
+                                (unless (string= "-" project-name)
+                                  (format "%s :: " project-name))))
+                             "%b"))
+
   (tool-bar-mode -1)                      ; disable toolbar
 
   ;; Set custom faces

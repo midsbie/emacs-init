@@ -66,31 +66,45 @@ characters wide."
    '(default ((t (:inherit nil :stipple nil :background "#080808"
                   :foreground "#dcdccc" :inverse-video nil :box nil
                   :strike-through nil :overline nil :underline nil
-                  :slant normal :weight normal :height 80 :width normal
+                  :slant normal :weight normal :height 75 :width normal
                   :foundry "unknown" :family "Hack"))))
    '(rst-level-1-face ((t (:weight bold))) t)
    '(rst-level-2-face ((t (:weight bold))) t)
    '(rst-level-3-face ((t (:weight extra-bold))) t))
 
-  ;; Let's now perform last initialization steps
-  (add-to-list 'default-frame-alist (cons 'width 185))
-  (add-to-list 'default-frame-alist (cons 'height 73))
+  ;; Let's now perform last initialization steps.
+  ;;
+  ;; Properties can be accessed with the following form:
+  ;;
+  ;;   (cdr (assoc 'width default-frame-alist))
+  (add-to-list 'default-frame-alist (cons 'width 120))
+  (add-to-list 'default-frame-alist (cons 'height 70))
 
-  (set-current-frame-width 185)
-  (set-current-frame-height 73)
+  (let* ((width (cdr (assoc 'width default-frame-alist)))
+         (height (cdr (assoc 'height default-frame-alist))))
+    (when width
+      (set-current-frame-width width))
+    (when height
+      (set-current-frame-width height)))
+
+  ;; Uncomment if desired that the window should be maximised
+  ; (toggle-frame-maximized)
 
   ;; Highlighter
-  ; UPDATE: disabled as it was seriously degrading performance
-  ; (global-hl-line-mode 1)
-  ; (set-face-background 'hl-line "#383830")
+  ;;
+  ;; ?????? Disabled as it was seriously degrading performance
+  ;;
+  ;; 260621 Circumstances which led to disabling of highlighter are unclear.  Tentatively
+  ;;        reactivating since many package upgrades have taken place since.
+  (global-hl-line-mode 1)
+  (set-face-background 'hl-line "#383830")
 
   ;; Enable clipboard functionality
   (setq select-enable-clipboard     t
         interprogram-paste-function 'x-cut-buffer-or-selection-value)
 
-  (split-window-horizontally)             ; two windows at startup
+  (balance-windows)
   (setq speedbar-use-images nil)          ; do not use icons in `speedbar-mode'
-
   (tooltip-mode -1)                       ; disable tooltips
 
   ;; For some reason, version >25.x seems to activate the horizontal scrollbars.

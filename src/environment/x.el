@@ -87,6 +87,11 @@ characters wide."
     (when height
       (set-current-frame-width height)))
 
+  ;; This should be improved upon to take into account the dimensions of the display and make
+  ;; splitting behave accordingly.
+  (setq split-width-threshold nil
+        split-height-threshold nil)
+
   ;; Uncomment if desired that the window should be maximised
   ; (toggle-frame-maximized)
 

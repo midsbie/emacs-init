@@ -32,9 +32,14 @@
 (transient-mark-mode t)                 ; Enable typing to replace
                                         ; selected text
 
+;; The following settings as per the documentation on improving the performance
+;; of LSP at:
+;; https://emacs-lsp.github.io/lsp-mode/page/performance/
+;;
 ;; Set higher threshold before GC kicks in. Changing this setting seems to make
 ;; emacs snappier for some specific workflows.
-(setq gc-cons-threshold 20000000)
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 10 1024 1024)) ; 10x on recommendation
 
 ;; enable useful commands
 (put 'narrow-to-region          'disabled nil)

@@ -87,6 +87,11 @@
                 indent-tabs-mode   nil
                 js-indent-level    2)
 
+  ;; Set the extra indentation before a substatement (e.g. the opening brace in
+  ;; the consequent block of an if statement) to 0 (instead of '+)
+  ;; Ref: https://stackoverflow.com/a/3956173
+  (c-set-offset 'substatement-open 0)
+
   ;; Hooks
   (add-hook 'c-mode-common-hook 'init/common-programming)
   (add-hook 'c-mode-common-hook 'init/c-c++)

@@ -27,8 +27,8 @@
 (defun init/mode/csharp ()
   "Initialise csharp mode."
   (lsp)
-  (setq-local c-basic-offset 4)
-  )
+  (lsp-lens-show)
+  (setq-local c-basic-offset 4))
 
 (use-package csharp-mode
   :mode (("\\.cs\\'" . csharp-mode))

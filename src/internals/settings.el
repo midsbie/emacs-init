@@ -78,7 +78,11 @@
  tab-width                    2
  fill-column                  init/defaults/fill-column
  help-window-select           'other    ; focus on help window when spawning
+ truncate-lines               t         ; don't wrap, truncate lines by default
  )
+
+;; Disable electric indent mode globally as it causes the behaviour of C-j and RET to swap.
+(electric-indent-mode -1)
 
 ;; Set tab-stop positions for C-i at two characters wide.
 (let (p)
@@ -94,13 +98,12 @@
 
 ;; Do not create lock files and place backup files in a `backups` directory.
 (setq create-lockfiles nil)
-
-(setq backup-directory-alist `(("." . "~/.backups"))
-      backup-by-copying t
-      delete-old-versions t
-      kept-new-versions 6
-      kept-old-versions 2
-      version-control t)
+(setq backup-directory-alist  `(("." . "~/.backups"))
+      backup-by-copying       t
+      delete-old-versions     t
+      kept-new-versions       6
+      kept-old-versions       2
+      version-control         t)
 
 ;; Windows
 (setq-default split-height-threshold 100)
@@ -126,11 +129,12 @@ invoked by mode initialisors, in particular the programming ones
 and makes RET and C-j work correctly.
 
 It would now seem that version 26.x restores pre-24.3 behaviour."
-  (when (and
-         (>= emacs-major-version 24)
-         (>= emacs-minor-version 3))
-    (local-set-key (kbd "RET") 'electric-newline-and-maybe-indent)
-    (local-set-key (kbd "C-j") 'newline)))
+  (unless (>= emacs-major-version 28)
+    (when (and
+           (>= emacs-major-version 24)
+           (>= emacs-minor-version 3))
+      (local-set-key (kbd "RET") 'electric-newline-and-maybe-indent)
+      (local-set-key (kbd "C-j") 'newline))))
 
 (defun detach-editor-workarounds()
   "Undo side-effects from running `apply-editor-workarounds'"

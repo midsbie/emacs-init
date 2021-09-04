@@ -24,6 +24,9 @@
 
 ;;; Code:
 
+;; Turn on native compilation, if supported.
+(setq comp-deferred-compilation t)      
+
 (eval-when-compile
   (require 'cl)
   (require 'cl-lib)
@@ -146,10 +149,16 @@ Files are only visited if the server hasn't yet been started.")
   (run-with-idle-timer 1 nil '(lambda ()
                                 (message "init took %s" (emacs-init-time)))))
 
-;; Enable electric indent mode globally as all major modes support it.
-(electric-indent-mode 1)
-;; Make it so lines are truncated by default, rather than wrapped.
-(setq-default truncate-lines t)
+;; Print useful diagnostic messages
+(if (and (fboundp 'native-comp-available-p)
+       (native-comp-available-p))
+  (message "Native compilation is available")
+(message "Native complation is *not* available"))
+
+(if (functionp 'json-serialize)
+  (message "Native JSON is available")
+(message "Native JSON is *not* available"))
+
 (message "[init] done.")
 
 ;;; init.el ends here

@@ -56,7 +56,12 @@
   ; work, nor will definition at point, and other features.  Solution found was
   ; to lazy-initialise it.
   ;;  (lsp))
-  (run-with-idle-timer .1 nil 'lsp))
+  (run-with-idle-timer .1 nil '(lambda()
+                                 (lsp)
+                                 ;; Unfortuntaly LSP's code lenses aren't yet supported by the
+                                 ;; server.  Here for posteriority, however.
+                                 ;; (lsp-lens-show)
+                                 )))
 
 (defun init/mode/tide()
   "Initialise tide mode."

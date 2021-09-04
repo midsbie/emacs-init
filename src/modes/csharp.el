@@ -32,6 +32,9 @@
 (use-package csharp-mode
   :mode (("\\.cs\\'" . csharp-mode))
   :init
-  :hook (csharp-mode . init/mode/csharp))
+  :hook (csharp-mode . init/mode/csharp)
+  :config
+  (add-hook 'before-save-hook 'lsp-format-buffer)
+  )
 
 ;;; csharp.el ends here

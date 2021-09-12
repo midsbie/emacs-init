@@ -81,8 +81,25 @@
  truncate-lines               t         ; don't wrap, truncate lines by default
  )
 
-;; Disable electric indent mode globally as it causes the behaviour of C-j and RET to swap.
-(electric-indent-mode -1)
+;; To make it easier for newcomers to Emacs, the developers decided to swap out the mechanics of
+;; C-j and RET when `electric-indent-mode' is enabled.  In the hook below, we make sure to retain
+;; the desired behaviour whereby C-j produces a newline and indention and C-m or RET only a
+;; newline.
+;;
+;; Ref: https://lists.gnu.org/archive/html/bug-gnu-emacs/2014-12/msg00098.html
+(add-hook 'electric-indent-mode-hook #'(lambda ()
+                                        (if electric-indent-mode
+                                            (progn
+                                              (global-set-key (kbd "C-j") 'newline)
+                                              (global-set-key (kbd "RET") 'electric-newline-and-maybe-indent))
+                                          (global-set-key (kbd "C-j") 'electric-newline-and-maybe-indent)
+                                          (global-set-key (kbd "RET") 'newline))))
+(electric-indent-mode 1)
+;; Also enabling `electric-pair-mode' because it works great with indent above.  Note that pair
+;; requires indent or indentation will be missing in some instances.
+(electric-pair-mode 1)
+;; This may be problematic in some modes.  Keeping it on for now as an experiment.
+(electric-layout-mode 1)
 
 ;; Set tab-stop positions for C-i at two characters wide.
 (let (p)

@@ -139,6 +139,13 @@
   ;; The following disabled:
 ; (doxymacs-mode)                    ; turn doxymacs on
 
+  ;; Providing navigation between code blocks designated by curly brackets and parentheses.
+  (local-set-key (kbd "C-x [") 'backward-up-list)
+  (local-set-key (kbd "C-x ]") 'up-list)
+
+  (local-set-key (kbd "C-x {") 'backward-list)
+  (local-set-key (kbd "C-x }") 'forward-list)
+
   (init/apply-editor-workarounds))
 
 (defun init/c-c++()

@@ -120,7 +120,7 @@
 This runs after the local variables have been processed."
   (run-hooks (intern (concat (symbol-name major-mode) "-local-vars-hook"))))
 
-(defun apply-editor-workarounds()
+(defun init/apply-editor-workarounds()
   "Apply editor workarounds.
 
 From 24.3 onwards, the behaviours of the `RET` and `C-j` keys
@@ -136,8 +136,8 @@ It would now seem that version 26.x restores pre-24.3 behaviour."
       (local-set-key (kbd "RET") 'electric-newline-and-maybe-indent)
       (local-set-key (kbd "C-j") 'newline))))
 
-(defun detach-editor-workarounds()
-  "Undo side-effects from running `apply-editor-workarounds'"
+(defun init/detach-editor-workarounds()
+  "Undo side-effects from running `init/apply-editor-workarounds'"
   (local-unset-key (kbd "RET"))
   (local-unset-key (kbd "C-j")))
 

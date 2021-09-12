@@ -139,7 +139,7 @@
   ;; The following disabled:
 ; (doxymacs-mode)                    ; turn doxymacs on
 
-  (apply-editor-workarounds))
+  (init/apply-editor-workarounds))
 
 (defun init/c-c++()
   "Initialise modes related to C and C++ development."
@@ -164,7 +164,7 @@
   (setq-local c-basic-offset  2)
   (setq-local programming-buffer t)
 
-  (apply-editor-workarounds))
+  (init/apply-editor-workarounds))
 
 (init/programming)
 

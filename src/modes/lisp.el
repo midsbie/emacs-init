@@ -27,9 +27,7 @@
 (defun init/elisp ()
   "Initialise modes related to ELISP development."
 
-  (turn-on-eldoc-mode)
-  ;; Must disable electric-indent-mode in the buffer to ensure that C-j behaves as expected.
-  (electric-indent-local-mode -1))
+  (turn-on-eldoc-mode))
 
 (use-package emacs-lisp-mode
   :mode ("\\.el\\'")

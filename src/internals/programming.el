@@ -87,6 +87,12 @@
                 indent-tabs-mode   nil
                 js-indent-level    2)
 
+  ;; Disabling as the sideline is annoying and is suspected of leading to signficant degradation of
+  ;; performance and stuttering.
+  (setq lsp-ui-sideline-enable nil)
+  ;; Not needed as imenu disabled; may also affect performance.
+  (setq lsp-ui-imenu-enable nil)
+
   ;; Set the extra indentation before a substatement (e.g. the opening brace in
   ;; the consequent block of an if statement) to 0 (instead of '+)
   ;; Ref: https://stackoverflow.com/a/3956173
@@ -95,13 +101,20 @@
   ;; Hooks
   (add-hook 'c-mode-common-hook 'init/common-nonweb-programming-mode)
   (add-hook 'c-mode-common-hook 'init/c-c++)
-
-  ;; Add hooks here to all major modes in which the electric/indent mode does not work correctly
-  (add-hook 'conf-mode-hook 'init/disable-electric-indent))
+  (add-hook 'conf-mode-hook 'init/disable-electric-indent)
+  (add-hook 'lsp-mode-hook 'init/configure-lsp-mode))
 
 (defun init/disable-electric-indent()
   "Disable electric indentation behaviour."
   (electric-indent-local-mode -1))
+
+(defun init/configure-lsp-mode()
+  "Configures LSP mode."
+  (when lsp-mode
+    ;; This is bugging out for some reason, causing the annotations to: not update timely and
+    ;; become misaligned; be captured by text selection; other oddities.  Shouldn't be enabled but
+    ;; forcefully disabling it anyway.
+    (lsp-lens-mode -1)))
 
 (defun init/common-programming-mode ()
   ;; NOTE: we are explicitly disabling `flyspell-mode' since it suffers from

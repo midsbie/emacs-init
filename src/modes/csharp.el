@@ -26,16 +26,7 @@
 
 (defun init/mode/csharp ()
   "Initialise csharp mode."
-  ;; Initialise LSP
   (lsp)
-
-  ;; This is bugging out for some reason, causing the annotations to: not update timely and become
-  ;; misaligned; be captured by text selection; other oddities.
-  (lsp-lens-mode -1)
-  ;; Disabling as the sideline is annoying and is suspected of leading to signficant degradation of
-  ;; performance and stuttering.
-  (lsp-ui-sideline-mode -1)
-
   (setq-local c-basic-offset 4)
   (setq-local flycheck-idle-change-delay 3)
   (setq-local flycheck-idle-buffer-switch-delay 1)

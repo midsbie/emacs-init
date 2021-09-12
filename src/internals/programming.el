@@ -166,22 +166,6 @@
 
   (apply-editor-workarounds))
 
-;; Defun invoked after pressing C-x C-k (see `init/elisp').
-;; Evals the current buffer and displays a message.
-(defun do-eval-buffer ()
-  "Evaluate the current buffer.
-This command should only be used with ELISP."
-  (interactive)
-  (cl-block inner
-      (cond
-       ((or (eq major-mode 'emacs-lisp-mode)
-            (eq major-mode 'lisp-interaction-mode))
-        (eval-buffer))
-       (t (message "unsupported mode: %s" major-mode)
-          (cl-return-from inner)))
-
-    (message "buffer evaluated")))
-
 (init/programming)
 
 ;;; programming.el ends here

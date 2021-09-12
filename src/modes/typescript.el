@@ -27,7 +27,7 @@
 
 (defun init/mode/ts-tsx ()
   "Initialise modes related to Typescript development."
-  (init/common-web-programming)
+  (init/common-web-programming-mode)
   (setq-local typescript-indent-level 2)
 
   (local-set-key (kbd "M-a") 'c-beginning-of-statement)

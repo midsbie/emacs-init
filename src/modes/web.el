@@ -37,7 +37,7 @@
 
 (defun init/web-mode ()
   "Initialise `web-mode'."
-  (init/common-web-programming)
+  (init/common-web-programming-mode)
 
   (make-local-variable 'web-mode-indentation-params)
   (make-local-variable 'web-mode-indent-offset)
@@ -88,10 +88,7 @@
   (unless (or (and (boundp 'typescript-mode) typescript-mode)
               (and (boundp 'tide-mode) tide-mode)
               (string-equal "tsx" (file-name-extension buffer-file-name)))
-    (flow-minor-enable-automatically))
-
-  ;; web-mode messes up C-j/RET mechanics even though electric-indent-mode is enabled
-  (apply-editor-workarounds))
+    (flow-minor-enable-automatically)))
 
 (defun init/web/load-local-vars ()
   "Map the value of `c-basic-offset' to `web-mode-code-indent-offset'."

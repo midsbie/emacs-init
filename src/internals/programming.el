@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(defun init/programming ()
+(defun init/programming-settings ()
   "Initialise programming modes."
   ;; Own custom default style
   (c-add-style "default"
@@ -93,7 +93,7 @@
   (c-set-offset 'substatement-open 0)
 
   ;; Hooks
-  (add-hook 'c-mode-common-hook 'init/common-programming)
+  (add-hook 'c-mode-common-hook 'init/common-nonweb-programming-mode)
   (add-hook 'c-mode-common-hook 'init/c-c++)
 
   ;; Add hooks here to all major modes in which the electric/indent mode does not work correctly
@@ -103,15 +103,21 @@
   "Disable electric indentation behaviour."
   (electric-indent-local-mode -1))
 
-(defun init/common-programming ()
+(defun init/common-programming-mode ()
+  ;; NOTE: we are explicitly disabling `flyspell-mode' since it suffers from
+  ;; very annoying, intrusive issues that actually impede development.
+  (setq-local programming-buffer t)
+
+  ;; Providing navigation between code blocks designated by curly brackets and parentheses.
+  (local-set-key (kbd "C-x [") 'backward-up-list)
+  (local-set-key (kbd "C-x ]") 'up-list)
+  (local-set-key (kbd "C-x {") 'backward-list)
+  (local-set-key (kbd "C-x }") 'forward-list))
+
+(defun init/common-nonweb-programming-mode ()
   "Perform initialisation of aspects common to all programming-related modes."
   (enable-fci-mode)                 ; fill column indicator
   (auto-fill-mode)                  ; auto fill
-
-  ;; NOTE: we are explicitly disabling `flyspell-mode' since it suffers from
-  ;; very annoying, intrusive issues that actually impede development.
-  (setq programming-buffer t)
-  (make-local-variable 'programming-buffer)
 
 ;;(flyspell-prog-mode)              ; turn spell check for strings and comments
 ;;(ac-flyspell-workaround)          ; this defun must be executed to prevent
@@ -138,15 +144,7 @@
 
   ;; The following disabled:
 ; (doxymacs-mode)                    ; turn doxymacs on
-
-  ;; Providing navigation between code blocks designated by curly brackets and parentheses.
-  (local-set-key (kbd "C-x [") 'backward-up-list)
-  (local-set-key (kbd "C-x ]") 'up-list)
-
-  (local-set-key (kbd "C-x {") 'backward-list)
-  (local-set-key (kbd "C-x }") 'forward-list)
-
-  (init/apply-editor-workarounds))
+  (init/common-programming-mode))
 
 (defun init/c-c++()
   "Initialise modes related to C and C++ development."
@@ -155,7 +153,7 @@
   (c-toggle-auto-hungry-state 1)
   (c-toggle-auto-state -1))
 
-(defun init/common-web-programming ()
+(defun init/common-web-programming-mode ()
   "Initialise modes related to web development."
 
   ;; Required below by `enable-prettier-mode-maybe'.
@@ -169,10 +167,9 @@
   (setq-local fill-column 99)
   (setq-local tab-width   2)
   (setq-local c-basic-offset  2)
-  (setq-local programming-buffer t)
 
-  (init/apply-editor-workarounds))
+  (init/common-programming-mode))
 
-(init/programming)
+(init/programming-settings)
 
 ;;; programming.el ends here

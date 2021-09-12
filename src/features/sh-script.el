@@ -29,7 +29,7 @@
   (setq-default  sh-basic-offset    2
                  sh-indentation     2)
 
-  (add-hook 'sh-mode-hook 'init/common-programming)
+  (add-hook 'sh-mode-hook 'init/common-nonweb-programming-mode)
   (add-hook 'sh-mode-hook 'init/sh-mode))
 
 (defun init/sh-mode ()

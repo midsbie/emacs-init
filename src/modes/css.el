@@ -44,7 +44,7 @@
 (use-package css-mode
   :defer t
   :config
-  (add-hook 'css-mode-hook  'init/common-programming)
+  (add-hook 'css-mode-hook  'init/common-nonweb-programming-mode)
   (add-hook 'css-mode-hook  'init/css))
 
 ;;; css.el ends here

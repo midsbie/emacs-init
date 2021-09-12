@@ -45,7 +45,7 @@
   (py-autopep8-enable-on-save))
 
 (use-package python-mode
-  :hook ((python-mode . init/common-programming)
+  :hook ((python-mode . init/common-nonweb-programming-mode)
          (python-mode . pylint-add-menu-items)
          (python-mode . pylint-add-key-bindings)
          (python-mode . init/python-mode)))

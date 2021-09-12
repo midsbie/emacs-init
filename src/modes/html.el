@@ -26,6 +26,6 @@
 
 (use-package sgml-mode
   :mode ("\\.html?\\'" "\\.xml\\'")
-  :hook (html-mode . init/common-web-programming))
+  :hook (html-mode . init/common-web-programming-mode))
 
 ;;; html.el ends here

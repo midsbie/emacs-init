@@ -77,7 +77,7 @@
 
 (defun init/go-mode ()
   "Initialise modes related to Go development."
-  (init/common-programming)
+  (init/common-nonweb-programming-mode)
   (go-eldoc-setup)
   (add-hook 'before-save-hook 'gofmt-before-save)
 

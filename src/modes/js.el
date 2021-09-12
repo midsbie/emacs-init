@@ -53,7 +53,7 @@
   :mode (("\\.js\\'" . js-mode)
          ("\\.jsx\\'" . js-jsx-mode))
   :hook (((js-mode js-jsx-mode) . init/config/js-mode)
-         ((js-mode js-jsx-mode) . init/common-web-programming))
+         ((js-mode js-jsx-mode) . init/common-web-programming-mode))
   :bind (("M-a" . c-beginning-of-statement)
          ("M-e" . c-end-of-statement)))
 

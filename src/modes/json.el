@@ -25,7 +25,7 @@
 ;;; Code:
 
 (defun init/config/json-mode()
-  (add-hook 'json-mode-hook 'init/common-programming))
+  (add-hook 'json-mode-hook 'init/common-nonweb-programming-mode))
 
 (use-package json-mode
   :mode ("\\.json\\'")

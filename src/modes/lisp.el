@@ -27,7 +27,8 @@
 (defun init/elisp ()
   "Initialise modes related to ELISP development."
 
-  (turn-on-eldoc-mode))
+  (turn-on-eldoc-mode)
+  (setq-local fill-column 79))
 
 (use-package emacs-lisp-mode
   :mode ("\\.el\\'")
@@ -35,6 +36,6 @@
          (emacs-lisp-mode . init/elisp)
          (lisp-interaction-mode . init/elisp))
   :bind (:map emacs-lisp-mode-map
-              ("C-x C-k" . do-eval-buffer)))
+              ("C-x C-k" . my/eval-buffer)))
 
 ;;; lisp.el ends here

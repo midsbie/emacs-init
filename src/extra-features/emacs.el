@@ -26,7 +26,7 @@
 
 ;; Defun invoked after pressing C-x C-k (see `init/elisp').
 ;; Evals the current buffer and displays a message.
-(defun do-eval-buffer ()
+(defun my/eval-buffer ()
   "Evaluate the current buffer.
 This command should only be used with ELISP."
   (interactive)

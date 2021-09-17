@@ -24,12 +24,36 @@
 
 ;;; Code:
 
+
+(defvar my/flycheck-buffer-last 0
+  "Last time `'flycheck-buffer' ran.")
+
+(defvar my/flycheck-buffer-time-between 2.5
+  "Minimum time that must elapse between invocations of `flycheck-buffer'.")
+
+(defun my/flycheck-buffer (orig &rest args)
+  "Function advice around `flycheck-buffer'.
+This is an attempt at making `flycheck' more performant with
+`lsp', especially when editing C# source files.  We make it so
+`flycheck-buffer' is executed at most once every number of
+seconds specified by `my/flycheck-buffer-time-between'."
+  (interactive)
+  (let* ((seconds-from-last (- (float-time) my/flycheck-buffer-last)))
+    (unless (< seconds-from-last my/flycheck-buffer-time-between)
+      (setq my/flycheck-buffer-last (float-time))
+      (unless (or (flycheck-running-p) (company--active-p))
+        (apply orig args)))))
+
 (defun init/config/flycheck ()
   "Configure `flycheck'."
 
   ;; Enable flycheck globally.
   (global-flycheck-mode 1)
   (load "flycheck-flow")
+
+  ;; Advice removal may not be needed but here for correctness anyway.
+  (advice-remove 'flycheck-buffer #'my/flycheck-buffer)
+  (advice-add 'flycheck-buffer :around #'my/flycheck-buffer)
 
   ;; + in c/c++ modes
   (setq flycheck-cppcheck-checks '("all"))

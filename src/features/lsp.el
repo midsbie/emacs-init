@@ -1,6 +1,6 @@
 ;;; lsp.el --- Configures the `lsp' package
 
-;; Copyright (C) 2019  Miguel Guedes
+;; Copyright (C) 2021  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -18,13 +18,47 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-;;; Commentary:
-;; This feature is currently disabled because recent versions of the Flow's LSP
-;; server was found to be crashing when activated for the ingnosis project.
-;; Older versions seemed to work mostly correctly.
+;;; Installation:
+;;
+;; TYPESCRIPT
+;; 1. Install `typescript-language-server` for javascript and typescript
+;;    support, as per documentation at:
+;;    https://github.com/typescript-language-server/typescript-language-server
+;;
+;;    $ npm install -g typescript-language-server
+;;
+;; CSHARP
+;; 1. Install the `mono-devel` system package by following the instructions on
+;;    Mono's website: https://www.mono-project.com/download/stable/
+;;
+;; 2. Install the omnisharp-roslyn LSP server:
+;;    M-x lsp-install-server RET csharp RET
+;;
+;; 3. The Omnisharp Roslyn server bundles its own minimal Mono runtime,
+;;    libraries and will prevent code instrospection and other LSP features
+;;    from working as expected.  Fix this by symlinking to the system's Mono
+;;    packages:
+;;    $ cd ~/.emacs.d/.cache/lsp/omnisharp-roslyn/latest/omnisharp-roslyn/lib
+;;    $ rm -rf mono
+;;    $ ln -s /usr/lib/mono
 
+;;; Commentary:
 ;;
 
 ;;; Code:
+
+(defun init/mode/lsp ()
+  "Initialise LSP mode."
+  ;; Refer to initialisation of `gc-cons-threshold' and `read-process-output-max'
+  ;; in `internal/settings.el'.
+  ;;
+  ;; The following as per the documentation at:
+  ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
+  (setq lsp-log-io nil))
+
+(use-package lsp-mode
+  :ensure t
+  :init
+  (init/mode/lsp))
 
 ;;; lsp.el ends here

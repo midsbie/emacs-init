@@ -20,7 +20,16 @@
 
 ;;; Commentary:
 
-;; [17092020] linum-mode reinstated due to unresolved incompatibilities between
+;; [130921] Reinstating this mode and turning off `linum-mode' after running
+;; `profile-start' and realising that the latter mode is super slow.  Then
+;; found multiple references online confirming this and encouraging a switch to
+;; this mode.
+;;
+;; References:
+;; https://www.reddit.com/r/orgmode/comments/e7pq7k/linummode_very_slow_for_large_org_files/
+;; https://www.emacswiki.org/emacs/LineNumbers
+;;
+;; [170920] linum-mode reinstated due to unresolved incompatibilities between
 ;; linu-numbers-mode and company-mode.  Turns out linum-mode also occupies less
 ;; space in the fringe, allowing more text and windows to fit in a single
 ;; frame.
@@ -31,15 +40,7 @@
   "Lazily load the `display-line-numbers-mode' package and initialise it."
 
   ;; display line numbers in left margin
-  ; (global-display-line-numbers-mode t))
-
-  ;; Currently disabled in favour of `linum-mode'.
-  (global-display-line-numbers-mode -1))
-
-(defun init/display-line-numbers-mode-mode()
-  "Configure the `display-line-numbers-mode-mode'."
-  (if (string= major-mode "speedbar-mode")
-      (display-line-numbers-mode-mode -1)))
+  (global-display-line-numbers-mode t))
 
 (use-package display-line-numbers
   :config

@@ -44,8 +44,10 @@
   (if (string= major-mode "speedbar-mode")
       (linum-mode -1)))
 
-(use-package linum
-  :config
-  (init/linum))
+;; Disabled in favour of `display-line-numbers':
+;;
+;; (use-package linum
+;;   :config
+;;   (init/linum))
 
 ;;; linum.el ends here

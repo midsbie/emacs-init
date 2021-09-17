@@ -31,18 +31,36 @@
 (defvar my/flycheck-buffer-time-between 2.5
   "Minimum time that must elapse between invocations of `flycheck-buffer'.")
 
+(defvar my/flycheck-buffer-timer nil
+  "Timer for next scheduled invocation of `flycheck-buffer'.")
+
+(defvar my/flycheck-buffer--func nil)
+(defvar my/flycheck-buffer--args nil)
+
 (defun my/flycheck-buffer (orig &rest args)
   "Function advice around `flycheck-buffer'.
 This is an attempt at making `flycheck' more performant with
 `lsp', especially when editing C# source files.  We make it so
 `flycheck-buffer' is executed at most once every number of
-seconds specified by `my/flycheck-buffer-time-between'."
+seconds specified by `my/flycheck-buffer-time-between'.  It is
+not executed if company mode's popup is active to prevent visual
+corruption.  Likewise, it is not executed if flycheck is
+running."
   (interactive)
-  (let* ((seconds-from-last (- (float-time) my/flycheck-buffer-last)))
-    (unless (< seconds-from-last my/flycheck-buffer-time-between)
-      (setq my/flycheck-buffer-last (float-time))
-      (unless (or (flycheck-running-p) (company--active-p))
-        (apply orig args)))))
+  (when (timerp my/flycheck-buffer-timer)
+    (cancel-timer my/flycheck-buffer-timer)
+    (setq my/flycheck-buffer-timer nil))
+  (let* ((seconds-from-last (- (float-time) my/flycheck-buffer-last))
+         (seconds-to-next (- my/flycheck-buffer-time-between seconds-from-last)))
+    ;; Must copy ORIG and ARGS or they won't be available in the timer lambda func.
+    (setq my/flycheck-buffer--func orig
+          my/flycheck-buffer--args args)
+    (run-with-idle-timer (max seconds-to-next 0) nil
+                         '(lambda ()
+                             (setq my/flycheck-buffer-last (float-time)
+                                   my/flycheck-buffer-timer nil)
+                             (unless (or (flycheck-running-p) (company--active-p))
+                               (apply my/flycheck-buffer--func my/flycheck-buffer--args))))))
 
 (defun init/config/flycheck ()
   "Configure `flycheck'."

@@ -28,9 +28,16 @@
   "Initialise csharp mode."
   (lsp)
   (setq-local c-basic-offset 4)
-  (setq-local flycheck-idle-change-delay 3)
-  (setq-local flycheck-idle-buffer-switch-delay 1)
-  (setq-local lsp-idle-delay .2))
+
+  ;; The following were meant to deal with performance issues when editing
+  ;; Unity scripts, but after some thought it was deemed that the best course
+  ;; of action was to tackle the issues affecting performance.  Settings are
+  ;; probably not needed now but kept here for future reference.
+  ;;
+  ;; (setq-local flycheck-idle-change-delay 3)
+  ;; (setq-local flycheck-idle-buffer-switch-delay 1)
+  ;; (setq-local lsp-idle-delay .5)
+  )
 
 (use-package csharp-mode
   :mode (("\\.cs\\'" . csharp-mode))

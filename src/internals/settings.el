@@ -39,7 +39,7 @@
 ;; Set higher threshold before GC kicks in. Changing this setting seems to make
 ;; emacs snappier for some specific workflows.
 (setq gc-cons-threshold 100000000)
-(setq read-process-output-max (* 10 1024 1024)) ; 10x on recommendation
+(setq read-process-output-max (* 1024 1024))
 
 ;; enable useful commands
 (put 'narrow-to-region          'disabled nil)

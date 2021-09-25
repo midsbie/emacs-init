@@ -47,6 +47,17 @@
 
 ;;; Code:
 
+(defun my/lsp/log-request (type method)
+  "Log LSP request.
+Prints TYPE and METHOD to special 'lsp-output' buffer.  Meant to
+be used when debugging `lsp'."
+  (with-current-buffer "lsp-output"
+    (goto-char (point-min))
+    (insert (format "[%s] <%s %s\n" (format-time-string "%H:%M:%S:%N" (current-time))
+                    type
+                    method))
+    (goto-char (point-min))))
+
 (defun init/mode/lsp ()
   "Initialise LSP mode."
   ;; Refer to initialisation of `gc-cons-threshold' and `read-process-output-max'
@@ -54,7 +65,17 @@
   ;;
   ;; The following as per the documentation at:
   ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
-  (setq lsp-log-io nil))
+  (setq lsp-log-io nil)
+
+  ;; Don't keep workspace alive once the last buffer is killed.
+  (setq lsp-keep-workspace-alive nil)
+
+  ;; May make sense to limit the number of signature doc lines?  Not for now,
+  ;; though.
+  ;; (setq lsp-signature-doc-lines 5)
+  (setq lsp-idle-delay 0.5)
+
+  (define-key lsp-mode-map (kbd "C-c l") lsp-command-map))
 
 (use-package lsp-mode
   :ensure t

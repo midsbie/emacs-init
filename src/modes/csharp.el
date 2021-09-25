@@ -29,19 +29,24 @@
   (lsp)
   (setq-local c-basic-offset 4)
 
-  ;; The following were meant to deal with performance issues when editing
-  ;; Unity scripts, but after some thought it was deemed that the best course
-  ;; of action was to tackle the issues affecting performance.  Settings are
-  ;; probably not needed now but kept here for future reference.
-  ;;
-  ;; (setq-local flycheck-idle-change-delay 3)
-  ;; (setq-local flycheck-idle-buffer-switch-delay 1)
-  ;; (setq-local lsp-idle-delay .5)
-  )
+  ;; Configure LSP and Flycheck to ensure the buffer is checked quickly-enough
+  (setq-local lsp-idle-delay 1.5)
+  ;; Don't set this to a value less than `lsp-idle-delay' above to prevent
+  ;; unnecessary messages being sent to the server and potentially overloading
+  ;; it.
+  (setq-local flycheck-idle-change-delay (+ .5 lsp-idle-delay))
+  ;; Flycheck's debouncer may no longer be necessary but here for now while it
+  ;; is evaluated.
+  (setq-local my/flycheck-buffer-time-between 1)
+  ;; Explicitly forcing to default syncronization method of `nil`, which
+  ;; defaults to `lsp--sync-full', as supported by omnisharp-roslyn.  This
+  ;; statement is here to document the fact that lsp supports the
+  ;; `lsp--sync-incremental', which may turn out to be more performant for some
+  ;; specific projects.
+  (setq-local lsp-document-sync-method nil))
 
 (use-package csharp-mode
   :mode (("\\.cs\\'" . csharp-mode))
-  :init
   :hook (csharp-mode . init/mode/csharp)
   :config
   (add-hook 'before-save-hook 'lsp-format-buffer)

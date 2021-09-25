@@ -28,14 +28,18 @@
 (defvar my/flycheck-buffer-last 0
   "Last time `'flycheck-buffer' ran.")
 
-(defvar my/flycheck-buffer-time-between 2.5
-  "Minimum time that must elapse between invocations of `flycheck-buffer'.")
+(defvar my/flycheck-buffer-time-between 1
+  "Minimum time that must elapse between invocations of `flycheck-buffer'.
+
+Note that experiments revealed that a value less than 5 may
+compromise performance in some modes, such as `csharp-mode'.")
 
 (defvar my/flycheck-buffer-timer nil
   "Timer for next scheduled invocation of `flycheck-buffer'.")
 
 (defvar my/flycheck-buffer--func nil)
 (defvar my/flycheck-buffer--args nil)
+(defvar my/flycheck-buffer-preemptive-p nil)
 
 (defun my/flycheck-buffer (orig &rest args)
   "Function advice around `flycheck-buffer'.
@@ -55,12 +59,31 @@ running."
     ;; Must copy ORIG and ARGS or they won't be available in the timer lambda func.
     (setq my/flycheck-buffer--func orig
           my/flycheck-buffer--args args)
-    (run-with-idle-timer (max seconds-to-next 0) nil
-                         '(lambda ()
-                             (setq my/flycheck-buffer-last (float-time)
-                                   my/flycheck-buffer-timer nil)
-                             (unless (or (flycheck-running-p) (company--active-p))
-                               (apply my/flycheck-buffer--func my/flycheck-buffer--args))))))
+    ;; Preempt buffer check if run via C-c ! c.
+    (when my/flycheck-buffer-preemptive-p
+      (setq seconds-to-next 0)
+      (setq my/flycheck-buffer-preemptive-p nil))
+    ;; The following two statements purposely disabled; the first one because
+    ;; it is only useful during debugging; the second one because it doesn't
+    ;; seem to be needed.
+    ;;
+    ;; (backtrace)
+    ;; (flycheck-delete-all-overlays)
+    ;; (message "running checker in %s @ %s (last @ %s)" (max seconds-to-next) (+ (max seconds-to-next) (float-time)) my/flycheck-buffer-last)
+    (setq my/flycheck-buffer-timer
+          (run-with-timer (max seconds-to-next 0) nil
+                          #'(lambda ()
+                              ;; (message "RUNNING CHECKER at %s" (time-to-seconds))
+                              (setq my/flycheck-buffer-last (float-time)
+                                    my/flycheck-buffer-timer nil)
+                              (unless (or (flycheck-running-p) (company--active-p))
+                                (apply my/flycheck-buffer--func my/flycheck-buffer--args)))))))
+
+;; Not currently used; see :bind section in use-package invocation below.
+(defun my/flycheck-buffer-preemptive ()
+  (interactive)
+  (setq my/flycheck-buffer-preemptive-p t)
+  (flycheck-buffer))
 
 (defun init/config/flycheck ()
   "Configure `flycheck'."
@@ -71,6 +94,7 @@ running."
 
   ;; Advice removal may not be needed but here for correctness anyway.
   (advice-remove 'flycheck-buffer #'my/flycheck-buffer)
+  ;; (advice-add 'flycheck-buffer :around #'my/flycheck-buffer)
   (advice-add 'flycheck-buffer :around #'my/flycheck-buffer)
 
   ;; + in c/c++ modes
@@ -159,6 +183,9 @@ running."
 
 (use-package flycheck
   :hook ((flycheck-mode . flycheck-popup-tip-mode))
+;;   :bind (
+;;          :map flycheck-mode-map
+;;               ("C-c ! c" . my/flycheck-buffer-preemptive))
   :init
   (init/config/flycheck))
 

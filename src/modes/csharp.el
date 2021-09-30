@@ -29,12 +29,10 @@
   (lsp)
   (setq-local c-basic-offset 4)
 
-  ;; Configure LSP and Flycheck to ensure the buffer is checked quickly-enough
-  (setq-local lsp-idle-delay 1.5)
   ;; Don't set this to a value less than `lsp-idle-delay' above to prevent
   ;; unnecessary messages being sent to the server and potentially overloading
-  ;; it.
-  (setq-local flycheck-idle-change-delay (+ .5 lsp-idle-delay))
+  ;; it.  Currently enforcing a minimum of 1s.
+  (setq-local flycheck-idle-change-delay (if (< lsp-idle-delay 1) 1 lsp-idle-delay))
   ;; Flycheck's debouncer may no longer be necessary but here for now while it
   ;; is evaluated.
   (setq-local my/flycheck-buffer-time-between 1)
@@ -43,7 +41,12 @@
   ;; statement is here to document the fact that lsp supports the
   ;; `lsp--sync-incremental', which may turn out to be more performant for some
   ;; specific projects.
-  (setq-local lsp-document-sync-method nil))
+  (setq-local lsp-document-sync-method nil)
+
+  ;; Enable the following if flycheck should only check the buffer on load and
+  ;; save.
+  ;; (setq-local flycheck-check-syntax-automatically '(mode-enabled save))
+  )
 
 (use-package csharp-mode
   :mode (("\\.cs\\'" . csharp-mode))

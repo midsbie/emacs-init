@@ -70,16 +70,61 @@ be used when debugging `lsp'."
   ;; Don't keep workspace alive once the last buffer is killed.
   (setq lsp-keep-workspace-alive nil)
 
+  ;; Auto-guess the root directory of the buffer
+  (setq lsp-auto-guess-root t)
+
   ;; May make sense to limit the number of signature doc lines?  Not for now,
   ;; though.
   ;; (setq lsp-signature-doc-lines 5)
+
   (setq lsp-idle-delay 0.5)
 
-  (define-key lsp-mode-map (kbd "C-c l") lsp-command-map))
+  ;; The following section from:
+  ;; https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
+  ;;
+  ;; Highlighting of symbol on point
+  (setq lsp-enable-symbol-highlighting t)
+  ;; Show documentation for symbol on point
+  (setq lsp-ui-doc-show-with-cursor t)
+  ;; Disable lens
+  (setq lsp-lens-enable nil)
+  ;; Enable headerline showing source file location in workspace
+  (setq lsp-headerline-breadcrumb-enable t)
+  ;; Enable documentation for symbol on hover
+  (setq lsp-eldoc-enable-hover t)
+  ;; Signature auto activation
+  ;; Can manually request them via `lsp-signature-activate`
+  (setq lsp-signature-auto-activate
+        '(:on-trigger-char :after-completion :on-server-request))
+  (setq lsp-signature-render-documentation t)
+
+  ;; Sideline:
+  ;; Disable intrusive code actions and symbol on hover but do show diagnostics
+  ;; in sideline
+  (setq lsp-ui-sideline-enable nil)
+  (setq lsp-ui-sideline-show-code-actions nil)
+  (setq lsp-ui-sideline-show-hover nil)
+  (setq lsp-ui-sideline-show-symbol nil)
+  (setq lsp-ui-sideline-show-diagnostics nil)
+
+  ;; Modeline:
+  ;; Disable code actions
+  (setq lsp-modeline-code-actions-enable t)
+  (setq lsp-modeline-diagnostics-enable t)
+  (setq lsp-modeline-workspace-status-enable nil);
+
+  ;; Completion
+  (setq lsp-completion-show-detail t)
+  (setq lsp-completion-show-kind t)
+  )
 
 (use-package lsp-mode
   :ensure t
   :init
-  (init/mode/lsp))
+  (init/mode/lsp)
+  :config
+  ;; This can't be in the initializing defun above or it'll error out.
+  ;; Ref: https://github.com/emacs-lsp/lsp-mode/issues/1532#issuecomment-602384182
+  (define-key lsp-mode-map (kbd "C-c l") lsp-command-map))
 
 ;;; lsp.el ends here

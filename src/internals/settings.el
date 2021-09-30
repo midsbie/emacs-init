@@ -24,6 +24,10 @@
 
 ;;; Code:
 
+;; Set path override for Mono libraries or the Omnisharp Roslyn server may not
+;; start or work as expected.
+(setenv "FrameworkPathOverride" "/lib/mono/4.5")
+
 (setq inhibit-splash-screen   t         ; Disable splash screen
       initial-scratch-message nil       ; Disable startup message
       password-cache-expiry   nil)      ; Disable password cache expiration
@@ -38,8 +42,8 @@
 ;;
 ;; Set higher threshold before GC kicks in. Changing this setting seems to make
 ;; emacs snappier for some specific workflows.
-(setq gc-cons-threshold 100000000)
-(setq read-process-output-max (* 1024 1024))
+(setq gc-cons-threshold (* 100 1024 1024))
+(setq read-process-output-max (* 10 1024 1024))
 
 ;; enable useful commands
 (put 'narrow-to-region          'disabled nil)

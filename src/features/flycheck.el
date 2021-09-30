@@ -85,6 +85,39 @@ running."
   (setq my/flycheck-buffer-preemptive-p t)
   (flycheck-buffer))
 
+(defun init/flycheck/on-flyspell-mode()
+  ;; Deactivate annoying correction of previous misspelled error when C-; is hit.
+  (define-key flyspell-mode-map (kbd "C-;") nil))
+
+;; Setup flycheck with repository-local eslint executable.
+;;
+;; Taken from:
+;; http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
+;;
+;; ... which was taken originally from:
+;; https://emacs.stackexchange.com/q/21205/15089
+;;
+;; However, the original function was enhanced as to support mono-repositories
+;; that host multiple projects via a meta-package manager such as Lerna and
+;; where multiple `node_modules` directories may exist.
+;;
+;; This function now looks up the full directory tree looking for
+;; `node_modules` and the eslint binary inside of it, until it hits the
+;; filesystem root.
+(defun init/flycheck/use-eslint-from-node-modules ()
+  (let* ((curdir (locate-dominating-file
+                (or (buffer-file-name) default-directory)
+                "node_modules")))
+    (setq-local flycheck-javascript-eslint-executable nil)
+    (while (and curdir (not flycheck-javascript-eslint-executable))
+      (let ((eslint (expand-file-name "node_modules/eslint/bin/eslint.js"
+                                      curdir)))
+        ;; Setting `flycheck-javascript-eslint-executable' terminates the loop
+        ;; above.
+        (if (and eslint (file-executable-p eslint))
+            (setq-local flycheck-javascript-eslint-executable eslint)
+          (setq curdir (file-name-directory (directory-file-name curdir))))))))
+
 (defun init/config/flycheck ()
   "Configure `flycheck'."
 
@@ -94,7 +127,6 @@ running."
 
   ;; Advice removal may not be needed but here for correctness anyway.
   (advice-remove 'flycheck-buffer #'my/flycheck-buffer)
-  ;; (advice-add 'flycheck-buffer :around #'my/flycheck-buffer)
   (advice-add 'flycheck-buffer :around #'my/flycheck-buffer)
 
   ;; + in c/c++ modes
@@ -146,40 +178,6 @@ running."
                  (side            . bottom)
                  (reusable-frames . visible)
                  (window-height   . 0.15))))
-
-
-(defun init/flycheck/on-flyspell-mode()
-  ;; Deactivate annoying correction of previous misspelled error when C-; is hit.
-  (define-key flyspell-mode-map (kbd "C-;") nil))
-
-;; Setup flycheck with repository-local eslint executable.
-;;
-;; Taken from:
-;; http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
-;;
-;; ... which was taken originally from:
-;; https://emacs.stackexchange.com/q/21205/15089
-;;
-;; However, the original function was enhanced as to support mono-repositories
-;; that host multiple projects via a meta-package manager such as Lerna and
-;; where multiple `node_modules` directories may exist.
-;;
-;; This function now looks up the full directory tree looking for
-;; `node_modules` and the eslint binary inside of it, until it hits the
-;; filesystem root.
-(defun init/flycheck/use-eslint-from-node-modules ()
-  (let* ((curdir (locate-dominating-file
-                (or (buffer-file-name) default-directory)
-                "node_modules")))
-    (setq-local flycheck-javascript-eslint-executable nil)
-    (while (and curdir (not flycheck-javascript-eslint-executable))
-      (let ((eslint (expand-file-name "node_modules/eslint/bin/eslint.js"
-                                      curdir)))
-        ;; Setting `flycheck-javascript-eslint-executable' terminates the loop
-        ;; above.
-        (if (and eslint (file-executable-p eslint))
-            (setq-local flycheck-javascript-eslint-executable eslint)
-          (setq curdir (file-name-directory (directory-file-name curdir))))))))
 
 (use-package flycheck
   :hook ((flycheck-mode . flycheck-popup-tip-mode))

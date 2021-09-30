@@ -24,6 +24,9 @@
 
 ;;; Code:
 
+(defun my/company/clear-flycheck-errors (manual)
+  (flycheck-clear))
+
 (defun smarter-yas-expand-next-field-complete ()
   "Try to `yas-expand' and `yas-next-field' at current cursor position.
 
@@ -66,8 +69,7 @@ If failed try to complete the common part with `company-complete-common'"
   (add-to-list 'company-backends 'company-flow)
   (global-company-mode 1)
   (company-statistics-mode)
-  (add-hook 'company-completion-started-hook #'(lambda ()
-                                                (flycheck-clear-errors)))
+  (add-hook 'company-completion-started-hook 'my/company/clear-flycheck-errors)
   (define-key company-mode-map (kbd "<C-return>") 'company-complete))
 
 (use-package company-lsp

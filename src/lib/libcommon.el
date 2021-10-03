@@ -88,6 +88,9 @@ happens.
   (interactive)
   (kill-buffer (current-buffer)))
 
+(defun add-suffix-to-symbol (sym suffix)
+  "Add a suffix to a symbol name."
+  (intern (concatenate 'string "" (symbol-name sym) suffix)))
 
 (provide 'libcommon)
 

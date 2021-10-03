@@ -85,7 +85,7 @@ be used when debugging `lsp'."
   ;; Highlighting of symbol on point
   (setq lsp-enable-symbol-highlighting t)
   ;; Show documentation for symbol on point
-  (setq lsp-ui-doc-show-with-cursor t)
+  (setq lsp-ui-doc-show-with-cursor nil)
   ;; Disable lens
   (setq lsp-lens-enable nil)
   ;; Enable headerline showing source file location in workspace
@@ -109,8 +109,8 @@ be used when debugging `lsp'."
 
   ;; Modeline:
   ;; Disable code actions
-  (setq lsp-modeline-code-actions-enable t)
-  (setq lsp-modeline-diagnostics-enable t)
+  (setq lsp-modeline-code-actions-enable nil)
+  (setq lsp-modeline-diagnostics-enable nil)
   (setq lsp-modeline-workspace-status-enable nil);
 
   ;; Completion

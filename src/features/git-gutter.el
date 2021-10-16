@@ -20,12 +20,17 @@
 
 ;;; Commentary:
 ;; Project hosted on Github: https://github.com/emacsorphanage/git-gutter
+;;
+;; A separate configuration for `git-gutter-fringe' is not provided because the
+;; interface is identical to `git-gutter' and it automatically defaults to the
+;; latter if not running in a graphical environment.
 
 ;;; Code:
 
 (defun init/git-gutter ()
   "Initialise git-gutter."
-  (global-git-gutter-mode t)
+  ;; The form `(use-package 'git-gutter-fringer)` did not work, but this did:
+  (require 'git-gutter-fringe)
 
   (let ((prefix "C-x C-g "))
     (global-set-key (kbd (concat prefix "!")) #'git-gutter)
@@ -44,23 +49,79 @@
     ;; Mark current hunk
     (global-set-key (kbd (concat prefix "SPC")) #'git-gutter:mark-hunk))
 
-  (setq git-gutter:modified-sign " "
-        git-gutter:added-sign " "
-        git-gutter:deleted-sign " "
-        git-gutter:update-interval 2
+  (fringe-helper-define 'git-gutter-fr:added nil
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......")
+
+  (fringe-helper-define 'git-gutter-fr:deleted nil
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......")
+
+  (fringe-helper-define 'git-gutter-fr:modified nil
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......"
+    "XX......")
+
+  (setq git-gutter:update-interval 2
         git-gutter:lighter ""
         git-gutter:hide-gutter t)
 
-  (set-face-background 'git-gutter:modified "dark magenta")
-  (set-face-attribute 'git-gutter:modified nil :height 60)
-  (set-face-background 'git-gutter:added "dark green")
-  ;; Looks wider than modified hunks if set to 60 for some strange reason
-  (set-face-attribute 'git-gutter:added nil :height 50)
-  (set-face-background 'git-gutter:deleted "dark red")
-  (set-face-attribute 'git-gutter:deleted nil :height 60))
+  (let* ((fringe-bg (face-attribute 'fringe :background)))
+    (set-face-foreground 'git-gutter-fr:modified "dark magenta")
+    (set-face-background 'git-gutter-fr:modified fringe-bg)
+    (set-face-foreground 'git-gutter-fr:added "dark green")
+    (set-face-background 'git-gutter-fr:added fringe-bg)
+    (set-face-foreground 'git-gutter-fr:deleted "dark red")
+    (set-face-background 'git-gutter-fr:deleted fringe-bg)
+
+    (set-face-background 'git-gutter:modified "dark magenta")
+    (set-face-background 'git-gutter:added "dark green")
+    (set-face-background 'git-gutter:deleted "dark red"))
+
+  (global-git-gutter-mode t))
 
 (use-package git-gutter
-  :ensure t
   :init
   (init/git-gutter)
   :config)

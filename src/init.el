@@ -25,7 +25,7 @@
 ;;; Code:
 
 ;; Turn on native compilation, if supported.
-(setq comp-deferred-compilation t)      
+(setq comp-deferred-compilation t)
 
 (eval-when-compile
   (require 'cl)
@@ -40,7 +40,7 @@
   "Absolute path to Emacs' init `src´ directory.
 If nil, `default-directory' is used instead.")
 
-(defvar init/dirs-load '("internals" "features" "extra-features" "modes")
+(defvar init/dirs-load '("config" "features" "extra-features" "modes")
   "Directories to automatically load.
 Contains directories to automatically load as part of the
 initialisation process.  Directories must be relative to

@@ -44,6 +44,4 @@
   ;; (global-hl-line-mode 1)
 )
 
-(eval-after-load 'linum #'init/env/term)
-
 ;;; term.el ends here

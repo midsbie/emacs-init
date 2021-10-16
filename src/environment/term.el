@@ -42,10 +42,7 @@
   ;; Turn highlight one globally (configuration is above)
   ;; UPDATE: disabled as it was degrading performance
   ;; (global-hl-line-mode 1)
-
-  ;; Fix "stuck" fringe by adding a space between line number and actual
-  ;; content
-  (setq linum-format "%d "))
+)
 
 (eval-after-load 'linum #'init/env/term)
 

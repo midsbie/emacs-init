@@ -94,8 +94,8 @@ characters wide."
     (when height
       (set-current-frame-width height)))
 
-  ;; This should be improved upon to take into account the dimensions of the display and make
-  ;; splitting behave accordingly.
+  ;; This should be improved upon to take into account the dimensions of the
+  ;; display and make splitting behave accordingly.
   (setq split-width-threshold nil
         split-height-threshold nil)
 
@@ -106,8 +106,9 @@ characters wide."
   ;;
   ;; ?????? Disabled as it was seriously degrading performance
   ;;
-  ;; 260621 Circumstances which led to disabling of highlighter are unclear.  Tentatively
-  ;;        reactivating since many package upgrades have taken place since.
+  ;; 260621 Circumstances which led to disabling of highlighter are unclear.
+  ;;        Tentatively reactivating since many package upgrades have taken
+  ;;        place since.
   (global-hl-line-mode 1)
   (set-face-background 'hl-line "#383830")
 

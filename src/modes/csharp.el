@@ -50,8 +50,6 @@
 
 (use-package csharp-mode
   :mode (("\\.cs\\'" . csharp-mode))
-  :hook (csharp-mode . init/mode/csharp)
-  :config
-  (add-hook 'before-save-hook 'lsp-format-buffer nil t))
+  :hook (csharp-mode . init/mode/csharp))
 
 ;;; csharp.el ends here

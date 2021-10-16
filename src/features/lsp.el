@@ -115,8 +115,7 @@ be used when debugging `lsp'."
 
   ;; Completion
   (setq lsp-completion-show-detail t)
-  (setq lsp-completion-show-kind t)
-  )
+  (setq lsp-completion-show-kind t))
 
 (use-package lsp-mode
   :ensure t
@@ -125,6 +124,7 @@ be used when debugging `lsp'."
   :config
   ;; This can't be in the initializing defun above or it'll error out.
   ;; Ref: https://github.com/emacs-lsp/lsp-mode/issues/1532#issuecomment-602384182
-  (define-key lsp-mode-map (kbd "C-c l") lsp-command-map))
+  (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
+  (add-hook 'before-save-hook 'lsp-format-buffer))
 
 ;;; lsp.el ends here

@@ -107,17 +107,18 @@
         git-gutter:lighter ""
         git-gutter:hide-gutter t)
 
-  (let* ((fringe-bg (face-attribute 'fringe :background)))
-    (set-face-foreground 'git-gutter-fr:modified "dark magenta")
-    (set-face-background 'git-gutter-fr:modified fringe-bg)
-    (set-face-foreground 'git-gutter-fr:added "dark green")
-    (set-face-background 'git-gutter-fr:added fringe-bg)
-    (set-face-foreground 'git-gutter-fr:deleted "dark red")
-    (set-face-background 'git-gutter-fr:deleted fringe-bg)
+  (run-with-timer 2 nil #'(lambda ()
+                            (let* ((fringe-bg (face-attribute 'fringe :background)))
+                              (set-face-foreground 'git-gutter-fr:modified "dark magenta")
+                              (set-face-background 'git-gutter-fr:modified fringe-bg)
+                              (set-face-foreground 'git-gutter-fr:added "dark green")
+                              (set-face-background 'git-gutter-fr:added fringe-bg)
+                              (set-face-foreground 'git-gutter-fr:deleted "dark red")
+                              (set-face-background 'git-gutter-fr:deleted fringe-bg)
 
-    (set-face-background 'git-gutter:modified "dark magenta")
-    (set-face-background 'git-gutter:added "dark green")
-    (set-face-background 'git-gutter:deleted "dark red"))
+                              (set-face-background 'git-gutter:modified "dark magenta")
+                              (set-face-background 'git-gutter:added "dark green")
+                              (set-face-background 'git-gutter:deleted "dark red"))))
 
   (global-git-gutter-mode t))
 

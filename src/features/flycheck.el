@@ -57,7 +57,7 @@
             (setq-local flycheck-javascript-eslint-executable eslint)
           (setq curdir (file-name-directory (directory-file-name curdir))))))))
 
-(defun init/config/flycheck ()
+(defun init/flycheck ()
   "Configure `flycheck'."
 
   ;; Enable flycheck globally.
@@ -115,8 +115,12 @@
                  (window-height   . 0.15))))
 
 (use-package flycheck
-  :hook ((flycheck-mode . flycheck-popup-tip-mode))
+  ;; Not activating flycheck-popup-tip-mode because error messages frequently
+  ;; do not respect boundaries of the window, often making it impossible to
+  ;; read the full message.
+  ;;
+  ;; :hook ((flycheck-mode . flycheck-popup-tip-mode))
   :init
-  (init/config/flycheck))
+  (init/flycheck))
 
 ;;; flycheck.el ends here

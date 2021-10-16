@@ -24,67 +24,6 @@
 
 ;;; Code:
 
-
-(defvar my/flycheck-buffer-last 0
-  "Last time `'flycheck-buffer' ran.")
-
-(defvar my/flycheck-buffer-time-between 1
-  "Minimum time that must elapse between invocations of `flycheck-buffer'.
-
-Note that experiments revealed that a value less than 5 may
-compromise performance in some modes, such as `csharp-mode'.")
-
-(defvar my/flycheck-buffer-timer nil
-  "Timer for next scheduled invocation of `flycheck-buffer'.")
-
-(defvar my/flycheck-buffer--func nil)
-(defvar my/flycheck-buffer--args nil)
-(defvar my/flycheck-buffer-preemptive-p nil)
-
-(defun my/flycheck-buffer (orig &rest args)
-  "Function advice around `flycheck-buffer'.
-This is an attempt at making `flycheck' more performant with
-`lsp', especially when editing C# source files.  We make it so
-`flycheck-buffer' is executed at most once every number of
-seconds specified by `my/flycheck-buffer-time-between'.  It is
-not executed if company mode's popup is active to prevent visual
-corruption.  Likewise, it is not executed if flycheck is
-running."
-  (interactive)
-  (when (timerp my/flycheck-buffer-timer)
-    (cancel-timer my/flycheck-buffer-timer)
-    (setq my/flycheck-buffer-timer nil))
-  (let* ((seconds-from-last (- (float-time) my/flycheck-buffer-last))
-         (seconds-to-next (- my/flycheck-buffer-time-between seconds-from-last)))
-    ;; Must copy ORIG and ARGS or they won't be available in the timer lambda func.
-    (setq my/flycheck-buffer--func orig
-          my/flycheck-buffer--args args)
-    ;; Preempt buffer check if run via C-c ! c.
-    (when my/flycheck-buffer-preemptive-p
-      (setq seconds-to-next 0)
-      (setq my/flycheck-buffer-preemptive-p nil))
-    ;; The following two statements purposely disabled; the first one because
-    ;; it is only useful during debugging; the second one because it doesn't
-    ;; seem to be needed.
-    ;;
-    ;; (backtrace)
-    ;; (flycheck-delete-all-overlays)
-    ;; (message "running checker in %s @ %s (last @ %s)" (max seconds-to-next) (+ (max seconds-to-next) (float-time)) my/flycheck-buffer-last)
-    (setq my/flycheck-buffer-timer
-          (run-with-timer (max seconds-to-next 0) nil
-                          #'(lambda ()
-                              ;; (message "RUNNING CHECKER at %s" (time-to-seconds))
-                              (setq my/flycheck-buffer-last (float-time)
-                                    my/flycheck-buffer-timer nil)
-                              (unless (or (flycheck-running-p) (company--active-p))
-                                (apply my/flycheck-buffer--func my/flycheck-buffer--args)))))))
-
-;; Not currently used; see :bind section in use-package invocation below.
-(defun my/flycheck-buffer-preemptive ()
-  (interactive)
-  (setq my/flycheck-buffer-preemptive-p t)
-  (flycheck-buffer))
-
 (defun init/flycheck/on-flyspell-mode()
   ;; Deactivate annoying correction of previous misspelled error when C-; is hit.
   (define-key flyspell-mode-map (kbd "C-;") nil))
@@ -124,10 +63,6 @@ running."
   ;; Enable flycheck globally.
   (global-flycheck-mode 1)
   (load "flycheck-flow")
-
-  ;; Advice removal may not be needed but here for correctness anyway.
-  (advice-remove 'flycheck-buffer #'my/flycheck-buffer)
-  (advice-add 'flycheck-buffer :around #'my/flycheck-buffer)
 
   ;; + in c/c++ modes
   (setq flycheck-cppcheck-checks '("all"))
@@ -181,9 +116,6 @@ running."
 
 (use-package flycheck
   :hook ((flycheck-mode . flycheck-popup-tip-mode))
-;;   :bind (
-;;          :map flycheck-mode-map
-;;               ("C-c ! c" . my/flycheck-buffer-preemptive))
   :init
   (init/config/flycheck))
 

@@ -58,8 +58,8 @@ be used when debugging `lsp'."
                     method))
     (goto-char (point-min))))
 
-(defun init/mode/lsp ()
-  "Initialise LSP mode."
+(defun init/lsp ()
+  "Initialise LSP."
   ;; Refer to initialisation of `gc-cons-threshold' and `read-process-output-max'
   ;; in `internal/settings.el'.
   ;;
@@ -120,7 +120,7 @@ be used when debugging `lsp'."
 (use-package lsp-mode
   :ensure t
   :init
-  (init/mode/lsp)
+  (init/lsp)
   :config
   ;; This can't be in the initializing defun above or it'll error out.
   ;; Ref: https://github.com/emacs-lsp/lsp-mode/issues/1532#issuecomment-602384182

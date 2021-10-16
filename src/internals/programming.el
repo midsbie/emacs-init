@@ -129,7 +129,6 @@
 
 (defun init/common-nonweb-programming-mode ()
   "Perform initialisation of aspects common to all programming-related modes."
-  (enable-fci-mode)                 ; fill column indicator
   (auto-fill-mode)                  ; auto fill
 
 ;;(flyspell-prog-mode)              ; turn spell check for strings and comments
@@ -172,7 +171,6 @@
   ;; Required below by `enable-prettier-mode-maybe'.
   (require 'add-node-modules-path)
 
-  (enable-fci-mode)
   (auto-fill-mode -1)
   (highlight-parentheses-mode)
   (subword-mode 1)

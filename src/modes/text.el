@@ -26,7 +26,6 @@
 
 (defun init/text-mode ()
   "Initialises `text-mode'."
-  (enable-fci-mode)                 ; fill column indicator
   (auto-fill-mode)                  ; auto fill
   (flyspell-mode)                   ; turn spell check on
   (abbrev-mode -1)                  ; turn abbrev-mode off

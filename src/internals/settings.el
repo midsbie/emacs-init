@@ -105,6 +105,10 @@
 ;; This may be problematic in some modes.  Keeping it on for now as an experiment.
 (electric-layout-mode 1)
 
+;; This feature, now native to Emacs 27, replaces the old package fill-column-indicator that was
+;; previously in use.
+(global-display-fill-column-indicator-mode)
+
 ;; Set tab-stop positions for C-i at two characters wide.
 (let (p)
   (dotimes (i 50)

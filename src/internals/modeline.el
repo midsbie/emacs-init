@@ -25,8 +25,12 @@
 
 ;;; Code:
 
-(setq my/diminished-modes '(projectile-mode ivy-mode eldoc-mode auto-fill-mode yas-minor-mode
-                                            git-gutter-mode))
+(setq my/diminished-modes '(auto-fill-mode auto-fill-function
+                                            display-fill-column-indicator-mode
+                                            git-gutter-mode
+                                            ivy-mode eldoc-mode
+                                            projectile-mode
+                                            yas-minor-mode ))
 
 (dolist (mode my/diminished-modes)
   (add-hook (add-suffix-to-symbol mode "-hook") `(lambda ()

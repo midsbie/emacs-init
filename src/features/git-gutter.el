@@ -113,7 +113,7 @@
                               (set-face-background 'git-gutter-fr:modified fringe-bg)
                               (set-face-foreground 'git-gutter-fr:added "dark green")
                               (set-face-background 'git-gutter-fr:added fringe-bg)
-                              (set-face-foreground 'git-gutter-fr:deleted "dark red")
+                              (set-face-foreground 'git-gutter-fr:deleted "firebrick3")
                               (set-face-background 'git-gutter-fr:deleted fringe-bg)
 
                               (set-face-background 'git-gutter:modified "dark magenta")

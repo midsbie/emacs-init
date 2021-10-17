@@ -49,59 +49,24 @@
     ;; Mark current hunk
     (global-set-key (kbd (concat prefix "SPC")) #'git-gutter:mark-hunk))
 
-  (fringe-helper-define 'git-gutter-fr:added nil
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......")
-
-  (fringe-helper-define 'git-gutter-fr:deleted nil
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......")
-
-  (fringe-helper-define 'git-gutter-fr:modified nil
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......"
-    "XX......")
+  (dolist (sym '(git-gutter-fr:added git-gutter-fr:modified git-gutter-fr:deleted))
+    (fringe-helper-define sym nil
+      "XX......"
+      "XX......"
+      "XX......"
+      "XX......"
+      "XX......"
+      "XX......"
+      "XX......"
+      "XX......"
+      "XX......"
+      "XX......"
+      "XX......"
+      "XX......"
+      "XX......"
+      "XX......"
+      "XX......"
+      "XX......"))
 
   (setq git-gutter:update-interval 2
         git-gutter:lighter ""
@@ -113,7 +78,7 @@
                               (set-face-background 'git-gutter-fr:modified fringe-bg)
                               (set-face-foreground 'git-gutter-fr:added "dark green")
                               (set-face-background 'git-gutter-fr:added fringe-bg)
-                              (set-face-foreground 'git-gutter-fr:deleted "firebrick3")
+                              (set-face-foreground 'git-gutter-fr:deleted "dark red")
                               (set-face-background 'git-gutter-fr:deleted fringe-bg)
 
                               (set-face-background 'git-gutter:modified "SkyBlue3")

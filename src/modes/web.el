@@ -88,7 +88,8 @@
   (unless (or (and (boundp 'typescript-mode) typescript-mode)
               (and (boundp 'tide-mode) tide-mode)
               (string-equal "tsx" (file-name-extension buffer-file-name)))
-    (flow-minor-enable-automatically)))
+    (when (flycheck-flow--predicate)
+      (lsp))))
 
 (defun init/web/load-local-vars ()
   "Map the value of `c-basic-offset' to `web-mode-code-indent-offset'."

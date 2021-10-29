@@ -24,6 +24,18 @@
 
 ;;; Code:
 
+(defun init/config/company-box ()
+  ;; company-box sets the `company-tooltip-selection' face invisible
+  (custom-set-faces
+   '(company-tooltip-selection
+     ((((class color) (min-colors 88) (background light))
+       (:background "light blue"))
+      (((class color) (min-colors 88) (background dark))
+       (:background "gray31"))
+      (t (:background "green"))))
+   '(company-tooltip ((t (:background "grey3"))))
+   ))
+
 (defun my/company/clear-flycheck-errors (manual)
   (flycheck-clear))
 
@@ -78,5 +90,10 @@ If failed try to complete the common part with `company-complete-common'"
 (use-package company-lsp
   :defer t
   :custom (company-lsp-cache-candidates 'auto))
+
+;; Ref: https://github.com/sebastiencs/company-box
+(use-package company-box
+  :hook (company-mode . company-box-mode)
+  :config (init/config/company-box))
 
 ;;; company.el ends here

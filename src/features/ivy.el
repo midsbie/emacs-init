@@ -94,4 +94,8 @@
   :config
   (init/config/ivy))
 
+(use-package ivy-rich
+  :ensure t
+  :init (ivy-rich-mode 1))
+
 ;;; ivi.el ends here

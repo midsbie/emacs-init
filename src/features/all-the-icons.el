@@ -26,16 +26,18 @@
 
 ;;; Code:
 
-(defun init/all-the-icons ()
+(defun init/all-the-icons-completion ()
   ;; This package doesn't seem to do anything but here for now while it is
   ;; evaluated.
   ;; Ref: https://github.com/iyefrat/all-the-icons-completion
-  (all-the-icons-completion))
+  (all-the-icons-completion-mode))
+
+(use-package all-the-icons-completion
+  :init
+  (init/all-the-icons-completion))
 
 ;; Ref: https://github.com/domtronn/all-the-icons.el
 (use-package all-the-icons
-  :init
-  init/all-the-icons
   ;; Ref: https://github.com/wyuenho/all-the-icons-dired
   :hook ((dired-mode . all-the-icons-dired-mode)))
 

@@ -1,6 +1,6 @@
 ;;; all-the-icons.el --- Configures all-the-icons and related packages
 
-;; Copyright (C) 2019-2020  Miguel Guedes
+;; Copyright (C) 2021  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools

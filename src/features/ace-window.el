@@ -1,6 +1,6 @@
-;;; ace-window.el --- Customises Ace Window package
+;;; ace-window.el --- configures Ace Window package
 
-;; Copyright (C) 2019-2020  Miguel Guedes
+;; Copyright (C) 2019-2021  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools

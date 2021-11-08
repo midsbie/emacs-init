@@ -97,6 +97,9 @@
   (flycheck-add-next-checker 'javascript-flow 'javascript-flow-coverage)
   (flycheck-add-next-checker 'javascript-flow 'javascript-eslint)
 
+  ;; Enabling eslint checker after lsp
+  (flycheck-add-next-checker 'lsp 'javascript-eslint)
+
   (add-hook 'flyspell-mode-hook 'init/flycheck/on-flyspell-mode)
   (add-hook 'flycheck-mode-hook 'init/flycheck/use-eslint-from-node-modules)
 

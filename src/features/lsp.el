@@ -117,14 +117,24 @@ be used when debugging `lsp'."
   (setq lsp-completion-show-detail t)
   (setq lsp-completion-show-kind t))
 
-(use-package lsp-mode
-  :ensure t
-  :init
-  (init/lsp)
-  :config
+(defun init/config/lsp ()
   ;; This can't be in the initializing defun above or it'll error out.
   ;; Ref: https://github.com/emacs-lsp/lsp-mode/issues/1532#issuecomment-602384182
   (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
-  (add-hook 'before-save-hook 'lsp-format-buffer))
+
+  ;; It's important that we always fallback to `lsp-format-buffer' when
+  ;; prettier isn't being used.
+  (unless prettier-mode
+    (add-hook 'before-save-hook 'lsp-format-buffer)))
+
+(use-package lsp-mode
+  ;; Refer to `init/config/lsp' for reason why.
+  :after prettier
+  :init (init/lsp)
+  :config (init/config/lsp)
+  ;; `js-jsx-mode' does not seem to load LSP; loading manually in
+  ;; `init/config/js-mode' instead.
+  :hook (((js-mode js-jsx-mode typescript-mode) . lsp-mode)
+         (lsp-mode . lsp-enable-which-key-integration)))
 
 ;;; lsp.el ends here

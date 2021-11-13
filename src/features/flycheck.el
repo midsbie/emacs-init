@@ -86,8 +86,10 @@
   ;;      (flycheck-add-mode 'html-tidy 'web-mode)
   ;;      (flycheck-add-mode 'css-csslint 'web-mode)
 
-  (flycheck-add-mode 'javascript-eslint 'web-mode)
+  (flycheck-add-mode 'javascript-eslint 'js-mode)
+  (flycheck-add-mode 'javascript-eslint 'js-jsx-mode)
   (flycheck-add-mode 'javascript-eslint 'typescript-mode)
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
 
   ;; IMPORTANT! Do not mess with the order in which the checkers are added
   ;; below.  Doing so will result in eslint being somehow overriden or

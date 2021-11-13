@@ -45,13 +45,12 @@
   (setq-local fill-column 99)
 
   ;; Was activating flow minor mode previously:
-  ;; 
+  ;;
   ;;   (when (flycheck-flow--predicate)
   ;;     (flow-minor-mode 1))
   ;;
   ;; Now using LSP.
-  (unless (and (boundp 'lsp-mode ) lsp-mode)
-    (lsp)))
+  (lsp 1))
 
 ;; Uncomment the following code if enabling:
 ;;

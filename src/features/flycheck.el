@@ -99,9 +99,6 @@
   (flycheck-add-next-checker 'javascript-flow 'javascript-flow-coverage)
   (flycheck-add-next-checker 'javascript-flow 'javascript-eslint)
 
-  ;; Enabling eslint checker after lsp
-  (flycheck-add-next-checker 'lsp 'javascript-eslint)
-
   (add-hook 'flyspell-mode-hook 'init/flycheck/on-flyspell-mode)
   (add-hook 'flycheck-mode-hook 'init/flycheck/use-eslint-from-node-modules)
 
@@ -119,7 +116,18 @@
                  (reusable-frames . visible)
                  (window-height   . 0.15))))
 
+(defun init/flycheck/chain-eslint-checker ()
+  "Add javascript-eslint checker.
+
+This function adds the javascript-eslint checker to the current
+checkers after `lsp-diagnostics-mode' is loaded.  Attempting to
+add the the checker before the load occurs fails with an error
+because the checker does not exist."
+  (when (and flycheck-mode lsp-diagnostics-mode)
+    (flycheck-add-next-checker 'lsp 'javascript-eslint)))
+
 (use-package flycheck
+  :hook (lsp-diagnostics-mode . init/flycheck/chain-eslint-checker)
   ;; Not activating flycheck-popup-tip-mode because error messages frequently
   ;; do not respect boundaries of the window, often making it impossible to
   ;; read the full message.

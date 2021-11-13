@@ -50,7 +50,8 @@
   ;;     (flow-minor-mode 1))
   ;;
   ;; Now using LSP.
-  (lsp 1))
+  (unless (and (boundp 'lsp-mode ) lsp-mode)
+    (lsp)))
 
 ;; Uncomment the following code if enabling:
 ;;

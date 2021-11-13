@@ -114,7 +114,7 @@
 ;;     ad-do-it))
 
 (use-package web-mode
-  :mode ("\\.jsx?\\'" "\\.html?\\'")
+  :mode ("\\.html?\\'")
   :hook ((web-mode-local-vars . init/web/load-local-vars)
          (web-mode . init/web-mode)))
 

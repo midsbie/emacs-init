@@ -44,16 +44,19 @@
   (setq-local comment-end   " */")
   (setq-local fill-column 99)
 
-  (when (flycheck-flow--predicate)
-    ;; Was activating flow minor mode previously but now using LSP:
-    ;;   (flow-minor-mode 1)
-    (lsp)))
+  ;; Was activating flow minor mode previously:
+  ;; 
+  ;;   (when (flycheck-flow--predicate)
+  ;;     (flow-minor-mode 1))
+  ;;
+  ;; Now using LSP.
+  (lsp 1))
 
 ;; Uncomment the following code if enabling:
 ;;
 (use-package js
   :mode (("\\.js\\'" . js-mode)
-         ("\\.jsx\\'" . js-jsx-mode))
+         ("\\.[jt]sx\\'" . js-jsx-mode))
   :hook (((js-mode js-jsx-mode) . init/config/js-mode)
          ((js-mode js-jsx-mode) . init/common-web-programming-mode))
   :bind (("M-a" . c-beginning-of-statement)

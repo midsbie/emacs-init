@@ -79,8 +79,7 @@
   (tide-hl-identifier-mode 1))
 
 (use-package typescript-mode
-  :mode (("\\.ts\\'" . typescript-mode)
-         ("\\.tsx\\'" . web-mode))
+  :mode (("\\.ts\\'" . typescript-mode))
   :hook
   (typescript-mode . init/mode/ts-tsx)
   (web-mode-hook . init/mode/tsx))

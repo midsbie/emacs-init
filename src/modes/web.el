@@ -64,7 +64,8 @@
                          (insert-char ?})
                          (indent-for-tab-command)))
 
-  ;; Fix C-left movement causing curly and double quote char to be inserted inside JSX block
+  ;; Fix C-left movement causing curly and double quote char to be inserted
+  ;; inside JSX block
   (local-set-key [C-left] 'backward-word)
   (local-set-key [C-right] 'forward-word)
 
@@ -83,12 +84,12 @@
   ;; Source: http://cha1tanya.com/2015/06/20/configuring-web-mode-with-jsx.html
   (setq-local web-mode-content-types-alist '(("jsx" . "\\.[tj]s[x]?\\'")))
 
-  ;; Note that we check for tsx extension to prevent enabling `flow-minor-mode' in typescript-mode
-  ;; because web-mode may initialise ahead in some circumstances.
+  ;; Load LSP if JSX with Flow or TSX.  Avoid when `typescript-mode' or `tide'
+  ;; in use.
   (unless (or (and (boundp 'typescript-mode) typescript-mode)
-              (and (boundp 'tide-mode) tide-mode)
-              (string-equal "tsx" (file-name-extension buffer-file-name)))
-    (when (flycheck-flow--predicate)
+              (and (boundp 'tide-mode) tide-mode))
+    (when (or (string-equal "tsx" (file-name-extension buffer-file-name))
+              (flycheck-flow--predicate))
       (lsp))))
 
 (defun init/web/load-local-vars ()

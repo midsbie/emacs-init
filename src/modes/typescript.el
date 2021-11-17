@@ -21,36 +21,32 @@
 ;;; Commentary:
 
 ;;; Log:
-;; 21-09-03 Disabling tide in favour of LSP
+;; 21-11-17 Moving back to TIDE as LSP is too slow
+;; 21-09-03 Disabling TIDE in favour of LSP
 
 ;;; Code:
 
 (defun init/mode/ts-tsx ()
-  "Initialise modes related to Typescript development."
+  "Configure buffer for Typescript development."
   (init/common-web-programming-mode)
   (setq-local typescript-indent-level 2)
 
   (local-set-key (kbd "M-a") 'c-beginning-of-statement)
   (local-set-key (kbd "M-e") 'c-end-of-statement)
 
-  (init/mode/ts-tsx/lsp-or-tide))
+  ;; (init/mode/ts-tsx/lsp)
+  (init/mode/ts-tsx/tide))
 
-(defun init/mode/tsx ()
-  "Initialise typescript mode for JSX."
+(defun init/mode/web/ts-tsx ()
+  "Initialise Typescript mode for React in `web-mode'."
   ; Since web-mode may be started for a wide variety of source files, such as
   ; HTML markup, template files and Javascript, the initialisation is only run
   ; if the buffer's file extension suggests a typescript source file.
   (when (string-equal "tsx" (file-name-extension buffer-file-name))
     (init/mode/ts-tsx)))
 
-(defun init/mode/ts-tsx/lsp-or-tide ()
-  "Initialise LSP or TIDE for typescript."
-  (init/mode/ts-tsx/lsp)
-  ;; (init/mode/tide)
-  )
-
 (defun init/mode/ts-tsx/lsp ()
-  "Initialise LSP for typescript."
+  "Enable LSP in Typescript buffer."
   ; For some reason, if LSP is invoked preemptively in this mode hook, it will
   ; initialise correctly but will fail to work as expected: lsp-ui will not
   ; work, nor will definition at point, and other features.  Solution found was
@@ -58,15 +54,15 @@
   ;;  (lsp))
   (run-with-idle-timer .1 nil '(lambda()
                                  (lsp)
-                                 ;; Unfortuntaly LSP's code lenses aren't yet supported by the
-                                 ;; server.  Here for posteriority, however.
+                                 ;; Unfortuntaly LSP's code lenses aren't yet
+                                 ;; supported by the server.  Here for
+                                 ;; posteriority, however.
                                  ;; (lsp-lens-show)
                                  )))
 
-(defun init/mode/tide()
-  "Initialise tide mode."
+(defun init/mode/ts-tsx/tide ()
+  "Enable TIDE in Typescript buffer."
   (interactive)
-  (message "TIDE HAS BEEN DEPRECATED: USE LSP INSTEAD")
   (tide-setup)
 
   (setq-local flycheck-check-syntax-automatically '(save idle-change mode-enabled))
@@ -79,26 +75,10 @@
   (tide-hl-identifier-mode 1))
 
 (use-package typescript-mode
-  :mode (("\\.ts\\'" . typescript-mode))
+  :mode (("\\.ts\\'" . typescript-mode)
+         ("\\.tsx\\'" . typescript-mode))
   :hook
   (typescript-mode . init/mode/ts-tsx)
-  (web-mode-hook . init/mode/tsx))
-
-;; (use-package tide
-;;   :ensure t
-;;   :after (typescript-mode company flycheck)
-;;   :hook (typescript-mode . init/mode/tide)
-;;     :bind ((:map tide-mode-map
-;;                  ("C-c t s" . tide-restart-server)
-;;                  ("C-c t S" . tide-kill-server)
-;;                  ("C-c t p" . tide-project-errors)
-;;                  ("C-c C-c" . tide-fix)
-;;                  ("C-c t x" . tide-references)
-;;                  ("C-c t m" . tide-rename-symbol)
-;;                  ("C-c t M" . tide-rename-file)
-;;                  ("C-c t r" . tide-refactor)))
-;;   :init
-;;   (setq tide-server-max-response-length 1024000) ; x10 the default value
-;;   )
+  (web-mode-hook . init/mode/web/ts-tsx))
 
 ;;; typescript.el ends here

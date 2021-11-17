@@ -75,6 +75,7 @@
   (tide-hl-identifier-mode 1))
 
 (use-package typescript-mode
+  :diminish "TS"
   :mode (("\\.ts\\'" . typescript-mode)
          ("\\.tsx\\'" . typescript-mode))
   :hook

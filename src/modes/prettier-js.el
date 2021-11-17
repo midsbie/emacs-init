@@ -69,6 +69,7 @@ The one exception to the rules above is when the file is inside a
             (prettier-mode 1)))))))
 
 (use-package prettier
+  :diminish "Pr"
   :init
   ;; Resolve transient hang when saving files.
   ;; Ref: https://github.com/jscheid/prettier.el/issues/34#issuecomment-657508597

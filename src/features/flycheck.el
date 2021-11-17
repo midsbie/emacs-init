@@ -127,6 +127,7 @@ because the checker does not exist."
     (flycheck-add-next-checker 'lsp 'javascript-eslint)))
 
 (use-package flycheck
+  :diminish "Fchk"
   :hook (lsp-diagnostics-mode . init/flycheck/chain-eslint-checker)
   ;; Not activating flycheck-popup-tip-mode because error messages frequently
   ;; do not respect boundaries of the window, often making it impossible to

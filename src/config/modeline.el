@@ -28,8 +28,10 @@
 (setq my/diminished-modes '(auto-fill-mode auto-fill-function
                                             display-fill-column-indicator-mode
                                             git-gutter-mode
-                                            ivy-mode eldoc-mode
+                                            highlight-parentheses-mode
+                                            ivy-mode
                                             projectile-mode
+                                            subword-mode
                                             yas-minor-mode ))
 
 (dolist (mode my/diminished-modes)

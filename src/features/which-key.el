@@ -39,6 +39,7 @@
   (which-key-mode))
 
 (use-package which-key
+  :diminish
   :init
   (init/which-key))
 

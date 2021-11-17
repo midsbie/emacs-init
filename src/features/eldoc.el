@@ -24,9 +24,14 @@
 
 ;;; Code:
 
-(eval-after-load 'eldoc
-  '(set-face-attribute 'eldoc-highlight-function-argument nil
-                       :underline t ; :foreground "green"
-                       :weight 'bold))
+(defun init/eldoc ()
+  (set-face-attribute 'eldoc-highlight-function-argument nil
+                      :underline t ; :foreground "green"
+                      :weight 'bold))
+
+(use-package eldoc
+  :diminish "Doc"
+  :init
+  (init/eldoc))
 
 ;;; eldoc.el ends here

@@ -27,7 +27,6 @@
 (defun init/config/company ()
   "Configure `company'."
   (unless clangd-p (delete 'company-clang company-backends))
-  (add-to-list 'company-backends 'company-flow)
   (global-company-mode 1)
   (company-statistics-mode)
   (add-hook 'company-completion-started-hook 'my/company/clear-flycheck-errors)
@@ -68,7 +67,7 @@ If failed try to complete the common part with `company-complete-common'"
 
 ;; As per: https://github.com/MatthewZMD/.emacs.d#company-mode
 (use-package company
-  :diminish company-mode
+  :diminish
   :hook ((prog-mode LaTeX-mode latex-mode ess-r-mode) . company-mode)
   :bind
   (:map company-active-map
@@ -98,6 +97,7 @@ If failed try to complete the common part with `company-complete-common'"
 
 ;; Ref: https://github.com/sebastiencs/company-box
 (use-package company-box
+  :diminish
   :hook (company-mode . company-box-mode)
   :config (init/config/company-box))
 

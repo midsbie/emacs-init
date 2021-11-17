@@ -24,19 +24,22 @@
 
 ;;; Code:
 
-; For some strange reason this now needs to be set otherwise the projectile
-; keymap is not available at all.
-(setq-default projectile-keymap-prefix "")
+(defun init/projectile ()
+  "Initialise `projectile'."
+  ;; For some strange reason this now needs to be set otherwise the projectile
+  ;; keymap is not available at all.
+  (setq-default projectile-keymap-prefix "")
+  (projectile-mode))
 
-; This statement was producing an error when placed before the function it
-; invokes, presumable because 'ido may have loaded in some circumstances.
+;; This statement was producing an error when placed before the function it
+;; invokes, presumable because 'ido may have loaded in some circumstances.
 (use-package projectile
-  :after (ido company)
+  :after (ido)
   ;; Cannot be bound to `projectile-mode-map' or it won't work
   :bind (("C-c C-p p" . projectile-switch-project-action)
          ("C-c C-p d" . projectile-find-dir)
          ("C-c C-p f" . projectile-find-file))
   :init
-  (projectile-mode))
+  (init/projectile))
 
 ;;; projectile.el ends here

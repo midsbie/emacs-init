@@ -47,17 +47,6 @@
 
 ;;; Code:
 
-(defun my/lsp/log-request (type method)
-  "Log LSP request.
-Prints TYPE and METHOD to special 'lsp-output' buffer.  Meant to
-be used when debugging `lsp'."
-  (with-current-buffer "lsp-output"
-    (goto-char (point-min))
-    (insert (format "[%s] <%s %s\n" (format-time-string "%H:%M:%S:%N" (current-time))
-                    type
-                    method))
-    (goto-char (point-min))))
-
 (defun init/lsp ()
   "Initialise LSP."
   ;; Refer to initialisation of `gc-cons-threshold' and `read-process-output-max'
@@ -126,6 +115,17 @@ be used when debugging `lsp'."
   ;; prettier isn't being used.
   (unless prettier-mode
     (add-hook 'before-save-hook 'lsp-format-buffer)))
+
+(defun my/lsp/log-request (type method)
+  "Log LSP request.
+Prints TYPE and METHOD to special 'lsp-output' buffer.  Meant to
+be used when debugging `lsp'."
+  (with-current-buffer "lsp-output"
+    (goto-char (point-min))
+    (insert (format "[%s] <%s %s\n" (format-time-string "%H:%M:%S:%N" (current-time))
+                    type
+                    method))
+    (goto-char (point-min))))
 
 (use-package lsp-mode
   ;; Refer to `init/config/lsp' for reason why.

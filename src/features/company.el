@@ -1,6 +1,6 @@
-;;; company.el --- Configures `company-mode'
+;;; company.el --- Configures `company-mode' and related packages
 
-;; Copyright (C) 2017-2020  Miguel Guedes
+;; Copyright (C) 2017-2021  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,6 +24,15 @@
 
 ;;; Code:
 
+(defun init/config/company ()
+  "Configure `company'."
+  (unless clangd-p (delete 'company-clang company-backends))
+  (add-to-list 'company-backends 'company-flow)
+  (global-company-mode 1)
+  (company-statistics-mode)
+  (add-hook 'company-completion-started-hook 'my/company/clear-flycheck-errors)
+  (define-key company-mode-map (kbd "<C-return>") 'company-complete))
+
 (defun init/config/company-box ()
   ;; company-box sets the `company-tooltip-selection' face invisible
   (custom-set-faces
@@ -37,6 +46,7 @@
    ))
 
 (defun my/company/clear-flycheck-errors (manual)
+  "Clear flycheck status in buffer."
   (flycheck-clear))
 
 (defun smarter-yas-expand-next-field-complete ()
@@ -80,12 +90,7 @@ If failed try to complete the common part with `company-complete-common'"
   (company-show-numbers t)
   (company-tooltip-idle-delay 0.1)
   :config
-  (unless clangd-p (delete 'company-clang company-backends))
-  (add-to-list 'company-backends 'company-flow)
-  (global-company-mode 1)
-  (company-statistics-mode)
-  (add-hook 'company-completion-started-hook 'my/company/clear-flycheck-errors)
-  (define-key company-mode-map (kbd "<C-return>") 'company-complete))
+  (init/config/company))
 
 (use-package company-lsp
   :defer t

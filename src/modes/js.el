@@ -36,6 +36,12 @@
 
 ;;; Code:
 
+(defun init/js-mode()
+  "Initialise `js-mode'."
+  ;; Supporting flow through `flow-minor-mode', although it is currently not in
+  ;; use.
+  (cl-pushnew 'company-flow company-backends))
+
 (defun init/config/js-mode ()
   "Initialise modes related to Javascript development."
 
@@ -56,10 +62,10 @@
 ;;
 (use-package js
   :mode (("\\.js\\'" . js-mode)
-         ("\\.[jt]sx\\'" . js-jsx-mode))
+         ("\\.jsx\\'" . js-jsx-mode))
   :hook (((js-mode js-jsx-mode) . init/config/js-mode)
          ((js-mode js-jsx-mode) . init/common-web-programming-mode))
-  :bind (("M-a" . c-beginning-of-statement)
-         ("M-e" . c-end-of-statement)))
+  :init
+  (init/js-mode))
 
 ;;; js.el ends here

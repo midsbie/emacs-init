@@ -26,16 +26,12 @@
 
 (defun init/mode/csharp ()
   "Initialise csharp mode."
-  (lsp)
   (setq-local c-basic-offset 4)
 
   ;; Don't set this to a value less than `lsp-idle-delay' above to prevent
   ;; unnecessary messages being sent to the server and potentially overloading
   ;; it.  Currently enforcing a minimum of 1s.
   (setq-local flycheck-idle-change-delay (if (< lsp-idle-delay 1) 1 lsp-idle-delay))
-  ;; Flycheck's debouncer may no longer be necessary but here for now while it
-  ;; is evaluated.
-  (setq-local my/flycheck-buffer-time-between 1)
   ;; Explicitly forcing to default syncronization method of `nil`, which
   ;; defaults to `lsp--sync-full', as supported by omnisharp-roslyn.  This
   ;; statement is here to document the fact that lsp supports the
@@ -46,6 +42,9 @@
   ;; Enable the following if flycheck should only check the buffer on load and
   ;; save.
   ;; (setq-local flycheck-check-syntax-automatically '(mode-enabled save))
+
+  ;; Enable LSP
+  (lsp)
   )
 
 (use-package csharp-mode

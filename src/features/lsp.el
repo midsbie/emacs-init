@@ -132,9 +132,6 @@ be used when debugging `lsp'."
   :after prettier
   :init (init/lsp)
   :config (init/config/lsp)
-  ;; `js-jsx-mode' does not seem to load LSP; loading manually in
-  ;; `init/config/js-mode' instead.
-  :hook (((js-mode js-jsx-mode typescript-mode) . lsp-mode)
-         (lsp-mode . lsp-enable-which-key-integration)))
+  :hook ((lsp-mode . lsp-enable-which-key-integration)))
 
 ;;; lsp.el ends here

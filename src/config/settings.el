@@ -134,9 +134,6 @@
 ;; Windows
 (setq-default split-height-threshold 100)
 
-;; Revert buffer if file associated with it changes outside of emacs.
-;; (global-auto-revert-mode 1)
-
 ;; Run a MAJORMODE-local-vars-hook when local vars are processed.
 ;; From: https://www.emacswiki.org/emacs/LocalVariables
 (add-hook 'hack-local-variables-hook 'run-local-vars-mode-hook)

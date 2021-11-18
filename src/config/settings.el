@@ -143,4 +143,12 @@
 This runs after the local variables have been processed."
   (run-hooks (intern (concat (symbol-name major-mode) "-local-vars-hook"))))
 
+;; Configuration of core modes that do not warrant their own separate module.
+;; ----------------------------------------------------------------------------
+(use-package autorevert
+  :diminish
+  :config
+  ;; Revert buffer if file associated with it changes outside of emacs.
+  (global-auto-revert-mode 1))
+
 ;;; settings.el ends here

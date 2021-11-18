@@ -1,6 +1,6 @@
 ;;; settings.el --- Configures settings of emacs' internal features
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2021  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -99,15 +99,16 @@
                                           (global-set-key (kbd "C-j") 'electric-newline-and-maybe-indent)
                                           (global-set-key (kbd "RET") 'newline))))
 (electric-indent-mode 1)
-;; Also enabling `electric-pair-mode' because it works great with indent above.  Note that pair
-;; requires indent or indentation will be missing in some instances.
+;; Also enabling `electric-pair-mode' because it works great with indent above.
+;; Note that pair requires indent or indentation will be missing in some
+;; instances.
 (electric-pair-mode 1)
 ;; This is problematic in some modes like `typescript-mode', as it forcefully
 ;; adds newlines when some characters are types (e.g. `{').
 (electric-layout-mode -1)
 
-;; This feature, now native to Emacs 27, replaces the old package fill-column-indicator that was
-;; previously in use.
+;; This feature, now native to Emacs 27, replaces the old package
+;; `fill-column-indicator' that was previously in use.
 (global-display-fill-column-indicator-mode)
 
 ;; Set tab-stop positions for C-i at two characters wide.

@@ -33,8 +33,7 @@
       password-cache-expiry   nil)      ; Disable password cache expiration
 
 (delete-selection-mode t)               ; Enable C-D to delete selected text
-(transient-mark-mode t)                 ; Enable typing to replace
-                                        ; selected text
+(transient-mark-mode t)                 ; Enable typing to replace selected text
 
 ;; The following settings as per the documentation on improving the performance
 ;; of LSP at:
@@ -60,7 +59,7 @@
 (setq default-major-mode 'text-mode)
 
 (menu-bar-mode -1)                      ; disable menu bar
-; (size-indication-mode)                  ; turn on size indication mode
+(size-indication-mode 1)                ; turn on size indication mode
 
 ;; Note that `scroll-bar-mode' doesn't seem to be defined in emacs v24.5.1 and
 ;; possibly earlier versions.

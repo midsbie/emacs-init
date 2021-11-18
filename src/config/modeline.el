@@ -22,17 +22,13 @@
 
 ;; I created this module as I wasn't able to get the `delight' package to hide
 ;; minor modes of my choosing.
+;;
+;; 211118 Now relying on use-package and the :diminish property.  Code kept for
+;;        future reference.
 
 ;;; Code:
 
-(setq my/diminished-modes '(auto-fill-mode auto-fill-function
-                                            display-fill-column-indicator-mode
-                                            git-gutter-mode
-                                            highlight-parentheses-mode
-                                            ivy-mode
-                                            projectile-mode
-                                            subword-mode
-                                            yas-minor-mode ))
+(setq my/diminished-modes '())
 
 (dolist (mode my/diminished-modes)
   (add-hook (add-suffix-to-symbol mode "-hook") `(lambda ()

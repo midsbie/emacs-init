@@ -89,6 +89,7 @@
   (global-git-gutter-mode t))
 
 (use-package git-gutter
+  :diminish
   :init
   (init/git-gutter)
   :config)

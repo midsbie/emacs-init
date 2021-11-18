@@ -48,6 +48,7 @@ Assumes currently open file is a C++ implementation source file."
   (define-key yas-minor-mode-map (kbd "<tab>") nil))
 
 (use-package yasnippet
+  :diminish
   :bind ([backtab] . yas-expand)
   :config
   (init/yasnippet))

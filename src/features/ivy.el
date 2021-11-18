@@ -91,6 +91,7 @@
   (setq ivy-height 20))
 
 (use-package ivy
+  :diminish
   :config
   (init/config/ivy))
 

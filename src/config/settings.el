@@ -106,10 +106,6 @@
 ;; adds newlines when some characters are types (e.g. `{').
 (electric-layout-mode -1)
 
-;; This feature, now native to Emacs 27, replaces the old package
-;; `fill-column-indicator' that was previously in use.
-(global-display-fill-column-indicator-mode)
-
 ;; Set tab-stop positions for C-i at two characters wide.
 (let (p)
   (dotimes (i 50)
@@ -150,5 +146,23 @@ This runs after the local variables have been processed."
   :config
   ;; Revert buffer if file associated with it changes outside of emacs.
   (global-auto-revert-mode 1))
+
+(use-package display-fill-column-indicator
+  :diminish
+  :config
+  ;; This feature, now native to Emacs 27, replaces the old package
+  ;; `fill-column-indicator' that was previously in use.
+  (global-display-fill-column-indicator-mode))
+
+(use-package highlight-parentheses
+  :diminish
+  :config
+  (global-highlight-parentheses-mode))
+
+(use-package simple
+  :diminish auto-fill-mode)
+
+(use-package subword
+  :diminish)
 
 ;;; settings.el ends here

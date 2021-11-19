@@ -113,8 +113,8 @@
 
   ;; It's important that we always fallback to `lsp-format-buffer' when
   ;; prettier isn't being used.
-  (unless prettier-mode
-    (add-hook 'before-save-hook 'lsp-format-buffer)))
+  (unless (and (boundp 'prettier-mode) prettier-mode)
+    (add-hook 'before-save-hook 'lsp-format-buffer nil t))) ; local hook
 
 (defun my/lsp/log-request (type method)
   "Log LSP request.

@@ -1,6 +1,6 @@
 ;;; php.el --- Configures `php-mode'
 
-;; Copyright (C) 2015-2020  Miguel Guedes
+;; Copyright (C) 2015-2021  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -25,23 +25,28 @@
 ;;; Code:
 
 (defun init/php-mode ()
-  "Initialise modes related to PHP development."
+  "Initialise `php-mode'."
+  (setq-default php-mode-coding-style      'default ; DISABLED: drupal
+                php-lineup-cascaded-calls  t
+                flycheck-phpmd-rulesets
+                '("cleancode" "codesize" "unusedcode" "design"))
+
+  (c-add-style "default-php" '("drupal")))
+
+(defun init/config/php-mode ()
+  "Configure `php-mode'."
+  (init/common-programming-mode)
+
   (setq comment-start "/* "
         comment-end   " */")
+
   (eldoc-mode 1)
   (php-eldoc-enable)
   (c-set-style "default-php")
   (c-toggle-auto-newline -1))
 
-(eval-after-load 'php-mode
-  '(progn
-
-     (setq-default php-mode-coding-style      'default ; DISABLED: drupal
-                   php-lineup-cascaded-calls  t
-                   flycheck-phpmd-rulesets
-                     '("cleancode" "codesize" "unusedcode" "design"))
-
-     (c-add-style "default-php" '("drupal"))
-     (add-hook 'php-mode-hook 'init/php-mode)))
+(use-package php-mode
+  :hook ((php-mode . init/config/php-mode))
+  :init (init/php-mode))
 
 ;;; php.el ends here

@@ -1,6 +1,6 @@
 ;;; go.el --- Configures `go-mode'
 
-;; Copyright (C) 2015-2020  Miguel Guedes
+;; Copyright (C) 2015-2021  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -28,8 +28,6 @@
 
 (defun init/config/go-mode ()
   "One-time initialisation sequence for `go-mode'."
-  (add-hook 'go-mode-hook  'init/go-mode)
-
   ;; Use goimports instead of go-fmt
   ;;
   ;; Note that this requires the executable `goimports' to be locatable in
@@ -79,7 +77,6 @@
   "Initialise modes related to Go development."
   (init/common-nonweb-programming-mode)
   (go-eldoc-setup)
-  (add-hook 'before-save-hook 'gofmt-before-save)
 
   ;; Customize compile command to run go build
   (if (not (string-match "go" compile-command))
@@ -104,6 +101,8 @@
 
 (use-package go-mode
   :mode ("\\.go\\'" )
+  :hook ((go-mode .init/go-mode)
+         (before-save . gofmt-before-save))
   :config
   (init/config/go-mode))
 

@@ -1,6 +1,6 @@
 ;;; dired.el --- Configures `dired-mode'
 
-;; Copyright (C) 2015-2020  Miguel Guedes
+;; Copyright (C) 2015-2021  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: internal, tools
@@ -36,8 +36,7 @@
   )
 
 (use-package dired
-  :config
-  (add-hook 'dired-mode-hook 'init/dired-mode-hook)
-  (add-hook 'dired-load-hook 'init/dired-load-hook))
+  :hook ((dired-mode .init/dired-mode-hook)
+         (dired-load-hook . init/dired-load-hook)))
 
 ;;; dired.el ends here

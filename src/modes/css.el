@@ -1,6 +1,6 @@
 ;;; css.el --- Configures `css-mode'
 
-;; Copyright (C) 2015-2020  Miguel Guedes
+;; Copyright (C) 2015-2021  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -43,8 +43,7 @@
 
 (use-package css-mode
   :defer t
-  :config
-  (add-hook 'css-mode-hook  'init/common-nonweb-programming-mode)
-  (add-hook 'css-mode-hook  'init/css))
+  :hook ((css-mode . init/common-nonweb-programming-mode)
+         (css-mode . init/css)))
 
 ;;; css.el ends here

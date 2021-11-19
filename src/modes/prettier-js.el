@@ -37,23 +37,19 @@ all JS/X buffers."
   :group 'init/prettier-mode
   :type 'boolean)
 
-;; Default parameters to pass to prettier.
-(defcustom init/prettier-projects nil
-  "List of projects to enable prettier-mode for."
-  :group 'init/prettier-mode
-  :type '(repeat string))
-
 (defun enable-prettier-mode-maybe ()
   "Turn on `prettier-mode' selectively.
 
-If the file associated with current buffer is contained by one of
-the directories in `init/prettier-projects',
-`prettier-mode' is also enabled.
+If the file associated with the current buffer is contained in a
+repository in which the prettier executable can be found in the
+relative path \"node_modules/.bin/prettier\", `prettier-mode' is
+enabled.
 
-The one exception to the rules above is when the file is inside a
+The one exception to this rule is when the file is inside a
 \"node_modules\"."
-  (when (or init/enable-prettier-mode
-            (locate-file-in-dominating-node-modules ".bin/prettier" buffer-file-name))
+  (when (and (or init/enable-prettier-mode
+                 (locate-file-in-dominating-node-modules ".bin/prettier" buffer-file-name))
+             (not (dir-is-parent-p "node_modules" buffer-file-name)))
       (prettier-mode 1)))
 
 (use-package prettier

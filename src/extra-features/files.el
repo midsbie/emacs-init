@@ -39,4 +39,12 @@ directory from FROM-PATH."
           (locate-file-recursive file
                                  (file-name-directory (directory-file-name path)))))))
 
+(defun dir-is-parent-p (dir path)
+  "Return t if DIR is parent of PATH."
+  (let* ((parent (directory-file-name (file-name-directory (directory-file-name path))))
+         (basename (file-name-nondirectory parent)))
+    (unless (string= "/" path)
+      (or (string= basename dir)
+          (dir-is-parent-p dir parent)))))
+
 ;;; files.el ends here

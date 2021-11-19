@@ -1,6 +1,6 @@
-;;; large_files.el --- Support for editing of large files
+;;; large-files.el --- Support for editing of large files
 
-;; Copyright (C) 2015-2020  Miguel Guedes
+;; Copyright (C) 2015-2021  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel@miguelguedes.org>
 ;; Keywords: tools
@@ -36,4 +36,4 @@ forcefully switches to fundamental mode."
 
 (add-hook 'find-file-hook 'init/handle-large-file-hook)
 
-;;; large_files.el ends here
+;;; large-files.el ends here

@@ -1,6 +1,6 @@
-;;; warn_when_root.el --- Change modeline background when acting as root user
+;;; warn-when-root.el --- Change modeline background when acting as root user
 
-;; Copyright (C) 2015-2020  Miguel Guedes
+;; Copyright (C) 2015-2021  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -44,4 +44,4 @@ with root privileges."
 ;; Change mode line background colour if file being edited as root.
 (add-hook 'after-change-major-mode-hook 'warn-when-root-visits-file)
 
-;;; warn_when_root.el ends here
+;;; warn-when-root.el ends here

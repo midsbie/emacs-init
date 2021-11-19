@@ -125,7 +125,11 @@
   (local-set-key (kbd "C-x [") 'backward-up-list)
   (local-set-key (kbd "C-x ]") 'up-list)
   (local-set-key (kbd "C-x {") 'backward-list)
-  (local-set-key (kbd "C-x }") 'forward-list))
+  (local-set-key (kbd "C-x }") 'forward-list)
+
+  ;; Delete all trailing whitespace before saving
+  (add-hook 'before-save-hook 'delete-trailing-whitespace nil t) ; local hook
+  (setq-local show-trailing-whitespace t))
 
 (defun init/common-nonweb-programming-mode ()
   "Perform initialisation of aspects common to all programming-related modes."
@@ -149,10 +153,6 @@
   ;; Update: disabled because it turns out to be too intrusive when editing
   ;; code.  It (mostly) works fine when writing new code though.
   (setq c-auto-newline nil)
-
-  ;; Delete all trailing whitespace before saving
-  (add-hook 'before-save-hook 'delete-trailing-whitespace)
-; (setq show-trailing-whitespace t)
 
   ;; The following disabled:
 ; (doxymacs-mode)                    ; turn doxymacs on

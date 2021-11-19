@@ -28,7 +28,9 @@
   "Initialise modes related to ELISP development."
 
   (turn-on-eldoc-mode)
-  (setq-local fill-column 79))
+  (setq-local fill-column 79)
+
+  (init/common-programming-mode))
 
 (use-package emacs-lisp-mode
   :mode ("\\.el\\'")

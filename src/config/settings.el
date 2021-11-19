@@ -139,30 +139,4 @@
 This runs after the local variables have been processed."
   (run-hooks (intern (concat (symbol-name major-mode) "-local-vars-hook"))))
 
-;; Configuration of core modes that do not warrant their own separate module.
-;; ----------------------------------------------------------------------------
-(use-package autorevert
-  :diminish
-  :config
-  ;; Revert buffer if file associated with it changes outside of emacs.
-  (global-auto-revert-mode 1))
-
-(use-package display-fill-column-indicator
-  :diminish
-  :config
-  ;; This feature, now native to Emacs 27, replaces the old package
-  ;; `fill-column-indicator' that was previously in use.
-  (global-display-fill-column-indicator-mode))
-
-(use-package highlight-parentheses
-  :diminish
-  :config
-  (global-highlight-parentheses-mode))
-
-(use-package simple
-  :diminish auto-fill-mode)
-
-(use-package subword
-  :diminish)
-
 ;;; settings.el ends here

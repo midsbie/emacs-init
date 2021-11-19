@@ -52,21 +52,9 @@ the directories in `init/prettier-projects',
 
 The one exception to the rules above is when the file is inside a
 \"node_modules\"."
-  (when init/enable-prettier-mode
-    (prettier-mode 1))
-  (unless (and (boundp 'prettier-mode) prettier-mode)
-    (let* ((path (file-name-directory (directory-file-name  buffer-file-name)))
-           (parent path)
-           (validp t))
-      (while (and (not (string= path "/")) validp)
-        (if (string= (file-name-nondirectory (directory-file-name path)) "node_modules")
-            (setq validp nil)
-          (setq path (file-name-directory (directory-file-name path)))))
-      (when validp
-        (dolist (dir init/prettier-projects)
-          (when (file-in-directory-p buffer-file-name dir)
-            (add-node-modules-path)
-            (prettier-mode 1)))))))
+  (when (or init/enable-prettier-mode
+            (locate-file-in-dominating-node-modules ".bin/prettier" buffer-file-name))
+      (prettier-mode 1)))
 
 (use-package prettier
   :diminish "Pr"

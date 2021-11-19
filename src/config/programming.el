@@ -168,9 +168,6 @@
 (defun init/common-web-programming-mode ()
   "Initialise modes related to web development."
 
-  ;; Required below by `enable-prettier-mode-maybe'.
-  (require 'add-node-modules-path)
-
   (auto-fill-mode -1)
   (highlight-parentheses-mode)
   (subword-mode 1)
@@ -179,6 +176,17 @@
   (setq-local tab-width   2)
   (setq-local c-basic-offset  2)
 
+  ;; Add node_modules path to `exec-path' to enable:
+  ;;
+  ;; - `prettier-mode' to work
+  ;;
+  ;; - LSP to correctly identify the `ts-ls' language server for Typescript
+  ;;   source files.
+  ;;
+  ;; Note that this requires an appropriate `use-package' invocation to load
+  ;; the `add-node-modules-path' package.  Refer to ./use-package.el for
+  ;; further infor.
+  (add-node-modules-path)
   (init/common-programming-mode))
 
 (init/programming-settings)

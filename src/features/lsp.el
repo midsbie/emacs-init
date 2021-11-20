@@ -127,11 +127,12 @@ be used when debugging `lsp'."
                     method))
     (goto-char (point-min))))
 
+;; Don't specify modes or file extensions here that LSP should initialize
+;; against.  The form in use calls for `lsp-deferred' to be invoked in the
+;; major mode configuration module; e.g. typescript.el, csharp.el.
 (use-package lsp-mode
-  ;; Refer to `init/config/lsp' for reason why.
-  :after prettier
+  :hook ((lsp-mode . lsp-enable-which-key-integration))
   :init (init/lsp)
-  :config (init/config/lsp)
-  :hook ((lsp-mode . lsp-enable-which-key-integration)))
+  :config (init/config/lsp))
 
 ;;; lsp.el ends here

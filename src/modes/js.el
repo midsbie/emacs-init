@@ -58,10 +58,11 @@
   ;;     (flow-minor-mode 1))
   ;;
   ;; Now using LSP.
-  (lsp 1))
+  (lsp-deferred))
 
 (use-package js
   :after (company flycheck)
+  :diminish "JS"
   :mode (("\\.js\\'" . js-mode)
          ("\\.jsx\\'" . js-jsx-mode))
   :hook (((js-mode js-jsx-mode) . init/config/js-mode))

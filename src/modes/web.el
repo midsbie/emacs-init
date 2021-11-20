@@ -84,13 +84,15 @@
   ;; Source: http://cha1tanya.com/2015/06/20/configuring-web-mode-with-jsx.html
   (setq-local web-mode-content-types-alist '(("jsx" . "\\.[tj]s[x]?\\'")))
 
+  ;; Deprecated support for Typescript below
+  ;; ----------------------------------------
   ;; Load LSP if JSX with Flow or TSX.  Avoid when `typescript-mode' or `tide'
   ;; in use.
   (unless (or (and (boundp 'typescript-mode) typescript-mode)
               (and (boundp 'tide-mode) tide-mode))
     (when (or (string-equal "tsx" (file-name-extension buffer-file-name))
               (flycheck-flow--predicate))
-      (lsp))))
+      (lsp-deferred))))
 
 (defun init/web/load-local-vars ()
   "Map the value of `c-basic-offset' to `web-mode-code-indent-offset'."

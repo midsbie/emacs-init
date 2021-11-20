@@ -27,12 +27,13 @@
 (defun init/tide ()
   "Initialise the TIDE package."
   ;; For some reason, 'company-tide is either not being added to the list of
-  ;; company backends or it is somehow being removed.  It is explicitly added
-  ;; here to ensure that completions work in TIDE.
+  ;; company backends or it is somehow being removed, perhaps by `lsp-mode'.
+  ;; It is explicitly added here to ensure that completions work in TIDE.
   (cl-pushnew 'company-tide company-backends))
 
 (use-package tide
-  :after (typescript-mode company flycheck)
+  :after (company)
+  :diminish "TIDE"
   :bind ((:map tide-mode-map
                ("C-c t s" . tide-restart-server)
                ("C-c t S" . tide-kill-server)
@@ -44,7 +45,6 @@
                ("C-c t r" . tide-refactor)))
   :custom
   (tide-server-max-response-length 1024000) ; x10 the default value
-  :init
-  (init/tide))
+  :init (init/tide))
 
 ;;; tide.el ends here

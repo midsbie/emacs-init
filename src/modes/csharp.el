@@ -32,6 +32,7 @@
   ;; unnecessary messages being sent to the server and potentially overloading
   ;; it.  Currently enforcing a minimum of 1s.
   (setq-local flycheck-idle-change-delay (if (< lsp-idle-delay 1) 1 lsp-idle-delay))
+
   ;; Explicitly forcing to default syncronization method of `nil`, which
   ;; defaults to `lsp--sync-full', as supported by omnisharp-roslyn.  This
   ;; statement is here to document the fact that lsp supports the
@@ -44,11 +45,10 @@
   ;; (setq-local flycheck-check-syntax-automatically '(mode-enabled save))
 
   ;; Enable LSP
-  (lsp)
-  )
+  (lsp-deferred))
 
 (use-package csharp-mode
-  :mode (("\\.cs\\'" . csharp-mode))
-  :hook (csharp-mode . init/mode/csharp))
+  :mode ("\\.cs\\'")
+  :config (init/mode/csharp))
 
 ;;; csharp.el ends here

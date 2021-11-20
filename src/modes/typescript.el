@@ -26,7 +26,7 @@
 
 ;;; Code:
 
-(defun init/mode/ts-tsx ()
+(defun init/config/ts-tsx ()
   "Configure buffer for Typescript development."
   (init/common-web-programming-mode)
   (setq-local typescript-indent-level 2)
@@ -34,33 +34,22 @@
   (local-set-key (kbd "M-a") 'c-beginning-of-statement)
   (local-set-key (kbd "M-e") 'c-end-of-statement)
 
-  ;; (init/mode/ts-tsx/lsp)
-  (init/mode/ts-tsx/tide))
+  ;; (init/config/ts-tsx/lsp)
+  (init/config/ts-tsx/tide))
 
-(defun init/mode/web/ts-tsx ()
+(defun init/config/web/ts-tsx ()
   "Initialise Typescript mode for React in `web-mode'."
   ; Since web-mode may be started for a wide variety of source files, such as
   ; HTML markup, template files and Javascript, the initialisation is only run
   ; if the buffer's file extension suggests a typescript source file.
   (when (string-equal "tsx" (file-name-extension buffer-file-name))
-    (init/mode/ts-tsx)))
+    (init/config/ts-tsx)))
 
-(defun init/mode/ts-tsx/lsp ()
+(defun init/config/ts-tsx/lsp ()
   "Enable LSP in Typescript buffer."
-  ; For some reason, if LSP is invoked preemptively in this mode hook, it will
-  ; initialise correctly but will fail to work as expected: lsp-ui will not
-  ; work, nor will definition at point, and other features.  Solution found was
-  ; to lazy-initialise it.
-  ;;  (lsp))
-  (run-with-idle-timer .1 nil '(lambda()
-                                 (lsp)
-                                 ;; Unfortuntaly LSP's code lenses aren't yet
-                                 ;; supported by the server.  Here for
-                                 ;; posteriority, however.
-                                 ;; (lsp-lens-show)
-                                 )))
+  (lsp-deferred))
 
-(defun init/mode/ts-tsx/tide ()
+(defun init/config/ts-tsx/tide ()
   "Enable TIDE in Typescript buffer."
   (interactive)
   (tide-setup)
@@ -76,10 +65,8 @@
 
 (use-package typescript-mode
   :diminish "TS"
-  :mode (("\\.ts\\'" . typescript-mode)
-         ("\\.tsx\\'" . typescript-mode))
-  :hook
-  (typescript-mode . init/mode/ts-tsx)
-  (web-mode-hook . init/mode/web/ts-tsx))
+  :mode ("\\.ts\\'" "\\.tsx\\'")
+  :hook ((typescript-mode . init/config/ts-tsx)
+         (web-mode-hook . init/config/web/ts-tsx)))
 
 ;;; typescript.el ends here

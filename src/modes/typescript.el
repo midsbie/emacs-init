@@ -39,9 +39,9 @@
 
 (defun init/config/web/ts-tsx ()
   "Initialise Typescript mode for React in `web-mode'."
-  ; Since web-mode may be started for a wide variety of source files, such as
-  ; HTML markup, template files and Javascript, the initialisation is only run
-  ; if the buffer's file extension suggests a typescript source file.
+  ;; Since web-mode may be started for a wide variety of source files, such as
+  ;; HTML markup, template files and Javascript, the initialisation is only run
+  ;; if the buffer's file extension suggests a typescript source file.
   (when (string-equal "tsx" (file-name-extension buffer-file-name))
     (init/config/ts-tsx)))
 

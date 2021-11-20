@@ -1,6 +1,6 @@
 ;;; yasnippet.el --- Configures the yasnippet feature
 
-;; Copyright (C) 2015-2020  Miguel Guedes
+;; Copyright (C) 2015-2021  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools, internal
@@ -38,19 +38,18 @@ Assumes currently open file is a C++ implementation source file."
   (get-kill-ring-word default-label))
 
 (defun init/yasnippet()
-  (yas/global-mode 1)
-
   (define-key yas-minor-mode-map (kbd "C-x y") 'yas/visit-snippet-file)
 
   ;; Strangely, just redefining one of the variations below won't work.
-  (define-key yas-minor-mode-map [(tab)]        nil)
-  (define-key yas-minor-mode-map (kbd "TAB")    nil)
-  (define-key yas-minor-mode-map (kbd "<tab>") nil))
+  (define-key yas-minor-mode-map [(tab)]       nil)
+  (define-key yas-minor-mode-map (kbd "TAB")   nil)
+  (define-key yas-minor-mode-map (kbd "<tab>") nil)
+
+  (yas/global-mode 1))
 
 (use-package yasnippet
   :diminish
   :bind ([backtab] . yas-expand)
-  :config
-  (init/yasnippet))
+  :config (init/yasnippet))
 
 ;;; yasnippet.el ends here

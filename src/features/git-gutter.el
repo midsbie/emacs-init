@@ -90,8 +90,6 @@
 
 (use-package git-gutter
   :diminish
-  :init
-  (init/git-gutter)
-  :config)
+  :init (init/git-gutter))
 
 ;;; git-gutter.el ends here

@@ -46,7 +46,6 @@
 
 (use-package magit-status
   :bind ("C-x g" . magit-status)
-  :config
-  (init/magit))
+  :config (init/magit))
 
 ;;; magit.el ends here

@@ -26,8 +26,8 @@
 
 ;;; Code:
 
-(defun init/config/go-mode ()
-  "One-time initialisation sequence for `go-mode'."
+(defun init/go-mode/config ()
+  "One-time configuration sequence for `go-mode'."
   ;; Use goimports instead of go-fmt
   ;;
   ;; Note that this requires the executable `goimports' to be locatable in
@@ -73,8 +73,8 @@
     (message "info: golint not found and will be unavailable"))
   )
 
-(defun init/go-mode ()
-  "Initialise modes related to Go development."
+(defun init/go-mode/mode ()
+  "Configure `go-mode' major mode."
   (init/common-nonweb-programming-mode)
   (go-eldoc-setup)
 
@@ -100,10 +100,9 @@
     (message "info: set %s: %s" name (getenv name))))
 
 (use-package go-mode
-  :mode ("\\.go\\'" )
-  :hook ((go-mode .init/go-mode)
+  :mode ("\\.go\\'")
+  :hook ((go-mode .init/go-mode/mode)
          (before-save . gofmt-before-save))
-  :config
-  (init/config/go-mode))
+  :config (init/go-mode/config))
 
 ;;; go.el ends here

@@ -1,6 +1,6 @@
 ;;; avy.el --- Customises the Avy package
 
-;; Copyright (C) 2019-2020  Miguel Guedes
+;; Copyright (C) 2019-2021  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -35,7 +35,6 @@
          ("M-g f" . avy-goto-line)
          ("M-g w" . avy-goto-word-1)
          ("C-c C-j" . avy-resume))
-  :config
-  (init/config/avy))
+  :config (init/config/avy))
 
 ;;; avy.el ends here

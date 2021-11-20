@@ -1,6 +1,6 @@
-;;; ivy.el --- Configures `ivy-mode'
+;;; ivy.el --- Configures the `ivy' package
 
-;; Copyright (C) 2019-2020  Miguel Guedes
+;; Copyright (C) 2019-2021  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -25,20 +25,6 @@
 ;;; Code:
 
 (defun init/config/ivy()
-  (use-package flx
-    :ensure t)
-  (use-package swiper
-    :ensure t)
-  (use-package counsel
-    :ensure t)
-
-  ;; Activate ivy's global mode
-  ;; Note that we choose not to lazy load this package since it is seen as being
-  ;; of primary importance to the Emacs user experience and should therefore be
-  ;; immediately available as soon as the editor finishes loading is accepting
-  ;; user input.
-  (ivy-mode 1)
-
   ;; From: https://www.reddit.com/r/emacs/comments/51lqn9/helm_or_ivy/d7d34il/
   ;;       https://emacs.stackexchange.com/a/36748
   ;; Let ivy use flx for fuzzy-matching for everything but swiper!
@@ -48,9 +34,6 @@
 
   ;; Use Enter on a directory to navigate into the directory, not open it with dired.
   (define-key ivy-minibuffer-map (kbd "C-m") 'ivy-alt-done)
-
-  ;; Let projectile use ivy
-  (setq projectile-completion-system 'ivy)
 
   ;; Suggestions from: https://oremacs.com/swiper/#basic-customization
   (setq ivy-use-virtual-buffers t)
@@ -88,15 +71,32 @@
   (global-set-key (kbd "C-c C-r") 'ivy-resume)
 
   ;; Set height of completion mini-buffer
-  (setq ivy-height 20))
+  (setq ivy-height 20)
+
+  ;; Activate ivy's global mode
+  ;;
+  ;; Note that we choose not to lazy load this package since it is seen as
+  ;; being of primary importance to the Emacs user experience and should
+  ;; therefore be immediately available as soon as the editor finishes loading
+  ;; is accepting user input.
+  (ivy-mode 1))
 
 (use-package ivy
   :diminish
-  :config
-  (init/config/ivy))
+  :config (init/config/ivy))
 
 (use-package ivy-rich
+  :after ivy
   :ensure t
   :init (ivy-rich-mode 1))
+
+(use-package flx
+  :after ivy)
+
+(use-package swiper
+  :after ivy)
+
+(use-package counsel
+  :after ivy)
 
 ;;; ivi.el ends here

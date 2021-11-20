@@ -1,6 +1,6 @@
 ;;; display-line-numbers-mode.el --- Configures `display-line-numbers-mode-mode'
 
-;; Copyright (C) 2015-2020  Miguel Guedes
+;; Copyright (C) 2015-2021  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -43,7 +43,6 @@
   (global-display-line-numbers-mode t))
 
 (use-package display-line-numbers
-  :config
-  (init/display-line-numbers-mode))
+  :config (init/display-line-numbers-mode))
 
 ;;; display-line-numbers-mode.el ends here

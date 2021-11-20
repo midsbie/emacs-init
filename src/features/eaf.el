@@ -1,6 +1,6 @@
 ;;; eaf.el --- Customises the `eaf' package
 
-;; Copyright (C) 2020  Miguel Guedes
+;; Copyright (C) 2021  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -62,4 +62,4 @@
   (eaf-bind-key eaf-send-key-sequence "M-]" eaf-terminal-keybinding)
   )
 
-;;; eww.el ends here
+;;; eaf.el ends here

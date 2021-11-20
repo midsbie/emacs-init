@@ -47,8 +47,7 @@
 
 (use-package highlight-parentheses
   :diminish
-  :config
-  (global-highlight-parentheses-mode))
+  :config (global-highlight-parentheses-mode))
 
 (use-package simple
   :diminish auto-fill-mode)

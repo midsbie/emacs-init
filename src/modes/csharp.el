@@ -49,6 +49,6 @@
 
 (use-package csharp-mode
   :mode ("\\.cs\\'")
-  :config (init/mode/csharp))
+  :hook (csharp-mode . init/mode/csharp))
 
 ;;; csharp.el ends here

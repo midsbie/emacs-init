@@ -1,6 +1,6 @@
-;;; org.el --- Configures `org-mode'
+;;; org.el --- Configuration for the `org' package
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2021  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(defun init/org-mode ()
+(defun init/org/config ()
   "Org mode load hook."
   (setq org-use-fast-todo-selection t
         org-directory               "~/documents/org"
@@ -64,7 +64,7 @@
   (custom-set-variables
    '(org-agenda-window-setup (quote current-window))))
 
-(defun init/mode/org ()
+(defun init/org-mode/mode ()
   ;; Turn on indent and visual line modes by default
   (org-indent-mode 1)
   (visual-line-mode)
@@ -88,13 +88,11 @@
     (message "Killed all org-mode buffers")))
 
 (use-package org
-  :hook (org-mode . init/mode/org)
-  ;; Unfortunately this hack had to be introduced because the ein package requires org-mode to be
-  ;; available when it loads, which in turn requires the speedbar package to have been loaded.
+  :hook (org-mode . init/org-mode/mode)
+  ;; The `ein' package requires org-mode to be available when it loads (or it
+  ;; used to), which in turn requires the `speedbar' package to have been
+  ;; loaded.
   :after speedbar
-  :init
-  (require 'speedbar)
-  :config
-  (init/org-mode))
+  :config (init/org/config))
 
 ;;; org.el ends here

@@ -1,6 +1,6 @@
 ;;; saveplace.el --- Configures the saveplace package
 
-;; Copyright (C) 2015-2020  Miguel Guedes
+;; Copyright (C) 2015-2021  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -31,8 +31,7 @@
 
 (use-package saveplace
   ;; The projectile package used as a way of deferring loading
-  :after (projectile)
-  :config
-  (init/saveplace))
+  :after projectile
+  :config (init/saveplace))
 
 ;;; saveplace.el ends here

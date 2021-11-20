@@ -1,6 +1,6 @@
 ;;; recentf.el --- Configures `recentf' package
 
-;; Copyright (C) 2015-2020  Miguel Guedes
+;; Copyright (C) 2015-2021  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -36,7 +36,6 @@
 (use-package recentf
   ;; The following replaces default binding to `ido-find-file-read-only'
   :bind ("C-x C-r" . recentf-open-files)
-  :config
-  (init/config/recentf))
+  :config (init/config/recentf))
 
 ;;; recentf.el ends here

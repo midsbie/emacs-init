@@ -24,19 +24,19 @@
 
 ;;; Code:
 
-(defun init/dired-load-hook ()
-  (use-package "dired-x")
-  ;; Set global variables here.  For example:
+(defun init/dired ()
   ;; (setq dired-guess-shell-gnutar "gtar")
   )
 
 (defun init/dired-mode-hook ()
-  ;; Set buffer-local variables here.  For example:
   ;; (dired-omit-mode 1)
   )
 
 (use-package dired
-  :hook ((dired-mode .init/dired-mode-hook)
-         (dired-load-hook . init/dired-load-hook)))
+  :hook ((dired-load-hook . init/dired-load-hook))
+  :init (init/dired))
+
+(use-package "dired-x"
+  :after (dired))
 
 ;;; dired.el ends here

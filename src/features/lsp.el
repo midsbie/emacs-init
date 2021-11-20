@@ -132,7 +132,7 @@ be used when debugging `lsp'."
 ;; major mode configuration module; e.g. typescript.el, csharp.el.
 (use-package lsp-mode
   :hook ((lsp-mode . lsp-enable-which-key-integration)
-         (lsp-mode . (init/config/lsp)))
+         (lsp-mode . init/config/lsp))
   :init (init/lsp))
 
 ;;; lsp.el ends here

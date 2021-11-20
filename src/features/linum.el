@@ -45,9 +45,8 @@
       (linum-mode -1)))
 
 ;; Disabled in favour of `display-line-numbers':
-;;
-;; (use-package linum
-;;   :config
-;;   (init/linum))
+(use-package linum
+  :disabled
+  :config (init/linum))
 
 ;;; linum.el ends here

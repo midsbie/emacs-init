@@ -107,8 +107,15 @@
   ;; Hooks
   (add-hook 'c-mode-common-hook 'init/common-nonweb-programming-mode)
   (add-hook 'c-mode-common-hook 'init/c-c++)
+  (add-hook 'minibuffer-mode-hook 'init/disable-electricity)
   (add-hook 'conf-mode-hook 'init/disable-electric-indent)
   (add-hook 'lsp-mode-hook 'init/configure-lsp-mode))
+
+(defun init/disable-electricity()
+  "Disable electric enhancements."
+  (electric-pair-local-mode -1)
+  (electric-layout-local-mode -1)
+  (init/disable-electric-indent))
 
 (defun init/disable-electric-indent()
   "Disable electric indentation behaviour."

@@ -98,6 +98,12 @@
   ;; Ref: https://stackoverflow.com/a/3956173
   (c-set-offset 'substatement-open 0)
 
+  ;; Set environment for supported compilers
+  (when (locate-file "clang" exec-path exec-suffixes 1)
+    (setenv "CC" "clang"))
+  (when (locate-file "clang++" exec-path exec-suffixes 1)
+    (setenv "CXX" "clang++"))
+
   ;; Hooks
   (add-hook 'c-mode-common-hook 'init/common-nonweb-programming-mode)
   (add-hook 'c-mode-common-hook 'init/c-c++)

@@ -1,6 +1,6 @@
 ;;; js.el --- Configures `js-mode'
 
-;; Copyright (C) 2015-2020  Miguel Guedes
+;; Copyright (C) 2015-2021  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -20,6 +20,7 @@
 
 ;;; Commentary:
 ;; xxxxxx Using `js2-mode' instead.
+;;
 ;; xxxxxx Using `web-mode' as the development on the above mode has been
 ;;        discontinued and JSX support isn't good enough.
 ;;
@@ -31,6 +32,8 @@
 ;;        development, as it is faster, more responsive and does not suffer
 ;;        from the quirks that `web-mode' does, however syntax highlighting is
 ;;        not great.  Staying with web-mode for the time being.
+;;
+;; 031221 Now using `js-mode' and `js-jsx-mode' for Javascript files.
 
 ;;
 

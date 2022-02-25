@@ -43,6 +43,8 @@
 
 (defun init/config/dart-mode ()
   "Configure `dart-mode' in the current buffer."
+  ;; Start debugging session with `dap-debug'.
+  (setq-local lsp-dart-dap-flutter-hot-reload-on-save t)
   (init/common-web-programming-mode))
 
 (use-package dart-mode

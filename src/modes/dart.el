@@ -30,6 +30,10 @@
 
 (defun init/dart-mode()
   "Initialise `dart-mode'."
+
+  ;; Explicitly enable automatic code formatting on buffer save.
+  (setq lsp-dart-enable-sdk-formatter t)
+
   ;; LSP will not work when using Flutter unless the `lsp-dart-flutter-sdk-dir'
   ;; variable is initialized with the path to the Flutter SDK.  This value is
   ;; easily obtained by running the command "flutter sdk-path" but care must be

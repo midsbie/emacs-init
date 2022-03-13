@@ -127,6 +127,11 @@
       kept-old-versions       2
       version-control         t)
 
+;; Some settings that may help with redisplay
+;; Ref: [4:25] https://200ok.ch/posts/2020-10-01_introduction_to_profiling_in_emacs.html
+(setq bidi-paragraph-direction 'left-to-right)
+(setq bidi-inhibit-bpa nil)
+
 ;; Windows
 (setq-default split-height-threshold 100)
 

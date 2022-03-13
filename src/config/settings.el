@@ -44,18 +44,26 @@
 (setq gc-cons-threshold (* 100 1024 1024))
 (setq read-process-output-max (* 10 1024 1024))
 
-;; enable useful commands
+;; Enable useful commands
 (put 'narrow-to-region          'disabled nil)
 (put 'erase-buffer              'disabled nil)
 (put 'upcase-region             'disabled nil)
 (put 'downcase-region           'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
 
-;; the following fucks with certain major modes (i.e. yasnippet) and must be
+;; The `list-timers' command is super useful when debugging high CPU usage
+;; where timers, idle or otherwise, are involved, but for some reason it is
+;; disabled.  Also of note are the `timer-list' and `timer-idle-list' lists.
+;;
+;; See this post I created for useful context:
+;; https://emacs.stackexchange.com/q/70926/
+(put 'list-timers 'disabled nil)
+
+;; The following fucks with certain major modes (i.e. yasnippet) and must be
 ;; disabled at ALL times
 (setq mode-require-final-newline nil)
 
-;; set text-mode as default mode
+;; Set text-mode as default mode
 (setq default-major-mode 'text-mode)
 
 (menu-bar-mode -1)                      ; disable menu bar

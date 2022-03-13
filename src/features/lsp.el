@@ -47,6 +47,20 @@
 
 ;;; Code:
 
+;; Make sure that the following function is patched correctly to prevent
+;; serious performance degradation after some time as a result of setting up
+;; the timer multiple times.  This must be done every time lsp is upgraded.
+(cl-defmethod dap-handle-event ((_event (eql dart.progressStart)) _session params)
+  "Handle debugger uris EVENT for SESSION with PARAMS."
+  (setq lsp-dart-dap--flutter-progress-reporter
+        (make-progress-reporter (concat lsp-dart-dap--debug-prefix (gethash "message" params))))
+  ;; BUGFIX: do NOT set up the timer more than once, as over time this leads to
+  ;; many dozens of repeated timers running simulateneously and serious
+  ;; performance degradation.
+  (unless lsp-dart-dap--flutter-progress-reporter-timer
+    (setq lsp-dart-dap--flutter-progress-reporter-timer
+          (run-with-timer 0.2 0.2 #'lsp-dart-dap--flutter-tick-progress-update))))
+
 (defun init/lsp ()
   "Initialise LSP."
   ;; Refer to initialisation of `gc-cons-threshold' and `read-process-output-max'

@@ -26,7 +26,7 @@
 
 ;;; Code:
 
-(defun init/go-mode/config ()
+(defun init/go-mode ()
   "One-time configuration sequence for `go-mode'."
   ;; Use goimports instead of go-fmt
   ;;
@@ -73,7 +73,7 @@
     (message "info: golint not found and will be unavailable"))
   )
 
-(defun init/go-mode/mode ()
+(defun init/go-mode/config ()
   "Configure `go-mode' major mode."
   (init/common-nonweb-programming-mode)
   (go-eldoc-setup)
@@ -90,7 +90,9 @@
                                              (interactive)
                                              (if (consp current-prefix-arg)
                                                  (godef-jump-other-window (point))
-                                               (godef-jump (point))))))
+                                               (godef-jump (point)))))
+
+  (add-hook 'before-save-hook 'gofmt-before-save nil t))
 
 (defun init/go/setenv (name env)
   "Extract environment variable given by NAME from go's ENV."
@@ -101,8 +103,7 @@
 
 (use-package go-mode
   :mode ("\\.go\\'")
-  :hook ((go-mode .init/go-mode/mode)
-         (before-save . gofmt-before-save))
+  :init (init/go-mode)
   :config (init/go-mode/config))
 
 ;;; go.el ends here

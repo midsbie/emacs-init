@@ -45,6 +45,16 @@
   ;; use.
   (cl-pushnew 'company-flow company-backends))
 
+(defun init/config/js-mode/determine-js-mode()
+  (if (flycheck-flow--predicate)
+      (web-mode)
+    (js-mode)))
+
+(defun init/config/js-mode/determine-jsx-mode()
+  (if (flycheck-flow--predicate)
+      (web-mode)
+    (js-jsx-mode)))
+
 (defun init/config/js-mode ()
   "Initialise modes related to Javascript development."
 
@@ -66,8 +76,8 @@
 (use-package js
   :after (company flycheck)
   :diminish "JS"
-  :mode (("\\.js\\'" . js-mode)
-         ("\\.jsx\\'" . js-jsx-mode))
+  :mode (("\\.js\\'" . init/config/js-mode/determine-js-mode)
+         ("\\.jsx\\'" . init/config/js-mode/determine-jsx-mode))
   :hook (((js-mode js-jsx-mode) . init/config/js-mode))
   :init
   (init/js-mode))

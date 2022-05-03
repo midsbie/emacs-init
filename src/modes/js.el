@@ -73,12 +73,19 @@
   ;; Now using LSP.
   (lsp-deferred))
 
+(defun init/js-mode/toggle-mode ()
+  "Switch to `web-mode'."
+  (interactive)
+  (web-mode))
+
 (use-package js
   :after (company flycheck)
   :diminish "JS"
   :mode (("\\.js\\'" . init/config/js-mode/determine-js-mode)
          ("\\.jsx\\'" . init/config/js-mode/determine-jsx-mode))
   :hook (((js-mode js-jsx-mode) . init/config/js-mode))
+  :bind (:map js-mode-map
+              ("C-c C-c" . init/js-mode/toggle-mode))
   :init
   (init/js-mode))
 

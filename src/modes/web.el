@@ -103,6 +103,14 @@
         (cond ((eq var 'c-basic-offset)
                (setq-local web-mode-code-indent-offset val)))))))
 
+(defun init/web-mode/toggle-js-mode ()
+  "Switch to `javascript-mode'."
+  (interactive)
+  (let ((ext (file-name-extension buffer-file-name)))
+    (when (or (string-equal "js" ext)
+              (string-equal "jsx" ext))
+              (javascript-mode))))
+
 ;; For better jsx syntax-highlighting in web-mode
 ;; - courtesy of Patrick @halbtuerke
 ;;
@@ -117,6 +125,8 @@
 
 (use-package web-mode
   :mode ("\\.html?\\'")
+  :bind (:map web-mode-map
+              ("C-c C-c" . init/web-mode/toggle-js-mode))
   :hook ((web-mode-local-vars . init/web/load-local-vars)
          (web-mode . init/web-mode)))
 

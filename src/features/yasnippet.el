@@ -49,7 +49,9 @@ Assumes currently open file is a C++ implementation source file."
 
 (use-package yasnippet
   :diminish
-  :bind ([backtab] . yas-expand)
+  :bind (("<S-tab>" . yas-expand)
+         ;; Required for `dart-mode' since the backtab binding is replaced
+         ("<C-tab>" . yas-expand))
   :config (init/yasnippet))
 
 ;;; yasnippet.el ends here

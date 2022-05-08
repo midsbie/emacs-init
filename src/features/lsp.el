@@ -1,6 +1,6 @@
 ;;; lsp.el --- Configures the `lsp' package
 
-;; Copyright (C) 2021  Miguel Guedes
+;; Copyright (C) 2021-2022  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools

@@ -61,7 +61,7 @@
   ;; FIXME: this does not seem to have any effect in JSX mode:
   (setq-local comment-start "/* ")
   (setq-local comment-end   " */")
-  (setq-local fill-column 99)
+  (setq-local fill-column init/defaults/fill-column)
 
   (init/common-web-programming-mode)
 

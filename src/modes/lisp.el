@@ -1,6 +1,6 @@
 ;;; lisp.el --- Configures `lisp-mode'
 
-;; Copyright (C) 2015-2020  Miguel Guedes
+;; Copyright (C) 2015-2022  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -28,7 +28,7 @@
   "Initialise modes related to ELISP development."
 
   (turn-on-eldoc-mode)
-  (setq-local fill-column 79)
+  (setq-local fill-column init/defaults/fill-column/narrow)
 
   (init/common-programming-mode))
 

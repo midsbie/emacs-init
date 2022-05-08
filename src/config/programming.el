@@ -1,6 +1,6 @@
 ;;; programming.el --- Programming-related configuration
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2022  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -185,7 +185,8 @@
   (highlight-parentheses-mode)
   (subword-mode 1)
 
-  (setq-local fill-column 99)
+  (setq-local fill-column init/defaults/fill-column)
+
   (setq-local tab-width   2)
   (setq-local c-basic-offset  2)
 
@@ -200,7 +201,15 @@
   ;; the `add-node-modules-path' package.  Refer to ./use-package.el for
   ;; further infor.
   (add-node-modules-path)
-  (init/common-programming-mode))
+  (init/common-programming-mode)
+
+  ;; For some reason preemptively setting the fill column above is now not
+  ;; taking hold in the following modes: `tide-mode', `js-mode'.
+  ;;
+  ;; Leave this statement at the end of this defun or it may not run.
+  (setq-local fill-column init/defaults/fill-column)
+  (run-with-idle-timer .1 nil #'(lambda ()
+                                  (setq-local fill-column init/defaults/fill-column))))
 
 (init/programming-settings)
 

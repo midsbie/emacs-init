@@ -1,6 +1,6 @@
 ;;; init.el --- Master emacs initialisation file
 
-;; Copyright (C) 2014-2019 Miguel Guedes
+;; Copyright (C) 2014-2022 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:
@@ -59,8 +59,11 @@ Files are only visited if the server hasn't yet been started.")
 (defvar init/suppress-jshint t
   "When non-nil, causes the jshint linter to be ignored.")
 
-(defconst init/defaults/fill-column 99
+(defconst init/defaults/fill-column 100
   "Default `fill-column' value.")
+
+(defconst init/defaults/fill-column/narrow 80
+  "Default narrow `fill-column' value.")
 
 (defun inclusion-path (path)
   (concat (file-name-as-directory init/path-base) path))

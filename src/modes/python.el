@@ -1,6 +1,6 @@
 ;;; python.el --- Configures `python-mode'
 
-;; Copyright (C) 2016-2021  Miguel Guedes
+;; Copyright (C) 2016-2022  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -38,7 +38,7 @@
 (defun init/python-mode ()
   "Customise `python-mode'."
 
-  (setq-local fill-column 79)
+  (setq-local fill-column init/defaults/fill-column/narrow)
   ;; Undoing replacement of projectile's key bindings
   (define-key elpy-mode-map (kbd "C-c C-p") nil)
   (define-key elpy-mode-map (kbd "C-c C-n") nil)

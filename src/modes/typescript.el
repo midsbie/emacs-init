@@ -1,6 +1,6 @@
 ;;; typescript.el --- Configures `typescript-mode'
 
-;; Copyright (C) 2020-2021  Miguel Guedes
+;; Copyright (C) 2020-2022  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -61,12 +61,7 @@
   (flycheck-add-next-checker 'typescript-tide 'javascript-eslint)
 
   (eldoc-mode 1)
-  (tide-hl-identifier-mode 1)
-
-  ;; For some reason preemptively setting the fill column, as done in
-  ;; `init/common-web-programming-mode', does not take hold.
-  (run-with-idle-timer .1 nil #'(lambda ()
-                                  (setq-local fill-column 100))))
+  (tide-hl-identifier-mode 1))
 
 (use-package typescript-mode
   :diminish "TS"

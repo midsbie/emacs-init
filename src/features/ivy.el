@@ -1,6 +1,6 @@
 ;;; ivy.el --- Configures the `ivy' package
 
-;; Copyright (C) 2019-2021  Miguel Guedes
+;; Copyright (C) 2019-2022  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,7 +24,10 @@
 
 ;;; Code:
 
-(defun init/config/ivy()
+(defun init/ivy ()
+  "Initialize ivy")
+
+(defun init/ivy/config()
   ;; From: https://www.reddit.com/r/emacs/comments/51lqn9/helm_or_ivy/d7d34il/
   ;;       https://emacs.stackexchange.com/a/36748
   ;; Let ivy use flx for fuzzy-matching for everything but swiper!
@@ -83,7 +86,8 @@
 
 (use-package ivy
   :diminish
-  :config (init/config/ivy))
+  :init (init/ivy)
+  :config (init/ivy/config))
 
 (use-package ivy-rich
   :after ivy

@@ -20,7 +20,18 @@
 
 ;;; Commentary:
 
+;; Try the following steps when troubleshooting issues:
 ;;
+;; (1) `prettier-restart' after making changes to a repository's `.prettierrc'
+;;     file.
+;;
+;; (2) `prettier-info' to verify prettier's configuration.
+;;
+;; Note that `prettier-mode' now bundles a base64-encoded compressed version of
+;; prettier (follow references to file "prettier-el.js.gz.base64" in
+;; `prettier--create-process') rather than execute prettier's script and that it
+;; may produce different results compared to a project's installed version if
+;; the versions mismatch significantly.
 
 ;;; Code:
 

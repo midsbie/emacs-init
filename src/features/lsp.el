@@ -20,6 +20,12 @@
 
 ;;; Installation:
 ;;
+;; PERFORMANCE
+;;
+;; This article contains super important tips for resolving performance
+;; problems or simply improving the performance of LSP and related modes:
+;; https://emacs-lsp.github.io/lsp-mode/page/performance/
+;;
 ;; TYPESCRIPT
 ;; 1. Install `typescript-language-server` for javascript and typescript
 ;;    support, as per documentation at:
@@ -63,8 +69,15 @@
 
 (defun init/lsp ()
   "Initialise LSP."
-  ;; Refer to initialisation of `gc-cons-threshold' and `read-process-output-max'
-  ;; in `internal/settings.el'.
+  ;; Enable plists when the required environment var is set to true.
+  ;; Ref: https://emacs-lsp.github.io/lsp-mode/page/performance/
+  (let ((use-plists (string= (getenv "LSP_USE_PLISTS") "true")))
+    (unless use-plists
+      (message "Warning: LSP_USE_PLISTS environment var not set or not true"))
+    (setq lsp-use-plists use-plists))
+
+  ;; Refer to initialisation of `gc-cons-threshold' and
+  ;; `read-process-output-max' in `internal/settings.el'.
   ;;
   ;; The following as per the documentation at:
   ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
@@ -80,6 +93,8 @@
   ;; though.
   ;; (setq lsp-signature-doc-lines 5)
 
+  ;; Suggested setting found on:
+  ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
   (setq lsp-idle-delay 0.5)
 
   ;; The following section from:

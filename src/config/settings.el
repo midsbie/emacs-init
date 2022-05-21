@@ -1,6 +1,6 @@
 ;;; settings.el --- Configures settings of emacs' internal features
 
-;; Copyright (C) 2015-2021  Miguel Guedes
+;; Copyright (C) 2015-2022  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -42,7 +42,28 @@
 ;; Set higher threshold before GC kicks in. Changing this setting seems to make
 ;; emacs snappier for some specific workflows.
 (setq gc-cons-threshold (* 100 1024 1024))
-(setq read-process-output-max (* 10 1024 1024))
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
+
+;; Native compilation optimizations
+;;
+;; - Docs for `native-comp-speed' states that a speed of 3 can lead to
+;;   "dangerous" optimizations.
+;;
+;; - Some users reported that passing "-O3" to the native compiler can lead to
+;;   worse performance.
+;;
+;; This has been disabled for now until native compilation matures further.
+;;
+;; (when 'native-comp-compiler-options
+;;   (setq native-comp-speed 3
+;;         native-comp-compiler-options
+;;         '("-O3"
+;;           ;; This is not understood by gcc on the main machine:
+;;           ;; "-march=native"
+;;           ;;
+;;           ;; Using the following instead as per:
+;;           "-m64"
+;;           "-mtune=native")))
 
 ;; Enable useful commands
 (put 'narrow-to-region          'disabled nil)

@@ -73,6 +73,14 @@
   (setq-local lsp-dart-dap-flutter-hot-reload-on-save t)
   (init/common-web-programming-mode)
 
+  ;; Changing the default setting of 1 because company mode in some
+  ;; circumstances seems to be implicated in occasional (sometimes too frequent)
+  ;; micro-stutters wnen the list of candidates returned by the LSP server is
+  ;; too large.  Notably it was happening fairly consistently when editing
+  ;; specific Dart/Flutter source files.  Since the increase to 2,
+  ;; microstuttering seems to have reduced.
+  (setq-local company-minimum-prefix-length 2)
+
   ;; Support for hot-reloading whenever a Dart/Flutter source file is saved.
   ;; This requires flutter to be run in debug mode, with hot-reloading enabled
   ;; (the default behavior), and for a PID file to exist in the repository's

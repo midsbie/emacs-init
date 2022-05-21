@@ -74,12 +74,10 @@ If failed try to complete the common part with `company-complete-common'"
         ([tab] . smarter-yas-expand-next-field-complete)
         ("TAB" . smarter-yas-expand-next-field-complete))
   :custom
-  ;; This was previously set to 1 but it was found to cause micro-stutters in
-  ;; some circumstances where the list of candidates returned by by the LSP
-  ;; server was too large.  Notably it was happening fairly consistently when
-  ;; editing specific Dart/Flutter source files.  Since the increase to 2,
-  ;; editing is no longer the pain it sometimes was.
-  (company-minimum-prefix-length 2)
+  ;; Note that some modes may need to redefine a higher minimum prefix length to
+  ;; prevent weird interactions with LSP mode that may lead to degraded to
+  ;; performance.
+  (company-minimum-prefix-length 1)
   (company-tooltip-align-annotations t)
   (company-begin-commands '(self-insert-command))
   (company-require-match 'never)

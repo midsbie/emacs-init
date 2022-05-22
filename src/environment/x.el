@@ -73,7 +73,7 @@ characters wide."
    '(default ((t (:inherit nil :stipple nil :background "#080808"
                   :foreground "#dcdccc" :inverse-video nil :box nil
                   :strike-through nil :overline nil :underline nil
-                  :slant normal :weight normal :height 75 :width normal
+                  :slant normal :weight normal :height 85 :width normal
                   :foundry "unknown" :family "Hack"))))
    '(rst-level-1-face ((t (:weight bold))) t)
    '(rst-level-2-face ((t (:weight bold))) t)

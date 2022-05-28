@@ -58,6 +58,10 @@
   ;; Explicitly enable automatic code formatting on buffer save.
   (setq lsp-dart-enable-sdk-formatter t)
 
+  ;; This may be necessary to improve performance.
+  ;; Ref: https://gitter.im/emacs-lsp/lsp-mode?at=5eefb9d3c223cc536a294315
+  (setq lsp-dart-flutter-widget-guides nil)
+
   ;; LSP will not work when using Flutter unless the `lsp-dart-flutter-sdk-dir'
   ;; variable is initialized with the path to the Flutter SDK.  This value is
   ;; easily obtained by running the command "flutter sdk-path" but care must be
@@ -80,6 +84,14 @@
   ;; specific Dart/Flutter source files.  Since the increase to 2,
   ;; microstuttering seems to have reduced.
   (setq-local company-minimum-prefix-length 2)
+
+  ;; Increasing idle delays in an effort to improve performance degradation
+  ;; experienced with auto-completion (company-mode) at times.
+  (setq-local lsp-idle-delay 1)
+  (setq-local company-idle-delay 1)
+
+  (setq-local company-backends
+              '(company-capf company-dabbrev company-dabbrev-code))
 
   ;; Support for hot-reloading whenever a Dart/Flutter source file is saved.
   ;; This requires flutter to be run in debug mode, with hot-reloading enabled

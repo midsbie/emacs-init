@@ -55,12 +55,15 @@
 (defun init/dart-mode()
   "Initialise `dart-mode'."
 
-  ;; Explicitly enable automatic code formatting on buffer save.
-  (setq lsp-dart-enable-sdk-formatter t)
-
-  ;; This may be necessary to improve performance.
-  ;; Ref: https://gitter.im/emacs-lsp/lsp-mode?at=5eefb9d3c223cc536a294315
-  (setq lsp-dart-flutter-widget-guides nil)
+  (setq
+   ;; Explicitly enable automatic code formatting on buffer save.
+   lsp-dart-enable-sdk-formatter   t
+   lsp-dart-line-length            init/defaults/fill-column
+   lsp-dart-main-code-lens         nil
+   lsp-dart-test-code-lens         nil
+   ;; This may be necessary to improve performance.
+   ;; Ref: https://gitter.im/emacs-lsp/lsp-mode?at=5eefb9d3c223cc536a294315
+   lsp-dart-flutter-widget-guides  nil)
 
   ;; LSP will not work when using Flutter unless the `lsp-dart-flutter-sdk-dir'
   ;; variable is initialized with the path to the Flutter SDK.  This value is
@@ -84,11 +87,6 @@
   ;; specific Dart/Flutter source files.  Since the increase to 2,
   ;; microstuttering seems to have reduced.
   (setq-local company-minimum-prefix-length 2)
-
-  ;; Increasing idle delays in an effort to improve performance degradation
-  ;; experienced with auto-completion (company-mode) at times.
-  (setq-local lsp-idle-delay 1)
-  (setq-local company-idle-delay 1)
 
   (setq-local company-backends
               '(company-capf company-dabbrev company-dabbrev-code))

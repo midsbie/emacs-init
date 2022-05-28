@@ -1,6 +1,6 @@
 ;;; company.el --- Configures `company-mode' and related packages
 
-;; Copyright (C) 2017-2021  Miguel Guedes
+;; Copyright (C) 2017-2022  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,11 +24,46 @@
 
 ;;; Code:
 
+(defvar init/company/clear-flycheck-errors-timer nil)
+
+(defvar init/company/disabled-backends
+  '(company-semantic company-bbdb company-gtags company-etags company-oddmuse
+                     company-keywords))
+
+(defun init/company/filter-backends (seq)
+  "Remove company backends from SEQ.
+
+Filter backends from `company-backends' that are specified in
+`init/company/disabled-backends'.  Supports lists as elements in
+`company-backends'."
+  (let ((result))
+    (dolist (elt seq)
+      (let (interm)
+        (setq interm (if (listp elt)
+                    (init/company/filter-backends elt)
+                  (unless (memq elt init/company/disabled-backends)
+                    elt)))
+        (when interm
+          (setq result (cons interm result)))))
+    (reverse result)))
+
 (defun init/config/company ()
   "Configure `company'."
-  (unless clangd-p (delete 'company-clang company-backends))
   (global-company-mode 1)
-  (company-statistics-mode)
+
+  ;; Add clang backend to disabled company backends unless the clang binary is
+  ;; installed on the system.
+  (unless clangd-p
+    (add-to-list 'init/company/disabled-backends 'company-clang))
+
+  ;; Remove backends specified in `init/company/disabled-backends'
+  (setq company-backends (init/company/filter-backends company-backends))
+
+  ;; The following disabled as it is believed to be involved in significant
+  ;; performance degradation experienced in specific circumstances where the
+  ;; number of candidates is particularly high.
+  ;;
+  ;; (company-statistics-mode)
   (add-hook 'company-completion-started-hook 'my/company/clear-flycheck-errors)
   (define-key company-mode-map (kbd "<C-return>") 'company-complete))
 

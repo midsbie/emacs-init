@@ -25,6 +25,7 @@
 ;;; Code:
 
 (defvar init/company/clear-flycheck-errors-timer nil)
+(defvar init/company/clear-flycheck-errors-delay .5)
 
 (defvar init/company/disabled-backends
   '(company-semantic company-bbdb company-gtags company-etags company-oddmuse
@@ -81,7 +82,12 @@ Filter backends from `company-backends' that are specified in
 
 (defun my/company/clear-flycheck-errors (manual)
   "Clear flycheck status in buffer."
-  (flycheck-clear))
+  (when init/company/clear-flycheck-errors-timer
+    (cancel-timer init/company/clear-flycheck-errors-timer))
+  (setq init/company/clear-flycheck-errors-timer
+        (run-with-idle-timer init/company/clear-flycheck-errors-delay
+                             nil #'(lambda ()
+                                     (flycheck-clear)))))
 
 (defun smarter-yas-expand-next-field-complete ()
   "Try to `yas-expand' and `yas-next-field' at current cursor position.

@@ -6,6 +6,12 @@
 
 Emacs' initialisation files.
 
+* Configurations of note
+** Jeremy Friesen's dotemacs configuration in literal programming format:
+https://github.com/jeremyf/dotemacs/blob/main/emacs.d/configuration.org
+
+Blog: https://takeonrules.com/
+
 * How to use
 
 After ensuring the source files are in Emacs' load path, edit your =~/.emacs=

@@ -54,6 +54,30 @@ characters wide."
   (set-frame-height (selected-frame) arg))
 
 (when window-system
+  ;; This should be improved upon to take into account the dimensions of the
+  ;; display and make splitting behave accordingly.
+  (setq split-width-threshold nil
+        split-height-threshold nil)
+
+  (setq speedbar-use-images nil)          ; do not use icons in `speedbar-mode'
+
+  ;; Uncomment if desired that the window should be maximised
+  ; (toggle-frame-maximized)
+
+  ;; Highlighter
+  ;;
+  ;; ?????? Disabled as it was seriously degrading performance
+  ;;
+  ;; 260621 Circumstances which led to disabling of highlighter are unclear.
+  ;;        Tentatively reactivating since many package upgrades have taken
+  ;;        place since.
+  (global-hl-line-mode 1)
+  (set-face-background 'hl-line "#383830")
+
+  ;; Enable clipboard functionality
+  (setq select-enable-clipboard     t
+        interprogram-paste-function 'x-cut-buffer-or-selection-value)
+
   ;; Dynamically setting active project name.
   ;; From: https://emacs.stackexchange.com/a/35443
   (setq frame-title-format '((:eval
@@ -61,8 +85,6 @@ characters wide."
                                 (unless (string= "-" project-name)
                                   (format "%s :: " project-name))))
                              "%b"))
-
-  (tool-bar-mode -1)                      ; disable toolbar
 
   ;; Set custom faces
   ; The following call sets the default color of window (buffer) backgrounds,
@@ -94,31 +116,8 @@ characters wide."
     (when height
       (set-current-frame-width height)))
 
-  ;; This should be improved upon to take into account the dimensions of the
-  ;; display and make splitting behave accordingly.
-  (setq split-width-threshold nil
-        split-height-threshold nil)
-
-  ;; Uncomment if desired that the window should be maximised
-  ; (toggle-frame-maximized)
-
-  ;; Highlighter
-  ;;
-  ;; ?????? Disabled as it was seriously degrading performance
-  ;;
-  ;; 260621 Circumstances which led to disabling of highlighter are unclear.
-  ;;        Tentatively reactivating since many package upgrades have taken
-  ;;        place since.
-  (global-hl-line-mode 1)
-  (set-face-background 'hl-line "#383830")
-
-  ;; Enable clipboard functionality
-  (setq select-enable-clipboard     t
-        interprogram-paste-function 'x-cut-buffer-or-selection-value)
-
+  ;; Re-balance windows now that the frame's size has been calculated
   (balance-windows)
-  (setq speedbar-use-images nil)          ; do not use icons in `speedbar-mode'
-  (tooltip-mode -1)                       ; disable tooltips
 
   ;; For some reason, version >25.x seems to activate the horizontal scrollbars.
   ;; We forcefully disable them here.

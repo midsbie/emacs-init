@@ -27,9 +27,11 @@
 (defun init/config/recentf ()
   "Initialises the `recentf' package."
 
-  ;; recentf-mode
   (setq recentf-auto-cleanup    'never
-        recentf-max-menu-items  25)
+        recentf-max-menu-items  100)
+
+  ;; Save files every 2 minutes
+  (run-at-time nil (* 2 60) 'recentf-save-list)
 
   (recentf-mode 1))
 

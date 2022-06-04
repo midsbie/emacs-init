@@ -28,12 +28,71 @@
 ;; start or work as expected.
 (setenv "FrameworkPathOverride" "/lib/mono/4.5")
 
+;; Emacs initialization
 (setq inhibit-splash-screen   t         ; Disable splash screen
       initial-scratch-message nil       ; Disable startup message
-      password-cache-expiry   nil)      ; Disable password cache expiration
+      )
 
-(delete-selection-mode t)               ; Enable C-D to delete selected text
-(transient-mark-mode t)                 ; Enable typing to replace selected text
+;; General settings
+(setq-default
+ enable-recursive-minibuffers t         ; allow recursive editing in minibuffer
+ help-window-select           'other    ; focus on help window when spawning
+ truncate-lines               t         ; don't wrap, truncate lines by default
+ idle-update-delay            1.1       ; reduce rate at which UI updates
+ echo-keystrokes              0.2       ; show keystrokes as they're happen
+ ring-bell-function           'ignore   ; don't ring any bell
+ ;; Recommendation from https://protesilaos.com/emacs/modus-themes
+ ;; found in: https://github.com/jeremyf/dotemacs/blob/main/emacs.d/configuration.org
+ x-underline-at-descent-line t
+ password-cache-expiry       nil        ; disable password cache expiration
+)
+
+;; Modes
+(setq default-major-mode 'text-mode     ; set text-mode as default mode
+      ;; The following fucks with certain major modes (i.e. yasnippet) and must
+      ;; be disabled at ALL times
+      mode-require-final-newline nil
+      )
+
+;; Column
+(setq-default
+ column-number-mode           t
+ fill-column                  init/defaults/fill-column)
+
+;; Indentation
+(setq-default indent-tabs-mode nil
+              standard-indent  2
+              tab-width        2)
+
+;; Coding-related
+(setq-default
+  comment-multi-line           t
+  comment-style                'multi
+  diff-switches                '-u      ; set diff to use unified format
+  vc-follow-symlinks t                  ; follow symlinks instead of prompting
+  )
+
+;; Backups
+(setq backup-directory-alist  `(("." . "~/.emacs.d/backups"))
+      backup-by-copying       t         ; place backup files in `backups`
+      create-lockfiles        nil       ; do not create lock files
+      delete-old-versions     t
+      kept-new-versions       20
+      kept-old-versions       5
+      version-control t                 ; use version numbers on backups
+      )
+
+;; Following list of buffers shouldn't open a new window
+(setq same-window-buffer-names '("*shell*"
+                                 "*mail*"
+                                 "*unsent mail*"
+                                 "*info*"))
+
+;; Some settings that may help with redisplay
+;; Ref: [4:25] https://200ok.ch/posts/2020-10-01_introduction_to_profiling_in_emacs.html
+(setq bidi-paragraph-direction  'left-to-right
+      bidi-inhibit-bpa          nil
+      )
 
 ;; The following settings as per the documentation on improving the performance
 ;; of LSP at:
@@ -41,8 +100,14 @@
 ;;
 ;; Set higher threshold before GC kicks in. Changing this setting seems to make
 ;; emacs snappier for some specific workflows.
-(setq gc-cons-threshold (* 100 1024 1024))
-(setq read-process-output-max (* 1024 1024)) ;; 1mb
+;;
+;; It may be wise to set the GC threshold to a reasonable value or we may end up
+;; hindering performance.  Might be best to have more frequent clean ups taking
+;; an imperceptible amount of time to complete, rather less frequent ones that
+;; momentarily block editing.
+(setq gc-cons-threshold (* 1 1024 1024)       ; 1 MiB
+      read-process-output-max (* 8 1024 1024) ; 8 MiB
+      )
 
 ;; Native compilation optimizations
 ;;
@@ -65,6 +130,22 @@
 ;;           "-m64"
 ;;           "-mtune=native")))
 
+;; Preferred coding system
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+
+;; Mode set up
+(delete-selection-mode t)               ; C-D deletes selected text
+(transient-mark-mode t)                 ; typing replaces selected text
+(global-so-long-mode t)                 ; better handling of long files
+(size-indication-mode t)                ; size indication mode
+
+(menu-bar-mode -1)                      ; disable menu bar
+(tool-bar-mode -1)                      ; disable toolbar
+(tooltip-mode -1)                       ; disable tooltips
+
 ;; Enable useful commands
 (put 'narrow-to-region          'disabled nil)
 (put 'erase-buffer              'disabled nil)
@@ -80,38 +161,18 @@
 ;; https://emacs.stackexchange.com/q/70926/
 (put 'list-timers 'disabled nil)
 
-;; The following fucks with certain major modes (i.e. yasnippet) and must be
-;; disabled at ALL times
-(setq mode-require-final-newline nil)
-
-;; Set text-mode as default mode
-(setq default-major-mode 'text-mode)
-
-(menu-bar-mode -1)                      ; disable menu bar
-(size-indication-mode 1)                ; turn on size indication mode
+;; Set tab-stop positions for C-i at two characters wide.
+(let (p)
+  (dotimes (i 50)
+    (setq p (cons (* 2 i) p)))
+  (setq tab-stop-list (reverse p)))
 
 ;; Note that `scroll-bar-mode' doesn't seem to be defined in emacs v24.5.1 and
 ;; possibly earlier versions.
 (when (boundp 'scroll-bar-mode)
   (scroll-bar-mode -1))                 ; disable scrollbars
 
-(setq diff-switches         '-u         ; set diff to use unified format
-      echo-keystrokes       0.1)        ; show keystrokes as they're happen
-
 (fset 'yes-or-no-p 'y-or-n-p)           ; accept 'y' or 'n' instead of yes/no
-
-(setq-default
- enable-recursive-minibuffers t         ; allow recursive editing in minibuffer
- column-number-mode           t
- comment-multi-line           t
- comment-style                'multi
- indent-tabs-mode             nil
- standard-indent              2
- tab-width                    2
- fill-column                  init/defaults/fill-column
- help-window-select           'other    ; focus on help window when spawning
- truncate-lines               t         ; don't wrap, truncate lines by default
- )
 
 ;; To make it easier for newcomers to Emacs, the developers decided to swap out
 ;; the mechanics of C-j and RET when `electric-indent-mode' is enabled.  In the
@@ -119,13 +180,14 @@
 ;; produces a newline and indention and C-m or RET only a newline.
 ;;
 ;; Ref: https://lists.gnu.org/archive/html/bug-gnu-emacs/2014-12/msg00098.html
-(add-hook 'electric-indent-mode-hook #'(lambda ()
-                                        (if electric-indent-mode
-                                            (progn
-                                              (global-set-key (kbd "C-j") 'newline)
-                                              (global-set-key (kbd "RET") 'electric-newline-and-maybe-indent))
-                                          (global-set-key (kbd "C-j") 'electric-newline-and-maybe-indent)
-                                          (global-set-key (kbd "RET") 'newline))))
+(add-hook 'electric-indent-mode-hook
+          #'(lambda ()
+              (if electric-indent-mode
+                  (progn
+                    (global-set-key (kbd "C-j") 'newline)
+                    (global-set-key (kbd "RET") 'electric-newline-and-maybe-indent))
+                (global-set-key (kbd "C-j") 'electric-newline-and-maybe-indent)
+                (global-set-key (kbd "RET") 'newline))))
 (electric-indent-mode 1)
 ;; Also enabling `electric-pair-mode' because it works great with indent above.
 ;; Note that pair requires indent or indentation will be missing in some
@@ -134,32 +196,6 @@
 ;; This is problematic in some modes like `typescript-mode', as it forcefully
 ;; adds newlines when some characters are types (e.g. `{').
 (electric-layout-mode -1)
-
-;; Set tab-stop positions for C-i at two characters wide.
-(let (p)
-  (dotimes (i 50)
-    (setq p (cons (* 2 i) p)))
-  (setq tab-stop-list (reverse p)))
-
-;; Following list of buffers shouldn't open a new window
-(setq same-window-buffer-names '("*shell*"
-                                 "*mail*"
-                                 "*unsent mail*"
-                                 "*info*"))
-
-;; Do not create lock files and place backup files in a `backups` directory.
-(setq create-lockfiles nil)
-(setq backup-directory-alist  `(("." . "~/.backups"))
-      backup-by-copying       t
-      delete-old-versions     t
-      kept-new-versions       6
-      kept-old-versions       2
-      version-control         t)
-
-;; Some settings that may help with redisplay
-;; Ref: [4:25] https://200ok.ch/posts/2020-10-01_introduction_to_profiling_in_emacs.html
-(setq bidi-paragraph-direction 'left-to-right)
-(setq bidi-inhibit-bpa nil)
 
 ;; Windows
 (setq-default split-height-threshold 100)

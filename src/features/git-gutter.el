@@ -51,22 +51,22 @@
 
   (dolist (sym '(git-gutter-fr:added git-gutter-fr:modified git-gutter-fr:deleted))
     (fringe-helper-define sym nil
-      "XX......"
-      "XX......"
-      "XX......"
-      "XX......"
-      "XX......"
-      "XX......"
-      "XX......"
-      "XX......"
-      "XX......"
-      "XX......"
-      "XX......"
-      "XX......"
-      "XX......"
-      "XX......"
-      "XX......"
-      "XX......"))
+      "....XXXX"
+      "....XXXX"
+      "....XXXX"
+      "....XXXX"
+      "....XXXX"
+      "....XXXX"
+      "....XXXX"
+      "....XXXX"
+      "....XXXX"
+      "....XXXX"
+      "....XXXX"
+      "....XXXX"
+      "....XXXX"
+      "....XXXX"
+      "....XXXX"
+      "....XXXX"))
 
   (setq git-gutter:update-interval 2
         git-gutter:lighter ""

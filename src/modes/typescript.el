@@ -35,7 +35,9 @@
   (local-set-key (kbd "M-e") 'c-end-of-statement)
 
   ;; (init/config/ts-tsx/lsp)
-  (init/config/ts-tsx/tide))
+  ;; (init/config/ts-tsx/tide)
+  (init/config/ts-tsx/eglot)
+  )
 
 (defun init/config/web/ts-tsx ()
   "Initialise Typescript mode for React in `web-mode'."
@@ -62,6 +64,10 @@
 
   (eldoc-mode 1)
   (tide-hl-identifier-mode 1))
+
+(defun init/config/ts-tsx/eglot ()
+  "Enable eglot in Typescript buffer."
+  (eglot-ensure))
 
 (use-package typescript-mode
   :diminish "TS"

@@ -71,7 +71,10 @@
   ;;     (flow-minor-mode 1))
   ;;
   ;; Now using LSP.
-  (lsp-deferred))
+  ;; (lsp-deferred)
+
+  ;; Nope.  Now using eglot!
+  (eglot-ensure))
 
 (defun init/js-mode/toggle-mode ()
   "Switch to `web-mode'."

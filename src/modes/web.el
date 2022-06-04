@@ -92,7 +92,10 @@
               (and (boundp 'tide-mode) tide-mode))
     (when (or (string-equal "tsx" (file-name-extension buffer-file-name))
               (flycheck-flow--predicate))
-      (lsp-deferred))))
+      ;; Usage of LSP has been disabled in favor of eglot.
+      ;; (lsp-deferred)
+      (eglot-ensure)
+      )))
 
 (defun init/web/load-local-vars ()
   "Map the value of `c-basic-offset' to `web-mode-code-indent-offset'."

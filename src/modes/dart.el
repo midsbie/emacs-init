@@ -112,7 +112,9 @@
 (use-package dart-mode
   ;; Requiring the `s' package because `s-trim-right' is used above.
   :after (company flycheck s)
-  :hook ((dart-mode . lsp)
+  :hook (
+         ;;(dart-mode . lsp)
+         (dart-mode . eglot-ensure)
          (dart-mode . init/config/dart-mode))
   :init
   (init/dart-mode))

@@ -44,6 +44,7 @@
   :bind (("C-c C-p p" . projectile-switch-project-action)
          ("C-c C-p d" . projectile-find-dir)
          ("C-c C-p f" . projectile-find-file))
-  :init (init/projectile))
+  :init (init/projectile)
+  :config (projectile-mode))
 
 ;;; projectile.el ends here

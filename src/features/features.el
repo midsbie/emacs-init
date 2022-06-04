@@ -59,7 +59,7 @@
 
 (use-package recursion-indicator
   :demand t
-  :init
+  :config
   (recursion-indicator-mode t))
 
 (use-package visual-regexp

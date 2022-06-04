@@ -32,9 +32,6 @@
 ;; Defaults
 (setq-default python-indent-offset 4)
 
-(defun init/python ()
-  "Python mode load hook.")
-
 (defun init/python-mode ()
   "Customise `python-mode'."
 

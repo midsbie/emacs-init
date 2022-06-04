@@ -73,7 +73,7 @@
     (message "info: golint not found and will be unavailable"))
   )
 
-(defun init/go-mode/config ()
+(defun init/config/go-mode ()
   "Configure `go-mode' major mode."
   (init/common-nonweb-programming-mode)
   (go-eldoc-setup)
@@ -104,6 +104,6 @@
 (use-package go-mode
   :mode ("\\.go\\'")
   :init (init/go-mode)
-  :config (init/go-mode/config))
+  :config (init/config/go-mode))
 
 ;;; go.el ends here

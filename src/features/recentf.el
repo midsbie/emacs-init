@@ -30,14 +30,17 @@
   (setq recentf-auto-cleanup    'never
         recentf-max-menu-items  100)
 
-  ;; Save files every 2 minutes
-  (run-at-time nil (* 2 60) 'recentf-save-list)
-
-  (recentf-mode 1))
+  ;; Save files every 2 minutes, suppressing the message printed in the
+  ;; minibuffer.
+  ;; Ref: https://emacs.stackexchange.com/questions/14706/
+  (run-at-time nil (* 2 60) '(lambda ()
+                               (let (message-log-max)
+                                 (recentf-save-list)))))
 
 (use-package recentf
   ;; The following replaces default binding to `ido-find-file-read-only'
   :bind ("C-x C-r" . recentf-open-files)
-  :init (init/recentf))
+  :init (init/recentf)
+  :config (recentf-mode 1))
 
 ;;; recentf.el ends here

@@ -85,11 +85,11 @@
                               (set-face-background 'git-gutter:added "dark green")
                               (set-face-background 'git-gutter:deleted "dark red"))))
 
-  (setq git-gutter:modified-sign "*")
-  (global-git-gutter-mode t))
+  (setq git-gutter:modified-sign "*"))
 
 (use-package git-gutter
   :diminish
-  :init (init/git-gutter))
+  :init (init/git-gutter)
+  :config (global-git-gutter-mode t))
 
 ;;; git-gutter.el ends here

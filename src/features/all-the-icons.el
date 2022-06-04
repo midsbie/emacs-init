@@ -1,6 +1,6 @@
 ;;; all-the-icons.el --- Configures all-the-icons and related packages
 
-;; Copyright (C) 2021  Miguel Guedes
+;; Copyright (C) 2021-2022  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -33,7 +33,7 @@
   (all-the-icons-completion-mode))
 
 (use-package all-the-icons-completion
-  :init
+  :config
   (init/all-the-icons-completion))
 
 ;; Ref: https://github.com/domtronn/all-the-icons.el
@@ -43,12 +43,12 @@
 
 ;; Ref: https://github.com/seagle0128/all-the-icons-ibuffer
 (use-package all-the-icons-ibuffer
-  :init (all-the-icons-ibuffer-mode 1))
+  :config (all-the-icons-ibuffer-mode 1))
 
 ;; Ref: https://github.com/seagle0128/all-the-icons-ivy-rich
 (use-package all-the-icons-ivy-rich
   ;; Only loads after the ivy-rich package does
   :after (ivy-rich)
-  :init (all-the-icons-ivy-rich-mode 1))
+  :config (all-the-icons-ivy-rich-mode 1))
 
 ;;; all-the-icons.el ends here

@@ -34,13 +34,14 @@
   ;; make sure which-key doesn't show normally but refreshes quickly after it is
   ;; triggered.
   (setq which-key-idle-delay 10000)
-  (setq which-key-idle-secondary-delay 0.05)
-  (which-key-setup-side-window-right)
-  (which-key-mode))
+  (setq which-key-idle-secondary-delay 0.05))
 
 (use-package which-key
   :diminish
   :init
-  (init/which-key))
+  (init/which-key)
+  :config
+  (which-key-setup-side-window-right)
+  (which-key-mode)  )
 
 ;;; which-key.el ends here

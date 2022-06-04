@@ -29,20 +29,18 @@
 
   ;; disable ido faces to see flx highlights.
   (setq ido-enable-flex-matching  t
-        ido-use-faces             nil)
+        ido-use-faces             nil))
 
+(defun init/config/ido ()
   (ido-mode 1)
   (ido-everywhere 1))
 
-(defun init/flx-ido ()
-  "Initialize the `flx-ido' package."
-  (flx-ido-mode 1))
-
 (use-package ido
-  :init (init/ido))
+  :init (init/ido)
+  :config (init/config/ido))
 
 (use-package flx-ido
   :after ido
-  :init (init/flx-ido))
+  :config (flx-ido-mode 1))
 
 ;;; ido.el ends here

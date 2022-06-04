@@ -39,7 +39,8 @@
 
 (use-package recentf
   ;; The following replaces default binding to `ido-find-file-read-only'
-  :bind ("C-x C-r" . recentf-open-files)
+  ;; :bind ("C-x C-r" . recentf-open-files)
+  :bind ("C-x C-r" . consult-recent-file)
   :init (init/recentf)
   :config (recentf-mode 1))
 

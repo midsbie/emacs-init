@@ -30,10 +30,9 @@
   ;; keymap is not available at all.
   (setq-default projectile-keymap-prefix "")
 
-  ;; Let projectile use ivy
-  (setq projectile-completion-system 'ivy)
-
-  (projectile-mode))
+  ;; Using ivy completion system previously
+  ;; (setq projectile-completion-system 'ivy)
+  (setq projectile-completion-system 'auto))
 
 ;; This statement was producing an error when placed before the function it
 ;; invokes, presumable because 'ido may have loaded in some circumstances.

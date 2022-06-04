@@ -1,6 +1,6 @@
 ;;; ido.el --- Configures ido and related packages
 
-;; Copyright (C) 2015-2021  Miguel Guedes
+;; Copyright (C) 2015-2022  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,25 +24,25 @@
 
 ;;; Code:
 
-(defun init/config/ido ()
-  "Configure the `ido' package."
-
-  (ido-mode 1)
-  (ido-everywhere 1)
+(defun init/ido ()
+  "Initialize the `ido' package."
 
   ;; disable ido faces to see flx highlights.
   (setq ido-enable-flex-matching  t
-        ido-use-faces             nil))
+        ido-use-faces             nil)
 
-(defun init/config/flx-ido ()
-  "Configure the `flx-ido' package."
+  (ido-mode 1)
+  (ido-everywhere 1))
+
+(defun init/flx-ido ()
+  "Initialize the `flx-ido' package."
   (flx-ido-mode 1))
 
 (use-package ido
-  :config (init/config/ido))
+  :init (init/ido))
 
 (use-package flx-ido
   :after ido
-  :config (init/config/flx-ido))
+  :init (init/flx-ido))
 
 ;;; ido.el ends here

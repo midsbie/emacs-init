@@ -1,4 +1,4 @@
-;;; display-line-numbers-mode.el --- Configures `display-line-numbers-mode-mode'
+;;; display-line-numbers.el --- Configures `display-line-numbers-mode-mode'
 
 ;; Copyright (C) 2015-2021  Miguel Guedes
 
@@ -45,4 +45,4 @@
 (use-package display-line-numbers
   :config (init/display-line-numbers-mode))
 
-;;; display-line-numbers-mode.el ends here
+;;; display-line-numbers.el ends here

@@ -1,6 +1,6 @@
 ;;; server.el --- Configuration of Emacs `server' package
 
-;; Copyright (C) 2017-2021  Miguel Guedes
+;; Copyright (C) 2017-2022  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -43,7 +43,6 @@ seconds after Emacs has launched."
                             (server-start)))))
 
 (use-package server
-  :after (projectile)
   :config (init/server))
 
 ;;; server.el ends here

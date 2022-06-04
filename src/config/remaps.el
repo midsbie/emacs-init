@@ -46,6 +46,7 @@
 (global-set-key [S-f3]                'better-previous-error)
 (global-set-key (kbd "C-x k")         'kill-current-buffer)
 (global-set-key (kbd "C-x w")         'copy-sexp-to-kill-ring)
+(global-set-key (kbd "C-c y")         'browse-kill-ring)
 
 ;; Buffer-related
 (global-set-key (kbd "C-x x")         'mark-whole-buffer)

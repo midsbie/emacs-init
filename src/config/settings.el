@@ -43,9 +43,11 @@
  ring-bell-function           'ignore   ; don't ring any bell
  ;; Recommendation from https://protesilaos.com/emacs/modus-themes
  ;; found in: https://github.com/jeremyf/dotemacs/blob/main/emacs.d/configuration.org
- x-underline-at-descent-line t
- password-cache-expiry       nil        ; disable password cache expiration
-)
+ x-underline-at-descent-line  t
+ password-cache-expiry        nil       ; disable password cache expiration
+ save-place                   t         ; save position in buffer
+ uniquify-buffer-name-style   'forward
+ )
 
 ;; Modes
 (setq default-major-mode 'text-mode     ; set text-mode as default mode
@@ -81,6 +83,13 @@
       kept-old-versions       5
       version-control t                 ; use version numbers on backups
       )
+
+;; Set calendar's week start day to Monday and not Sunday, as by default.
+(setq calendar-week-start-day 1)
+
+;; Set default browser - currently set to `xdg-open'.
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program  "xdg-open")
 
 ;; Following list of buffers shouldn't open a new window
 (setq same-window-buffer-names '("*shell*"

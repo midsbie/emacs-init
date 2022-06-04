@@ -1,6 +1,6 @@
 ;;; recentf.el --- Configures `recentf' package
 
-;; Copyright (C) 2015-2021  Miguel Guedes
+;; Copyright (C) 2015-2022  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(defun init/config/recentf ()
+(defun init/recentf ()
   "Initialises the `recentf' package."
 
   (setq recentf-auto-cleanup    'never
@@ -38,6 +38,6 @@
 (use-package recentf
   ;; The following replaces default binding to `ido-find-file-read-only'
   :bind ("C-x C-r" . recentf-open-files)
-  :config (init/config/recentf))
+  :init (init/recentf))
 
 ;;; recentf.el ends here

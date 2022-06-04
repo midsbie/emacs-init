@@ -1,6 +1,6 @@
 ;;; tramp.el --- Customises Tramp
 
-;; Copyright (C) 2020  Miguel Guedes
+;; Copyright (C) 2022  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,17 +24,16 @@
 
 ;;; Code:
 
-(defun init/tramp ()
-  "Initialise the `tramp' package."
+(defun init/config/tramp ()
+  "Configure the `tramp' package."
 
   ; Invoke by opening /sudo:sudo-zeus:/path/to/file
   (add-to-list 'tramp-default-proxies-alist
-               '("sudo-zeus" nil "/ssh:softgeist.com:"))
-)
+               '("sudo-zeus" nil "/ssh:softgeist.com:")))
 
-; Moved to after the function declaration so as to avoid potential failures at
-; load time
-(eval-after-load 'tramp '(init/tramp))
-
+;; Moved to after the function declaration so as to avoid potential failures at
+;; load time
+(use-package tramp
+  :config (init/config/tramp))
 
 ;;; tramp.el ends here

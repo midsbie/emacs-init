@@ -1,6 +1,6 @@
 ;;; speedbar.el --- Configures the `speedbar' package
 
-;; Copyright (C) 2015-2021  Miguel Guedes
+;; Copyright (C) 2015-2022  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -35,6 +35,6 @@
                                     (left-fringe . 0))))
 
 (use-package speedbar
-  :config (init/speedbar))
+  :init (init/speedbar))
 
 ;;; speedbar.el ends here

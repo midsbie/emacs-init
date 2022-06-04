@@ -1,6 +1,6 @@
-;;; browse-kill-ring.el --- Configures the browse-kill-ring feature
+;;; sh.el --- Configures sh-mode
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2022  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,6 +24,18 @@
 
 ;;; Code:
 
-(global-set-key "\C-cy" 'browse-kill-ring)
+(defun init/sh-script ()
+  "Configure the `sh-script' package."
+  (setq-default  sh-basic-offset    2
+                 sh-indentation     2))
 
-;;; browse-kill-ring.el ends here
+(defun init/config/sh-mode ()
+  "Initialise modes related to shell scripting development."
+  (init/common-nonweb-programming-mode)
+  (auto-fill-mode -1))
+
+(use-package sh-script
+  :init (init/sh-script)
+  :hook ((sh-mode . init/config/sh-mode)))
+
+;;; sh.el ends here

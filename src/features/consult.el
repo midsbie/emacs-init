@@ -68,6 +68,13 @@
                  nil
                  (window-parameters (mode-line-format . none)))))
 
+(defun init/consult/choose-fly-diagnostic ()
+  "Pick between flymake and flycheck and show diagnostics."
+  (interactive)
+  (if (flycheck-running-p)
+      (consult-flycheck)
+    (consult-flymake)))
+
 ;; Consult users will also want the embark-consult package.
 (use-package embark-consult
   :after (embark consult)
@@ -102,7 +109,7 @@
          ("<help> a" . consult-apropos)            ; was: apropos-command
          ;; M-g bindings (goto-map)
          ("M-g e" . consult-compile-error)
-         ("M-g f" . consult-flymake)               ; Alternative: consult-flycheck
+         ("M-g f" . init/consult/choose-fly-diagnostic)
          ("M-g g" . consult-goto-line)             ; was: goto-line
          ("M-g M-g" . consult-goto-line)           ; was: goto-line
          ("M-g o" . consult-outline)               ; Alternative: consult-org-heading

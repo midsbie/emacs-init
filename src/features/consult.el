@@ -78,13 +78,14 @@
   (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package consult
+  :after (projectile)
   ;; Replace bindings. Lazily loaded due by `use-package'.
-  :bind (;; C-c bindings (mode-specific-map)
+  :bind (
+         ;; C-c bindings (mode-specific-map)
          ("C-c h" . consult-history)
          ("C-c m" . consult-mode-command)
          ("C-c k" . consult-kmacro)
          ("C-c p" . consult-projectile)
-         ("C-c C-p b" . consult-project-buffer)    ; orig. project-switch-to-buffer
          ;; C-x bindings (ctl-x-map)
          ("C-x M-:" . consult-complex-command)     ; orig. repeat-complex-command
          ("C-x b" . consult-buffer)                ; orig. switch-to-buffer
@@ -129,7 +130,16 @@
          ;; Minibuffer history
          :map minibuffer-local-map
          ("M-s" . consult-history)                 ; orig. next-matching-history-element
-         ("M-r" . consult-history))                ; orig. previous-matching-history-element
+         ("M-r" . consult-history)                 ; orig. previous-matching-history-element
+         ;; Projectile
+         :map projectile-command-map
+         ("b" . consult-projectile-switch-to-buffer)    ; orig. project-switch-to-buffer
+         ("p" . consult-projectile-switch-project)
+         ("d" . consult-projectile-find-dir)
+         ("f" . consult-projectile-find-file)
+         ("r" . consult-projectile-recentf)
+         ;; end bindings
+         )
 
   ;; Enable automatic preview at point in the *Completions* buffer. This is
   ;; relevant when you use the default completion UI.

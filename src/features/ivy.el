@@ -84,23 +84,28 @@
   ;; is accepting user input.
   (ivy-mode 1))
 
-;; (use-package ivy
-;;   :diminish
-;;   :init (init/ivy)
-;;   :config (init/ivy/config))
+(use-package ivy
+  :disabled
+  :diminish
+  :init (init/ivy)
+  :config (init/ivy/config))
 
-;; (use-package ivy-rich
-;;   :after ivy
-;;   :ensure t
-;;   :init (ivy-rich-mode 1))
+(use-package ivy-rich
+  :disabled
+  :after ivy
+  :ensure t
+  :init (ivy-rich-mode 1))
 
-;; (use-package flx
-;;   :after ivy)
+(use-package flx
+  :disabled
+  :after ivy)
 
-;; (use-package swiper
-;;   :after ivy)
+(use-package swiper
+  :disabled
+  :after ivy)
 
-;; (use-package counsel
-;;   :after ivy)
+(use-package counsel
+  :disabled
+  :after ivy)
 
 ;;; ivi.el ends here

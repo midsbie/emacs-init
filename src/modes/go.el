@@ -1,6 +1,6 @@
 ;;; go.el --- Configures `go-mode'
 
-;; Copyright (C) 2015-2021  Miguel Guedes
+;; Copyright (C) 2015-2022  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -60,9 +60,6 @@
       (unless (getenv "GOPATH")
         (setenv "GOPATH" (expand-file-name "~/go"))
         (message "info: set default GOPATH: %s" (getenv "GOPATH")))))
-
-  ;; Attempt to load go autocomplete
-  (maybe-load-library "go-autocomplete")
 
   ;; Load golint if executable found.  Note that golint is currently
   ;; expected to have been installed via `go get`.

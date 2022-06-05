@@ -24,93 +24,96 @@
 
 ;;; Code:
 
-(defun init/programming-settings ()
-  "Initialise programming modes."
-  ;; Own custom default style
-  (c-add-style "default"
-               '("linux"
-                 (c-recognize-knr-p . nil)
-                 (c-basic-offset  . 2)
-                 (indent-tabs-mode . nil)
-                 (c-comment-only-line-offset . 0)
-                 (c-syntactic-indentation-in-macros . nil)
-                 (c-hanging-braces-alist . ((brace-list-open)
-                                            (brace-entry-open)
-                                            (substatement-open after)
-                                            (block-close . c-snug-do-while)
-                                            (arglist-cont-nonempty)))
-                 (c-cleanup-list . (brace-else-brace
-                                    brace-elseif-brace
-                                    brace-catch-brace
-                                    empty-defun-braces
-                                    one-liner-defun
-                                    defun-close-semi
-                                    ;;                               space-before-funcall
-                                    compact-empty-funcall))
-                 (c-hanging-semi&comma-criteria . ((lambda () 'stop)))
-                 (c-offsets-alist . ((innamespace           . 0)
-                                     (statement-block-intro . +)
-                                     (knr-argdecl-intro     . 0)
-                                     (substatement-open     . 0)
-                                     (substatement-label    . 0)
-                                     (label                 . 0)
-                                     (statement-cont        . +)))))
+;; Global programming settings
+;; --
+;; Own custom default style
+(c-add-style "default"
+             '("linux"
+               (c-recognize-knr-p . nil)
+               (c-basic-offset  . 2)
+               (indent-tabs-mode . nil)
+               (c-comment-only-line-offset . 0)
+               (c-syntactic-indentation-in-macros . nil)
+               (c-hanging-braces-alist . ((brace-list-open)
+                                          (brace-entry-open)
+                                          (substatement-open after)
+                                          (block-close . c-snug-do-while)
+                                          (arglist-cont-nonempty)))
+               (c-cleanup-list . (brace-else-brace
+                                  brace-elseif-brace
+                                  brace-catch-brace
+                                  empty-defun-braces
+                                  one-liner-defun
+                                  defun-close-semi
+                                  ;;                               space-before-funcall
+                                  compact-empty-funcall))
+               (c-hanging-semi&comma-criteria . ((lambda () 'stop)))
+               (c-offsets-alist . ((innamespace           . 0)
+                                   (statement-block-intro . +)
+                                   (knr-argdecl-intro     . 0)
+                                   (substatement-open     . 0)
+                                   (substatement-label    . 0)
+                                   (label                 . 0)
+                                   (statement-cont        . +)))))
 
-  ;; TODO: Investigate how to make the following work with
-  ;; `c-hanging-semi&comma-criteria above.  Tried and failed to get it to work and
-  ;; in the end simply disabled newline on semi.
-  ;;
-  ;;                . (c-semi&comma-no-newlines-for-oneline-inliners
-  ;;                   c-semi&comma-inside-parenlist
-  ;;                   c-semi&comma-no-newlines-before-nonblanks))
+;; TODO: Investigate how to make the following work with
+;; `c-hanging-semi&comma-criteria above.  Tried and failed to get it to work and
+;; in the end simply disabled newline on semi.
+;;
+;;                . (c-semi&comma-no-newlines-for-oneline-inliners
+;;                   c-semi&comma-inside-parenlist
+;;                   c-semi&comma-no-newlines-before-nonblanks))
 
-  ;; No clean-ups.  May prove useful in chaotically formatted code.
-  ;; NOTE: don't forget to also turn off `c-auto-newline'!
-  (c-add-style "default-bland"
-               '("default"
-                 (c-cleanup-list . nil)))
+;; No clean-ups.  May prove useful in chaotically formatted code.
+;; NOTE: don't forget to also turn off `c-auto-newline'!
+(c-add-style "default-bland"
+             '("default"
+               (c-cleanup-list . nil)))
 
-  ;; OpenBSD style.
-  (c-add-style "openbsd"
-               '("bsd"
-                 (c-backspace-function . delete-backward-char)
-                 (c-syntactic-indentation-in-macros . nil)
-                 (c-tab-always-indent . nil)
-                 (c-hanging-braces-alist (block-close . c-snug-do-while))
-                 (c-offsets-alist (arglist-cont-nonempty . *)
-                                  (statement-cont . *))
-                 (indent-tabs-mode . t)))
+;; OpenBSD style.
+(c-add-style "openbsd"
+             '("bsd"
+               (c-backspace-function . delete-backward-char)
+               (c-syntactic-indentation-in-macros . nil)
+               (c-tab-always-indent . nil)
+               (c-hanging-braces-alist (block-close . c-snug-do-while))
+               (c-offsets-alist (arglist-cont-nonempty . *)
+                                (statement-cont . *))
+               (indent-tabs-mode . t)))
 
-  ;; Default settings
-  (setq-default c-default-style    "default" ; own default style
-                tab-width          2
-                indent-tabs-mode   nil
-                js-indent-level    2)
+;; Default settings
+(setq-default c-default-style    "default" ; own default style
+              tab-width          2
+              indent-tabs-mode   nil
+              js-indent-level    2)
 
-  ;; Disabling as the sideline is annoying and is suspected of leading to signficant degradation of
-  ;; performance and stuttering.
-  (setq lsp-ui-sideline-enable nil)
-  ;; Not needed as imenu disabled; may also affect performance.
-  (setq lsp-ui-imenu-enable nil)
+;; Disabling as the sideline is annoying and is suspected of leading to signficant degradation of
+;; performance and stuttering.
+(setq lsp-ui-sideline-enable nil)
+;; Not needed as imenu disabled; may also affect performance.
+(setq lsp-ui-imenu-enable nil)
 
-  ;; Set the extra indentation before a substatement (e.g. the opening brace in
-  ;; the consequent block of an if statement) to 0 (instead of '+)
-  ;; Ref: https://stackoverflow.com/a/3956173
-  (c-set-offset 'substatement-open 0)
+;; Set the extra indentation before a substatement (e.g. the opening brace in
+;; the consequent block of an if statement) to 0 (instead of '+)
+;; Ref: https://stackoverflow.com/a/3956173
+(c-set-offset 'substatement-open 0)
 
-  ;; Set environment for supported compilers
-  (when (locate-file "clang" exec-path exec-suffixes 1)
-    (setenv "CC" "clang"))
-  (when (locate-file "clang++" exec-path exec-suffixes 1)
-    (setenv "CXX" "clang++"))
+;; Set environment for compilers to use
+(when (executable-find "clang")
+  (setenv "CC" "clang"))
+(when (executable-find "clang++")
+  (setenv "CXX" "clang++"))
 
-  ;; Hooks
-  (add-hook 'c-mode-common-hook 'init/common-nonweb-programming-mode)
-  (add-hook 'c-mode-common-hook 'init/c-c++)
-  (add-hook 'minibuffer-mode-hook 'init/disable-electricity)
-  (add-hook 'conf-mode-hook 'init/disable-electric-indent)
-  (add-hook 'lsp-mode-hook 'init/configure-lsp-mode))
+;; Hooks
+(add-hook 'c-mode-common-hook 'init/common-nonweb-programming-mode)
+(add-hook 'c-mode-common-hook 'init/c-c++)
+(add-hook 'minibuffer-mode-hook 'init/disable-electricity)
+(add-hook 'conf-mode-hook 'init/disable-electric-indent)
+(add-hook 'lsp-mode-hook 'init/configure-lsp-mode)
 
+
+;; Defuns
+;; --
 (defun init/disable-electricity()
   "Disable electric enhancements."
   (electric-pair-local-mode -1)
@@ -210,7 +213,5 @@
   (setq-local fill-column init/defaults/fill-column)
   (run-with-idle-timer .1 nil #'(lambda ()
                                   (setq-local fill-column init/defaults/fill-column))))
-
-(init/programming-settings)
 
 ;;; programming.el ends here

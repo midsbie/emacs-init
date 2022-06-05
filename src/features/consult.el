@@ -25,15 +25,17 @@
 ;;; Code:
 
 (use-package vertico
+  :demand
   :config
   (vertico-mode))
 
 (use-package marginalia
-  :ensure t
+  :demand
   :config
   (marginalia-mode))
 
 (use-package orderless
+  :demand
   :init
   ;; Configure a custom style dispatcher (see the Consult wiki)
   ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
@@ -43,7 +45,7 @@
         completion-category-overrides '((file (styles . (partial-completion))))))
 
 (use-package swiper
-  :ensure t
+  :demand
   :bind ("C-s" . swiper-isearch))
 
 (use-package embark
@@ -67,7 +69,6 @@
 
 ;; Consult users will also want the embark-consult package.
 (use-package embark-consult
-  :ensure t
   :after (embark consult)
   :demand t ; only necessary if you have the hook below
   ;; if you want to have consult previews as you move around an

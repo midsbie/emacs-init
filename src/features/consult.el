@@ -55,12 +55,10 @@
    ("C-x h B" . embark-bindings))       ; alternative for `describe-bindings'
 
   :init
-
   ;; Optionally replace the key help with a completing-read interface
   (setq prefix-help-command #'embark-prefix-help-command)
 
   :config
-
   ;; Hide the mode line of the Embark live/completions buffers
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
@@ -87,24 +85,24 @@
          ("C-c k" . consult-kmacro)
          ("C-c p" . consult-projectile)
          ;; C-x bindings (ctl-x-map)
-         ("C-x M-:" . consult-complex-command)     ; orig. repeat-complex-command
-         ("C-x b" . consult-buffer)                ; orig. switch-to-buffer
-         ("C-x 4 b" . consult-buffer-other-window) ; orig. switch-to-buffer-other-window
-         ("C-x 5 b" . consult-buffer-other-frame)  ; orig. switch-to-buffer-other-frame
-         ("C-x r b" . consult-bookmark)            ; orig. bookmark-jump
+         ("C-x M-:" . consult-complex-command)     ; was: repeat-complex-command
+         ("C-x b" . consult-buffer)                ; was: switch-to-buffer
+         ("C-x 4 b" . consult-buffer-other-window) ; was: switch-to-buffer-other-window
+         ("C-x 5 b" . consult-buffer-other-frame)  ; was: switch-to-buffer-other-frame
+         ("C-x r b" . consult-bookmark)            ; was: bookmark-jump
          ("C-x C-r" . consult-recent-file)         ; was: recentf-open-files
          ;; Custom M-# bindings for fast register access
          ("M-#" . consult-register-load)
-         ("M-'" . consult-register-store)          ; orig. abbrev-prefix-mark (unrelated)
+         ("M-'" . consult-register-store)          ; was: abbrev-prefix-mark (unrelated)
          ("C-M-#" . consult-register)
          ;; Other custom bindings
-         ("M-y" . consult-yank-pop)                ; orig. yank-pop
-         ("<help> a" . consult-apropos)            ; orig. apropos-command
+         ("M-y" . consult-yank-pop)                ; was: yank-pop
+         ("<help> a" . consult-apropos)            ; was: apropos-command
          ;; M-g bindings (goto-map)
          ("M-g e" . consult-compile-error)
          ("M-g f" . consult-flymake)               ; Alternative: consult-flycheck
-         ("M-g g" . consult-goto-line)             ; orig. goto-line
-         ("M-g M-g" . consult-goto-line)           ; orig. goto-line
+         ("M-g g" . consult-goto-line)             ; was: goto-line
+         ("M-g M-g" . consult-goto-line)           ; was: goto-line
          ("M-g o" . consult-outline)               ; Alternative: consult-org-heading
          ("M-g m" . consult-mark)
          ("M-g k" . consult-global-mark)
@@ -124,17 +122,17 @@
          ;; Isearch integration
          ("M-s e" . consult-isearch-history)
          :map isearch-mode-map
-         ("M-e" . consult-isearch-history)         ; orig. isearch-edit-string
-         ("M-s e" . consult-isearch-history)       ; orig. isearch-edit-string
+         ("M-e" . consult-isearch-history)         ; was: isearch-edit-string
+         ("M-s e" . consult-isearch-history)       ; was: isearch-edit-string
          ("M-s l" . consult-line)                  ; needed by consult-line to detect isearch
          ("M-s L" . consult-line-multi)            ; needed by consult-line to detect isearch
          ;; Minibuffer history
          :map minibuffer-local-map
-         ("M-s" . consult-history)                 ; orig. next-matching-history-element
-         ("M-r" . consult-history)                 ; orig. previous-matching-history-element
+         ("M-s" . consult-history)                 ; was: next-matching-history-element
+         ("M-r" . consult-history)                 ; was: previous-matching-history-element
          ;; Projectile
          :map projectile-command-map
-         ("b" . consult-projectile-switch-to-buffer)    ; orig. project-switch-to-buffer
+         ("b" . consult-projectile-switch-to-buffer)    ; was: project-switch-to-buffer
          ("p" . consult-projectile-switch-project)
          ("d" . consult-projectile-find-dir)
          ("f" . consult-projectile-find-file)

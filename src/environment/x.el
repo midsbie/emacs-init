@@ -93,10 +93,10 @@ characters wide."
   ; Emacs' base configuration.
   (custom-set-faces
    '(default ((t (:inherit nil :stipple nil :background "#080808"
-                  :foreground "#dcdccc" :inverse-video nil :box nil
-                  :strike-through nil :overline nil :underline nil
-                  :slant normal :weight normal :height 85 :width normal
-                  :foundry "unknown" :family "Hack"))))
+                           :foreground "#dcdccc" :inverse-video nil :box nil
+                           :strike-through nil :overline nil :underline nil
+                           :slant normal :weight normal :height 85 :width normal
+                           :foundry "unknown" :family "Hack"))))
    '(rst-level-1-face ((t (:weight bold))) t)
    '(rst-level-2-face ((t (:weight bold))) t)
    '(rst-level-3-face ((t (:weight extra-bold))) t))

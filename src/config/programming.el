@@ -87,8 +87,8 @@
               indent-tabs-mode   nil
               js-indent-level    2)
 
-;; Disabling as the sideline is annoying and is suspected of leading to signficant degradation of
-;; performance and stuttering.
+;; Disabling as the sideline is annoying and is suspected of leading to
+;; signficant degradation of performance and stuttering.
 (setq lsp-ui-sideline-enable nil)
 ;; Not needed as imenu disabled; may also affect performance.
 (setq lsp-ui-imenu-enable nil)

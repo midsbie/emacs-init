@@ -1,6 +1,6 @@
 ;;; projectile.el --- Initialises the projectile package
 
-;; Copyright (C) 2017-2020  Miguel Guedes
+;; Copyright (C) 2017-2022  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -20,30 +20,30 @@
 
 ;;; Commentary:
 
-;;
+;; Refer to consult.el for bindings to projectile actions.
 
 ;;; Code:
-
-(defun init/projectile ()
-  "Initialise `projectile'."
-  ;; For some strange reason this now needs to be set otherwise the projectile
-  ;; keymap is not available at all.
-  (setq-default projectile-keymap-prefix "")
-
-  ;; Using ivy completion system previously
-  ;; (setq projectile-completion-system 'ivy)
-  (setq projectile-completion-system 'auto))
 
 ;; This statement was producing an error when placed before the function it
 ;; invokes, presumable because 'ido may have loaded in some circumstances.
 (use-package projectile
   :diminish
-  :after ido
-  ;; Cannot be bound to `projectile-mode-map' or it won't work
-  :bind (("C-c C-p p" . projectile-switch-project-action)
-         ("C-c C-p d" . projectile-find-dir)
-         ("C-c C-p f" . projectile-find-file))
-  :init (init/projectile)
-  :config (projectile-mode))
+
+  ;; Cannot specify ido as dependency or it won't trigger :config
+  ;; :after (ido)
+
+  :init
+  ;; For some strange reason this now needs to be set otherwise the projectile
+  ;; keymap is not available at all.
+  (setq-default projectile-keymap-prefix "")
+
+  :config
+  ;; Using ivy completion system previously
+  ;; (setq projectile-completion-system 'ivy)
+  (setq projectile-completion-system 'auto)
+
+  ;; Now activating projectile
+  (projectile-mode)
+  )
 
 ;;; projectile.el ends here

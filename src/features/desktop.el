@@ -24,25 +24,28 @@
 
 ;;; Code:
 
-;; Set our preferred window arrangement after successfully loading a desktop
-;; configuration.
-(add-hook 'desktop-after-read-hook 'rearrange-desktop)
-
-;; Add all known minor modes to `desktop-minor-mode-table' to prevent
-;; `desktop-save' from saving the minor modes associated with each file.
-(add-hook 'find-file-hook 'desktop--update-minor-mode-table)
-
-(unless (boundp 'desktop-minor-mode-table)
-  (setq desktop-minor-mode-table nil))
-
-(defun desktop--update-minor-mode-table()
+(defun init/desktop/update-minor-mode-table()
   (when (boundp 'loop)
-    (loop for mode in minor-mode-list do
-          (add-to-list 'desktop-minor-mode-table (list mode nil)))))
+    (cl-loop for mode in minor-mode-list do
+             (add-to-list 'desktop-minor-mode-table (list mode nil)))))
 
-;; Make it so `desktop-change-dir' and `desktop-save' prompt for the current
-;; working directory by default.
-(eval-after-load 'desktop-change-dir
-  '(add-to-list 'desktop-path "."))
+(use-package desktop
+  :defer t
+  :hook (;; Set our preferred window arrangement after successfully loading a
+         ;; desktop configuration.
+         (desktop-after-read-hook . rearrange-desktop)
+         ;; Add all known minor modes to `desktop-minor-mode-table' to prevent
+         ;; `desktop-save' from saving the minor modes associated with each file.
+         (find-file-hook . init/desktop/update-minor-mode-table)
+         )
+  :config
+  (unless (boundp 'desktop-minor-mode-table)
+    (setq desktop-minor-mode-table nil))
+
+  ;; Make it so `desktop-change-dir' and `desktop-save' prompt for the current
+  ;; working directory by default.
+  (eval-after-load 'desktop-change-dir
+    '(add-to-list 'desktop-path "."))
+  )
 
 ;;; desktop.el ends here

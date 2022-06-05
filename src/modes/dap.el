@@ -41,6 +41,7 @@
   (dap-ui-controls-mode -1))
 
 (use-package dap-mode
+  :disabled
   :init (init/dap-mode))
 
 ;;; dap.el ends here

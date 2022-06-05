@@ -41,6 +41,9 @@
 ;;  (4) above requires running flutter as given below:
 ;;
 ;;    $ flutter run --debug --hot --pid-file=${init/dart-mode/flutter-pid-file}
+;;
+;; * The `lsp-dart' package was removed with the transition to `eglot' and will
+;;   need to be reinstalled if a decision is made to go back to `lsp'.
 
 ;;; Documentation:
 ;;

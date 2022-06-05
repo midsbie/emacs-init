@@ -19,12 +19,23 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+;; Configuration of `eglot' by locating the `tsconfig.json' file found at:
+;; https://notes.alexkehayias.com/setting-up-typescript-and-eslint-with-eglot/
 
 ;;; Log:
+;; 22-06-05 Transitioned to the amazing eglot package
 ;; 21-11-17 Moving back to TIDE as LSP is too slow
 ;; 21-09-03 Disabling TIDE in favour of LSP
 
 ;;; Code:
+
+;; Unclear why but it isrequired to prevent error when removed/not present.
+(cl-defmethod project-root ((project (head eglot-project)))
+  (cdr project))
+
+(defun init/typescript/try-tsconfig-json (dir)
+  (when-let* ((found (locate-dominating-file dir "tsconfig.json")))
+    (cons 'eglot-project found)))
 
 (defun init/config/ts-tsx ()
   "Configure buffer for Typescript development."
@@ -72,7 +83,14 @@
 (use-package typescript-mode
   :diminish "TS"
   :mode ("\\.ts\\'" "\\.tsx\\'")
+
   :hook ((typescript-mode . init/config/ts-tsx)
-         (web-mode-hook . init/config/web/ts-tsx)))
+         (web-mode-hook . init/config/web/ts-tsx))
+
+  :config
+  ;; This is required to
+  (add-hook 'project-find-functions
+            'init/typescript/try-tsconfig-json nil nil)
+  )
 
 ;;; typescript.el ends here

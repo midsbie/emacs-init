@@ -39,9 +39,14 @@
   ;;
   ;;   (setcdr (assoc '(js-mode typescript-mode) eglot-server-programs)
   ;;           (list init/typescript-server-location "--stdio"))
-)
+  )
+
+(defun init/config/eglot ()
+  "Configure `eglot' when enabled in a buffer."
+  (add-hook 'before-save-hook 'eglot-format-buffer nil t))
 
 (use-package eglot
-  :init (init/eglot))
+  :hook (eglot-managed-mode . init/config/eglot)
+  :config (init/eglot))
 
 ;;; eglot.el ends here

@@ -27,20 +27,17 @@
 (defun init/ido ()
   "Initialize the `ido' package."
 
-  ;; disable ido faces to see flx highlights.
+  (ido-mode 1)
+  (ido-everywhere 1)
+  (flx-ido-mode 1)
+
+  ;; Disable ido faces to see flx highlights.
+  ;; Ref: https://github.com/lewang/flx
   (setq ido-enable-flex-matching  t
         ido-use-faces             nil))
 
-(defun init/config/ido ()
-  (ido-mode 1)
-  (ido-everywhere 1))
-
-(use-package ido
-  :init (init/ido)
-  :config (init/config/ido))
-
 (use-package flx-ido
   :after ido
-  :config (flx-ido-mode 1))
+  :config (init/ido))
 
 ;;; ido.el ends here

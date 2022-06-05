@@ -70,6 +70,7 @@ Files are only visited if the server hasn't yet been started.")
 
 (message "[init] starting")
 (add-hook 'after-init-hook 'init/post-init)
+(run-at-time "3 sec" nil #'init/delayed-init)
 
 ;; set up include paths
 (add-to-list 'load-path "/usr/src")
@@ -124,17 +125,6 @@ Files are only visited if the server hasn't yet been started.")
        (or (and (display-graphic-p) "environment/x")
            "environment/term")))
 
-;; ----- Setup delayed initialisations
-;;
-;; Disable 'buffer * still has clients' message shown when killing buffers
-;; spawned by emacsclient.
-;; NOTE: for some reason the call to remove-hook needs to take place a few
-;; seconds after emacs has launched.
-(run-at-time "3 sec" nil
-             #'(lambda ()
-                 (remove-hook 'kill-buffer-query-functions
-                              'server-kill-buffer-query-function)))
-
 ;; Load files in `init/open-at-startup' list after a short delay so as
 ;; enable the user to mutate the `init/open-at-startup' list.
 (dolist (file init/open-at-startup)
@@ -145,12 +135,6 @@ Files are only visited if the server hasn't yet been started.")
       (when (eq major-mode 'org-mode)
         (org-shifttab 2)))
     (other-window 1)))
-
-(defun init/post-init ()
-  "Perform post-init steps."
-  ;; Show how long it took to initialise emacs after 1 idle second.
-  (run-with-idle-timer 1 nil #'(lambda ()
-                                 (message "init took %s" (emacs-init-time)))))
 
 ;; Print useful diagnostic messages
 (if (and (fboundp 'native-comp-available-p)
@@ -163,5 +147,22 @@ Files are only visited if the server hasn't yet been started.")
 (message "Native JSON is *not* available"))
 
 (message "[init] done.")
+
+;; --
+(defun init/post-init ()
+  "Perform post-init steps."
+  ;; Show how long it took to initialise emacs after 1 idle second.
+  (run-with-idle-timer 1 nil #'(lambda ()
+                                 (message "init took %s" (emacs-init-time)))))
+
+(defun init/delayed-init ()
+  "Delayed initializations steps."
+  ;; Disable 'buffer * still has clients' message shown when killing buffers
+  ;; spawned by emacsclient.
+  ;;
+  ;; NOTE: for some reason the call to remove-hook needs to take place a few
+  ;; seconds after emacs has launched.
+  (remove-hook 'kill-buffer-query-functions
+               'server-kill-buffer-query-function))
 
 ;;; init.el ends here

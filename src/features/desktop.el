@@ -1,6 +1,6 @@
 ;;; desktop.el --- Configures the desktop feature
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2022  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -39,5 +39,10 @@
   (when (boundp 'loop)
     (loop for mode in minor-mode-list do
           (add-to-list 'desktop-minor-mode-table (list mode nil)))))
+
+;; Make it so `desktop-change-dir' and `desktop-save' prompt for the current
+;; working directory by default.
+(eval-after-load 'desktop-change-dir
+  '(add-to-list 'desktop-path "."))
 
 ;;; desktop.el ends here

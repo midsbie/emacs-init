@@ -31,15 +31,15 @@
   (eldoc-mode 1)
   (css-eldoc-enable)
 
-  (local-set-key "}"  '(lambda ()
-                   (interactive)
-                   (insert-char ?})
-                   (indent-for-tab-command)))
+  (local-set-key "}"  #'(lambda ()
+                          (interactive)
+                          (insert-char ?})
+                          (indent-for-tab-command)))
 
-  (local-set-key ";"  '(lambda ()
-                   (interactive)
-                   (insert-char ?\;)
-                   (indent-for-tab-command))))
+  (local-set-key ";"  #'(lambda ()
+                          (interactive)
+                          (insert-char ?\;)
+                          (indent-for-tab-command))))
 
 (use-package css-mode
   :defer t

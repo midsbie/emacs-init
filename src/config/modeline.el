@@ -31,7 +31,7 @@
 (setq my/diminished-modes '())
 
 (dolist (mode my/diminished-modes)
-  (add-hook (add-suffix-to-symbol mode "-hook") `(lambda ()
-                                                   (diminish (quote ,mode)))))
+  (add-hook (add-suffix-to-symbol mode "-hook") #'(lambda ()
+                                                    (diminish (quote ,mode)))))
 
 ;;; modeline.el ends here

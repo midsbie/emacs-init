@@ -38,9 +38,9 @@ seconds after Emacs has launched."
 
     ;; Start server after a minor delay.
     (run-with-idle-timer 1 nil
-                         '(lambda ()
-                            (message "[server] starting")
-                            (server-start)))))
+                         #'(lambda ()
+                             (message "[server] starting")
+                             (server-start)))))
 
 (use-package server
   :config (init/server))

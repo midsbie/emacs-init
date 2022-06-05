@@ -54,15 +54,15 @@
   (setq-local web-mode-comment-keywords                 t)
   (setq-local web-mode-enable-current-element-highlight t)
 
-  (local-set-key "."  '(lambda ()
-                         (interactive)
-                         (insert-char ?.)
-                         (indent-for-tab-command)))
+  (local-set-key "."  #'(lambda ()
+                          (interactive)
+                          (insert-char ?.)
+                          (indent-for-tab-command)))
 
-  (local-set-key "}"  '(lambda ()
-                         (interactive)
-                         (insert-char ?})
-                         (indent-for-tab-command)))
+  (local-set-key "}"  #'(lambda ()
+                          (interactive)
+                          (insert-char ?})
+                          (indent-for-tab-command)))
 
   ;; Fix C-left movement causing curly and double quote char to be inserted
   ;; inside JSX block

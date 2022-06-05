@@ -33,9 +33,9 @@
   ;; Save files every 2 minutes, suppressing the message printed in the
   ;; minibuffer.
   ;; Ref: https://emacs.stackexchange.com/questions/14706/
-  (run-at-time nil (* 2 60) '(lambda ()
-                               (let (message-log-max)
-                                 (recentf-save-list)))))
+  (run-at-time nil (* 2 60) #'(lambda ()
+                                (let (message-log-max)
+                                  (recentf-save-list)))))
 
 (use-package recentf
   ;; The following replaces default binding to `ido-find-file-read-only'

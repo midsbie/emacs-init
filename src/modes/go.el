@@ -86,11 +86,11 @@
   (define-key go-mode-map (kbd "C-c C-r") 'go-remove-unused-imports)
   (define-key go-mode-map (kbd "C-c i")   'go-goto-imports)
   ;; Supporting C-u M-. so jump to def takes place in other window
-  (define-key go-mode-map (kbd "M-.")     '(lambda()
-                                             (interactive)
-                                             (if (consp current-prefix-arg)
-                                                 (godef-jump-other-window (point))
-                                               (godef-jump (point)))))
+  (define-key go-mode-map (kbd "M-.")     #'(lambda()
+                                              (interactive)
+                                              (if (consp current-prefix-arg)
+                                                  (godef-jump-other-window (point))
+                                                (godef-jump (point)))))
 
   (add-hook 'before-save-hook 'gofmt-before-save nil t))
 

@@ -24,24 +24,24 @@
 
 ;;; Code:
 
-(defun init/recentf ()
-  "Initialises the `recentf' package."
+(use-package recentf
+  :demand
+  ;; The following replaces default binding to `ido-find-file-read-only'
+  ;; :bind ("C-x C-r" . recentf-open-files)
 
+  :init
   (setq recentf-auto-cleanup    'never
         recentf-max-menu-items  100)
 
   ;; Save files every 2 minutes, suppressing the message printed in the
   ;; minibuffer.
-  ;; Ref: https://emacs.stackexchange.com/questions/14706/
+  ;; Ref: https://superuser.com/questions/669701/
   (run-at-time nil (* 2 60) #'(lambda ()
-                                (let (message-log-max)
-                                  (recentf-save-list)))))
+                                (let ((inhibit-message t))
+                                  (recentf-save-list))))
 
-(use-package recentf
-  ;; The following replaces default binding to `ido-find-file-read-only'
-  ;; :bind ("C-x C-r" . recentf-open-files)
-  :bind ("C-x C-r" . consult-recent-file)
-  :init (init/recentf)
-  :config (recentf-mode 1))
+  :config
+  (recentf-mode 1)
+  )
 
 ;;; recentf.el ends here

@@ -34,6 +34,13 @@
   (cdr project))
 
 (defun init/typescript/try-tsconfig-json (dir)
+  "Locate the tsconfig.json file in a sub-tree of DIR.
+
+Successfully locating Typescript's configuration file means that
+we are indeed in a Typescript repository.
+
+More importantly this function allows for `eglot' to be
+configured correctly for monorepositories."
   (when-let* ((found (locate-dominating-file dir "tsconfig.json")))
     (cons 'eglot-project found)))
 
@@ -88,7 +95,8 @@
          (web-mode-hook . init/config/web/ts-tsx))
 
   :config
-  ;; This is required to
+  ;; This is required to ensure Eglot is configured correctly for monorepository
+  ;; projects.
   (add-hook 'project-find-functions
             'init/typescript/try-tsconfig-json nil nil)
   )

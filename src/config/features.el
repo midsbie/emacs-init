@@ -46,6 +46,11 @@
                          networks noncommands notifications
                          readonly ring stamp track))))
 
+(use-package marginalia
+  :demand
+  :config
+  (marginalia-mode))
+
 (use-package gcmh
   :diminish 'gcmh-mode
   :init
@@ -65,6 +70,15 @@
   :demand t
   :config
   (recursion-indicator-mode t))
+
+;; Persist history over Emacs restarts. Vertico sorts by history position.
+(use-package savehist
+  :config
+  (savehist-mode))
+
+(use-package swiper
+  :demand
+  :bind ("C-s" . swiper-isearch))
 
 (use-package visual-regexp
   :bind (("C-c r" . vr/replace)

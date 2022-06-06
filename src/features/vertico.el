@@ -43,11 +43,6 @@
   :config
   (vertico-mode))
 
-;; Persist history over Emacs restarts. Vertico sorts by history position.
-(use-package savehist
-  :config
-  (savehist-mode))
-
 ;; A few more useful configurations...
 (use-package emacs
   :init
@@ -71,8 +66,6 @@
   ;; Vertico commands are hidden in normal buffers.
   ;; (setq read-extended-command-predicate
   ;;       #'command-completion-default-include-p)
-
-  ;; Enable recursive minibuffers
-  (setq enable-recursive-minibuffers t))
+  )
 
 ;;; vertico.el ends here

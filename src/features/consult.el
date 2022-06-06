@@ -1,4 +1,4 @@
-;;; consult.el --- Configures the Consult and related packages
+;;; consult.el --- Configures the consult package
 
 ;; Copyright (C) 2022  Miguel Guedes
 
@@ -20,53 +20,9 @@
 
 ;;; Commentary:
 
-;; This module configures the Consult, Vertico, Marginalia, and Embark packages.
+;;
 
 ;;; Code:
-
-(use-package vertico
-  :demand
-  :config
-  (vertico-mode))
-
-(use-package marginalia
-  :demand
-  :config
-  (marginalia-mode))
-
-(use-package orderless
-  :demand
-  :init
-  ;; Configure a custom style dispatcher (see the Consult wiki)
-  ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
-  ;;       orderless-component-separator #'orderless-escapable-split-on-space)
-  (setq completion-styles '(orderless basic partial-completion)
-        completion-category-defaults nil
-        completion-category-overrides '((file (styles . (partial-completion)))))
-  )
-
-(use-package swiper
-  :demand
-  :bind ("C-s" . swiper-isearch))
-
-(use-package embark
-  :ensure t
-
-  :bind
-  (("C-." . embark-act)                 ; pick some comfortable binding
-   ("C-;" . embark-dwim)                ; good alternative: M-.
-   ("C-x h B" . embark-bindings))       ; alternative for `describe-bindings'
-
-  :init
-  ;; Optionally replace the key help with a completing-read interface
-  (setq prefix-help-command #'embark-prefix-help-command)
-
-  :config
-  ;; Hide the mode line of the Embark live/completions buffers
-  (add-to-list 'display-buffer-alist
-               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-                 nil
-                 (window-parameters (mode-line-format . none)))))
 
 (defun init/consult/choose-fly-diagnostic ()
   "Pick between flymake and flycheck and show diagnostics."
@@ -75,16 +31,8 @@
       (consult-flycheck)
     (consult-flymake)))
 
-;; Consult users will also want the embark-consult package.
-(use-package embark-consult
-  :after (embark consult)
-  :demand t ; only necessary if you have the hook below
-  ;; if you want to have consult previews as you move around an
-  ;; auto-updating embark collect buffer
-  :hook
-  (embark-collect-mode . consult-preview-at-point-mode))
-
 (use-package consult
+  ;; Requires `projectile' because of key rebindings on its map
   :after (projectile)
   ;; Replace bindings. Lazily loaded due by `use-package'.
   :bind (
@@ -155,14 +103,18 @@
 
   ;; The :init configuration is always executed (Not lazy)
   :init
-
+  ;; Suggested values for `completion-styles':
   ;; (setq completion-styles '(substring basic partial-completion))
-  (setq completion-styles '(basic substring flex initials partial-completion))
+  ;;
+  ;; This one works particularly well:
+  ;; (setq completion-styles '(basic substring flex initials partial-completion))
+  ;;
+  ;; Note that this is now set in the `orderless' configuration file.
 
   ;; Optionally configure the register formatting. This improves the register
   ;; preview for `consult-register', `consult-register-load',
   ;; `consult-register-store' and the Emacs built-ins.
-  (setq register-preview-delay 0.5
+  (setq register-preview-delay    0.5
         register-preview-function #'consult-register-format)
 
   ;; Optionally tweak the register preview window.
@@ -173,17 +125,18 @@
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
 
-  ;; Configure other variables and modes in the :config section,
-  ;; after lazily loading the package.
+  ;; Configure other variables and modes in the :config section, after lazily
+  ;; loading the package.
   :config
-
   ;; Optionally configure preview. The default value
   ;; is 'any, such that any key triggers the preview.
+  ;;
   ;; (setq consult-preview-key 'any)
   ;; (setq consult-preview-key (kbd "M-."))
   ;; (setq consult-preview-key (list (kbd "<S-down>") (kbd "<S-up>")))
+  ;;
   ;; For some commands and buffer sources it is useful to configure the
-  ;; :preview-key on a per-command basis using the `consult-customize' macro.
+  ;; `:preview-key' on a per-command basis using the `consult-customize' macro.
   (consult-customize
    consult-theme
    :preview-key '(:debounce 0.2 any)

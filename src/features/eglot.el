@@ -55,6 +55,13 @@
 
 (use-package eglot
   :hook (eglot-managed-mode . init/eglot/config)
+
+  :bind (
+         :map eglot-mode-map
+              ("C-c l a a" . eglot-code-actions)
+              ("C-c l r r" . eglot-rename)
+              )
+
   :config (init/eglot))
 
 ;;; eglot.el ends here

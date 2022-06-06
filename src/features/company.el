@@ -70,6 +70,8 @@ Filter backends from `company-backends' that are specified in
 
 (defun init/config/company-box ()
   ;; company-box sets the `company-tooltip-selection' face invisible
+
+  ;; Default faces are not visible using the default theme with dark background.
   (custom-set-faces
    '(company-tooltip-selection
      ((((class color) (min-colors 88) (background light))

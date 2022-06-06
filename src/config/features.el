@@ -1,4 +1,4 @@
-;;; features.el --- simple configuration meta-module
+;;; features.el --- master configuration module of features
 
 ;; Copyright (C) 2022  Miguel Guedes
 
@@ -20,7 +20,8 @@
 
 ;;; Commentary:
 
-;;
+;; This module contains use-package invocations and configurations for features
+;; for which a dedicated configuration module was thought to be unjustified.
 
 ;;; Code:
 
@@ -40,16 +41,19 @@
 (use-package erc
   :init
   (setq erc-modules
-        (quote (autojoin button completion fill irccontrols list match menu
-                         move-to-prompt netsplit networks noncommands notifications
+        (quote (autojoin button completion fill irccontrols list
+                         match menu move-to-prompt netsplit
+                         networks noncommands notifications
                          readonly ring stamp track))))
 
 (use-package gcmh
   :diminish 'gcmh-mode
   :init
   (setq gcmh-idle-delay 5
-	  gcmh-high-cons-threshold (* 16 1024 1024))  ; 16mb
-  :config (gcmh-mode))
+	      gcmh-high-cons-threshold (* 16 1024 1024))  ; 16mb
+
+  :config
+  (gcmh-mode))
 
 (use-package neotree
   :init

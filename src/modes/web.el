@@ -35,8 +35,8 @@
 
 ;;; Code:
 
-(defun init/web-mode ()
-  "Initialise `web-mode'."
+(defun init/web-mode/config ()
+  "Configures `web-mode'."
   (init/common-web-programming-mode)
 
   (make-local-variable 'web-mode-indentation-params)

@@ -77,7 +77,7 @@
       (setq lsp-dart-flutter-sdk-dir
             (s-trim-right (shell-command-to-string "flutter sdk-path"))))))
 
-(defun init/config/dart-mode ()
+(defun init/dart-mode/config ()
   "Configure `dart-mode' in the current buffer."
   ;; Start debugging session with `dap-debug'.
   (setq-local lsp-dart-dap-flutter-hot-reload-on-save t)
@@ -115,11 +115,14 @@
 (use-package dart-mode
   ;; Requiring the `s' package because `s-trim-right' is used above.
   :after (company flycheck s)
+
   :hook (
          ;;(dart-mode . lsp)
          (dart-mode . eglot-ensure)
-         (dart-mode . init/config/dart-mode))
+         (dart-mode . init/dart-mode/config))
+
   :init
-  (init/dart-mode))
+  (init/dart-mode)
+  )
 
 ;;; dart.el ends here

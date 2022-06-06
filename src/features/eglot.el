@@ -41,12 +41,12 @@
   ;;           (list init/typescript-server-location "--stdio"))
   )
 
-(defun init/config/eglot ()
+(defun init/eglot/config ()
   "Configure `eglot' when enabled in a buffer."
   (add-hook 'before-save-hook 'eglot-format-buffer nil t))
 
 (use-package eglot
-  :hook (eglot-managed-mode . init/config/eglot)
+  :hook (eglot-managed-mode . init/eglot/config)
   :config (init/eglot))
 
 ;;; eglot.el ends here

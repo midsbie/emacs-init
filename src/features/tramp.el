@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(defun init/config/tramp ()
+(defun init/tramp/config ()
   "Configure the `tramp' package."
 
   ; Invoke by opening /sudo:sudo-zeus:/path/to/file
@@ -34,6 +34,6 @@
 ;; Moved to after the function declaration so as to avoid potential failures at
 ;; load time
 (use-package tramp
-  :config (init/config/tramp))
+  :config (init/tramp/config))
 
 ;;; tramp.el ends here

@@ -33,7 +33,7 @@
 
   (c-add-style "default-php" '("drupal")))
 
-(defun init/config/php-mode ()
+(defun init/php-mode/config ()
   "Configure `php-mode'."
   (init/common-programming-mode)
 
@@ -45,7 +45,7 @@
   (c-toggle-auto-newline -1))
 
 (use-package php-mode
-  :hook ((php-mode . init/config/php-mode))
+  :hook ((php-mode . init/php-mode/config))
   :init (init/php-mode))
 
 ;;; php.el ends here

@@ -45,17 +45,17 @@
   ;; use.
   (cl-pushnew 'company-flow company-backends))
 
-(defun init/config/js-mode/determine-js-mode()
+(defun init/js-mode/config/determine-js-mode()
   (if (flycheck-flow--predicate)
       (web-mode)
     (js-mode)))
 
-(defun init/config/js-mode/determine-jsx-mode()
+(defun init/js-mode/config/determine-jsx-mode()
   (if (flycheck-flow--predicate)
       (web-mode)
     (js-jsx-mode)))
 
-(defun init/config/js-mode ()
+(defun init/js-mode/config ()
   "Initialise modes related to Javascript development."
 
   ;; FIXME: this does not seem to have any effect in JSX mode:
@@ -84,9 +84,9 @@
 (use-package js
   :after (company flycheck)
   :diminish "JS"
-  :mode (("\\.js\\'" . init/config/js-mode/determine-js-mode)
-         ("\\.jsx\\'" . init/config/js-mode/determine-jsx-mode))
-  :hook (((js-mode js-jsx-mode) . init/config/js-mode))
+  :mode (("\\.js\\'" . init/js-mode/config/determine-js-mode)
+         ("\\.jsx\\'" . init/js-mode/config/determine-jsx-mode))
+  :hook (((js-mode js-jsx-mode) . init/js-mode/config))
   :bind (:map js-mode-map
               ("C-c C-c" . init/js-mode/toggle-mode))
   :init

@@ -29,13 +29,13 @@
   (setq-default  sh-basic-offset    2
                  sh-indentation     2))
 
-(defun init/config/sh-mode ()
+(defun init/sh-mode/config ()
   "Initialise modes related to shell scripting development."
   (init/common-nonweb-programming-mode)
   (auto-fill-mode -1))
 
 (use-package sh-script
   :init (init/sh-script)
-  :hook ((sh-mode . init/config/sh-mode)))
+  :hook ((sh-mode . init/sh-mode/config)))
 
 ;;; sh.el ends here

@@ -146,7 +146,7 @@ to degrade under LSP")
   (setq lsp-completion-show-detail t)
   (setq lsp-completion-show-kind t))
 
-(defun init/config/lsp ()
+(defun init/lsp/config ()
   ;; This can't be in the initializing defun above or it'll error out.
   ;; Ref: https://github.com/emacs-lsp/lsp-mode/issues/1532#issuecomment-602384182
   (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
@@ -172,7 +172,7 @@ be used when debugging `lsp'."
 ;; major mode configuration module; e.g. typescript.el, csharp.el.
 (use-package lsp-mode
   :hook ((lsp-mode . lsp-enable-which-key-integration)
-         (lsp-mode . init/config/lsp))
+         (lsp-mode . init/lsp/config))
   :init (init/lsp))
 
 ;;; lsp.el ends here

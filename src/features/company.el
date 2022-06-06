@@ -48,7 +48,7 @@ Filter backends from `company-backends' that are specified in
           (setq result (cons interm result)))))
     (reverse result)))
 
-(defun init/config/company ()
+(defun init/company/config ()
   "Configure `company'."
   (global-company-mode 1)
 
@@ -68,7 +68,7 @@ Filter backends from `company-backends' that are specified in
   (add-hook 'company-completion-started-hook 'my/company/clear-flycheck-errors)
   (define-key company-mode-map (kbd "<C-return>") 'company-complete))
 
-(defun init/config/company-box ()
+(defun init/company-box/config ()
   ;; company-box sets the `company-tooltip-selection' face invisible
 
   ;; Default faces are not visible using the default theme with dark background.
@@ -112,10 +112,12 @@ If failed try to complete the common part with `company-complete-common'"
 (use-package company
   :diminish
   :hook ((prog-mode LaTeX-mode latex-mode ess-r-mode) . company-mode)
+
   :bind
   (:map company-active-map
         ([tab] . smarter-yas-expand-next-field-complete)
         ("TAB" . smarter-yas-expand-next-field-complete))
+
   :custom
   ;; Note that some modes may need to redefine a higher minimum prefix length to
   ;; prevent weird interactions with LSP mode that may lead to degraded to
@@ -134,8 +136,9 @@ If failed try to complete the common part with `company-complete-common'"
   ;; Number the candidates (use M-1, M-2 etc to select completions).
   (company-show-numbers t)
   (company-tooltip-idle-delay 0.1)
+
   :config
-  (init/config/company))
+  (init/company/config))
 
 (use-package company-lsp
   :defer t
@@ -145,6 +148,6 @@ If failed try to complete the common part with `company-complete-common'"
 (use-package company-box
   :diminish
   :hook (company-mode . company-box-mode)
-  :config (init/config/company-box))
+  :config (init/company-box/config))
 
 ;;; company.el ends here

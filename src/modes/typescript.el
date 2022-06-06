@@ -44,7 +44,7 @@ configured correctly for monorepositories."
   (when-let* ((found (locate-dominating-file dir "tsconfig.json")))
     (cons 'eglot-project found)))
 
-(defun init/config/ts-tsx ()
+(defun init/typescript/config/ts-tsx ()
   "Configure buffer for Typescript development."
   (init/common-web-programming-mode)
   (setq-local typescript-indent-level 2)
@@ -52,24 +52,24 @@ configured correctly for monorepositories."
   (local-set-key (kbd "M-a") 'c-beginning-of-statement)
   (local-set-key (kbd "M-e") 'c-end-of-statement)
 
-  ;; (init/config/ts-tsx/lsp)
-  ;; (init/config/ts-tsx/tide)
-  (init/config/ts-tsx/eglot)
+  ;; (init/typescript/config/lsp)
+  ;; (init/typescript/config/tide)
+  (init/typescript/config/eglot)
   )
 
-(defun init/config/web/ts-tsx ()
+(defun init/typescript/config/web ()
   "Initialise Typescript mode for React in `web-mode'."
   ;; Since web-mode may be started for a wide variety of source files, such as
   ;; HTML markup, template files and Javascript, the initialisation is only run
   ;; if the buffer's file extension suggests a typescript source file.
   (when (string-equal "tsx" (file-name-extension buffer-file-name))
-    (init/config/ts-tsx)))
+    (init/typescript/config/ts-tsx)))
 
-(defun init/config/ts-tsx/lsp ()
+(defun init/typescript/config/lsp ()
   "Enable LSP in Typescript buffer."
   (lsp-deferred))
 
-(defun init/config/ts-tsx/tide ()
+(defun init/typescript/config/tide ()
   "Enable TIDE in Typescript buffer."
   (interactive)
   (tide-setup)
@@ -83,7 +83,7 @@ configured correctly for monorepositories."
   (eldoc-mode 1)
   (tide-hl-identifier-mode 1))
 
-(defun init/config/ts-tsx/eglot ()
+(defun init/typescript/config/eglot ()
   "Enable eglot in Typescript buffer."
   (eglot-ensure))
 

@@ -27,9 +27,9 @@
 (defun init/consult/choose-fly-diagnostic ()
   "Pick between flymake and flycheck and show diagnostics."
   (interactive)
-  (if (flycheck-running-p)
-      (consult-flycheck)
-    (consult-flymake)))
+  (if flymake-mode
+      (consult-flymake)
+    (consult-flycheck)))
 
 (use-package consult
   ;; Requires `projectile' because of key rebindings on its map

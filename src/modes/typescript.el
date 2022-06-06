@@ -89,10 +89,10 @@ configured correctly for monorepositories."
 
 (use-package typescript-mode
   :diminish "TS"
-  :mode ("\\.ts\\'" "\\.tsx\\'")
+  :mode ("\\.ts\\'")
 
-  :hook ((typescript-mode . init/config/ts-tsx)
-         (web-mode-hook . init/config/web/ts-tsx))
+  :hook ((typescript-mode . init/typescript/config/ts-tsx)
+         (web-mode-hook . init/typescript/config/web))
 
   :config
   ;; This is required to ensure Eglot is configured correctly for monorepository

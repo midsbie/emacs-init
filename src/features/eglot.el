@@ -39,6 +39,14 @@
   ;;
   ;;   (setcdr (assoc '(js-mode typescript-mode) eglot-server-programs)
   ;;           (list init/typescript-server-location "--stdio"))
+
+  ;; Configure `eglot' to support Typescript source files when edited in
+  ;; `web-mode'.
+  (if (assoc 'web-mode eglot-server-programs)
+      (setcdr (assoc 'web-mode eglot-server-programs)
+              '("typescript-language-server" "--stdio"))
+    (add-to-list 'eglot-server-programs
+                 '(web-mode . ("typescript-language-server" "--stdio"))))
   )
 
 (defun init/eglot/config ()

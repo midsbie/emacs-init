@@ -35,6 +35,12 @@
 
 ;;; Code:
 
+(defvar init/web-mode/exts-to-js-mode '("js" "jsx" "ts" "tsx")
+  "File extensions for switching to `javascript-mode'.
+Contains a list of extensions that cause
+`init/web-mode/toggle-js-mode' to switch to `javascript-mode'
+when a match occurs with the buffer's file name.")
+
 (defun init/web-mode/config ()
   "Configures `web-mode'."
   (init/common-web-programming-mode)
@@ -88,14 +94,11 @@
   ;; ----------------------------------------
   ;; Load LSP if JSX with Flow or TSX.  Avoid when `typescript-mode' or `tide'
   ;; in use.
-  (unless (or (and (boundp 'typescript-mode) typescript-mode)
-              (and (boundp 'tide-mode) tide-mode))
-    (when (or (string-equal "tsx" (file-name-extension buffer-file-name))
-              (flycheck-flow--predicate))
-      ;; Usage of LSP has been disabled in favor of eglot.
-      ;; (lsp-deferred)
-      (eglot-ensure)
-      )))
+  (unless (and (boundp 'tide-mode) tide-mode)
+    (cond ((flycheck-flow--predicate)
+           (lsp-deferred))
+          ((string-equal "tsx" (file-name-extension buffer-file-name))
+           (eglot-ensure)))))
 
 (defun init/web/load-local-vars ()
   "Map the value of `c-basic-offset' to `web-mode-code-indent-offset'."
@@ -109,10 +112,8 @@
 (defun init/web-mode/toggle-js-mode ()
   "Switch to `javascript-mode'."
   (interactive)
-  (let ((ext (file-name-extension buffer-file-name)))
-    (when (or (string-equal "js" ext)
-              (string-equal "jsx" ext))
-              (javascript-mode))))
+  (when (member (file-name-extension buffer-file-name) init/web-mode/exts-to-js-mode)
+    (javascript-mode)))
 
 ;; For better jsx syntax-highlighting in web-mode
 ;; - courtesy of Patrick @halbtuerke
@@ -127,10 +128,15 @@
 ;;     ad-do-it))
 
 (use-package web-mode
-  :mode ("\\.html?\\'")
+  ;; Do not specify the "jsx" extension here as that is handled in the js.el
+  ;; module.
+  :mode ("\\.html?\\'" "\\.tsx\\'")
+
   :bind (:map web-mode-map
               ("C-c C-c" . init/web-mode/toggle-js-mode))
+
   :hook ((web-mode-local-vars . init/web/load-local-vars)
-         (web-mode . init/web-mode)))
+         (web-mode . init/web-mode/config))
+  )
 
 ;;; web.el ends here

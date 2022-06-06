@@ -45,12 +45,12 @@
   ;; use.
   (cl-pushnew 'company-flow company-backends))
 
-(defun init/js-mode/config/determine-js-mode()
+(defun init/js-mode/config/determine-js-mode ()
   (if (flycheck-flow--predicate)
       (web-mode)
     (js-mode)))
 
-(defun init/js-mode/config/determine-jsx-mode()
+(defun init/js-mode/config/determine-jsx-mode ()
   (if (flycheck-flow--predicate)
       (web-mode)
     (js-jsx-mode)))
@@ -70,11 +70,12 @@
   ;;   (when (flycheck-flow--predicate)
   ;;     (flow-minor-mode 1))
   ;;
-  ;; Now using LSP.
-  ;; (lsp-deferred)
-
-  ;; Nope.  Now using eglot!
-  (eglot-ensure))
+  ;; Now using LSP for Flow, eglot otherwise.
+  (cond
+   ((flycheck-flow--predicate)
+    (lsp-deferred))
+   (t
+    (eglot-ensure))))
 
 (defun init/js-mode/toggle-mode ()
   "Switch to `web-mode'."

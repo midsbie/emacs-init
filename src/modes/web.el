@@ -82,13 +82,10 @@ when a match occurs with the buffer's file name.")
   ;; Disable `flycheck-mode' for buffers where the eslint checker does not
   ;; apply and would produce false positives.
   (let ((ext (file-name-extension (buffer-file-name))))
-    (cond ((string-match "^\\(css\\|html\\|less\\)$" ext)
-           (message "warn: flycheck-mode disabled")
-           (flycheck-mode -1))))
-
-  ;; Set content type to jsx for source files with "js", "jsx" or "tsx" suffix.
-  ;; Source: http://cha1tanya.com/2015/06/20/configuring-web-mode-with-jsx.html
-  (setq-local web-mode-content-types-alist '(("jsx" . "\\.[tj]s[x]?\\'")))
+    (cond ((eq (string-match "^\\(css\\|html\\|less\\)$" ext) 0)
+           (when flycheck-mode
+             (message "warn: flycheck-mode disabled")
+             (flycheck-mode -1)))))
 
   ;; Deprecated support for Typescript below
   ;; ----------------------------------------
@@ -127,6 +124,27 @@ when a match occurs with the buffer's file name.")
 ;;       ad-do-it)
 ;;     ad-do-it))
 
+(defun init/web-mode/before-save ()
+  ;; Set web-mode's content-type to "typescript" when editing TS source files or
+  ;; it'll default to JSX, causing prettier to error out on Typescript-specific
+  ;; syntax.  This cannot be set preemptively because it results in web-mode not
+  ;; rendering the JSX markup in the buffer correctly.
+  (when (eq major-mode 'web-mode)
+    (let ((ext (file-name-extension (buffer-file-name))))
+      (cond ((not ext) t)
+            ((eq (string-match "^tsx?$" ext) 0)
+             (setq web-mode-content-type "typescript")))))
+  )
+
+(defun init/web-mode/after-save ()
+  ;; Undoing the setting made in `init/web-mode/before-save', if applicable.
+  (when (eq major-mode 'web-mode)
+    (let ((ext (file-name-extension (buffer-file-name))))
+      (cond ((not ext) t)
+            ((eq (string-match "^tsx?$" ext) 0)
+             (setq web-mode-content-type "jsx")))))
+  )
+
 (use-package web-mode
   ;; Do not specify the "jsx" extension here as that is handled in the js.el
   ;; module.
@@ -137,6 +155,14 @@ when a match occurs with the buffer's file name.")
 
   :hook ((web-mode-local-vars . init/web/load-local-vars)
          (web-mode . init/web-mode/config))
+
+  :init
+  ;; Set content type to jsx for source files with "js", "jsx" or "tsx" suffix.
+  ;; Source: http://cha1tanya.com/2015/06/20/configuring-web-mode-with-jsx.html
+  (setq-default web-mode-content-types-alist '(("jsx" . "^\\(jsx?\\|tsx\\)\\'$")))
+
+  (advice-add 'prettier--maybe-prettify-on-save :before #'init/web-mode/before-save)
+  (advice-add 'prettier--maybe-prettify-on-save :after #'init/web-mode/after-save)
   )
 
 ;;; web.el ends here

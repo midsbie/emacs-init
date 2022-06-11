@@ -1,6 +1,6 @@
 ;;; flycheck.el --- Configures the flycheck feature
 
-;; Copyright (C) 2015-2020  Miguel Guedes
+;; Copyright (C) 2015-2022  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -129,6 +129,7 @@ because the checker does not exist."
 (use-package flycheck
   :diminish "Fchk"
   :hook (lsp-diagnostics-mode . init/flycheck/chain-eslint-checker)
+
   ;; Not activating flycheck-popup-tip-mode because error messages frequently
   ;; do not respect boundaries of the window, often making it impossible to
   ;; read the full message.

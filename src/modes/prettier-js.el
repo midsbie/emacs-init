@@ -70,11 +70,13 @@ The one exception to this rule is when the file is inside a
   ;; Ref: https://github.com/jscheid/prettier.el/issues/34#issuecomment-657508597
   (unless (getenv "NODE_PATH")
     (setenv "NODE_PATH" "/usr/lib/node_modules"))
+
   :hook ((
           ;; Actively used modes
           html-mode css-mode scss-mode js-mode js-jsx-mode typescript-mode
+                    web-mode
                     ;; Deprecated modes
-                    js2-mode web-mode)
+                    js2-mode)
          . enable-prettier-mode-maybe))
 
 ;;; prettier-js.el ends here

@@ -46,10 +46,12 @@
                          networks noncommands notifications
                          readonly ring stamp track))))
 
-(use-package marginalia
-  :demand
+(use-package flyspell
   :config
-  (marginalia-mode))
+  ;; Deactivate annoying correction of previous misspelled error when C-; is hit.
+  ;; NOTE: currently enabled
+  ;; (define-key flyspell-mode-map (kbd "C-;") nil)
+  )
 
 (use-package gcmh
   :diminish 'gcmh-mode
@@ -59,6 +61,11 @@
 
   :config
   (gcmh-mode))
+
+(use-package marginalia
+  :demand
+  :config
+  (marginalia-mode))
 
 (use-package neotree
   :init

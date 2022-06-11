@@ -51,6 +51,9 @@
 
 (defun init/eglot/config ()
   "Configure `eglot' when enabled in a buffer."
+  (when flymake-mode
+    (flycheck-mode -1))
+
   (add-hook 'before-save-hook 'eglot-format-buffer nil t))
 
 (use-package eglot

@@ -24,13 +24,15 @@
 
 ;;; Code:
 
-(defun init/flymake/on-flyspell-mode()
-  ;; Deactivate annoying correction of previous misspelled error when C-; is hit.
-  (define-key flyspell-mode-map (kbd "C-;") nil))
+(defun init/flymake/config ()
+  (flymake-diagnostic-at-point-mode 1)
+  (flycheck-mode -1)
+  )
 
 (use-package flymake-diagnostic-at-point
+  :demand
   :after flymake
-  :hook ((flymake-mode . flymake-diagnostic-at-point-mode))
+  :hook ((flymake-mode . init/flymake/config))
   )
 
 ;;; flymake.el ends here

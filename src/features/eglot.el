@@ -31,6 +31,9 @@
 (defun init/eglot ()
   "Configure `eglot' package."
 
+  ;; Do not persist server events for better performance
+  (setq eglot-events-buffer-size 0)
+
   ;; Configure typescript server location by replacing setting for the js and
   ;; typescript modes
   ;;

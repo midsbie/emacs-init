@@ -28,47 +28,12 @@
 
 (defun init/go-mode ()
   "One-time configuration sequence for `go-mode'."
-  ;; Use goimports instead of go-fmt
-  ;;
-  ;; Note that this requires the executable `goimports' to be locatable in
-  ;; the path.  goimports can be found at:
-  ;; https://godoc.org/golang.org/x/tools/cmd/goimports
-  (if (executable-find "goimports")
-      (setq-default gofmt-command "goimports")
-    (message "info: goimports not found and will be unavailable"))
 
-  ;; Attempt to load Go Oracle.
-  ;;
-  ;; Note that this requires the `oracle.el' to be found in the directory
-  ;; specified below.  oracle can be found at:
-  ;; https://godoc.org/golang.org/x/tools/cmd/oracle
-  ;;
-  ;; TODO: it is ugly that we're loading from the home directory.  This
-  ;; should perhaps be in the user's .emacs file.
-  (let ((file (expand-file-name
-               "~/go/src/golang.org/x/tools/cmd/oracle/oracle.el")))
-    (if (not (file-exists-p file))
-        (message "info: go oracle not found and will be unavailable")
-      (load file)))
-
-  (if (not (executable-find "go"))
-      (error "GOROOT environment variable not set and go\
- executable not found")
-    (let ((env (shell-command-to-string "go env")))
-      (unless (getenv "GOROOT")
-        (init/go/setenv "GOROOT" env))
-      (unless (getenv "GOPATH")
-        (setenv "GOPATH" (expand-file-name "~/go"))
-        (message "info: set default GOPATH: %s" (getenv "GOPATH")))))
-
-  ;; Load golint if executable found.  Note that golint is currently
-  ;; expected to have been installed via `go get`.
-  (if (executable-find "golint")
-      (load-library
-       (concat (getenv "GOPATH")
-               "/src/github.com/golang/lint/misc/emacs/golint.el"))
-    (message "info: golint not found and will be unavailable"))
-  )
+  ;; Make sure $HOME/go/bin is in the PATH env var otherwise eglot will fail to
+  ;; run.
+  (let ((gobin (expand-file-name "go/bin" (getenv "HOME"))))
+    (unless (string-match gobin (getenv "PATH"))
+      (error "Unable to find gopls in PATH: eglot will fail to run"))))
 
 (defun init/go-mode/config ()
   "Configure `go-mode' major mode."
@@ -76,31 +41,22 @@
   (go-eldoc-setup)
 
   ;; Customize compile command to run go build
-  (if (not (string-match "go" compile-command))
-      (set (make-local-variable 'compile-command)
-           "go build -v"))              ; removed: "&& go test -v && go vet"
+  (unless (string-match "go build" compile-command)
+    (setq-local compile-command "go build -v"))
 
-  (define-key go-mode-map (kbd "C-c C-r") 'go-remove-unused-imports)
-  (define-key go-mode-map (kbd "C-c i")   'go-goto-imports)
-  ;; Supporting C-u M-. so jump to def takes place in other window
-  (define-key go-mode-map (kbd "M-.")     #'(lambda()
-                                              (interactive)
-                                              (if (consp current-prefix-arg)
-                                                  (godef-jump-other-window (point))
-                                                (godef-jump (point)))))
+  ;; Mode-specific settings
+  (setq-local tab-width 8)
 
-  (add-hook 'before-save-hook 'gofmt-before-save nil t))
-
-(defun init/go/setenv (name env)
-  "Extract environment variable given by NAME from go's ENV."
-  (if (not (string-match (concat name "=\"\\([^\"]+\\)\"") env))
-      (error (concat "Failed to extract " name))
-    (setenv name (match-string 1 env))
-    (message "info: set %s: %s" name (getenv name))))
+  ;; (add-hook 'before-save-hook 'gofmt-before-save nil t)
+  (eglot-ensure)
+  )
 
 (use-package go-mode
   :mode ("\\.go\\'")
+  :hook ((go-mode . init/go-mode/config))
   :init (init/go-mode)
-  :config (init/go-mode/config))
+  :bind ((:map go-mode-map
+               ("C-c C-c" . compile)
+               ("C-c C-r" . go-remove-unused-imports))))
 
 ;;; go.el ends here

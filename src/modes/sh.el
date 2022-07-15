@@ -32,7 +32,9 @@
 (defun init/sh-mode/config ()
   "Initialise modes related to shell scripting development."
   (init/common-nonweb-programming-mode)
-  (auto-fill-mode -1))
+  (auto-fill-mode -1)
+  ;; Disable to prevent frequent freezes
+  (company-mode -1))
 
 (use-package sh-script
   :init (init/sh-script)

@@ -52,10 +52,9 @@ configured correctly for monorepositories."
   (local-set-key (kbd "M-a") 'c-beginning-of-statement)
   (local-set-key (kbd "M-e") 'c-end-of-statement)
 
-  ;; (init/typescript/config/lsp)
   ;; (init/typescript/config/tide)
-  (init/typescript/config/eglot)
-  )
+  ;; (lsp-deferred)
+  (eglot-ensure))
 
 (defun init/typescript/config/web ()
   "Initialise Typescript mode for React in `web-mode'."
@@ -64,10 +63,6 @@ configured correctly for monorepositories."
   ;; if the buffer's file extension suggests a typescript source file.
   (when (string-equal "tsx" (file-name-extension buffer-file-name))
     (init/typescript/config/ts-tsx)))
-
-(defun init/typescript/config/lsp ()
-  "Enable LSP in Typescript buffer."
-  (lsp-deferred))
 
 (defun init/typescript/config/tide ()
   "Enable TIDE in Typescript buffer."
@@ -82,10 +77,6 @@ configured correctly for monorepositories."
 
   (eldoc-mode 1)
   (tide-hl-identifier-mode 1))
-
-(defun init/typescript/config/eglot ()
-  "Enable eglot in Typescript buffer."
-  (eglot-ensure))
 
 (use-package typescript-mode
   :diminish "TS"

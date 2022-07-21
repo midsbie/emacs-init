@@ -94,13 +94,18 @@
   (setq-local company-backends
               '(company-capf company-dabbrev company-dabbrev-code))
 
+  (add-hook 'before-save-hook 'eglot-format-buffer nil t)
+
   ;; Support for hot-reloading whenever a Dart/Flutter source file is saved.
   ;; This requires flutter to be run in debug mode, with hot-reloading enabled
   ;; (the default behavior), and for a PID file to exist in the repository's
   ;; root directory:
   ;;
   ;;   $ flutter run --debug --hot --pid-file=${init/dart-mode/flutter-pid-file}
-  (add-hook 'after-save-hook #'init/dart-mode/maybe-hotreload nil t))
+  (add-hook 'after-save-hook #'init/dart-mode/maybe-hotreload nil t)
+
+  ;; (lsp-deferred)
+  (eglot-ensure))
 
 (defun init/dart-mode/maybe-hotreload ()
   "Maybe hot-reload Flutter debugging session."
@@ -115,12 +120,7 @@
 (use-package dart-mode
   ;; Requiring the `s' package because `s-trim-right' is used above.
   :after (company flycheck s)
-
-  :hook (
-         ;;(dart-mode . lsp)
-         (dart-mode . eglot-ensure)
-         (dart-mode . init/dart-mode/config))
-
+  :hook ((dart-mode . init/dart-mode/config))
   :init
   (init/dart-mode)
   )

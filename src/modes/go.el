@@ -38,24 +38,29 @@
 (defun init/go-mode/config ()
   "Configure `go-mode' major mode."
   (init/common-nonweb-programming-mode)
-  (go-eldoc-setup)
 
   ;; Customize compile command to run go build
   (unless (string-match "go build" compile-command)
     (setq-local compile-command "go build -v"))
 
   ;; Mode-specific settings
-  (setq-local tab-width 8)
+  (setq-local tab-width 4)
+  (setq-local fill-column 80)
 
-  ;; (add-hook 'before-save-hook 'gofmt-before-save nil t)
   (eglot-ensure)
-  )
+
+  ;; The following defun does not seem to be defined for some reason.
+  ;; (add-hook 'before-save-hook #'gofmt-before-save nill t)
+  ;;
+  ;; Defaulting to eglot's server for the same effect:
+  (add-hook 'before-save-hook 'eglot-format-buffer nil t))
 
 (use-package go-mode
   :mode ("\\.go\\'")
   :hook ((go-mode . init/go-mode/config))
   :init (init/go-mode)
-  :bind ((:map go-mode-map
+  :bind (
+         (:map go-mode-map
                ("C-c C-c" . compile)
                ("C-c C-r" . go-remove-unused-imports))))
 

@@ -127,6 +127,9 @@ to degrade under LSP")
         '(:on-trigger-char :after-completion :on-server-request))
   (setq lsp-signature-render-documentation t)
 
+  ;; Not needed as imenu disabled; may also affect performance.
+  (setq lsp-ui-imenu-enable nil)
+
   ;; Sideline:
   ;; Disable intrusive code actions and symbol on hover but do show diagnostics
   ;; in sideline
@@ -147,6 +150,12 @@ to degrade under LSP")
   (setq lsp-completion-show-kind t))
 
 (defun init/lsp/config ()
+  (when lsp-mode
+    ;; This is bugging out for some reason, causing the annotations to: not
+    ;; update timely and become misaligned; be captured by text selection; other
+    ;; oddities.  Shouldn't be enabled but forcefully disabling it anyway.
+    (lsp-lens-mode -1))
+
   ;; This can't be in the initializing defun above or it'll error out.
   ;; Ref: https://github.com/emacs-lsp/lsp-mode/issues/1532#issuecomment-602384182
   (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)

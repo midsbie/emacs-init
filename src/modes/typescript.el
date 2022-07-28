@@ -53,7 +53,6 @@ configured correctly for monorepositories."
   (local-set-key (kbd "M-e") 'c-end-of-statement)
 
   ;; (init/typescript/config/tide)
-  ;; (lsp-deferred)
   (eglot-ensure))
 
 (defun init/typescript/config/web ()

@@ -104,7 +104,6 @@
   ;;   $ flutter run --debug --hot --pid-file=${init/dart-mode/flutter-pid-file}
   (add-hook 'after-save-hook #'init/dart-mode/maybe-hotreload nil t)
 
-  ;; (lsp-deferred)
   (eglot-ensure))
 
 (defun init/dart-mode/maybe-hotreload ()

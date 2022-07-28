@@ -19,6 +19,9 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+;;;
+;; 28/07/22 Switch exclusively to eglot
+;;
 ;; 13/07/20 Remove dependency on go-autocomplete in favour of lsp-server and
 ;;          company-mode.
 

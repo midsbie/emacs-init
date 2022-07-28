@@ -70,12 +70,17 @@
   ;;   (when (flycheck-flow--predicate)
   ;;     (flow-minor-mode 1))
   ;;
-  ;; Now using LSP for Flow, eglot otherwise.
-  (cond
-   ((flycheck-flow--predicate)
-    (lsp-deferred))
-   (t
-    (eglot-ensure))))
+  ;; Then support transitioned to LSP for Flow source files and to eglot for all
+  ;; other source files:
+  ;;
+  ;;   (cond
+  ;;    ((flycheck-flow--predicate)
+  ;;     (lsp-deferred))
+  ;;    (t
+  ;;     (eglot-ensure)))
+  ;;
+  ;; Now exclusively using eglot.
+  (eglot-ensure))
 
 (defun init/js-mode/toggle-mode ()
   "Switch to `web-mode'."

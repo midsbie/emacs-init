@@ -87,15 +87,16 @@ when a match occurs with the buffer's file name.")
              (message "warn: flycheck-mode disabled")
              (flycheck-mode -1)))))
 
-  ;; Deprecated support for Typescript below
-  ;; ----------------------------------------
-  ;; Load LSP if JSX with Flow or TSX.  Avoid when `typescript-mode' or `tide'
-  ;; in use.
+  ;; Deprecated support for Typescript below in case `ts-mode' somehow doesn't
+  ;; work as expected and we need to switch temporarily to `web-mode'.
+  ;;
+  ;; Note too that we're now exclusively using the eglot LSP client for Flow
+  ;; and any other supported source files.
   (unless (and (boundp 'tide-mode) tide-mode)
-    (cond ((flycheck-flow--predicate)
-           (lsp-deferred))
-          ((string-equal "tsx" (file-name-extension buffer-file-name))
-           (eglot-ensure)))))
+    (cond
+     ((or (flycheck-flow--predicate)
+          (string-equal "tsx" (file-name-extension buffer-file-name)))
+      (eglot-ensure)))))
 
 (defun init/web/load-local-vars ()
   "Map the value of `c-basic-offset' to `web-mode-code-indent-offset'."

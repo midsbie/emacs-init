@@ -33,6 +33,11 @@
   :demand
   :after flymake
   :hook ((flymake-mode . init/flymake/config))
-  )
+  :bind ((:map flymake-mode-map
+               ("C-c ! p" . flymake-goto-prev-error)
+               ("C-c ! n" . flymake-goto-next-error)
+               ("C-c ! l" . flymake-show-project-diagnostics)
+               ("C-c ! b" . flymake-show-buffer-diagnostics)
+               ("C-c ! c" . flymake-start))))
 
 ;;; flymake.el ends here

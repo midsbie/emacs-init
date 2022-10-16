@@ -53,15 +53,8 @@ configured correctly for monorepositories."
   (local-set-key (kbd "M-e") 'c-end-of-statement)
 
   ;; (init/typescript/config/tide)
-  (eglot-ensure))
-
-(defun init/typescript/config/web ()
-  "Initialise Typescript mode for React in `web-mode'."
-  ;; Since web-mode may be started for a wide variety of source files, such as
-  ;; HTML markup, template files and Javascript, the initialisation is only run
-  ;; if the buffer's file extension suggests a typescript source file.
-  (when (string-equal "tsx" (file-name-extension buffer-file-name))
-    (init/typescript/config/ts-tsx)))
+  (eglot-ensure)
+  (flymake-eslint-enable))
 
 (defun init/typescript/config/tide ()
   "Enable TIDE in Typescript buffer."
@@ -81,8 +74,7 @@ configured correctly for monorepositories."
   :diminish "TS"
   :mode ("\\.ts\\'")
 
-  :hook ((typescript-mode . init/typescript/config/ts-tsx)
-         (web-mode-hook . init/typescript/config/web))
+  :hook ((typescript-mode . init/typescript/config/ts-tsx))
 
   :config
   ;; This is required to ensure Eglot is configured correctly for monorepository

@@ -49,7 +49,7 @@
                 "node_modules")))
     (setq-local flycheck-javascript-eslint-executable nil)
     (while (and curdir (not flycheck-javascript-eslint-executable))
-      (let ((eslint (expand-file-name "node_modules/eslint/bin/eslint.js"
+      (let ((eslint (expand-file-name "node_modules/.bin/eslint"
                                       curdir)))
         ;; Setting `flycheck-javascript-eslint-executable' terminates the loop
         ;; above.

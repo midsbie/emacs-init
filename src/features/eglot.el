@@ -53,9 +53,7 @@
   )
 
 (defun init/eglot/config ()
-  "Configure `eglot' when enabled in a buffer."
-  (when flymake-mode
-    (flycheck-mode -1)))
+  "Configure `eglot' when enabled in a buffer.")
 
 (use-package eglot
   :hook (eglot-managed-mode . init/eglot/config)

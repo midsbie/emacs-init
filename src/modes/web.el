@@ -96,16 +96,7 @@ when a match occurs with the buffer's file name.")
     (cond
      ((or (flycheck-flow--predicate)
           (string-equal "tsx" (file-name-extension buffer-file-name)))
-      (eglot-ensure)
-
-      ;; For some reason, the eslint backend must be enabled with a delay _and_
-      ;; flymake must toggled off and on for the backend to take effect.  Seems
-      ;; to be an interaction with web-mode, as typescript-mode does not seem to
-      ;; require this special handling.
-      (run-with-idle-timer 1 nil #'(lambda ()
-                                     (flymake-eslint-enable)
-                                     (flymake-mode -1);
-                                     (flymake-mode 1)))))))
+      (eglot-ensure)))))
 
 (defun init/web/load-local-vars ()
   "Map the value of `c-basic-offset' to `web-mode-code-indent-offset'."

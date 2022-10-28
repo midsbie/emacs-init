@@ -25,9 +25,23 @@
 ;;; Code:
 
 (defun init/flymake/config ()
+  "Configure flymake.
+
+This function disables `flycheck-mode', if enabled, and
+configures `flymake-eslint' correctly if it finds `eslint' in the
+variable `exec-path'."
+  (when flycheck-mode
+    (flycheck-mode -1))
+
   (flymake-diagnostic-at-point-mode 1)
-  (flycheck-mode -1)
-  )
+
+  ;; Requires `add-node-modules-path' to have been called during mode
+  ;; configuration.  Calling `add-hook' to enable `flymake-eslint' because
+  ;; `flymake-eslint-enable' doesn't seem to work.
+  (when (executable-find flymake-eslint-executable-name)
+    (ignore-errors
+      (setq-local flymake-eslint-project-root (project-root (project-current))))
+    (add-hook 'flymake-diagnostic-functions 'flymake-eslint--checker nil t)))
 
 (use-package flymake-diagnostic-at-point
   :demand

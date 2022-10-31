@@ -35,10 +35,12 @@ variable `exec-path'."
 
   (flymake-diagnostic-at-point-mode 1)
 
-  ;; Requires `add-node-modules-path' to have been called during mode
-  ;; configuration.  Calling `add-hook' to enable `flymake-eslint' because
-  ;; `flymake-eslint-enable' doesn't seem to work.
-  (when (executable-find flymake-eslint-executable-name)
+  ;; Requires `init/add-node-modules-to-exec-path' to have been called during
+  ;; mode configuration.  Enabling `flymake-eslint' by directly mutating
+  ;; `flymake-diagnostic-functions' because calling `flymake-eslint-enable'
+  ;; doesn't seem to work.
+  (when (and (boundp 'flymake-eslint-executable-name)
+             (executable-find flymake-eslint-executable-name))
     (ignore-errors
       (setq-local flymake-eslint-project-root (project-root (project-current))))
     (add-hook 'flymake-diagnostic-functions 'flymake-eslint--checker nil t)))

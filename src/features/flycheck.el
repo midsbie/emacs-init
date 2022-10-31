@@ -100,7 +100,13 @@
   (flycheck-add-next-checker 'javascript-flow 'javascript-eslint)
 
   (add-hook 'flyspell-mode-hook 'init/flycheck/on-flyspell-mode)
-  (add-hook 'flycheck-mode-hook 'init/flycheck/use-eslint-from-node-modules)
+  ;; Disabled because we are calling `init/add-node-modules-to-exec-path' as
+  ;; part of the initialization sequence in `init/common-web-programming-mode',
+  ;; which updates `exec-path' to point to the buffer's root "node_modules/.bin"
+  ;; directory and should allow the eslint command to be found by
+  ;; `flycheck-mode' if present.
+  ;;
+  ;; (add-hook 'flycheck-mode-hook 'init/flycheck/use-eslint-from-node-modules)
 
   ;; Show the error list in the bottom third of the present buffer's window.
   ;; The error list can be summoned via `M-x flycheck-list-errors` or

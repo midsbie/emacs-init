@@ -83,7 +83,7 @@ when a match occurs with the buffer's file name.")
   ;; apply and would produce false positives.
   (let ((ext (file-name-extension (buffer-file-name))))
     (cond ((eq (string-match "^\\(css\\|html\\|less\\)$" ext) 0)
-           (when flycheck-mode
+           (when (and (boundp 'flycheck-mode) flycheck-mode)
              (message "warn: flycheck-mode disabled")
              (flycheck-mode -1)))))
 
@@ -96,7 +96,9 @@ when a match occurs with the buffer's file name.")
     (cond
      ((or (flycheck-flow--predicate)
           (string-equal "tsx" (file-name-extension buffer-file-name)))
-      (eglot-ensure)))))
+      (eglot-ensure)
+      (flycheck-mode -1)
+      (flymake-eslint-enable)))))
 
 (defun init/web/load-local-vars ()
   "Map the value of `c-basic-offset' to `web-mode-code-indent-offset'."

@@ -54,6 +54,7 @@ configured correctly for monorepositories."
 
   ;; (init/typescript/config/tide)
   (eglot-ensure)
+  (flycheck-mode -1)
   (flymake-eslint-enable))
 
 (defun init/typescript/config/tide ()

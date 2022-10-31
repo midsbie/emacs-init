@@ -187,7 +187,16 @@
   ;; Note that this requires an appropriate `use-package' invocation to load
   ;; the `add-node-modules-path' package.  Refer to ./use-package.el for
   ;; further infor.
-  (add-node-modules-path)
+  ;;
+  ;; [31Oct22] This is now disabled because `add-node-modules-path' does not
+  ;; take into account the fact that mono-repositories often have multiple
+  ;; "node_modules" directories.  The custom function
+  ;; `init/add-node-modules-to-exec-path' was crafted to take this into account
+  ;; when looking for a repository's root "node_modules" directory.
+  ;;
+  ;; (add-node-modules-path)
+
+  (init/add-node-modules-to-exec-path)
   (init/common-programming-mode)
 
   ;; For some reason preemptively setting the fill column above is now not
@@ -197,5 +206,31 @@
   (setq-local fill-column init/defaults/fill-column)
   (run-with-idle-timer .1 nil #'(lambda ()
                                   (setq-local fill-column init/defaults/fill-column))))
+
+(defun init/find-node-modules ()
+  "Find path to node_modules directory.
+
+This defun attempts to determine the path to the repository's
+node_modules directory by recursively traversing all the
+directories of the current buffer and returning the path to the
+last node_modules seen."
+  (let* ((p (locate-dominating-file (or (buffer-file-name) default-directory)
+                                    "node_modules"))
+         (last nil))
+    (while (and p (not (string= p "/")))
+    (setq p (expand-file-name p))
+      (when (and (file-directory-p (expand-file-name "node_modules" p)))
+        (setq last p))
+      (setq p (file-name-directory (directory-file-name p))))
+    last))
+
+(defun init/add-node-modules-to-exec-path ()
+  "Add special node_modules/.bin directory to `exec-path', if found
+in the buffer's directory tree."
+  (let* ((p (init/find-node-modules))
+         (binp (and p (expand-file-name "node_modules/.bin" p))))
+    (when (and binp (file-directory-p binp))
+      (make-local-variable 'exec-path)
+      (add-to-list 'exec-path binp))))
 
 ;;; programming.el ends here

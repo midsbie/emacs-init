@@ -19,39 +19,70 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;; Install the following PIP packages to ensure that elpy and flycheck work as expected:
 ;;
-;; # sudo pip install jedi pylint flake8 autopep8
+;; ## INSTALLATION
+;; ### LINTERS
+;; Install the following PIP packages to ensure that elpy and flycheck work as
+;; expected:
 ;;
-;; Note that fake8 is invoked by pylint (C-c C-v) whereas pylint is used by flycheck.
+;; # pip install jedi pylint flake8 autopep8
+;;
+;; Note that flake8 is invoked by pylint (C-c C-v) whereas pylint is used by
+;; `flycheck'.  Beware that if using `eglot', `flymake' will be in use instead
+;; and may therefore not enable pylint.
+
+;; ### RUNNING EGLOT OR LSP CLIENTS
+;;
+;; For `eglot' or`lsp' to activate one needs to:
+;;
+;; 1. Install Python package:
+;;    pip install python-lsp-server[all]
+;;
+;; 2. Run `pylsp`:
+;;    pylsp
+;;
+;; Additional information at:
+;; https://emacs-lsp.github.io/lsp-mode/page/lsp-pylsp/
+
+;; ## PACKAGE ELPY NOT ENABLED
+;;
+;; The elpy-mode is currently not enabled because it was found to be super
+;; annoying.  Main reason is it defines keybindings that clash with existing
+;; ones.  Might be possible to customize but unclear if worth the effort.
+;;
+;; Installation instructions straight from:
+;; https://elpy.readthedocs.io/en/latest/introduction.html#installation
 
 ;;
 
 ;;; Code:
 
-;; Defaults
-(setq-default python-indent-offset 4)
-
-(defun init/python-mode ()
+(defun init/python-mode/config ()
   "Customise `python-mode'."
 
   (setq-local fill-column init/defaults/fill-column/narrow)
-  ;; Undoing replacement of projectile's key bindings
-  (define-key elpy-mode-map (kbd "C-c C-p") nil)
-  (define-key elpy-mode-map (kbd "C-c C-n") nil)
-  (py-autopep8-enable-on-save))
+
+  ;; Undoing replacement of projectile's key bindings when `elpy-mode' enabled.
+  (when (and (boundp 'elpy-mode-map) elpy-mode-map)
+    (define-key elpy-mode-map (kbd "C-c C-p") nil)
+    (define-key elpy-mode-map (kbd "C-c C-n") nil))
+
+  (py-autopep8-mode)
+
+  ;; Refer to section in commentary entitled RUNNING EGLOT OR LSP CLIENTS if
+  ;; eglot fails to enable.  Note that it fails with
+  (eglot-ensure))
 
 (use-package python-mode
   :hook ((python-mode . init/common-nonweb-programming-mode)
          (python-mode . pylint-add-menu-items)
          (python-mode . pylint-add-key-bindings)
-         (python-mode . init/python-mode)))
+         (python-mode . init/python-mode/config)))
 
 (use-package pylint
   :after python-mode)
 
-;; Installation instructions straight from:
-;; https://elpy.readthedocs.io/en/latest/introduction.html#installation
+;; Currently disabled; refer to commentary for reason why.
 (use-package elpy
   :after python-mode
   :ensure t

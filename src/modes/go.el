@@ -19,8 +19,8 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;;;
-;; 28/07/22 Switch exclusively to eglot
+;;
+;; 28/07/22 Switched exclusively to eglot
 ;;
 ;; 13/07/20 Remove dependency on go-autocomplete in favour of lsp-server and
 ;;          company-mode.
@@ -51,7 +51,7 @@
     (setq-local compile-command "go build -v"))
 
   ;; Mode-specific settings
-  (setq-local tab-width 4)
+  (setq-local tab-width 8)
   (setq-local fill-column 80)
 
   (eglot-ensure)

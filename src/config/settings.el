@@ -19,6 +19,10 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+;;
+;; This setting did NOT prevent Emacs from aggressively resizing windows.
+;; Ref: https://stackoverflow.com/a/11458625
+;; (setq even-window-heights nil)
 
 ;;
 
@@ -100,8 +104,7 @@
 ;; Some settings that may help with redisplay
 ;; Ref: [4:25] https://200ok.ch/posts/2020-10-01_introduction_to_profiling_in_emacs.html
 (setq bidi-paragraph-direction  'left-to-right
-      bidi-inhibit-bpa          nil
-      )
+      bidi-inhibit-bpa          nil)
 
 ;; The following settings as per the documentation on improving the performance
 ;; of LSP at:

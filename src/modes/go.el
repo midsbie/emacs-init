@@ -48,7 +48,7 @@
 
   ;; Customize compile command to run go build
   (unless (string-match "go build" compile-command)
-    (setq-local compile-command "go build -v"))
+    (setq-local compile-command "go build -v "))
 
   ;; Mode-specific settings
   (setq-local tab-width 8)

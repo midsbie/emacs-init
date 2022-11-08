@@ -32,11 +32,9 @@
 (defun init/go-mode ()
   "One-time configuration sequence for `go-mode'."
 
-  ;; Probably not too important but warn if $GOPATH/bin is not found in PATH, as
-  ;; it likely means there'll be trouble running compiled Go programs.
-  (let ((gobin (expand-file-name "bin" (getenv "GOPATH"))))
-    (unless (string-match gobin (getenv "PATH"))
-      (warn (concat "Go binary directory not in PATH: " gobin))))
+  ;; Warn when "go" binary not found in path.
+  (unless (executable-find "go")
+      (warn "Unable to find 'go' binary")))
 
   ;; Make sure the gopls binary is available otherwise eglot will fail to run.
   (unless (executable-find "gopls")

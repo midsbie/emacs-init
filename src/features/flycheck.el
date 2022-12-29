@@ -141,7 +141,6 @@ because the checker does not exist."
   ;; read the full message.
   ;;
   ;; :hook ((flycheck-mode . flycheck-popup-tip-mode))
-  :init
-  (init/flycheck))
+  :init (init/flycheck))
 
 ;;; flycheck.el ends here

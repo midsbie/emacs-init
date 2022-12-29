@@ -34,7 +34,7 @@
 
   ;; Warn when "go" binary not found in path.
   (unless (executable-find "go")
-      (warn "Unable to find 'go' binary")))
+      (warn "Unable to find 'go' binary"))
 
   ;; Make sure the gopls binary is available otherwise eglot will fail to run.
   (unless (executable-find "gopls")
@@ -63,7 +63,7 @@
 (use-package go-mode
   :mode ("\\.go\\'")
   :hook ((go-mode . init/go-mode/config))
-  :init (init/go-mode)
+  :config (init/go-mode)
   :bind (
          (:map go-mode-map
                ("C-c C-c" . compile)

@@ -31,7 +31,6 @@
 
 (use-package eldoc
   :diminish "Doc"
-  :init
-  (init/eldoc))
+  :config (init/eldoc))
 
 ;;; eldoc.el ends here

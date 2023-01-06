@@ -56,9 +56,6 @@ Absolute path to directory containing packages managed by the
 
 Files are only visited if the server hasn't yet been started.")
 
-(defvar init/suppress-jshint t
-  "When non-nil, causes the jshint linter to be ignored.")
-
 (defconst init/defaults/fill-column 100
   "Default `fill-column' value.")
 

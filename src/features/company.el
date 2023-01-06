@@ -68,20 +68,6 @@ Filter backends from `company-backends' that are specified in
   (add-hook 'company-completion-started-hook 'my/company/clear-flycheck-errors)
   (define-key company-mode-map (kbd "<C-return>") 'company-complete))
 
-(defun init/company-box/config ()
-  ;; company-box sets the `company-tooltip-selection' face invisible
-
-  ;; Default faces are not visible using the default theme with dark background.
-  (custom-set-faces
-   '(company-tooltip-selection
-     ((((class color) (min-colors 88) (background light))
-       (:background "light blue"))
-      (((class color) (min-colors 88) (background dark))
-       (:background "gray31"))
-      (t (:background "green"))))
-   '(company-tooltip ((t (:background "grey3"))))
-   ))
-
 (defun my/company/clear-flycheck-errors (manual)
   "Clear flycheck status in buffer."
   (when init/company/clear-flycheck-errors-timer
@@ -147,7 +133,6 @@ If failed try to complete the common part with `company-complete-common'"
 ;; Ref: https://github.com/sebastiencs/company-box
 (use-package company-box
   :diminish
-  :hook (company-mode . company-box-mode)
-  :config (init/company-box/config))
+  :hook (company-mode . company-box-mode))
 
 ;;; company.el ends here

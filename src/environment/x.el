@@ -1,6 +1,6 @@
 ;;; x.el --- Initialisation sequence when run within X
 
-;; Copyright (C) 2014-2020 Miguel Guedes
+;; Copyright (C) 2014-2022 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:
@@ -31,15 +31,13 @@ resolution.  Frame size is set to 190 characters wide if the
 display width is larger than 1280, otherwise it is set to 90
 characters wide."
   (interactive)
-  (if window-system
-      (progn
-        ;; use 190 char wide window for largeish displays
-        ;; and smaller 90 column windows for smaller displays
-        (if (> (x-display-pixel-width) 1280)
-            (add-to-list 'default-frame-alist (cons 'width 190))
-          (add-to-list 'default-frame-alist (cons 'width 90)))
-        (add-to-list 'default-frame-alist
-                     (cons 'height 77)))))
+  (when window-system
+    ;; use 190 char wide window for largeish displays
+    ;; and smaller 90 column windows for smaller displays
+    (if (> (x-display-pixel-width) 1280)
+        (add-to-list 'default-frame-alist (cons 'width 190))
+      (add-to-list 'default-frame-alist (cons 'width 90)))
+    (add-to-list 'default-frame-alist (cons 'height 77))))
 
 ;; Function: Set current frame width
 (defun set-current-frame-width (arg)
@@ -72,7 +70,6 @@ characters wide."
   ;;        Tentatively reactivating since many package upgrades have taken
   ;;        place since.
   (global-hl-line-mode 1)
-  (set-face-background 'hl-line "#383830")
 
   ;; Enable clipboard functionality
   (setq select-enable-clipboard     t
@@ -86,20 +83,14 @@ characters wide."
                                   (format "%s :: " project-name))))
                              "%b"))
 
-  ;; Set custom faces
-  ; The following call sets the default color of window (buffer) backgrounds,
-  ; as well as some other aspects, such as the default foreground color and
-  ; font.  Note that a theme is NOT in use and we currently rely entirely on
-  ; Emacs' base configuration.
+  (load-theme 'solarized-selenized-light t t)
+
   (custom-set-faces
-   '(default ((t (:inherit nil :stipple nil :background "#080808"
-                           :foreground "#dcdccc" :inverse-video nil :box nil
+   '(default ((t (:inherit nil :stipple nil
+                           :inverse-video nil :box nil
                            :strike-through nil :overline nil :underline nil
                            :slant normal :weight normal :height 85 :width normal
-                           :foundry "unknown" :family "Hack"))))
-   '(rst-level-1-face ((t (:weight bold))) t)
-   '(rst-level-2-face ((t (:weight bold))) t)
-   '(rst-level-3-face ((t (:weight extra-bold))) t))
+                           :foundry "unknown" :family "Hack")))))
 
   ;; Let's now perform last initialization steps.
   ;;

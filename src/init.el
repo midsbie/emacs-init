@@ -62,6 +62,9 @@ Files are only visited if the server hasn't yet been started.")
 (defconst init/defaults/fill-column/narrow 80
   "Default narrow `fill-column' value.")
 
+(defconst init/prefer-eglot-lsp-client nil
+  "Indicates `eglot' should be used as the LSP client when t.")
+
 (defun inclusion-path (path)
   (concat (file-name-as-directory init/path-base) path))
 

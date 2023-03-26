@@ -1,6 +1,6 @@
 ;;; js.el --- Configures `js-mode'
 
-;; Copyright (C) 2015-2021  Miguel Guedes
+;; Copyright (C) 2015-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -19,22 +19,28 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;; xxxxxx Using `js2-mode' instead.
+;;
+
+;;; Log:
+;;
+;; 260323 Reverted to using `lsp' as an experiment to solve weird performance
+;;        issues under eglot.
+;;
+;; 031221 Now using `js-mode' and `js-jsx-mode' for Javascript files.
+;;
+;; 140520 Attempted to switch to `js-mode' and `js-jsx-mode' for all Javascript
+;;        development, as it is faster, more responsive and does not suffer from
+;;        the quirks that `web-mode' does, however syntax highlighting is not
+;;        great.  Staying with web-mode for the time being.
+;;
+;; 120519 Considered enabling `js-jsx-mode' as it now seems to handle JSX source
+;;        files correctly and seems faster than `web-mode', however syntax
+;;        highlighting isn't as good and useful as the latter's.
 ;;
 ;; xxxxxx Using `web-mode' as the development on the above mode has been
 ;;        discontinued and JSX support isn't good enough.
 ;;
-;; 120519 Considered enabling `js-jsx-mode' as it now seems to handle JSX
-;;        source files correctly and seems faster than `web-mode', however
-;;        syntax highlighting isn't as good and useful as the latter's.
-;;
-;; 140520 Attempted to switch to `js-mode' and `js-jsx-mode' for all Javascript
-;;        development, as it is faster, more responsive and does not suffer
-;;        from the quirks that `web-mode' does, however syntax highlighting is
-;;        not great.  Staying with web-mode for the time being.
-;;
-;; 031221 Now using `js-mode' and `js-jsx-mode' for Javascript files.
-
+;; xxxxxx Using `js2-mode' instead.
 ;;
 
 ;;; Code:
@@ -80,7 +86,9 @@
   ;;     (eglot-ensure)))
   ;;
   ;; Now exclusively using eglot.
-  (eglot-ensure))
+  (if (not init/prefer-eglot-lsp-client)
+      (lsp)
+    (eglot-ensure)))
 
 (defun init/js-mode/toggle-mode ()
   "Switch to `web-mode'."

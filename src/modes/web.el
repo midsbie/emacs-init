@@ -1,6 +1,6 @@
 ;;; web.el --- Configures `web-mode'
 
-;; Copyright (C) 2015-2022  Miguel Guedes
+;; Copyright (C) 2015-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -19,19 +19,26 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+;;
 ;; Do not forget to also make changes in the ~/.emacs file as it might be
 ;; forcefully enabling this (or some other) mode.
 
 ;;; Log:
-;; xxxxxx React's jsx files are best loaded under web mode.  However, we're now
-;; using web-mode as the default mode for all things Javascript.
+;;;
+;; 260323 Reverted to using `lsp' as an experiment to solve weird performance
+;;        issues under eglot.
 ;;
-;; 120519 Noting that `js-mode' and `js-jsx-mode' seem stable at the moment.
-;; Unfortunately, `web-mode' still provides an overall better experience but
-;; the two Emacs native modes should be kept regular under evaluation.
+;; xxxxxx React's jsx files are best loaded under web mode.  However, we're now
+;;        using web-mode as the default mode for all things Javascript.
 ;;
 ;; 140520 Emacs supports JSX natively now, however syntax highlighting is still
-;; not great.  Waiting until v27 and considering building from source.
+;;        not great.  Waiting until v27 and considering building from source.
+;;
+;; 120519 Noting that `js-mode' and `js-jsx-mode' seem stable at the moment.
+;;        Unfortunately, `web-mode' still provides an overall better experience
+;;        but the two Emacs native modes should be kept regular under
+;;        evaluation.
+;;
 
 ;;; Code:
 
@@ -96,9 +103,11 @@ when a match occurs with the buffer's file name.")
     (cond
      ((or (flycheck-flow--predicate)
           (string-equal "tsx" (file-name-extension buffer-file-name)))
-      (eglot-ensure)
-      (flycheck-mode -1)
-      (flymake-eslint-enable)))))
+      (if (not init/prefer-eglot-lsp-client)
+          (lsp)
+        (eglot-ensure)
+        (flycheck-mode -1)
+        (flymake-eslint-enable))))))
 
 (defun init/web/load-local-vars ()
   "Map the value of `c-basic-offset' to `web-mode-code-indent-offset'."

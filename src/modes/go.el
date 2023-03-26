@@ -1,6 +1,6 @@
 ;;; go.el --- Configures `go-mode'
 
-;; Copyright (C) 2015-2022  Miguel Guedes
+;; Copyright (C) 2015-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -20,11 +20,16 @@
 
 ;;; Commentary:
 ;;
-;; 28/07/22 Switched exclusively to eglot
-;;
-;; 13/07/20 Remove dependency on go-autocomplete in favour of lsp-server and
-;;          company-mode.
 
+;;; Log:
+;;
+;; 260323 Reverted to using `lsp' when js, typescript and web modes were
+;;        switched over.
+;;
+;; 280722 Switched exclusively to `eglot'
+;;
+;; 130720 Remove dependency on go-autocomplete in favour of lsp-server and
+;;        company-mode.
 ;;
 
 ;;; Code:
@@ -52,13 +57,15 @@
   (setq-local tab-width 8)
   (setq-local fill-column 80)
 
-  (eglot-ensure)
+  (if (not init/prefer-eglot-lsp-client)
+      (lsp)
 
-  ;; The following defun does not seem to be defined for some reason.
-  ;; (add-hook 'before-save-hook #'gofmt-before-save nill t)
-  ;;
-  ;; Defaulting to eglot's server for the same effect:
-  (add-hook 'before-save-hook 'eglot-format-buffer nil t))
+    ;; The following defun does not seem to be defined for some reason.
+    ;; (add-hook 'before-save-hook #'gofmt-before-save nill t)
+    ;;
+    ;; Defaulting to eglot's server for the same effect:
+    (add-hook 'before-save-hook 'eglot-format-buffer nil t)
+    (eglot-ensure)))
 
 (use-package go-mode
   :mode ("\\.go\\'")

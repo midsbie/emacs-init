@@ -1,6 +1,6 @@
 ;;; typescript.el --- Configures `typescript-mode'
 
-;; Copyright (C) 2020-2022  Miguel Guedes
+;; Copyright (C) 2020-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -23,9 +23,15 @@
 ;; https://notes.alexkehayias.com/setting-up-typescript-and-eslint-with-eglot/
 
 ;;; Log:
-;; 22-06-05 Transitioned to the amazing eglot package
-;; 21-11-17 Moving back to TIDE as LSP is too slow
-;; 21-09-03 Disabling TIDE in favour of LSP
+;;
+;; 260323 Reverted to using `lsp' as an experiment to solve weird performance
+;;        issues under eglot.
+;;
+;; 050622 Transitioned to the amazing `eglot' package
+;;
+;; 171121 Moving back to TIDE as LSP is too slow
+;;
+;; 030921 Disabling TIDE in favour of LSP
 
 ;;; Code:
 
@@ -53,9 +59,11 @@ configured correctly for monorepositories."
   (local-set-key (kbd "M-e") 'c-end-of-statement)
 
   ;; (init/typescript/config/tide)
-  (eglot-ensure)
-  (flycheck-mode -1)
-  (flymake-eslint-enable))
+  (if (not init/prefer-eglot-lsp-client)
+      (lsp)
+    (eglot-ensure)
+    (flycheck-mode -1)
+    (flymake-eslint-enable)))
 
 (defun init/typescript/config/tide ()
   "Enable TIDE in Typescript buffer."

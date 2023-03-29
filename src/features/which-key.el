@@ -1,6 +1,6 @@
 ;;; which-key.el --- Configures the which-key package
 
-;; Copyright (C) 2021  Miguel Guedes
+;; Copyright (C) 2021-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -20,28 +20,28 @@
 
 ;;; Commentary:
 
-;;
+;; Initialization mostly from: https://github.com/justbur/emacs-which-key
+;; ...which seems to have been taken from:
+;; https://elpa.gnu.org/packages/which-key.html#orgf035424
 
 ;;; Code:
 
 (defun init/which-key ()
   "Initialise the `which-key' package."
-  ;; The following mostly from:
-  ;; https://github.com/justbur/emacs-which-key
-  ;;
-  ;; Allow C-h to trigger which-key before it is done automatically
-  (setq which-key-show-early-on-C-h t)
-  ;; make sure which-key doesn't show normally but refreshes quickly after it is
-  ;; triggered.
-  (setq which-key-idle-delay 10000)
-  (setq which-key-idle-secondary-delay 0.05))
+  ;; Make sure which-key doesn't show automatically, as is default behavior, and
+  ;; refreshes quickly after it is triggered.
+  (setq which-key-idle-delay            10000
+        which-key-idle-secondary-delay  0.05
+        ;; Allow C-? to trigger which-key manually
+        which-key-show-early-on-C-h     t
+        which-key-side-window-max-width 0.5))
 
 (use-package which-key
   :diminish
   :init
   (init/which-key)
   :config
-  (which-key-setup-side-window-right)
-  (which-key-mode)  )
+  (which-key-setup-side-window-right-bottom)
+  (which-key-mode))
 
 ;;; which-key.el ends here

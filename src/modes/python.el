@@ -60,6 +60,10 @@
 (defun init/python-mode/config ()
   "Customise `python-mode'."
 
+  (init/common-nonweb-programming-mode)
+  (pylint-add-menu-items)
+  (pylint-add-key-bindings)
+
   (setq-local fill-column init/defaults/fill-column/narrow)
 
   ;; Undoing replacement of projectile's key bindings when `elpy-mode' enabled.
@@ -67,17 +71,10 @@
     (define-key elpy-mode-map (kbd "C-c C-p") nil)
     (define-key elpy-mode-map (kbd "C-c C-n") nil))
 
-  (py-autopep8-mode)
-
-  ;; Refer to section in commentary entitled RUNNING EGLOT OR LSP CLIENTS if
-  ;; eglot fails to enable.  Note that it fails with
-  (eglot-ensure))
+  (py-autopep8-mode))
 
 (use-package python-mode
-  :hook ((python-mode . init/common-nonweb-programming-mode)
-         (python-mode . pylint-add-menu-items)
-         (python-mode . pylint-add-key-bindings)
-         (python-mode . init/python-mode/config)))
+  :hook ((python-mode . init/python-mode/config)))
 
 (use-package pylint
   :after python-mode)

@@ -1,6 +1,6 @@
-;;; libinit --- Collection of useful defuns for use at initialisation time
+;;; init --- Collection of useful defuns for use at initialisation time
 
-;; Copyright (C) 2017-2018 Miguel Guedes
+;; Copyright (C) 2017-2023 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:
@@ -31,6 +31,4 @@
 The function is only executed when the editor is in an idle state."
   (run-with-idle-timer 1 nil function))
 
-(provide 'libinit)
-
-;;; libinit.el ends here
+;;; init.el ends here

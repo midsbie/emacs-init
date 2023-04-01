@@ -77,8 +77,8 @@ Files are only visited if the server hasn't yet been started.")
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/elpa")
 
 ;; load our common libraries and the `package' feature
-(load (inclusion-path "lib/libcommon"))
-(load (inclusion-path "lib/libinit"))
+(load (inclusion-path "lib/common"))
+(load (inclusion-path "lib/init"))
 (load (inclusion-path "./compat"))
 
 ;; setup and load ELPA packages (and others) first and foremost

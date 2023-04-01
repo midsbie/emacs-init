@@ -1,6 +1,6 @@
-;;; libcommon --- Collection of useful defuns
+;;; common --- Collection of useful defuns
 
-;; Copyright (C) 2014-2019 Miguel Guedes
+;; Copyright (C) 2014-2023 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:
@@ -92,6 +92,4 @@ happens.
   "Add a suffix to a symbol name."
   (intern (concatenate 'string "" (symbol-name sym) suffix)))
 
-(provide 'libcommon)
-
-;;; libcommon.el ends here
+;;; common.el ends here

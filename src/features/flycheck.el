@@ -1,6 +1,6 @@
 ;;; flycheck.el --- Configures the flycheck feature
 
-;; Copyright (C) 2015-2022  Miguel Guedes
+;; Copyright (C) 2015-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -122,6 +122,11 @@
                  (reusable-frames . visible)
                  (window-height   . 0.15))))
 
+(defun init/flycheck/config ()
+  ;; Flymake's configuration turns flycheck-mode off automatically if eglot is
+  ;; found to be running.
+  )
+
 (defun init/flycheck/chain-eslint-checker ()
   "Add javascript-eslint checker.
 
@@ -134,7 +139,8 @@ because the checker does not exist."
 
 (use-package flycheck
   :diminish "Fchk"
-  :hook (lsp-diagnostics-mode . init/flycheck/chain-eslint-checker)
+  :hook ((flycheck-mode . init/flycheck/config)
+         (lsp-diagnostics-mode . init/flycheck/chain-eslint-checker))
 
   ;; Not activating flycheck-popup-tip-mode because error messages frequently
   ;; do not respect boundaries of the window, often making it impossible to

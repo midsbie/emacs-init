@@ -1,6 +1,6 @@
 ;;; flymake.el --- Configures the flymake feature
 
-;; Copyright (C) 2022  Miguel Guedes
+;; Copyright (C) 2022-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -30,21 +30,27 @@
 This function disables `flycheck-mode', if enabled, and
 configures `flymake-eslint' correctly if it finds `eslint' in the
 variable `exec-path'."
-  (when init/prefer-eglot-lsp-client
-    (when flycheck-mode
-      (flycheck-mode -1))
+  (when (and (eglot-managed-p) flycheck-mode)
+    (flycheck-mode -1))
 
-    (flymake-diagnostic-at-point-mode 1)
+  (flymake-diagnostic-at-point-mode 1)
 
-    ;; Requires `init/add-node-modules-to-exec-path' to have been called during
-    ;; mode configuration.  Enabling `flymake-eslint' by directly mutating
-    ;; `flymake-diagnostic-functions' because calling `flymake-eslint-enable'
-    ;; doesn't seem to work.
-    (when (and (boundp 'flymake-eslint-executable-name)
-               (executable-find flymake-eslint-executable-name))
-      (ignore-errors
-        (setq-local flymake-eslint-project-root (project-root (project-current))))
-      (add-hook 'flymake-diagnostic-functions 'flymake-eslint--checker nil t))))
+  ;; This was taken from `flymake-eslint-enable' and may be necessary for the
+  ;; checker to work.  Note that we shouldn't call this function here because
+  ;; it'll lead to a never ending loop (it calls `flymake-mode').
+  (unless flymake-eslint-defer-binary-check
+    (flymake-eslint--ensure-binary-exists))
+  (make-local-variable 'flymake-eslint-project-root)
+
+  ;; Requires `init/add-node-modules-to-exec-path' to have been called during
+  ;; mode configuration.  Enabling `flymake-eslint' by directly mutating
+  ;; `flymake-diagnostic-functions' because calling `flymake-eslint-enable'
+  ;; doesn't seem to work.
+  (when (and (boundp 'flymake-eslint-executable-name)
+             (executable-find flymake-eslint-executable-name))
+    (ignore-errors
+      (setq-local flymake-eslint-project-root (project-root (project-current))))
+    (add-hook 'flymake-diagnostic-functions 'flymake-eslint--checker nil t)))
 
 (use-package flymake-diagnostic-at-point
   :demand

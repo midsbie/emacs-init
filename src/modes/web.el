@@ -92,22 +92,7 @@ when a match occurs with the buffer's file name.")
     (cond ((eq (string-match "^\\(css\\|html\\|less\\)$" ext) 0)
            (when (and (boundp 'flycheck-mode) flycheck-mode)
              (message "warn: flycheck-mode disabled")
-             (flycheck-mode -1)))))
-
-  ;; Deprecated support for Typescript below in case `ts-mode' somehow doesn't
-  ;; work as expected and we need to switch temporarily to `web-mode'.
-  ;;
-  ;; Note too that we're now exclusively using the eglot LSP client for Flow
-  ;; and any other supported source files.
-  (unless (and (boundp 'tide-mode) tide-mode)
-    (cond
-     ((or (flycheck-flow--predicate)
-          (string-equal "tsx" (file-name-extension buffer-file-name)))
-      (if (not init/prefer-eglot-lsp-client)
-          (lsp)
-        (eglot-ensure)
-        (flycheck-mode -1)
-        (flymake-eslint-enable))))))
+             (flycheck-mode -1))))))
 
 (defun init/web/load-local-vars ()
   "Map the value of `c-basic-offset' to `web-mode-code-indent-offset'."

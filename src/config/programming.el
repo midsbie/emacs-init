@@ -92,15 +92,7 @@
 ;; Ref: https://stackoverflow.com/a/3956173
 (c-set-offset 'substatement-open 0)
 
-;; Set environment for compilers to use
-(when (executable-find "clang")
-  (setenv "CC" "clang"))
-(when (executable-find "clang++")
-  (setenv "CXX" "clang++"))
-
 ;; Hooks
-(add-hook 'c-mode-common-hook 'init/common-nonweb-programming-mode)
-(add-hook 'c-mode-common-hook 'init/c-c++)
 (add-hook 'minibuffer-mode-hook 'init/disable-electricity)
 (add-hook 'conf-mode-hook 'init/disable-electric-indent)
 

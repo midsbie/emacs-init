@@ -1,6 +1,6 @@
 ;;; c++.el --- Configures `c++-mode'
 
-;; Copyright (C) 2015-2020  Miguel Guedes
+;; Copyright (C) 2015-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,12 +24,32 @@
 
 ;;; Code:
 
-(defun init/c++ ()
-  "Initialise modes related to C++ development."
-  (setq comment-start "/* "
-        comment-end   " */"))
+(defun init/c-c++/config ()
+  "Initialise modes related to C and C++ development."
+
+  (init/common-nonweb-programming-mode)
+  (local-set-key "\C-co" 'buftoggle)
+
+  (c-toggle-auto-hungry-state 1)
+  (c-toggle-auto-state -1)
+
+  (setq-local comment-start "/* ")
+  (setq-local comment-end   " */"))
 
 (use-package cc-mode
-  :hook (c++-mode . init/c++))
+  :mode (("\\.c\\'" . c-mode)
+         ("\\.h\\'" . c-mode)
+         ("\\.cpp\\'" . c++-mode)
+         ("\\.hpp\\'" . c++-mode))
+
+  :hook ((c-mode . init/c-c++/config)
+         (c++-mode . init/c-c++-/config))
+
+  :init
+  ;; Set environment for compilers to use
+  (when (executable-find "clang")
+    (setenv "CC" "clang"))
+  (when (executable-find "clang++")
+    (setenv "CXX" "clang++")))
 
 ;;; c++.el ends here

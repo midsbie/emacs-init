@@ -59,11 +59,7 @@ configured correctly for monorepositories."
   (local-set-key (kbd "M-e") 'c-end-of-statement)
 
   ;; (init/typescript/config/tide)
-  (if (not init/prefer-eglot-lsp-client)
-      (lsp)
-    (eglot-ensure)
-    (flycheck-mode -1)
-    (flymake-eslint-enable)))
+  )
 
 (defun init/typescript/config/tide ()
   "Enable TIDE in Typescript buffer."
@@ -82,7 +78,6 @@ configured correctly for monorepositories."
 (use-package typescript-mode
   :diminish "TS"
   :mode ("\\.ts\\'")
-
   :hook ((typescript-mode . init/typescript/config/ts-tsx))
 
   :config

@@ -157,6 +157,15 @@ when a match occurs with the buffer's file name.")
              (setq web-mode-content-type "jsx")))))
   )
 
+(defun is-web-programming-mode-p ()
+  (or (eq major-mode 'js-mode)
+            (eq major-mode 'typescript-mode)
+            (and
+             (eq major-mode 'web-mode)
+             (or
+              (string= web-mode-content-type "js")
+              (string= web-mode-content-type "jsx")))))
+
 (use-package web-mode
   ;; Do not specify the "jsx" extension here as that is handled in the js.el
   ;; module.

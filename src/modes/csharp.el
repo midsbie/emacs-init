@@ -43,9 +43,7 @@
   ;; Enable the following if flycheck should only check the buffer on load and
   ;; save.
   ;; (setq-local flycheck-check-syntax-automatically '(mode-enabled save))
-
-  ;; Enable LSP
-  (lsp-deferred))
+  )
 
 (use-package csharp-mode
   :mode ("\\.cs\\'")

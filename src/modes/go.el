@@ -55,17 +55,7 @@
 
   ;; Mode-specific settings
   (setq-local tab-width 8)
-  (setq-local fill-column 80)
-
-  (if (not init/prefer-eglot-lsp-client)
-      (lsp)
-
-    ;; The following defun does not seem to be defined for some reason.
-    ;; (add-hook 'before-save-hook #'gofmt-before-save nill t)
-    ;;
-    ;; Defaulting to eglot's server for the same effect:
-    (add-hook 'before-save-hook 'eglot-format-buffer nil t)
-    (eglot-ensure)))
+  (setq-local fill-column 80))
 
 (use-package go-mode
   :mode ("\\.go\\'")

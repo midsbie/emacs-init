@@ -69,26 +69,7 @@
   (setq-local comment-end   " */")
   (setq-local fill-column init/defaults/fill-column)
 
-  (init/common-web-programming-mode)
-
-  ;; Was activating flow minor mode previously:
-  ;;
-  ;;   (when (flycheck-flow--predicate)
-  ;;     (flow-minor-mode 1))
-  ;;
-  ;; Then support transitioned to LSP for Flow source files and to eglot for all
-  ;; other source files:
-  ;;
-  ;;   (cond
-  ;;    ((flycheck-flow--predicate)
-  ;;     (lsp-deferred))
-  ;;    (t
-  ;;     (eglot-ensure)))
-  ;;
-  ;; Now exclusively using eglot.
-  (if (not init/prefer-eglot-lsp-client)
-      (lsp)
-    (eglot-ensure)))
+  (init/common-web-programming-mode))
 
 (defun init/js-mode/toggle-mode ()
   "Switch to `web-mode'."

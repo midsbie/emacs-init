@@ -123,6 +123,9 @@
   (add-hook 'before-save-hook 'delete-trailing-whitespace nil t) ; local hook
   (setq-local show-trailing-whitespace t))
 
+  ;; Attempt to run the language server for the active programming mode
+  (init/run-language-server))
+
 (defun init/common-nonweb-programming-mode ()
   "Perform initialisation of aspects common to all programming-related modes."
   (auto-fill-mode)                  ; auto fill
@@ -224,5 +227,28 @@ in the buffer's directory tree."
     (when (and binp (file-directory-p binp))
       (make-local-variable 'exec-path)
       (add-to-list 'exec-path binp))))
+
+
+(defun init/run-language-server ()
+  ;; The following comments in modes/js.el kept for posteriority.
+  ;; ---
+  ;; Was activating flow minor mode previously:
+  ;;
+  ;;   (when (flycheck-flow--predicate)
+  ;;     (flow-minor-mode 1))
+  ;;
+  ;; Then support transitioned to LSP for Flow source files and to eglot for all
+  ;; other source files:
+  ;;
+  ;;   (cond
+  ;;    ((flycheck-flow--predicate)
+  ;;     (lsp-deferred))
+  ;;    (t
+  ;;     (eglot-ensure)))
+  ;;
+  ;; Now exclusively using eglot.
+  (if (not init/prefer-eglot-lsp-client)
+      (lsp)
+    (eglot-ensure)))
 
 ;;; programming.el ends here

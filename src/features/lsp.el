@@ -150,11 +150,12 @@ to degrade under LSP")
   (setq lsp-completion-show-kind t))
 
 (defun init/lsp/config ()
-  (when lsp-mode
-    ;; This is bugging out for some reason, causing the annotations to: not
-    ;; update timely and become misaligned; be captured by text selection; other
-    ;; oddities.  Shouldn't be enabled but forcefully disabling it anyway.
-    (lsp-lens-mode -1))
+  (lsp-enable-which-key-integration)
+
+  ;; This is bugging out for some reason, causing the annotations to: not
+  ;; update timely and become misaligned; be captured by text selection; other
+  ;; oddities.  Shouldn't be enabled but forcefully disabling it anyway.
+  (lsp-lens-mode -1)
 
   ;; This can't be in the initializing defun above or it'll error out.
   ;; Ref: https://github.com/emacs-lsp/lsp-mode/issues/1532#issuecomment-602384182
@@ -180,8 +181,7 @@ be used when debugging `lsp'."
 ;; against.  The form in use calls for `lsp-deferred' to be invoked in the
 ;; major mode configuration module; e.g. typescript.el, csharp.el.
 (use-package lsp-mode
-  :hook ((lsp-mode . lsp-enable-which-key-integration)
-         (lsp-mode . init/lsp/config))
+  :hook ((lsp-mode . init/lsp/config))
   :init (init/lsp)
   :config
   ;; Fix for error: json-parse-error \u0000 is not allowed without JSON_ALLOW_NUL

@@ -119,9 +119,13 @@
   (local-set-key (kbd "C-x {") 'backward-list)
   (local-set-key (kbd "C-x }") 'forward-list)
 
+  (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting
+  (abbrev-mode -1)                  ; turn abbrev-mode off
+  (subword-mode 1)
+
   ;; Delete all trailing whitespace before saving
   (add-hook 'before-save-hook 'delete-trailing-whitespace nil t) ; local hook
-  (setq-local show-trailing-whitespace t))
+  (setq-local show-trailing-whitespace t)
 
   ;; Attempt to run the language server for the active programming mode
   (init/run-language-server))
@@ -134,10 +138,6 @@
 ;;(ac-flyspell-workaround)          ; this defun must be executed to prevent
                                     ; flyspell from messing with
                                     ; auto-complete-mode
-
-  (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting
-  (abbrev-mode -1)                  ; turn abbrev-mode off
-  (subword-mode 1)
 
   ;; `c-auto-newline' was previously disabled and done so for a reason. Have
   ;; just tested it and seemed fine whilst editing a C source file but may not
@@ -157,12 +157,10 @@
 (defun init/common-web-programming-mode ()
   "Initialise modes related to web development."
 
-  (auto-fill-mode -1)
-  (highlight-parentheses-mode)
-  (subword-mode 1)
+  (auto-fill-mode -1)                   ; unclear why this is enabled in common
+                                        ; non-web
 
   (setq-local fill-column init/defaults/fill-column)
-
   (setq-local tab-width   2)
   (setq-local c-basic-offset  2)
 

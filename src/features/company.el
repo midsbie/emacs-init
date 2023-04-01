@@ -70,8 +70,10 @@ Filter backends from `company-backends' that are specified in
   ;; Remove backends specified in `init/company/disabled-backends'
   (setq company-backends (init/company/filter-backends company-backends))
 
+  ;; Unclear if there is any value to having this.  Disabled for now as it may
+  ;; be implicated in hover-on-symbol not displaying documentation via eldoc.
   ;;
-  (add-hook 'company-completion-started-hook 'my/company/clear-flycheck-errors)
+  ;; (add-hook 'company-completion-started-hook 'my/company/clear-flycheck-errors)
   (define-key company-mode-map (kbd "<C-return>") 'company-complete))
 
 (defun my/company/clear-flycheck-errors (manual)
@@ -81,7 +83,8 @@ Filter backends from `company-backends' that are specified in
   (setq init/company/clear-flycheck-errors-timer
         (run-with-idle-timer init/company/clear-flycheck-errors-delay
                              nil #'(lambda ()
-                                     (flycheck-clear)))))
+                                     (when flycheck-mode
+                                       (flycheck-clear))))))
 
 (defun smarter-yas-expand-next-field-complete ()
   "Try to `yas-expand' and `yas-next-field' at current cursor position.

@@ -153,12 +153,6 @@
 ; (doxymacs-mode)                    ; turn doxymacs on
   (init/common-programming-mode))
 
-(defun init/c-c++()
-  "Initialise modes related to C and C++ development."
-  (local-set-key "\C-co" 'buftoggle)
-
-  (c-toggle-auto-hungry-state 1)
-  (c-toggle-auto-state -1))
 
 (defun init/common-web-programming-mode ()
   "Initialise modes related to web development."

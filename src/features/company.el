@@ -1,6 +1,6 @@
 ;;; company.el --- Configures `company-mode' and related packages
 
-;; Copyright (C) 2017-2022  Miguel Guedes
+;; Copyright (C) 2017-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -21,6 +21,15 @@
 ;;; Commentary:
 
 ;;
+
+;;; Log:
+
+;; 010423 The `company-statistics-mode' had been disabled as it was believed to
+;;        be involved in significant performance degradation experienced in
+;;        specific circumstances where the number of candidates was particularly
+;;        high.  It has now been re-enabled since performance issues are
+;;        believed to be mode-specific, in which case these should be considered
+;;        extraordinary exceptions.
 
 ;;; Code:
 
@@ -51,6 +60,7 @@ Filter backends from `company-backends' that are specified in
 (defun init/company/config ()
   "Configure `company'."
   (global-company-mode 1)
+  (company-statistics-mode)
 
   ;; Add clang backend to disabled company backends unless the clang binary is
   ;; installed on the system.
@@ -60,11 +70,7 @@ Filter backends from `company-backends' that are specified in
   ;; Remove backends specified in `init/company/disabled-backends'
   (setq company-backends (init/company/filter-backends company-backends))
 
-  ;; The following disabled as it is believed to be involved in significant
-  ;; performance degradation experienced in specific circumstances where the
-  ;; number of candidates is particularly high.
   ;;
-  ;; (company-statistics-mode)
   (add-hook 'company-completion-started-hook 'my/company/clear-flycheck-errors)
   (define-key company-mode-map (kbd "<C-return>") 'company-complete))
 

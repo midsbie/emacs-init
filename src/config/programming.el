@@ -182,9 +182,10 @@
   ;; when looking for a repository's root "node_modules" directory.
   ;;
   ;; (add-node-modules-path)
-
   (init/add-node-modules-to-exec-path)
+
   (init/common-programming-mode)
+  (add-hook 'after-save-hook #'init/run-eslint-autofix-if-applicable nil t)
 
   ;; For some reason preemptively setting the fill column above is now not
   ;; taking hold in the following modes: `tide-mode', `js-mode'.
@@ -220,6 +221,25 @@ in the buffer's directory tree."
       (make-local-variable 'exec-path)
       (add-to-list 'exec-path binp))))
 
+(defun init/run-eslint-autofix-if-applicable ()
+  (when (is-web-programming-mode-p)
+    (init/run-eslint-autofix)))
+
+(defun init/run-eslint-autofix ()
+  "Apply eslint auto-fixes after buffer save.
+
+This function applies eslint's auto-fixes automatically to a
+buffer after it has been saved.  The main motivating factor here
+is to make organization of imports as per the repository's
+settings to be less of a pain point.
+
+It is unclear whether there will be performance issues from
+running the eslint tool in blocking mode."
+  (interactive)
+  (when-let ((project (project-current)))
+    (let* ((root (expand-file-name (car (project-roots project)))))
+      (shell-command-to-string (format "%s/node_modules/.bin/eslint --fix %s" root buffer-file-name))
+      (revert-buffer t t t))))
 
 (defun init/run-language-server ()
   ;; The following comments in modes/js.el kept for posteriority.

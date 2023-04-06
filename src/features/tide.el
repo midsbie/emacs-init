@@ -1,6 +1,6 @@
 ;;; tide.el --- Configures TIDE
 
-;; Copyright (C) 2021  Miguel Guedes
+;; Copyright (C) 2021-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -25,10 +25,14 @@
 ;;; Code:
 
 (defun init/tide ()
-  "Initialise the TIDE package."
+  "Initialise the TIDE package.")
+
+(defun init/tide/config ()
+  "Configure the TIDE mode."
   ;; For some reason, 'company-tide is either not being added to the list of
   ;; company backends or it is somehow being removed, perhaps by `lsp-mode'.
   ;; It is explicitly added here to ensure that completions work in TIDE.
+  (make-local-variable 'company-backends)
   (cl-pushnew 'company-tide company-backends))
 
 (use-package tide
@@ -43,6 +47,7 @@
                ("C-c t m" . tide-rename-symbol)
                ("C-c t M" . tide-rename-file)
                ("C-c t r" . tide-refactor)))
+  :hook (tide-mode . init/tide/config)
   :custom
   (tide-server-max-response-length 1024000) ; x10 the default value
   :init (init/tide))

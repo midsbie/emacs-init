@@ -1,6 +1,6 @@
 ;;; programming.el --- Programming-related configuration
 
-;; Copyright (C) 2015-2022  Miguel Guedes
+;; Copyright (C) 2015-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -119,6 +119,9 @@
   (local-set-key (kbd "C-x {") 'backward-list)
   (local-set-key (kbd "C-x }") 'forward-list)
 
+  ;; Configure compile
+  (local-set-key (kbd "C-c C-c") 'compile)
+
   (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting
   (abbrev-mode -1)                  ; turn abbrev-mode off
   (subword-mode 1)
@@ -193,7 +196,10 @@
   ;; Leave this statement at the end of this defun or it may not run.
   (setq-local fill-column init/defaults/fill-column)
   (run-with-idle-timer .1 nil #'(lambda ()
-                                  (setq-local fill-column init/defaults/fill-column))))
+                                  (setq-local fill-column init/defaults/fill-column)))
+
+  ;; Provide default command for `compile'
+  (setq-local compile-command "yarn run test"))
 
 (defun init/find-node-modules ()
   "Find path to node_modules directory.

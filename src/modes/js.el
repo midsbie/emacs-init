@@ -46,10 +46,7 @@
 ;;; Code:
 
 (defun init/js-mode()
-  "Initialise `js-mode'."
-  ;; Supporting flow through `flow-minor-mode', although it is currently not in
-  ;; use.
-  (cl-pushnew 'company-flow company-backends))
+  "Initialise `js-mode'.")
 
 (defun init/js-mode/config/determine-js-mode ()
   (if (flycheck-flow--predicate)
@@ -69,7 +66,12 @@
   (setq-local comment-end   " */")
   (setq-local fill-column init/defaults/fill-column)
 
-  (init/common-web-programming-mode))
+  (init/common-web-programming-mode)
+
+  ;; Supporting flow through `flow-minor-mode', although it is currently not in
+  ;; use.
+  (make-local-variable 'company-backends)
+  (cl-pushnew 'company-flow company-backends)  )
 
 (defun init/js-mode/toggle-mode ()
   "Switch to `web-mode'."

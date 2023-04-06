@@ -67,6 +67,14 @@ Filter backends from `company-backends' that are specified in
   (unless clangd-p
     (add-to-list 'init/company/disabled-backends 'company-clang))
 
+  ;; Set up additional backends.
+  ;;
+  ;; `company-yasnippet' must be added carefully so as to not come before
+  ;; `company-capf' (completion-at-point) or it will prevent LSP's own
+  ;; completion at point functionality from working at all.  Currently disabled.
+  ;;
+  ;; (cl-pushnew 'company-yasnippet company-backends)
+
   ;; Remove backends specified in `init/company/disabled-backends'
   (setq company-backends (init/company/filter-backends company-backends))
 

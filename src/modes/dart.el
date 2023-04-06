@@ -1,6 +1,6 @@
 ;;; dart.el --- Configures `dart-mode'
 
-;; Copyright (C) 2022  Miguel Guedes
+;; Copyright (C) 2022-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -91,8 +91,13 @@
   ;; microstuttering seems to have reduced.
   (setq-local company-minimum-prefix-length 2)
 
-  (setq-local company-backends
-              '(company-capf company-dabbrev company-dabbrev-code))
+  (make-local-variable 'company-backends)
+  ;; We were previously forcefully setting `company-backends' to a fixed list,
+  ;; which overrode some useful default backends.  Unfortunately the reason for
+  ;; this hadn't been documented but it is believed that company-files may have
+  ;; been at fault. Following statement is commented out as I'm not sure.
+  ;;
+  ;; (cl-remove 'company-files company-backends)
 
   ;; Support for hot-reloading whenever a Dart/Flutter source file is saved.
   ;; This requires flutter to be run in debug mode, with hot-reloading enabled

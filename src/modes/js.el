@@ -45,48 +45,14 @@
 
 ;;; Code:
 
-(defun init/js-mode()
-  "Initialise `js-mode'.")
-
-(defun init/js-mode/config/determine-js-mode ()
-  (if (flycheck-flow--predicate)
-      (web-mode)
-    (js-mode)))
-
-(defun init/js-mode/config/determine-jsx-mode ()
-  (if (flycheck-flow--predicate)
-      (web-mode)
-    (js-jsx-mode)))
-
 (defun init/js-mode/config ()
   "Initialise modes related to Javascript development."
-
-  ;; FIXME: this does not seem to have any effect in JSX mode:
-  (setq-local comment-start "/* ")
-  (setq-local comment-end   " */")
-  (setq-local fill-column init/defaults/fill-column)
-
-  (init/common-web-programming-mode)
-
-  ;; Supporting flow through `flow-minor-mode', although it is currently not in
-  ;; use.
-  (make-local-variable 'company-backends)
-  (cl-pushnew 'company-flow company-backends)  )
-
-(defun init/js-mode/toggle-mode ()
-  "Switch to `web-mode'."
-  (interactive)
-  (web-mode))
+  (init/common-web-programming-mode))
 
 (use-package js
   :after (company flycheck)
   :diminish "JS"
-  :mode (("\\.js\\'" . init/js-mode/config/determine-js-mode)
-         ("\\.jsx\\'" . init/js-mode/config/determine-jsx-mode))
-  :hook (((js-mode js-jsx-mode) . init/js-mode/config))
-  :bind (:map js-mode-map
-              ("C-c C-c" . init/js-mode/toggle-mode))
-  :init
-  (init/js-mode))
+  :mode (("\\.jsx?\\'" . js-ts-mode))
+  :hook (((js-ts-mode js-mode js-jsx-mode) . init/js-mode/config)))
 
 ;;; js.el ends here

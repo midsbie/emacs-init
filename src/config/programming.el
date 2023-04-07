@@ -206,8 +206,10 @@
   (run-with-idle-timer .1 nil #'(lambda ()
                                   (setq-local fill-column init/defaults/fill-column)))
 
-  ;; Provide default command for `compile'
-  (setq-local compile-command "yarn run test"))
+  ;; Provide default command for `compile' that should apply to all web-related
+  ;; major modes.
+  (when (or (not compile-command) (string= compile-command "make -k "))
+    (setq-local compile-command "yarn run test")))
 
 (defun init/find-node-modules ()
   "Find path to node_modules directory.

@@ -153,6 +153,7 @@
 (transient-mark-mode t)                 ; typing replaces selected text
 (global-so-long-mode t)                 ; better handling of long files
 (size-indication-mode t)                ; size indication mode
+(global-prettify-symbols-mode)          ; (lambda ... -> (λ ...
 
 (menu-bar-mode -1)                      ; disable menu bar
 (tool-bar-mode -1)                      ; disable toolbar

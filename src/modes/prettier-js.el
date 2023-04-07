@@ -1,6 +1,6 @@
 ;;; prettier-js.el --- Configures the prettier-js minor mode
 
-;; Copyright (C) 2017-2018  Miguel Guedes
+;; Copyright (C) 2017-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -64,7 +64,7 @@ The one exception to this rule is when the file is inside a
       (prettier-mode 1)))
 
 (use-package prettier
-  :diminish "Pr"
+  :diminish "🧹"
   :init
   ;; Resolve transient hang when saving files.
   ;; Ref: https://github.com/jscheid/prettier.el/issues/34#issuecomment-657508597
@@ -75,6 +75,8 @@ The one exception to this rule is when the file is inside a
           ;; Actively used modes
           html-mode css-mode scss-mode js-mode js-jsx-mode typescript-mode
                     web-mode
+                    ;; Tree-sitter modes
+                    css-ts-mode typescript-ts-mode js-ts-mode
                     ;; Deprecated modes
                     js2-mode)
          . enable-prettier-mode-maybe))

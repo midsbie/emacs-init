@@ -19,6 +19,8 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+;; 070423 elpy and python-mode packages removed in favor of the native python
+;;        and tree-sitter packages.
 ;;
 ;; ## INSTALLATION
 ;; ### LINTERS
@@ -73,19 +75,12 @@
 
   (py-autopep8-mode))
 
-(use-package python-mode
-  :hook ((python-mode . init/python-mode/config)))
+(use-package python
+  :mode (("\\.py\\'" . python-ts-mode))
+  :hook ((python-ts-mode . init/python-mode/config)))
 
 (use-package pylint
   :after python-mode)
-
-;; Currently disabled; refer to commentary for reason why.
-(use-package elpy
-  :after python-mode
-  :ensure t
-  :defer t
-  :init
-  (advice-add 'python-mode :before 'elpy-enable))
 
 
 ;;; python.el ends here

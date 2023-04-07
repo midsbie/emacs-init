@@ -1,6 +1,6 @@
 ;;; yasnippet.el --- Configures the yasnippet feature
 
-;; Copyright (C) 2015-2021  Miguel Guedes
+;; Copyright (C) 2015-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools, internal
@@ -38,6 +38,7 @@ Assumes currently open file is a C++ implementation source file."
   (get-kill-ring-word default-label))
 
 (defun init/yasnippet()
+  "Initialize yasnippet."
   (define-key yas-minor-mode-map (kbd "C-x y") 'yas/visit-snippet-file)
 
   ;; Strangely, just redefining one of the variations below won't work.
@@ -47,11 +48,15 @@ Assumes currently open file is a C++ implementation source file."
 
   (yas/global-mode 1))
 
+(defun init/yasnippet/config ()
+  "Configure yasnippet minor mode."
+  (diminish 'yas-minor-mode "✀"))
+
 (use-package yasnippet
-  :diminish
   :bind (("<S-tab>" . yas-expand)
          ;; Required for `dart-mode' since the backtab binding is replaced
          ("<C-tab>" . yas-expand))
+  :hook ((yasnippet-minor-mode . init/yasnippet/config))
   :config (init/yasnippet))
 
 ;;; yasnippet.el ends here

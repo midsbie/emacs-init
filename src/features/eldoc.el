@@ -1,6 +1,6 @@
 ;;; eldoc.el --- Customises eldoc
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -30,7 +30,7 @@
                       :weight 'bold))
 
 (use-package eldoc
-  :diminish "Doc"
+  :diminish "📚"
   :config (init/eldoc))
 
 ;;; eldoc.el ends here

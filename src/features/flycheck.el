@@ -138,7 +138,7 @@ because the checker does not exist."
     (flycheck-add-next-checker 'lsp 'javascript-eslint)))
 
 (use-package flycheck
-  :diminish "Fchk"
+  :diminish "🐞"
   :hook ((flycheck-mode . init/flycheck/config)
          (lsp-diagnostics-mode . init/flycheck/chain-eslint-checker))
 

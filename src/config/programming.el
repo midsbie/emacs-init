@@ -134,7 +134,8 @@
   (add-hook 'before-save-hook 'delete-trailing-whitespace nil t) ; local hook
   (setq-local show-trailing-whitespace t)
 
-  ;; Attempt to run the language server for the active programming mode
+  ;; Attempt to run the language server for the active programming mode and
+  ;; enable tree-sitter.
   (init/run-language-server))
 
 (defun init/common-nonweb-programming-mode ()
@@ -150,14 +151,14 @@
   ;; just tested it and seemed fine whilst editing a C source file but may not
   ;; work well on all major modes. If that's the case then it needs activation
   ;; on a per major-mode basis. However, if it needs to be disabled altogether,
-  ;; please explain why for future reference.
+  ;; make sure to document reason for future reference.
   ;;
   ;; Update: disabled because it turns out to be too intrusive when editing
   ;; code.  It (mostly) works fine when writing new code though.
   (setq c-auto-newline nil)
 
   ;; The following disabled:
-; (doxymacs-mode)                    ; turn doxymacs on
+  ;; (doxymacs-mode)                    ; turn doxymacs on
   (init/common-programming-mode))
 
 
@@ -270,7 +271,11 @@ running the eslint tool in blocking mode."
   ;;
   ;; Now exclusively using eglot.
   (if (not init/prefer-eglot-lsp-client)
-      (lsp)
+      (cl-case major-mode
+        ('emacs-lisp-mode
+         nil)
+        (t
+         (lsp-deferred)))
     (eglot-ensure)))
 
 ;;; programming.el ends here

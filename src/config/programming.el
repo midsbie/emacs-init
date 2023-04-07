@@ -119,6 +119,10 @@
   (local-set-key (kbd "C-x {") 'backward-list)
   (local-set-key (kbd "C-x }") 'forward-list)
 
+  ;; These currently error out in Javascript and Typescript modes
+  ;;   (local-set-key (kbd "M-a") 'c-beginning-of-statement-1)
+  ;;   (local-set-key (kbd "M-e") 'c-end-of-statement)
+
   ;; Configure compile
   (local-set-key (kbd "C-c C-c") 'compile)
 

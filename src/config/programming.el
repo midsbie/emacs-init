@@ -87,6 +87,10 @@
               indent-tabs-mode   nil
               js-indent-level    2)
 
+;; Tree-sitter
+;; - Apply all available syntax highlighting
+(setq-default treesit-font-lock-level 4)
+
 ;; Set the extra indentation before a substatement (e.g. the opening brace in
 ;; the consequent block of an if statement) to 0 (instead of '+)
 ;; Ref: https://stackoverflow.com/a/3956173

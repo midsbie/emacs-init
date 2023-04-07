@@ -23,6 +23,10 @@
 
 ;;; Log:
 ;;
+;; 070423 Now using tree-sitter with JSX syntax highlighting provided by the
+;;        `tsx-ts-mode'.  The default LSP flow activation function is overriden
+;;        to make sure it works with tsx-ts-mode.
+;;
 ;; 260323 Reverted to using `lsp' as an experiment to solve weird performance
 ;;        issues under eglot.
 ;;
@@ -45,14 +49,33 @@
 
 ;;; Code:
 
+(defun init/js/lsp-clients-flow-activate-p (file-name _mode)
+  "Check if the Flow language server should be enabled for a
+particular FILE-NAME and MODE."
+  (and (derived-mode-p 'js-mode 'web-mode 'js2-mode 'flow-js2-mode 'rjsx-mode
+                       'js-ts-mode 'tsx-ts-mode)
+       (not (derived-mode-p 'json-mode))
+       (or (lsp-clients-flow-project-p file-name)
+           (lsp-clients-flow-tag-file-present-p file-name))))
+
+(defun init/determine-js-mode ()
+  (if (flycheck-flow--predicate)
+        (tsx-ts-mode)
+    (js-ts-mode)))
+
 (defun init/js-mode/config ()
   "Initialise modes related to Javascript development."
   (init/common-web-programming-mode))
 
+(use-package lsp
+  :config
+    (advice-add 'lsp-clients-flow-activate-p
+                :override #'init/js/lsp-clients-flow-activate-p))
+
 (use-package js
   :after (company flycheck)
   :diminish "JS"
-  :mode (("\\.jsx?\\'" . js-ts-mode))
+  :mode (("\\.jsx?\\'" . init/determine-js-mode))
   :hook (((js-ts-mode js-mode js-jsx-mode) . init/js-mode/config)))
 
 ;;; js.el ends here

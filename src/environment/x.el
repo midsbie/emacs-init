@@ -72,8 +72,7 @@ characters wide."
   (global-hl-line-mode 1)
 
   ;; Enable clipboard functionality
-  (setq select-enable-clipboard     t
-        interprogram-paste-function 'x-cut-buffer-or-selection-value)
+  (setq select-enable-clipboard     t)
 
   ;; Dynamically setting active project name.
   ;; From: https://emacs.stackexchange.com/a/35443

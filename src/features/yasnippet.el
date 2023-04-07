@@ -53,8 +53,9 @@ Assumes currently open file is a C++ implementation source file."
   (diminish 'yas-minor-mode "✀"))
 
 (use-package yasnippet
-  :bind (("<S-tab>" . yas-expand)
-         ;; Required for `dart-mode' since the backtab binding is replaced
+  :bind (
+         ;; Careful if changing in future as backtab binding is replaced in
+         ;; `dart-mode'.
          ("<C-tab>" . yas-expand))
   :hook ((yasnippet-minor-mode . init/yasnippet/config))
   :config (init/yasnippet))

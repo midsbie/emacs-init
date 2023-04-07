@@ -52,39 +52,21 @@ configured correctly for monorepositories."
 
 (defun init/typescript/config/ts-tsx ()
   "Configure buffer for Typescript development."
-  (init/common-web-programming-mode)
-  (setq-local typescript-indent-level 2)
+  (init/common-web-programming-mode))
 
-  (local-set-key (kbd "M-a") 'c-beginning-of-statement)
-  (local-set-key (kbd "M-e") 'c-end-of-statement)
-
-  ;; (init/typescript/config/tide)
-  )
-
-(defun init/typescript/config/tide ()
-  "Enable TIDE in Typescript buffer."
-  (interactive)
-  (tide-setup)
-
-  (setq-local flycheck-check-syntax-automatically '(save idle-change mode-enabled))
-  (setq-local company-tooltip-align-annotations t)
-
-  (flycheck-add-next-checker 'tsx-tide 'javascript-eslint)
-  (flycheck-add-next-checker 'typescript-tide 'javascript-eslint)
-
-  (eldoc-mode 1)
-  (tide-hl-identifier-mode 1))
-
-(use-package typescript-mode
+(use-package typescript-ts-mode
   :diminish "TS"
-  :mode ("\\.ts\\'")
-  :hook ((typescript-mode . init/typescript/config/ts-tsx))
+  :mode (("\\.ts\\'" . typescript-ts-mode)
+         ("\\.tsx\\'" . tsx-ts-mode))
+  :hook ((typescript-ts-mode . init/typescript/config/ts-tsx)
+         (tsx-ts-mode . init/typescript/config/ts-tsx))
 
   :config
-  ;; This is required to ensure Eglot is configured correctly for monorepository
-  ;; projects.
-  (add-hook 'project-find-functions
-            'init/typescript/try-tsconfig-json nil nil)
+  (when init/prefer-eglot-lsp-client
+    ;; This is required to ensure Eglot is configured correctly for monorepository
+    ;; projects.
+    (add-hook 'project-find-functions
+              'init/typescript/try-tsconfig-json nil nil))
   )
 
 ;;; typescript.el ends here

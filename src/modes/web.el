@@ -154,7 +154,7 @@ when a match occurs with the buffer's file name.")
 (use-package web-mode
   ;; Do not specify the "jsx" extension here as that is handled in the js.el
   ;; module.
-  :mode ("\\.html?\\'" "\\.tsx\\'")
+  :mode ("\\.html?\\'")
 
   :bind (:map web-mode-map
               ("C-c C-c" . init/web-mode/toggle-js-mode))

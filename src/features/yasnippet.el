@@ -46,10 +46,11 @@ Assumes currently open file is a C++ implementation source file."
   (define-key yas-minor-mode-map (kbd "TAB")   nil)
   (define-key yas-minor-mode-map (kbd "<tab>") nil)
 
-  (yas/global-mode 1))
-
-(defun init/yasnippet/config ()
-  "Configure yasnippet minor mode."
+  (yas/global-mode 1)
+  ;; Note that the form below did not work to change the modeline string of
+  ;; Yasnippet's minor mode; init/yasnippet/config would then call diminish.
+  ;;
+  ;; :hook ((yasnippet-minor-mode . init/yasnippet/config))
   (diminish 'yas-minor-mode "✀"))
 
 (use-package yasnippet
@@ -57,7 +58,6 @@ Assumes currently open file is a C++ implementation source file."
          ;; Careful if changing in future as backtab binding is replaced in
          ;; `dart-mode'.
          ("<C-tab>" . yas-expand))
-  :hook ((yasnippet-minor-mode . init/yasnippet/config))
   :config (init/yasnippet))
 
 ;;; yasnippet.el ends here

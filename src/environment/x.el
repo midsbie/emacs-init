@@ -136,10 +136,8 @@ characters wide."
 
   (let* ((width (cdr (assoc 'width default-frame-alist)))
          (height (cdr (assoc 'height default-frame-alist))))
-    (when width
-      (set-current-frame-width width))
-    (when height
-      (set-current-frame-width height)))
+    (and width (set-current-frame-width width))
+    (and height (set-current-frame-width height)))
 
   ;; Re-balance windows now that the frame's size has been calculated
   (balance-windows)

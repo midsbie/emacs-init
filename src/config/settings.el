@@ -1,6 +1,6 @@
 ;;; settings.el --- Configures settings of emacs' internal features
 
-;; Copyright (C) 2015-2022  Miguel Guedes
+;; Copyright (C) 2015-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -32,12 +32,14 @@
 ;; start or work as expected.
 (setenv "FrameworkPathOverride" "/lib/mono/4.5")
 
+;; GENERAL CONFIGURATION
+;; -----------------------------------------------------------------------------
 ;; Emacs initialization
 (setq inhibit-splash-screen   t         ; Disable splash screen
       initial-scratch-message nil       ; Disable startup message
       )
 
-;; General settings
+;; Assorted settings
 (setq-default
  enable-recursive-minibuffers t         ; allow recursive editing in minibuffer
  help-window-select           'other    ; focus on help window when spawning
@@ -61,30 +63,28 @@
       )
 
 ;; Column
-(setq-default
- column-number-mode           t
- fill-column                  init/defaults/fill-column)
+(setq-default column-number-mode    t
+              fill-column           init/defaults/fill-column)
 
 ;; Indentation
-(setq-default indent-tabs-mode nil
-              standard-indent  2
-              tab-width        2)
+(setq-default indent-tabs-mode      nil
+              standard-indent       2
+              tab-width             2)
 
 ;; Coding-related
-(setq-default
-  comment-multi-line           t
-  comment-style                'multi
-  diff-switches                '-u      ; set diff to use unified format
-  vc-follow-symlinks t                  ; follow symlinks instead of prompting
+(setq-default comment-multi-line    t
+  comment-style                     'multi
+  diff-switches                     '-u ; set diff to use unified format
+  vc-follow-symlinks                t   ; follow symlinks instead of prompting
   )
 
 ;; Backups
-(setq backup-directory-alist  `(("." . "~/.emacs.d/backups"))
-      backup-by-copying       t         ; place backup files in `backups`
-      create-lockfiles        nil       ; do not create lock files
-      delete-old-versions     t
-      kept-new-versions       20
-      kept-old-versions       5
+(setq backup-directory-alist        `(("." . "~/.emacs.d/backups"))
+      backup-by-copying             t   ; place backup files in `backups`
+      create-lockfiles              nil ; do not create lock files
+      delete-old-versions           t
+      kept-new-versions             20
+      kept-old-versions             5
       version-control t                 ; use version numbers on backups
       )
 
@@ -100,47 +100,6 @@
                                  "*mail*"
                                  "*unsent mail*"
                                  "*info*"))
-
-;; Some settings that may help with redisplay
-;; Ref: [4:25] https://200ok.ch/posts/2020-10-01_introduction_to_profiling_in_emacs.html
-(setq bidi-paragraph-direction  'left-to-right
-      bidi-inhibit-bpa          nil)
-
-;; The following settings as per the documentation on improving the performance
-;; of LSP at:
-;; https://emacs-lsp.github.io/lsp-mode/page/performance/
-;;
-;; Set higher threshold before GC kicks in. Changing this setting seems to make
-;; emacs snappier for some specific workflows.
-;;
-;; It may be wise to set the GC threshold to a reasonable value or we may end up
-;; hindering performance.  Might be best to have more frequent clean ups taking
-;; an imperceptible amount of time to complete, rather less frequent ones that
-;; momentarily block editing.
-(setq gc-cons-threshold (* 1 1024 1024)       ; 1 MiB
-      read-process-output-max (* 8 1024 1024) ; 8 MiB
-      )
-
-;; Native compilation optimizations
-;;
-;; - Docs for `native-comp-speed' states that a speed of 3 can lead to
-;;   "dangerous" optimizations.
-;;
-;; - Some users reported that passing "-O3" to the native compiler can lead to
-;;   worse performance.
-;;
-;; This has been disabled for now until native compilation matures further.
-;;
-;; (when 'native-comp-compiler-options
-;;   (setq native-comp-speed 3
-;;         native-comp-compiler-options
-;;         '("-O3"
-;;           ;; This is not understood by gcc on the main machine:
-;;           ;; "-march=native"
-;;           ;;
-;;           ;; Using the following instead as per:
-;;           "-m64"
-;;           "-mtune=native")))
 
 ;; Preferred coding system
 (prefer-coding-system 'utf-8)
@@ -165,6 +124,56 @@
 (put 'upcase-region             'disabled nil)
 (put 'downcase-region           'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
+
+;; NATIVE COMPILATION OPTIMIZATIONS
+;; -----------------------------------------------------------------------------
+;; - Docs for `native-comp-speed' states that a speed of 3 can lead to
+;;   "dangerous" optimizations.
+;;
+;; - Some users reported that passing "-O3" to the native compiler can lead to
+;;   worse performance.
+;;
+;; This has been disabled for now until native compilation matures further.
+;;
+;; (when 'native-comp-compiler-options
+;;   (setq native-comp-speed 3
+;;         native-comp-compiler-options
+;;         '("-O3"
+;;           ;; This is not understood by gcc on the main machine:
+;;           ;; "-march=native"
+;;           ;;
+;;           ;; Using the following instead as per:
+;;           "-m64"
+;;           "-mtune=native")))
+
+;; PERFORMANCE OPTIMIZATIONS
+;; -----------------------------------------------------------------------------
+;; The following settings as per the documentation on improving the performance
+;; of LSP at:
+;; https://emacs-lsp.github.io/lsp-mode/page/performance/
+;;
+;; Set higher threshold before GC kicks in. Changing this setting seems to make
+;; emacs snappier for some specific workflows.
+;;
+;; It may be wise to set the GC threshold to a reasonable value or we may end up
+;; hindering performance.  Might be best to have more frequent clean ups taking
+;; an imperceptible amount of time to complete, rather less frequent ones that
+;; momentarily block editing.
+;;
+;; Noting that on Emacs 29.0.90 it no longer seems possible to set this value.
+(setq gc-cons-threshold (* 16 1024 1024)       ; 16 MiB
+      )
+
+;; Documentation of `read-process-output-max' states that "on GNU/Linux systems,
+;; the value should not exceed /proc/sys/fs/pipe-max-size".
+(setq read-process-output-max (with-temp-buffer
+                                (insert-file-contents "/proc/sys/fs/pipe-max-size")
+                                (string-to-number (buffer-string))))
+
+;; Some settings that may help with redisplay
+;; Ref: [4:25] https://200ok.ch/posts/2020-10-01_introduction_to_profiling_in_emacs.html
+(setq bidi-paragraph-direction  'left-to-right
+      bidi-inhibit-bpa          t)
 
 ;; The `list-timers' command is super useful when debugging high CPU usage
 ;; where timers, idle or otherwise, are involved, but for some reason it is

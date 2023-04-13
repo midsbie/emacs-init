@@ -114,13 +114,14 @@ to degrade under LSP")
   ;; Highlighting of symbol on point
   (setq lsp-enable-symbol-highlighting t)
   ;; Show documentation for symbol on point
-  (setq lsp-ui-doc-show-with-cursor nil)
+  (setq lsp-ui-doc-show-with-cursor t)
   ;; Disable lens
   (setq lsp-lens-enable nil)
   ;; Enable headerline showing source file location in workspace
   (setq lsp-headerline-breadcrumb-enable t)
   ;; Enable documentation for symbol on hover
   (setq lsp-eldoc-enable-hover t)
+  (setq lsp-eldoc-render-all t)         ; required to be useful
   ;; Signature auto activation
   ;; Can manually request them via `lsp-signature-activate`
   (setq lsp-signature-auto-activate
@@ -133,16 +134,16 @@ to degrade under LSP")
   ;; Sideline:
   ;; Disable intrusive code actions and symbol on hover but do show diagnostics
   ;; in sideline
-  (setq lsp-ui-sideline-enable nil)
+  (setq lsp-ui-sideline-enable t)
   (setq lsp-ui-sideline-show-code-actions nil)
   (setq lsp-ui-sideline-show-hover nil)
   (setq lsp-ui-sideline-show-symbol nil)
-  (setq lsp-ui-sideline-show-diagnostics nil)
+  (setq lsp-ui-sideline-show-diagnostics t)
 
   ;; Modeline:
   ;; Disable code actions
   (setq lsp-modeline-code-actions-enable nil)
-  (setq lsp-modeline-diagnostics-enable nil)
+  (setq lsp-modeline-diagnostics-enable t)
   (setq lsp-modeline-workspace-status-enable nil);
 
   ;; Completion

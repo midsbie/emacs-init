@@ -277,10 +277,8 @@ running the eslint tool in blocking mode."
   ;; Now exclusively using eglot.
   (if (not init/prefer-eglot-lsp-client)
       (cl-case major-mode
-        ('emacs-lisp-mode
-         nil)
-        (t
-         (lsp-deferred)))
+        (emacs-lisp-mode nil)
+        (t (lsp-deferred)))
     (eglot-ensure)))
 
 ;;; programming.el ends here

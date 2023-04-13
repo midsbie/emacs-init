@@ -82,7 +82,31 @@ characters wide."
                                   (format "%s :: " project-name))))
                              "%b"))
 
-  (load-theme 'solarized-selenized-light t t)
+  ;; The following themes in order of reverse preference:
+  ;;
+  ;; - Difficult to read lighter faces.
+  ;; - Integration with `vertico' could be improved.
+  ;; (load-theme 'solarized-selenized-light t)
+  ;;
+  ;; - An improvement over solarized light but still feels a little washed out,
+  ;;   making it difficult to distinguish some faces whose foreground color are
+  ;;   approximate the background color.
+  ;; + GREAT harmonized face colors for programming.
+  ;; (load-theme 'solarized-zenburn t)
+  ;;
+  ;; + THE BEST theme in terms of readability.
+  ;; - BAD choise of face colors for programming; e.g. purple for keywords
+  ;; (load-theme 'tango t)
+  ;;
+  ;; * Evaluating themes below:
+  ;; (load-theme 'gruvbox-dark-soft t)
+  ;; (load-theme 'modus-operandi t)
+
+  (setq solarized-distinct-fringe-background  t
+        solarized-distinct-doc-face           t
+        solarized-high-contrast-mode-line     t)
+
+  (load-theme 'solarized-zenburn t)
 
   (custom-set-faces
    '(default ((t (:inherit nil :stipple nil

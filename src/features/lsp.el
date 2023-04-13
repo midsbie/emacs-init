@@ -26,9 +26,9 @@
 ;; problems or simply improving the performance of LSP and related modes:
 ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
 ;;
-;; Note that support for plists should NOT be enabled as this feature was found
-;; to significantly degrade performance when editing Dart/Flutter source files.
-;; See inline comment further below.
+;; Note that support for plists (property lists) should NOT be enabled as this
+;; feature was found to significantly degrade performance when editing
+;; Dart/Flutter source files.  See inline comment further below.
 ;;
 ;; TYPESCRIPT
 ;; 1. Install `typescript-language-server` for javascript and typescript
@@ -81,11 +81,9 @@
   ;; files, and also generally other modes too though to a lesser extent.
   ;;
   ;; Ref: https://emacs-lsp.github.io/lsp-mode/page/performance/
-  (let ((use-plists (string= (getenv "LSP_USE_PLISTS") "true")))
-    (when use-plists
-      (message "Warning: LSP_USE_PLISTS environment var set: performance likely
-to degrade under LSP")
-      (setq lsp-use-plists use-plists)))
+  (when (string= (getenv "LSP_USE_PLISTS") "true")
+    (warn "Warning: LSP_USE_PLISTS environment var set: performance likely
+to degrade under LSP"))
 
   ;; Refer to initialisation of `gc-cons-threshold' and
   ;; `read-process-output-max' in `internal/settings.el'.

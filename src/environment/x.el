@@ -108,12 +108,23 @@ characters wide."
 
   (load-theme 'solarized-zenburn t)
 
+  ;; Theme customizations
+  (custom-theme-set-faces
+   'solarized-zenburn
+   '(font-lock-string-face ((t (:foreground "#CC9393"))))
+   '(company-tooltip-selection ((t (:background "#606060" :weight bold))))
+   '(region ((t (:background "#4f5f60" :foreground nil)))))
+
+  ;; Eval the following statement when debugging or trying out new faces:
+  ;; (custom-set-faces '(region ((t (:background "#4f5f60" :foreground nil)))))
+
+  ;; Default face
   (custom-set-faces
    '(default ((t (:inherit nil :stipple nil
                            :inverse-video nil :box nil
                            :strike-through nil :overline nil :underline nil
                            :slant normal :weight normal :height 85 :width normal
-                           :foundry "unknown" :family "Hack")))))
+                           :family "Hack")))))
 
   ;; Let's now perform last initialization steps.
   ;;

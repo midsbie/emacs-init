@@ -1,4 +1,4 @@
-;;; c++.el --- Configures `c++-mode'
+;;; cc.el --- Configures C and C++ modes
 
 ;; Copyright (C) 2015-2023  Miguel Guedes
 
@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(defun init/c-c++/config ()
+(defun init/cc/config ()
   "Initialise modes related to C and C++ development."
 
   (init/common-nonweb-programming-mode)
@@ -42,8 +42,8 @@
          ("\\.cpp\\'" . c++-mode)
          ("\\.hpp\\'" . c++-mode))
 
-  :hook ((c-mode . init/c-c++/config)
-         (c++-mode . init/c-c++-/config))
+  :hook ((c-mode . init/cc/config)
+         (c++-mode . init/cc-/config))
 
   :init
   ;; Set environment for compilers to use
@@ -52,4 +52,4 @@
   (when (executable-find "clang++")
     (setenv "CXX" "clang++")))
 
-;;; c++.el ends here
+;;; cc.el ends here

@@ -82,8 +82,11 @@
                (indent-tabs-mode . t)))
 
 ;; Default settings
-(setq-default c-default-style    "default" ; own default style
-              tab-width          2
+;; - This cannot be a string because `vala-mode' expects it to be an assoc list
+;;   and errors out during initialization otherwise.
+(setq-default c-default-style    '((other . "default")))
+;; - Etc
+(setq-default tab-width          2
               indent-tabs-mode   nil
               js-indent-level    2)
 

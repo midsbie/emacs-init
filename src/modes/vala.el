@@ -34,9 +34,7 @@
   "Configure `vala-mode'."
 
   (init/common-nonweb-programming-mode)
-
-  (c-toggle-auto-hungry-state 1)
-  (c-toggle-auto-state -1))
+  (c-toggle-auto-hungry-state 1))
 
 (use-package vala-mode
   :hook ((vala-mode . init/vala/config))

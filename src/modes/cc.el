@@ -31,7 +31,6 @@
   (local-set-key "\C-co" 'buftoggle)
 
   (c-toggle-auto-hungry-state 1)
-  (c-toggle-auto-state -1)
 
   (setq-local comment-start "/* ")
   (setq-local comment-end   " */"))

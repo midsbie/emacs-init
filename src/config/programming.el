@@ -84,7 +84,8 @@
 ;; Default settings
 ;; - This cannot be a string because `vala-mode' expects it to be an assoc list
 ;;   and errors out during initialization otherwise.
-(setq-default c-default-style    '((other . "default")))
+(setq-default c-default-style    '((vala-mode . "default")
+                                   (other . "default")))
 ;; - Etc
 (setq-default tab-width          2
               indent-tabs-mode   nil

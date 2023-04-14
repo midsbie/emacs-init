@@ -57,6 +57,10 @@
 
 ;;; Code:
 
+(defvar init/lsp/format-buffer-major-mode-exceptions '()
+  "List containing major modes that cause LSP to skip formatting the
+buffer on save")
+
 ;; Make sure that the following function is patched correctly to prevent
 ;; serious performance degradation after some time as a result of setting up
 ;; the timer multiple times.  This must be done every time lsp is upgraded.
@@ -163,8 +167,7 @@ to degrade under LSP"))
   ;; Don't use `lsp-format-buffer' if prettier enabled OR the major-mode isn't
   ;; supported.
   (unless (or (and (boundp 'prettier-mode) prettier-mode)
-              (member major-mode '(vala-mode)))
-    (print major-mode)
+              (member major-mode init/lsp/format-buffer-major-mode-exceptions))
     (add-hook 'before-save-hook 'lsp-format-buffer nil t)))
 
 (defun my/lsp/log-request (type method)

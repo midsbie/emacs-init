@@ -160,10 +160,12 @@ to degrade under LSP"))
   ;; Ref: https://github.com/emacs-lsp/lsp-mode/issues/1532#issuecomment-602384182
   (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
 
-  ;; It's important that we always fallback to `lsp-format-buffer' when
-  ;; prettier isn't being used.
-  (unless (and (boundp 'prettier-mode) prettier-mode)
-    (add-hook 'before-save-hook 'lsp-format-buffer nil t))) ; local hook
+  ;; Don't use `lsp-format-buffer' if prettier enabled OR the major-mode isn't
+  ;; supported.
+  (unless (or (and (boundp 'prettier-mode) prettier-mode)
+              (member major-mode '(vala-mode)))
+    (print major-mode)
+    (add-hook 'before-save-hook 'lsp-format-buffer nil t)))
 
 (defun my/lsp/log-request (type method)
   "Log LSP request.

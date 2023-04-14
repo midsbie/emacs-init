@@ -56,14 +56,20 @@ Absolute path to directory containing packages managed by the
 
 Files are only visited if the server hasn't yet been started.")
 
+(defvar init/prefer-eglot-lsp-client nil
+  "Indicates `eglot' should be used as the LSP client when t.")
+
+(defvar init/beginning-of-statement-fn '(c-backward-sexp backward-sexp backward-sentence)
+  "List containing the order of functions to execute when M-a is pressed.")
+
+(defvar init/end-of-statement-fn '(c-forward-sexp forward-sexp forward-sentence)
+  "List containing the order of functions to execute when M-e is pressed.")
+
 (defconst init/defaults/fill-column 100
   "Default `fill-column' value.")
 
 (defconst init/defaults/fill-column/narrow 80
   "Default narrow `fill-column' value.")
-
-(defconst init/prefer-eglot-lsp-client nil
-  "Indicates `eglot' should be used as the LSP client when t.")
 
 (defun inclusion-path (path)
   (concat (file-name-as-directory init/path-base) path))

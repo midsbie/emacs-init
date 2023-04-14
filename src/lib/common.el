@@ -92,4 +92,13 @@ happens.
   "Add a suffix to a symbol name."
   (intern (concatenate 'string "" (symbol-name sym) suffix)))
 
+(defun execute-first-in-list (function-list)
+  "Execute each function in FUNCTION-LIST in order, until one succeeds."
+    (dolist (fn function-list)
+      (condition-case nil
+          (progn
+            (funcall fn)
+            (return))
+        (error nil))))
+
 ;;; common.el ends here

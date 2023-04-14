@@ -31,13 +31,7 @@ Attempts to run the original function.  In web-related modes like
 `typescript-ts-mode' errors may occur, in which case it will
 attempt to provide a similar result using alternative methods."
   (interactive)
-  (condition-case nil
-      (c-beginning-of-statement-1)
-    (error
-     (condition-case nil
-         (c-backward-sexp)
-       (error
-        (backward-sentence))))))
+  (execute-first-in-list init/beginning-of-statement-fn))
 
 (defun my/end-of-statement ()
   "Safe version of `c-end-of-statement'.
@@ -46,12 +40,6 @@ Attempts to run the original function.  In web-related modes like
 `typescript-ts-mode' errors may occur, in which case it will
 attempt to provide a similar result using alternative methods."
   (interactive)
-  (condition-case nil
-      (c-end-of-statement)
-    (error
-     (condition-case nil
-         (c-forward-sexp)
-       (error
-        (forward-sentence))))))
+  (execute-first-in-list init/end-of-statement-fn))
 
 ;;; buffer.el ends here

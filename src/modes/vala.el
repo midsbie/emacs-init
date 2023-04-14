@@ -34,7 +34,14 @@
   "Configure `vala-mode'."
 
   (init/common-nonweb-programming-mode)
-  (c-toggle-auto-hungry-state 1))
+  (c-toggle-auto-hungry-state 1)
+
+  ;; This hook must be set up BEFORE the LSP buffer formatting one below to
+  ;; ensure it runs LAST, otherwise LSP will replace spaces for tabs.
+  (add-hook 'before-save-hook 'untabify-buffer nil t)
+
+  (when (executable-find "uncrustify")
+    (add-hook 'before-save-hook 'lsp-format-buffer nil t)))
 
 (use-package vala-mode
   :hook ((vala-mode . init/vala/config))

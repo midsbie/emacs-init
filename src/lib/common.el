@@ -101,4 +101,9 @@ happens.
             (return))
         (error nil))))
 
+(defun untabify-buffer ()
+  "Convert tabs to spaces in the current buffer."
+  (interactive)
+  (untabify (point-min) (point-max)))
+
 ;;; common.el ends here

@@ -52,7 +52,11 @@ configured correctly for monorepositories."
 
 (defun init/typescript/config/ts-tsx ()
   "Configure buffer for Typescript development."
-  (init/common-web-programming-mode))
+  (init/common-web-programming-mode)
+
+  ;; Adding 'operator to level 4 font lock features
+  (push 'operator (car (last treesit-font-lock-feature-list)))
+  (treesit-major-mode-setup))
 
 (use-package typescript-ts-mode
   :diminish "TS"

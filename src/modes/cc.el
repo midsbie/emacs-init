@@ -28,21 +28,24 @@
   "Initialise modes related to C and C++ development."
 
   (init/common-nonweb-programming-mode)
-  (local-set-key "\C-co" 'buftoggle)
-
-  (c-toggle-auto-hungry-state 1)
+  (c-toggle-auto-hungry-state -1)
 
   (setq-local comment-start "/* ")
   (setq-local comment-end   " */"))
 
 (use-package cc-mode
-  :mode (("\\.c\\'" . c-mode)
-         ("\\.h\\'" . c-mode)
-         ("\\.cpp\\'" . c++-mode)
-         ("\\.hpp\\'" . c++-mode))
+  :mode (("\\.c\\'" . c-ts-mode)
+         ("\\.h\\'" . c-ts-mode)
+         ("\\.cpp\\'" . c++-ts-mode)
+         ("\\.cxx\\'" . c++-ts-mode)
+         ("\\.hpp\\'" . c++-ts-mode)
+         ("\\.hxx\\'" . c++-ts-mode))
 
-  :hook ((c-mode . init/cc/config)
-         (c++-mode . init/cc-/config))
+  ;; buftoggle not found
+  ;;  :bind (("C-c o" . buftoggle))
+
+  :hook ((c-ts-mode . init/cc/config)
+         (c++-ts-mode . init/cc-/config))
 
   :init
   ;; Set environment for compilers to use

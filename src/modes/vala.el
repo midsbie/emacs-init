@@ -26,22 +26,28 @@
 
 (defun init/vala ()
   "Initialise `vala-mode'."
-    ;; Ensure that the idiomatic "vala" style is used in `vala-mode'.
-    (unless (assoc 'vala-mode c-default-style)
-      (add-to-list 'c-default-style '(vala-mode . "vala"))))
+  ;; Add this mode to LSP's formatting indent alist to ensure that the buffer is
+  ;; formatted correctly.
+  (push '(vala-mode . c-basic-offset) lsp--formatting-indent-alist)
+
+  ;; Ensure that the idiomatic "vala" style is used in `vala-mode'.
+  (unless (assoc 'vala-mode c-default-style)
+    (add-to-list 'c-default-style '(vala-mode . "vala")))
+
+  (if (executable-find "uncrustify")
+      (setq init/lsp/format-buffer-major-mode-exceptions
+            (cl-remove 'vala-mode init/lsp/format-buffer-major-mode-exceptions))
+    (add-to-list 'init/lsp/format-buffer-major-mode-exceptions 'vala-mode)
+    (warn "uncrustify executable not found: buffer formatting unavailable")))
 
 (defun init/vala/config ()
   "Configure `vala-mode'."
 
   (init/common-nonweb-programming-mode)
-  (c-toggle-auto-hungry-state 1)
+  (c-toggle-auto-hungry-state -1)
 
-  ;; This hook must be set up BEFORE the LSP buffer formatting one below to
-  ;; ensure it runs LAST, otherwise LSP will replace spaces for tabs.
-  (add-hook 'before-save-hook 'untabify-buffer nil t)
-
-  (when (executable-find "uncrustify")
-    (add-hook 'before-save-hook 'lsp-format-buffer nil t)))
+  ;; Make sure to disable tabs mode to ensure buffer is formatted with spaces.
+  (setq-local indent-tabs-mode nil))
 
 (use-package vala-mode
   :hook ((vala-mode . init/vala/config))

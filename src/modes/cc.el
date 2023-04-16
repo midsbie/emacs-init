@@ -45,13 +45,13 @@
   ;;  :bind (("C-c o" . buftoggle))
 
   :hook ((c-ts-mode . init/cc/config)
-         (c++-ts-mode . init/cc-/config))
+         (c++-ts-mode . init/cc/config))
 
   :init
-  ;; Set environment for compilers to use
-  (when (executable-find "clang")
-    (setenv "CC" "clang"))
-  (when (executable-find "clang++")
-    (setenv "CXX" "clang++")))
+  ;; Set environment for compilers to use, but only if not set.
+  (when (not (getenv "CC"))
+    (setenv "CC" (or (and (executable-find "clang") "clang") "gcc")))
+  (when (not (getenv "CXX"))
+    (setenv "CXX" (or (and (executable-find "clang++") "clang++") "g++"))))
 
 ;;; cc.el ends here

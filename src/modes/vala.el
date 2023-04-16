@@ -34,11 +34,15 @@
   (unless (assoc 'vala-mode c-default-style)
     (add-to-list 'c-default-style '(vala-mode . "vala")))
 
-  (if (executable-find "uncrustify")
-      (setq init/lsp/format-buffer-major-mode-exceptions
-            (cl-remove 'vala-mode init/lsp/format-buffer-major-mode-exceptions))
-    (add-to-list 'init/lsp/format-buffer-major-mode-exceptions 'vala-mode)
-    (warn "uncrustify executable not found: buffer formatting unavailable")))
+  ;; DISABLED because it doesn't seem to support lambdas and sometimes deletes
+  ;; code.
+  ;;
+  ;;   (if (executable-find "uncrustify")
+  ;;       (setq init/lsp/format-buffer-major-mode-exceptions
+  ;;             (cl-remove 'vala-mode init/lsp/format-buffer-major-mode-exceptions))
+  ;;     (add-to-list 'init/lsp/format-buffer-major-mode-exceptions 'vala-mode)
+  ;;     (warn "uncrustify executable not found: buffer formatting unavailable"))
+  )
 
 (defun init/vala/config ()
   "Configure `vala-mode'."

@@ -1,6 +1,6 @@
 ;;; features.el --- master configuration module of features
 
-;; Copyright (C) 2022  Miguel Guedes
+;; Copyright (C) 2022-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -28,15 +28,21 @@
 (use-package ace-window
   :bind ("M-o" . ace-window))
 
+;; This package is required by `enable-prettier-mode-maybe' and all web-related
+;; source files..
+(use-package add-node-modules-path)
+
+(use-package autorevert
+  :diminish
+  :config
+  ;; Revert buffer if file associated with it changes outside of emacs.
+  (global-auto-revert-mode 1))
+
 (use-package buf-move
   :bind (("<C-S-up>" . buf-move-up)
          ("<C-S-down>" . buf-move-down)
          ("<C-S-left>" . buf-move-left)
          ("<C-S-right>" . buf-move-right)))
-
-(use-package eww
-  :bind (("C-c w g" . google)
-         ("C-c w b" . browse-web)))
 
 (use-package erc
   :init
@@ -45,6 +51,21 @@
                          match menu move-to-prompt netsplit
                          networks noncommands notifications
                          readonly ring stamp track))))
+
+(use-package eww
+  :bind (("C-c w g" . google)
+         ("C-c w b" . browse-web)))
+
+(use-package display-fill-column-indicator
+  :diminish
+  :config
+  ;; This feature, now native to Emacs 27, replaces the old package
+  ;; `fill-column-indicator' that was previously in use.
+  (global-display-fill-column-indicator-mode))
+
+(use-package highlight-parentheses
+  :diminish
+  :config (global-highlight-parentheses-mode))
 
 (use-package flyspell
   :config
@@ -82,6 +103,12 @@
 (use-package savehist
   :config
   (savehist-mode))
+
+(use-package simple
+  :diminish auto-fill-mode)
+
+(use-package subword
+  :diminish)
 
 (use-package swiper
   :demand

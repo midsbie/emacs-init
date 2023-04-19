@@ -65,6 +65,9 @@ Files are only visited if the server hasn't yet been started.")
 (defvar init/end-of-statement-fn '(c-forward-sexp forward-sexp forward-sentence)
   "List containing the order of functions to execute when M-e is pressed.")
 
+(defvar init/compilation-jump-to-bottom t
+  "Causes the caret to move to the bottom of the compilation buffer when t.")
+
 (defconst init/defaults/fill-column 100
   "Default `fill-column' value.")
 

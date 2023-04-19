@@ -224,11 +224,25 @@
 
 ;; Run a MAJORMODE-local-vars-hook when local vars are processed.
 ;; From: https://www.emacswiki.org/emacs/LocalVariables
-(add-hook 'hack-local-variables-hook 'run-local-vars-mode-hook)
-(defun run-local-vars-mode-hook ()
+(defun my/run-local-vars-mode-hook ()
   "Run a hook for the MAJOR-MODE.
 
 This runs after the local variables have been processed."
   (run-hooks (intern (concat (symbol-name major-mode) "-local-vars-hook"))))
+
+(add-hook 'hack-local-variables-hook #'my/run-local-vars-mode-hook)
+
+(defun my/compilation-started (proc)
+  "Move the cursor to the bottom of the buffer associated to the
+process PROC at the start of a compilation."
+  (let* ((buf (process-buffer proc))
+         (win (get-buffer-window buf 'visible)))
+    (when win
+      (with-selected-window win
+        (when (and init/compilation-jump-to-bottom
+                   (eq major-mode 'compilation-mode))
+          (goto-char (point-max)))))))
+
+(add-hook 'compilation-start-hook #'my/compilation-started)
 
 ;;; settings.el ends here

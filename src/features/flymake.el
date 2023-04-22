@@ -38,9 +38,11 @@ variable `exec-path'."
   ;; This was taken from `flymake-eslint-enable' and may be necessary for the
   ;; checker to work.  Note that we shouldn't call this function here because
   ;; it'll lead to a never ending loop (it calls `flymake-mode').
-  (unless flymake-eslint-defer-binary-check
-    (flymake-eslint--ensure-binary-exists))
-  (make-local-variable 'flymake-eslint-project-root)
+  (when (fboundp 'flymake-eslint--ensure-binary-exists)
+    (unless flymake-eslint-defer-binary-check
+      (flymake-eslint--ensure-binary-exists)))
+  (when (boundp 'flymake-eslint-project-root)
+    (make-local-variable 'flymake-eslint-project-root))
 
   ;; Requires `init/add-node-modules-to-exec-path' to have been called during
   ;; mode configuration.  Enabling `flymake-eslint' by directly mutating

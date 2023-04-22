@@ -279,10 +279,17 @@ running the eslint tool in blocking mode."
   ;;     (eglot-ensure)))
   ;;
   ;; Now exclusively using eglot.
-  (if (not init/prefer-eglot-lsp-client)
-      (cl-case major-mode
-        (emacs-lisp-mode nil)
-        (t (lsp-deferred)))
-    (eglot-ensure)))
+  (init/run--explicit-language-server (init/get-language-server major-mode)))
+
+(defun init/get-language-server (mode)
+  (let ((lsl (assoc mode init/language-server-map-to-major-modes)))
+    (if lsl
+        (cdr lsl)
+      (or init/default-language-server-client 'lsp))))
+
+(defun init/run--explicit-language-server (ls)
+  (cl-case ls
+    ('eglot (eglot-ensure))
+    ('lsp (lsp-deferred))))
 
 ;;; programming.el ends here

@@ -56,8 +56,27 @@ Absolute path to directory containing packages managed by the
 
 Files are only visited if the server hasn't yet been started.")
 
-(defvar init/prefer-eglot-lsp-client nil
-  "Indicates `eglot' should be used as the LSP client when t.")
+(defvar init/default-language-server-client 'lsp
+  "Indicates which language server should be used by default when an
+explicit entry does not exist in
+`init/language-server-map-to-major-modes'.  Can be one of 'eglot,
+'lsp or nil.  If nil, defaults to 'lsp.")
+
+(defvar init/language-server-map-to-major-modes
+  '(
+    ;; Explicitly disabling language server for the major modes below
+    ;; ------------------------------------------------------------------------
+    (emacs-lisp-mode . nil)
+    ;; Explicitly specifying language server override for the major modes below
+    ;; ------------------------------------------------------------------------
+    (vala-mode . eglot)
+    ;; lsp-dart did not work particularly well under `dart-mode' in the past.
+    ;; If this continues to be true, revert to eglot.
+    ;; (dart-mode . eglot)
+    )
+  "List of mapping between major mode and a language server.  The
+language server can be 'eglot, 'lsp or nil.  When nil, no
+language server is used.")
 
 (defvar init/beginning-of-statement-fn '(c-backward-sexp backward-sexp backward-sentence)
   "List containing the order of functions to execute when M-a is pressed.")

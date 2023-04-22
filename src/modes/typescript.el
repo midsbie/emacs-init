@@ -66,7 +66,7 @@ configured correctly for monorepositories."
          (tsx-ts-mode . init/typescript/config/ts-tsx))
 
   :config
-  (when init/prefer-eglot-lsp-client
+  (when (eq (init/get-language-server major-mode) 'eglot)
     ;; This is required to ensure Eglot is configured correctly for monorepository
     ;; projects.
     (add-hook 'project-find-functions

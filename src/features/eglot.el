@@ -28,28 +28,36 @@
   (expand-file-name
    "~/.emacs.d/.cache/lsp/npm/typescript-language-server/bin/typescript-language-server"))
 
+(defvar init/eglot/extra-server-programs
+  '(
+    (vala-mode . ("vala-language-server"))
+    (typescript-mode . ("typescript-language-server" "--stdio"))
+    (tsx-ts-mode . ("typescript-language-server" "--stdio"))
+    (typescript-ts-mode . ("typescript-language-server" "--stdio"))))
+
 (defun init/eglot ()
   "Configure `eglot' package."
 
   ;; Do not persist server events for better performance
   (setq eglot-events-buffer-size 0)
 
-  ;; Configure typescript server location by replacing setting for the js and
-  ;; typescript modes
-  ;;
-  ;; Note that this is currently disabled since we can simply symlink the server
-  ;; in the bin directory or some other location that is in PATH.
-  ;;
-  ;;   (setcdr (assoc '(js-mode typescript-mode) eglot-server-programs)
-  ;;           (list init/typescript-server-location "--stdio"))
+  (dolist (server-program init/eglot/extra-server-programs)
+    (let ((mode (car server-program))
+          (args (cdr server-program)))
+      (unless (assoc mode eglot-server-programs)
+        (add-to-list 'eglot-server-programs `(,mode . ,args)))))
 
   ;; Configure `eglot' to support Typescript source files when edited in
   ;; `web-mode'.
-  (if (assoc 'web-mode eglot-server-programs)
-      (setcdr (assoc 'web-mode eglot-server-programs)
-              '("typescript-language-server" "--stdio"))
-    (add-to-list 'eglot-server-programs
-                 '(web-mode . ("typescript-language-server" "--stdio"))))
+  ;;
+  ;; This is currently disabled because web-mode is no longer used for this
+  ;; purpose.
+  ;;
+  ;;   (if (assoc 'web-mode eglot-server-programs)
+  ;;       (setcdr (assoc 'web-mode eglot-server-programs)
+  ;;               '("typescript-language-server" "--stdio"))
+  ;;     (add-to-list 'eglot-server-programs
+  ;;                  '(web-mode . ("typescript-language-server" "--stdio"))))
   )
 
 (defun init/eglot/config ()

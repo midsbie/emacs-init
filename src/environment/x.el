@@ -102,14 +102,17 @@ characters wide."
   ;; (load-theme 'gruvbox-dark-soft t)
   ;; (load-theme 'modus-operandi t)
 
-  (setq solarized-distinct-fringe-background  t
-        solarized-distinct-doc-face           t
-        solarized-high-contrast-mode-line     t)
+  ;; Disabled
+  ;;
+  ;;   (setq solarized-distinct-fringe-background  t
+  ;;         solarized-distinct-doc-face           t
+  ;;         solarized-high-contrast-mode-line     t)
+  ;;   (load-theme 'solarized-zenburn t)
 
-  (load-theme 'solarized-zenburn t)
-
-  ;; Default face
   (custom-set-faces
+   ;; Default face; note that any subsequent face customization calls on
+   ;; 'default are likely to not result in the intended result; consider using
+   ;; `set-face-attribute' instead.
    '(default ((t (:inherit nil :stipple nil
                            :inverse-video nil :box nil
                            :strike-through nil :overline nil :underline nil
@@ -120,12 +123,7 @@ characters wide."
    '(font-lock-number-face ((t (:inherit font-lock-warning-face :weight normal))))
    '(font-lock-operator-face ((t (:inherit font-lock-builtin-face)))))
 
-  ;; Theme customizations
-  (custom-theme-set-faces
-   'solarized-zenburn
-   '(font-lock-string-face ((t (:foreground "#CC9393"))))
-   '(company-tooltip-selection ((t (:background "#606060" :weight bold))))
-   '(region ((t (:background "#4f5f60" :foreground nil)))))
+  (add-hook 'emacs-startup-hook #'init/customize-default-theme)
 
   ;; Eval the following statement when debugging or trying out new faces:
   ;; (custom-set-faces '(region ((t (:background "#4f5f60" :foreground nil)))))
@@ -154,6 +152,87 @@ characters wide."
   ;; Completely disable mouse on the 'nyx' laptop.
   (cond ((string= (system-name) "nyx")
          (global-disable-mouse-mode 1)))
+
+  )
+
+(defun init/customize-default-theme ()
+  "Customize default theme if no custom theme loaded."
+  (unless custom-enabled-themes
+    ;; Calling `custom-set-faces' a second time on 'default will not work
+    ;; because the settings would be merged and, it seems, the first call's
+    ;; settings would win resulting in a nil foreground and background.  Must
+    ;; therefore use `set-face-attribute'.
+    (set-face-attribute 'default nil
+                        :foreground "#ffffff"
+                        :background "#000000")
+
+    (set-face-attribute 'widget-field nil :foreground "black")
+
+    ;; Inherited by `swiper-match-face-1'
+    (set-face-attribute 'lazy-highlight nil :foreground "white" :background "blue4")
+    ;; Inherited by `swiper-match-face-2'
+    (set-face-attribute 'isearch nil :foreground "black")
+
+    (set-face-attribute 'isearch-group-1 nil :foreground "dark blue")
+    (set-face-attribute 'isearch-group-2 nil :foreground "dark blue")
+    (set-face-attribute 'popup-isearch-match nil :foreground "dark blue")
+
+    (set-face-attribute 'swiper-match-face-1 nil :foreground "white")
+    (set-face-attribute 'swiper-match-face-2 nil :foreground "black")
+    (set-face-attribute 'swiper-match-face-3 nil :foreground "white")
+    (set-face-attribute 'swiper-match-face-4 nil :foreground "white")
+
+    (set-face-attribute 'magit-diff-added nil :foreground "white smoke")
+    (set-face-attribute 'magit-diff-added-highlight nil :foreground "white smoke")
+    (set-face-attribute 'magit-diff-removed nil :foreground "white smoke")
+    (set-face-attribute 'magit-diff-removed-highlight nil :foreground "white smoke")
+
+    (set-face-attribute 'company-tooltip nil :background "gray10")
+    (set-face-attribute 'company-tooltip-selection nil :inherit 'highlight)
+    (set-face-attribute 'company-tooltip-search nil :inherit 'consult-highlight-match)
+
+    (set-face-attribute 'pulse-highlight-start-face nil :foreground "dark blue")
+    (set-face-attribute 'speedbar-highlight-face nil :foreground "dark blue")
+
+    (set-face-attribute 'font-lock-doc-face nil :foreground "dark salmon")
+    (set-face-attribute 'font-lock-property-use-face nil :foreground "cornsilk")
+    (set-face-attribute 'font-lock-function-call-face nil
+                        :inherit nil :foreground "LightBlue")
+
+     ;; Another possibility here is "midnight blue", or considering a darker
+     ;; still variation of the dark green #004225, possibly with a blue-ish ink.
+    (set-face-attribute 'highlight nil :background "#004225")
+    (set-face-attribute 'hl-line nil :inherit 'highlight :background "#000f08")
+    ))
+
+;; These customizations kept for posteriority in case a decision is made to go
+;; back to a solarized-based theme.
+(use-package solarized-theme
+  :config
+  (cond ((member 'solarized-zenburn custom-enabled-themes)
+         (require 'solarized-palettes)
+         (custom-theme-set-faces
+          'solarized-zenburn
+          `(font-lock-preprocessor-face
+            ((t (:weight bold :foreground ,(cdr (assoc 'red-l solarized-zenburn-color-palette-alist))))))
+          `(font-lock-string-face
+            ((t (:foreground ,(cdr (assoc 'orange solarized-zenburn-color-palette-alist))))))
+          `(font-lock-number-face
+            ((t (:foreground ,(cdr (assoc 'orange-2fg solarized-zenburn-color-palette-alist))))))
+          `(font-lock-constant-face
+            ((t (:foreground ,(cdr (assoc 'orange-2fg solarized-zenburn-color-palette-alist))))))
+          `(font-lock-function-name-face
+            ((t (:foreground ,(cdr (assoc 'magenta solarized-zenburn-color-palette-alist))))))
+          `(my-function-call-face
+            ((t ( :foreground ,(cdr (assoc 'magenta-2fg solarized-zenburn-color-palette-alist))))))
+          `(font-lock-function-call-face
+            ((t (:override t :inherit my-function-call-face :foreground ,(cdr (assoc 'magenta-2fg solarized-zenburn-color-palette-alist))))))
+          `(font-lock-variable-use-face
+            ((t (:foreground ,(cdr (assoc 'cyan-2fg solarized-zenburn-color-palette-alist))))))
+          `(font-lock-property-use-face
+            ((t (:foreground ,(cdr (assoc 'base0 solarized-zenburn-color-palette-alist))))))
+          `(company-tooltip-selection ((t (:background "#606060" :weight bold))))
+          `(region ((t (:foreground nil :background "#4f5f60")))))))
   )
 
 ;;; x.el ends here

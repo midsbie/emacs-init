@@ -148,11 +148,6 @@ characters wide."
   ;; We forcefully disable them here.
   (when (boundp 'horizontal-scroll-bar-mode)
     (horizontal-scroll-bar-mode -1))
-
-  ;; Completely disable mouse on the 'nyx' laptop.
-  (cond ((string= (system-name) "nyx")
-         (global-disable-mouse-mode 1)))
-
   )
 
 (defun init/customize-default-theme ()

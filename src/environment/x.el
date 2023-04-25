@@ -199,6 +199,25 @@ characters wide."
     (set-face-attribute 'font-lock-function-call-face nil
                         :inherit nil :foreground "LightBlue")
 
+    (set-face-attribute 'ansi-color-blue nil :foreground "DodgerBlue")
+
+    ;; Tango color scheme for ANSI faces
+    (set-face-attribute 'ansi-color-black nil :foreground "#2e3436" :background "#2e3436")
+    (set-face-attribute 'ansi-color-red nil :foreground "#cc0000" :background "#cc0000")
+    (set-face-attribute 'ansi-color-green nil :foreground "#4e9a06" :background "#4e9a06")
+    (set-face-attribute 'ansi-color-yellow nil :foreground "#c4a000" :background "#c4a000")
+    (set-face-attribute 'ansi-color-blue nil :foreground "#3465a4" :background "#3465a4")
+    (set-face-attribute 'ansi-color-magenta nil :foreground "#75507b" :background "#75507b")
+    (set-face-attribute 'ansi-color-cyan nil :foreground "#06989a" :background "#06989a")
+    (set-face-attribute 'ansi-color-white nil :foreground "#d3d7cf" :background "#d3d7cf")
+    (set-face-attribute 'ansi-color-bright-black nil :foreground "#555753" :background "#555753")
+    (set-face-attribute 'ansi-color-bright-red nil :foreground "#ef2929" :background "#ef2929")
+    (set-face-attribute 'ansi-color-bright-green nil :foreground "#8ae234" :background "#8ae234")
+    (set-face-attribute 'ansi-color-bright-yellow nil :foreground "#fce94f" :background "#fce94f")
+    (set-face-attribute 'ansi-color-bright-blue nil :foreground "#729fcf" :background "#729fcf")
+    (set-face-attribute 'ansi-color-bright-magenta nil :foreground "#ad7fa8" :background "#ad7fa8")
+    (set-face-attribute 'ansi-color-bright-cyan nil :foreground "#34e2e2" :background "#34e2e2")
+
      ;; Another possibility here is "midnight blue", or considering a darker
      ;; still variation of the dark green #004225, possibly with a blue-ish ink.
     (set-face-attribute 'highlight nil :background "#004225")

@@ -170,23 +170,30 @@ characters wide."
 
     (set-face-attribute 'isearch-group-1 nil :foreground "dark blue")
     (set-face-attribute 'isearch-group-2 nil :foreground "dark blue")
-    (set-face-attribute 'popup-isearch-match nil :foreground "dark blue")
+
+    ;; Doesn't seem to be defined:
+    ;; (set-face-attribute 'popup-isearch-match nil :foreground "dark blue")
 
     (set-face-attribute 'swiper-match-face-1 nil :foreground "white")
     (set-face-attribute 'swiper-match-face-2 nil :foreground "black")
     (set-face-attribute 'swiper-match-face-3 nil :foreground "white")
     (set-face-attribute 'swiper-match-face-4 nil :foreground "white")
 
-    (set-face-attribute 'magit-diff-added nil :foreground "white smoke")
-    (set-face-attribute 'magit-diff-added-highlight nil :foreground "white smoke")
-    (set-face-attribute 'magit-diff-removed nil :foreground "white smoke")
-    (set-face-attribute 'magit-diff-removed-highlight nil :foreground "white smoke")
+    (use-package magit
+      :config
+      (set-face-attribute 'magit-diff-added nil :foreground "white smoke")
+      (set-face-attribute 'magit-diff-added-highlight nil :foreground "white smoke")
+      (set-face-attribute 'magit-diff-removed nil :foreground "white smoke")
+      (set-face-attribute 'magit-diff-removed-highlight nil :foreground "white smoke"))
 
-    (set-face-attribute 'company-tooltip nil :background "gray10")
-    (set-face-attribute 'company-tooltip-selection nil :inherit 'highlight)
-    (set-face-attribute 'company-tooltip-search nil :inherit 'consult-highlight-match)
+    (use-package company
+      :config
+      (set-face-attribute 'company-tooltip nil :background "gray10")
+      (set-face-attribute 'company-tooltip-selection nil :inherit 'highlight)
+      (set-face-attribute 'company-tooltip-search nil :inherit 'consult-highlight-match))
 
-    (set-face-attribute 'pulse-highlight-start-face nil :foreground "dark blue")
+    ;; Doesn't seem to be defined:
+    ;; (set-face-attribute 'pulse-highlight-start-face nil :foreground "dark blue")
     (set-face-attribute 'speedbar-highlight-face nil :foreground "dark blue")
 
     (set-face-attribute 'font-lock-doc-face nil :foreground "dark salmon")

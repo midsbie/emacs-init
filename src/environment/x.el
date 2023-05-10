@@ -153,56 +153,6 @@ characters wide."
 (defun init/customize-default-theme ()
   "Customize default theme if no custom theme loaded."
   (unless custom-enabled-themes
-    ;; Calling `custom-set-faces' a second time on 'default will not work
-    ;; because the settings would be merged and, it seems, the first call's
-    ;; settings would win resulting in a nil foreground and background.  Must
-    ;; therefore use `set-face-attribute'.
-    (set-face-attribute 'default nil
-                        :foreground "#ffffff"
-                        :background "#000000")
-
-    (set-face-attribute 'widget-field nil :foreground "black")
-
-    ;; Inherited by `swiper-match-face-1'
-    (set-face-attribute 'lazy-highlight nil :foreground "white" :background "blue4")
-    ;; Inherited by `swiper-match-face-2'
-    (set-face-attribute 'isearch nil :foreground "black")
-
-    (set-face-attribute 'isearch-group-1 nil :foreground "dark blue")
-    (set-face-attribute 'isearch-group-2 nil :foreground "dark blue")
-
-    ;; Doesn't seem to be defined:
-    ;; (set-face-attribute 'popup-isearch-match nil :foreground "dark blue")
-
-    (set-face-attribute 'swiper-match-face-1 nil :foreground "white")
-    (set-face-attribute 'swiper-match-face-2 nil :foreground "black")
-    (set-face-attribute 'swiper-match-face-3 nil :foreground "white")
-    (set-face-attribute 'swiper-match-face-4 nil :foreground "white")
-
-    (use-package magit
-      :config
-      (set-face-attribute 'magit-diff-added nil :foreground "white smoke")
-      (set-face-attribute 'magit-diff-added-highlight nil :foreground "white smoke")
-      (set-face-attribute 'magit-diff-removed nil :foreground "white smoke")
-      (set-face-attribute 'magit-diff-removed-highlight nil :foreground "white smoke"))
-
-    (use-package company
-      :config
-      (set-face-attribute 'company-tooltip nil :background "gray10")
-      (set-face-attribute 'company-tooltip-selection nil :inherit 'highlight)
-      (set-face-attribute 'company-tooltip-search nil :inherit 'consult-highlight-match))
-
-    ;; Doesn't seem to be defined:
-    ;; (set-face-attribute 'pulse-highlight-start-face nil :foreground "dark blue")
-    (set-face-attribute 'speedbar-highlight-face nil :foreground "dark blue")
-
-    (set-face-attribute 'font-lock-doc-face nil :foreground "dark salmon")
-    (set-face-attribute 'font-lock-property-use-face nil :foreground "cornsilk")
-    (set-face-attribute 'font-lock-function-call-face nil
-                        :inherit nil :foreground "LightBlue")
-
-    (set-face-attribute 'ansi-color-blue nil :foreground "DodgerBlue")
-
     ;; Tango color scheme for ANSI faces
     (set-face-attribute 'ansi-color-black nil :foreground "#2e3436" :background "#2e3436")
     (set-face-attribute 'ansi-color-red nil :foreground "#cc0000" :background "#cc0000")
@@ -220,11 +170,73 @@ characters wide."
     (set-face-attribute 'ansi-color-bright-magenta nil :foreground "#ad7fa8" :background "#ad7fa8")
     (set-face-attribute 'ansi-color-bright-cyan nil :foreground "#34e2e2" :background "#34e2e2")
 
-     ;; Another possibility here is "midnight blue", or considering a darker
-     ;; still variation of the dark green #004225, possibly with a blue-ish ink.
-    (set-face-attribute 'highlight nil :background "#004225")
-    (set-face-attribute 'hl-line nil :inherit 'highlight :background "#000f08")
-    ))
+    (cond
+     (init/defaults/light-theme
+      (set-face-attribute 'hl-line nil :inherit 'highlight :background "#ceeace")
+
+      (set-face-attribute 'font-lock-doc-face nil :foreground "DarkRed")
+      (set-face-attribute 'font-lock-property-use-face nil :foreground "SaddleBrown")
+      (set-face-attribute 'font-lock-function-call-face nil
+                          :inherit nil :foreground "Gray20"))
+
+     ((not init/defaults/light-theme)
+      ;; Calling `custom-set-faces' a second time on 'default will not work
+      ;; because the settings would be merged and, it seems, the first call's
+      ;; settings would win resulting in a nil foreground and background.  Must
+      ;; therefore use `set-face-attribute'.
+      (set-face-attribute 'default nil
+                          :foreground "#ffffff"
+                          :background "#000000")
+
+      (set-face-attribute 'widget-field nil :foreground "black")
+
+      ;; Inherited by `swiper-match-face-1'
+      (set-face-attribute 'lazy-highlight nil :foreground "white" :background "blue4")
+      ;; Inherited by `swiper-match-face-2'
+      (set-face-attribute 'isearch nil :foreground "black")
+
+      (set-face-attribute 'isearch-group-1 nil :foreground "dark blue")
+      (set-face-attribute 'isearch-group-2 nil :foreground "dark blue")
+
+      ;; Doesn't seem to be defined:
+      ;; (set-face-attribute 'popup-isearch-match nil :foreground "dark blue")
+
+      (set-face-attribute 'swiper-match-face-1 nil :foreground "white")
+      (set-face-attribute 'swiper-match-face-2 nil :foreground "black")
+      (set-face-attribute 'swiper-match-face-3 nil :foreground "white")
+      (set-face-attribute 'swiper-match-face-4 nil :foreground "white")
+
+      (use-package magit
+        :config
+        (set-face-attribute 'magit-diff-added nil :foreground "white smoke")
+        (set-face-attribute 'magit-diff-added-highlight nil :foreground "white smoke")
+        (set-face-attribute 'magit-diff-removed nil :foreground "white smoke")
+        (set-face-attribute 'magit-diff-removed-highlight nil :foreground "white smoke"))
+
+      (use-package company
+        :config
+        (set-face-attribute 'company-tooltip nil :background "gray10")
+        (set-face-attribute 'company-tooltip-selection nil :inherit 'highlight)
+        (set-face-attribute 'company-tooltip-search nil :inherit 'consult-highlight-match))
+
+      ;; Doesn't seem to be defined:
+      ;; (set-face-attribute 'pulse-highlight-start-face nil :foreground "dark blue")
+      (set-face-attribute 'speedbar-highlight-face nil :foreground "dark blue")
+
+      (set-face-attribute 'font-lock-doc-face nil :foreground "dark salmon")
+      (set-face-attribute 'font-lock-property-use-face nil :foreground "cornsilk")
+      (set-face-attribute 'font-lock-function-call-face nil
+                          :inherit nil :foreground "LightBlue")
+
+      (set-face-attribute 'mode-line-inactive nil
+                          :inherit 'mode-line-active
+                          :background "grey30")
+
+      ;; Another possibility here is "midnight blue", or considering a darker
+      ;; still variation of the dark green #004225, possibly with a blue-ish ink.
+      (set-face-attribute 'highlight nil :background "#004225")
+      (set-face-attribute 'hl-line nil :inherit 'highlight :background "#000f08")
+      ))))
 
 ;; These customizations kept for posteriority in case a decision is made to go
 ;; back to a solarized-based theme.

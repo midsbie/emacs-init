@@ -94,6 +94,9 @@ language server is used.")
 (defconst init/defaults/fill-column/narrow 80
   "Default narrow `fill-column' value.")
 
+(defconst init/defaults/light-theme nil
+  "When nil, the default Emacs theme is turned into a dark theme.")
+
 (defun inclusion-path (path)
   (concat (file-name-as-directory init/path-base) path))
 

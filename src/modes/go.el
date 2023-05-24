@@ -59,7 +59,8 @@
 
 (use-package go-mode
   :mode ("\\.go\\'")
-  :hook ((go-mode . init/go-mode/config))
+  :hook ((go-mode . init/go-mode/config)
+         (go-ts-mode . init/go-mode/config))
   :config (init/go-mode)
   :bind (
          (:map go-mode-map

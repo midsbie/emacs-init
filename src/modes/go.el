@@ -55,7 +55,11 @@
 
   ;; Mode-specific settings
   (setq-local tab-width 8)
-  (setq-local fill-column 80))
+  (setq-local fill-column 80)
+
+  ;; Preventing problematic auto-filling under go-ts-mode
+  (when (string= major-mode "go-ts-mode")
+    (auto-fill-mode -1)))
 
 (use-package go-mode
   :mode ("\\.go\\'")

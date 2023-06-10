@@ -55,7 +55,7 @@
 
   ;; Mode-specific settings
   (setq-local tab-width 8)
-  (setq-local fill-column 80)
+  (setq-local fill-column 100)
 
   ;; Preventing problematic auto-filling under go-ts-mode
   (when (string= major-mode "go-ts-mode")

@@ -1,6 +1,6 @@
 ;;; org.el --- Configuration for the `org' package
 
-;; Copyright (C) 2015-2021  Miguel Guedes
+;; Copyright (C) 2015-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -69,6 +69,7 @@
   (org-indent-mode 1)
   (visual-line-mode)
   (auto-fill-mode -1)
+  (display-fill-column-indicator-mode -1)
 
   ;; Remaps
   (local-set-key (kbd "M-h") 'backward-kill-word))

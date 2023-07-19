@@ -58,10 +58,11 @@ enabled.
 
 The one exception to this rule is when the file is inside a
 \"node_modules\"."
-  (when (and (or init/enable-prettier-mode
-                 (locate-file-in-dominating-node-modules ".bin/prettier" buffer-file-name))
-             (not (dir-is-parent-p "node_modules" buffer-file-name)))
-      (prettier-mode 1)))
+  (ignore-errors
+    (when (and (or init/enable-prettier-mode
+                   (locate-file-in-dominating-node-modules ".bin/prettier" buffer-file-name))
+               (not (dir-is-parent-p "node_modules" buffer-file-name)))
+      (prettier-mode 1))))
 
 (use-package prettier
   :diminish "🧹"

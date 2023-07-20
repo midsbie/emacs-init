@@ -45,7 +45,7 @@
   (unless (executable-find "gopls")
       (warn "Unable to find 'gopls' for Go source files: eglot will not run")))
 
-(defun init/go-mode/config ()
+(defun init/go-mode/mode ()
   "Configure `go-mode' major mode."
   (init/common-nonweb-programming-mode)
 
@@ -57,14 +57,12 @@
   (setq-local tab-width 8)
   (setq-local fill-column 100)
 
-  ;; Preventing problematic auto-filling under go-ts-mode
-  (when (string= major-mode "go-ts-mode")
-    (auto-fill-mode -1)))
+  (auto-fill-mode -1))
 
 (use-package go-mode
   :mode ("\\.go\\'")
-  :hook ((go-mode . init/go-mode/config)
-         (go-ts-mode . init/go-mode/config))
+  :hook ((go-mode . init/go-mode/mode)
+         (go-ts-mode . init/go-mode/mode))
   :config (init/go-mode)
   :bind (
          (:map go-mode-map

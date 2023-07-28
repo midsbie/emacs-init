@@ -42,4 +42,17 @@ attempt to provide a similar result using alternative methods."
   (interactive)
   (execute-first-in-list init/end-of-statement-fn))
 
+(defun my/select-current-word ()
+  "Select the word under cursor."
+  (interactive)
+  (let ((subword-enabled (and (fboundp 'subword-mode) subword-mode)))
+    (when subword-enabled
+      (subword-mode -1))
+    (unless (looking-at "\\<")
+      (backward-word))
+    (set-mark-command nil)
+    (forward-word)
+    (when subword-enabled
+      (subword-mode 1))))
+
 ;;; buffer.el ends here

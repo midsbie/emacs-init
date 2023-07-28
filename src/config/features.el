@@ -25,6 +25,9 @@
 
 ;;; Code:
 
+(use-package emacs
+  :bind ("C-c w" . my/select-current-word))
+
 (use-package ace-window
   :bind ("M-o" . ace-window))
 
@@ -51,10 +54,6 @@
                          match menu move-to-prompt netsplit
                          networks noncommands notifications
                          readonly ring stamp track))))
-
-(use-package eww
-  :bind (("C-c w g" . google)
-         ("C-c w b" . browse-web)))
 
 (use-package display-fill-column-indicator
   :diminish

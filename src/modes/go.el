@@ -60,7 +60,7 @@
   (auto-fill-mode -1))
 
 (use-package go-mode
-  :mode ("\\.go\\'")
+  :mode (("\\.go\\'" . go-ts-mode))
   :hook ((go-mode . init/go-mode/mode)
          (go-ts-mode . init/go-mode/mode))
   :config (init/go-mode)

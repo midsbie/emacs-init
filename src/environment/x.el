@@ -1,6 +1,6 @@
 ;;; x.el --- Initialisation sequence when run within X
 
-;; Copyright (C) 2014-2022 Miguel Guedes
+;; Copyright (C) 2014-2023 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:
@@ -186,7 +186,7 @@ characters wide."
       ;; therefore use `set-face-attribute'.
       (set-face-attribute 'default nil
                           :foreground "#ffffff"
-                          :background "#000000")
+                          :background "#080808")
 
       (set-face-attribute 'widget-field nil :foreground "black")
 

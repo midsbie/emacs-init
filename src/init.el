@@ -1,6 +1,6 @@
 ;;; init.el --- Master emacs initialisation file
 
-;; Copyright (C) 2014-2022 Miguel Guedes
+;; Copyright (C) 2014-2023 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:

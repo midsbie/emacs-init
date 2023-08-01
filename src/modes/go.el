@@ -59,10 +59,19 @@
 
   (auto-fill-mode -1))
 
+(defun init/go-mode/format ()
+  "Format buffer just before saving.
+Note that `lsp-format-buffer' should not be called here as this
+is automatically handled by another hook function.  Only
+additional formatting should be carried out in this function."
+  (ignore-errors
+    (lsp-organize-imports)))
+
 (use-package go-mode
   :mode (("\\.go\\'" . go-ts-mode))
   :hook ((go-mode . init/go-mode/mode)
-         (go-ts-mode . init/go-mode/mode))
+         (go-ts-mode . init/go-mode/mode)
+         (before-save . init/go-mode/format))
   :config (init/go-mode)
   :bind (
          (:map go-mode-map

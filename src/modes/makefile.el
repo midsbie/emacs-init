@@ -1,6 +1,6 @@
 ;;; makefile.el --- Configures `make-mode'
 
-;; Copyright (C) 2015-2021  Miguel Guedes
+;; Copyright (C) 2015-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,8 +24,12 @@
 
 ;;; Code:
 
+(defun init/makefile-mode/mode ()
+  (init/common-nonweb-programming-mode)
+  (auto-fill-mode -1))
+
 ;; Mode is `makefile-mode' in make-mode.el, provides `make-mode'.
 (use-package make-mode
-  :hook ((makefile-mode . init/common-nonweb-programming-mode)))
+  :hook ((makefile-mode . init/makefile-mode/mode)))
 
 ;;; makefile.el ends here

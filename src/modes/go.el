@@ -62,8 +62,9 @@
 (defun init/go-mode/format ()
   "Format buffer just before saving.
 Note that `lsp-format-buffer' should not be called here as this
-is automatically handled by another hook function.  Only
-additional formatting should be carried out in this function."
+is automatically handled by a hook function setup elsewhere.
+Only additional formatting should be carried out in this
+function."
   (ignore-errors
     (lsp-organize-imports)))
 

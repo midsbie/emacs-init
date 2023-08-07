@@ -1,6 +1,6 @@
 ;;; python.el --- Configures `python-mode'
 
-;; Copyright (C) 2016-2022  Miguel Guedes
+;; Copyright (C) 2016-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -73,7 +73,8 @@
     (define-key elpy-mode-map (kbd "C-c C-p") nil)
     (define-key elpy-mode-map (kbd "C-c C-n") nil))
 
-  (py-autopep8-mode))
+  (py-autopep8-mode)
+  (auto-fill-mode -1))
 
 (use-package python
   :mode (("\\.py\\'" . python-ts-mode))

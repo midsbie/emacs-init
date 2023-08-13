@@ -75,7 +75,8 @@ particular FILE-NAME and MODE."
 (use-package js
   :after (company flycheck)
   :diminish "JS"
-  :mode (("\\.jsx?\\'" . init/determine-js-mode))
+  :mode (("\\.jsx?\\'" . init/determine-js-mode)
+         ("\\.mjs\\'" . init/determine-js-mode))
   :hook (((js-ts-mode js-mode js-jsx-mode) . init/js-mode/config)))
 
 ;;; js.el ends here

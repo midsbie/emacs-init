@@ -58,10 +58,9 @@ configured correctly for monorepositories."
   (push 'operator (car (last treesit-font-lock-feature-list)))
   (treesit-major-mode-setup)
 
-  ;; Enable prettier-mode if source file is Javascript Flow since the LSP server
-  ;; does not support buffer formatting.
-  (when (flycheck-flow--predicate)
-    (prettier-mode 1)))
+  ;; Prefer prettier for automatic buffer formatting as LSP's buffer formatting
+  ;; not as good.
+  (enable-prettier-mode-maybe))
 
 (use-package typescript-ts-mode
   :diminish "TS"

@@ -88,6 +88,14 @@ happens.
   (interactive)
   (kill-buffer (current-buffer)))
 
+(defun kill-buffers-with-nonexistent-files ()
+  "Kill all buffers associated with files that no longer exist."
+  (interactive)
+  (dolist (buffer (buffer-list))
+    (let ((file (buffer-file-name buffer)))
+      (when (and file (not (file-exists-p file)))
+        (kill-buffer buffer)))))
+
 (defun add-suffix-to-symbol (sym suffix)
   "Add a suffix to a symbol name."
   (intern (concatenate 'string "" (symbol-name sym) suffix)))

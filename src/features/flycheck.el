@@ -20,7 +20,20 @@
 
 ;;; Commentary:
 
+;; You may need to add the following to .dir-local.el file if flycheck is
+;; complaining that it cannot find eslint:
 ;;
+;; ((typescript-ts-mode
+;;   (eval . (setq-local flycheck-javascript-eslint-executable
+;;                       (expand-file-name "node_modules/.bin/eslint"
+;;                                         (locate-dominating-file default-directory ".dir-locals.el"))))))
+;; OR for more than one major mode:
+;;
+;; ((nil . ((eval . (when (or (eq major-mode 'typescript-ts-mode)
+;;                            (eq major-mode 'js-mode))
+;;                   (setq-local flycheck-javascript-eslint-executable
+;;                               (expand-file-name "node_modules/.bin/eslint"
+;;                                                 (locate-dominating-file default-directory ".dir-locals.el"))))))))
 
 ;;; Code:
 
@@ -87,8 +100,11 @@
   ;;      (flycheck-add-mode 'css-csslint 'web-mode)
 
   (flycheck-add-mode 'javascript-eslint 'js-mode)
+  (flycheck-add-mode 'javascript-eslint 'js-ts-mode)
   (flycheck-add-mode 'javascript-eslint 'js-jsx-mode)
   (flycheck-add-mode 'javascript-eslint 'typescript-mode)
+  (flycheck-add-mode 'javascript-eslint 'typescript-ts-mode)
+  (flycheck-add-mode 'javascript-eslint 'tsx-ts-mode)
   (flycheck-add-mode 'javascript-eslint 'web-mode)
 
   ;; IMPORTANT! Do not mess with the order in which the checkers are added

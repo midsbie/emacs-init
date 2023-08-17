@@ -1,6 +1,6 @@
 ;;; lsp.el --- Configures the `lsp' package
 
-;; Copyright (C) 2021-2022  Miguel Guedes
+;; Copyright (C) 2021-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -117,6 +117,10 @@ to degrade under LSP"))
   (setq lsp-enable-symbol-highlighting t)
   ;; Show documentation for symbol on point
   (setq lsp-ui-doc-show-with-cursor t)
+  ;; Disable the super annoying UI doc frame as it oftens obscures part of the
+  ;; code.
+  (setq lsp-ui-doc-enable nil)
+
   ;; Disable lens
   (setq lsp-lens-enable nil)
   ;; Enable headerline showing source file location in workspace

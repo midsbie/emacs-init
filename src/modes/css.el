@@ -1,6 +1,6 @@
 ;;; css.el --- Configures `css-mode'
 
-;; Copyright (C) 2015-2021  Miguel Guedes
+;; Copyright (C) 2015-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -25,11 +25,14 @@
 ;;; Code:
 
 (defun init/css ()
-  "Initialise modes related to CSS development."
+  "Initialize `css-mode'."
+  (css-eldoc-enable))
+
+(defun init/css/mode ()
+  "Configure `css-mode'."
   (setq-default css-indent-offset            2)
   (auto-fill-mode -1)
   (eldoc-mode 1)
-  (css-eldoc-enable)
 
   (local-set-key "}"  #'(lambda ()
                           (interactive)
@@ -44,6 +47,8 @@
 (use-package css-mode
   :defer t
   :hook ((css-mode . init/common-nonweb-programming-mode)
-         (css-mode . init/css)))
+         (css-mode . init/css/mode))
+  :config
+  (init/css))
 
 ;;; css.el ends here

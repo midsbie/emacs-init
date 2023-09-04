@@ -77,7 +77,7 @@ The one exception to this rule is when the file is inside a
           html-mode css-mode scss-mode js-mode js-jsx-mode typescript-mode
                     web-mode
                     ;; Tree-sitter modes
-                    css-ts-mode typescript-ts-mode js-ts-mode
+                    css-ts-mode typescript-ts-mode tsx-ts-mode js-ts-mode
                     ;; Deprecated modes
                     js2-mode)
          . enable-prettier-mode-maybe))

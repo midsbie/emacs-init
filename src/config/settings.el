@@ -214,7 +214,10 @@
 ;; Also enabling `electric-pair-mode' because it works great with indent above.
 ;; Note that pair requires indent or indentation will be missing in some
 ;; instances.
-(electric-pair-mode 1)
+;;
+;; 230914 This has now been disabled because it isn't very smart at knowing when
+;;        NOT to automatically add a closing pair.
+(electric-pair-mode -1)
 ;; This is problematic in some modes like `typescript-mode', as it forcefully
 ;; adds newlines when some characters are types (e.g. `{').
 (electric-layout-mode -1)

@@ -68,6 +68,7 @@ explicit entry does not exist in
     ;; ------------------------------------------------------------------------
     (emacs-lisp-mode . nil)
     (meson-mode . nil)
+    (sql-mode . nil)
     ;; Explicitly specifying language server override for the major modes below
     ;; ------------------------------------------------------------------------
     (vala-mode . eglot)

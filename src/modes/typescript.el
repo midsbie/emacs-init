@@ -52,15 +52,16 @@ configured correctly for monorepositories."
 
 (defun init/typescript/config/ts-tsx ()
   "Configure buffer for Typescript development."
+  (setq-local typescript-ts-mode-indent-offset 2)
+  (setq-local lsp-eslint-enable nil)
+  (setq-local lsp-eslint-run "onSave")
+  (setq-local lsp-eslint-format nil)
+
   (init/common-web-programming-mode)
 
   ;; Adding 'operator to level 4 font lock features
   (push 'operator (car (last treesit-font-lock-feature-list)))
-  (treesit-major-mode-setup)
-
-  ;; Prefer prettier for automatic buffer formatting as LSP's buffer formatting
-  ;; not as good.
-  (enable-prettier-mode-maybe))
+  (treesit-major-mode-setup))
 
 (use-package typescript-ts-mode
   :diminish "TS"

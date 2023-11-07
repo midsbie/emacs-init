@@ -246,8 +246,19 @@ in the buffer's directory tree."
       (make-local-variable 'exec-path)
       (add-to-list 'exec-path binp))))
 
+(defun init/is-web-programming-mode-p ()
+  (or (eq major-mode 'js-mode)
+            (eq major-mode 'typescript-mode)
+            (eq major-mode 'typescript-ts-mode)
+            (eq major-mode 'tsx-ts-mode)
+            (and
+             (eq major-mode 'web-mode)
+             (or
+              (string= web-mode-content-type "js")
+              (string= web-mode-content-type "jsx")))))
+
 (defun init/run-eslint-autofix-if-applicable ()
-  (when (is-web-programming-mode-p)
+  (when (init/is-web-programming-mode-p)
     (init/run-eslint-autofix)))
 
 (defun init/run-eslint-autofix ()

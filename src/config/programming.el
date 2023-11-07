@@ -200,7 +200,10 @@
   (init/add-node-modules-to-exec-path)
 
   (init/common-programming-mode)
-  (add-hook 'after-save-hook #'init/run-eslint-autofix-if-applicable nil t)
+
+  ;; Disabled as it would likely turn into a nuisance.  Can still be run via
+  ;; `init/run-eslint-autofix'.
+  ;; (add-hook 'after-save-hook #'init/run-eslint-autofix-if-applicable nil t)
 
   ;; For some reason preemptively setting the fill column above is now not
   ;; taking hold in the following modes: `tide-mode', `js-mode'.

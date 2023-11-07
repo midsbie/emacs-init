@@ -213,7 +213,12 @@
   ;; Provide default command for `compile' that should apply to all web-related
   ;; major modes.
   (when (or (not compile-command) (string= compile-command "make -k "))
-    (setq-local compile-command "yarn run test")))
+    (setq-local compile-command "yarn run test"))
+
+  ;; Attempt
+  (ignore-errors
+    (when (and (boundp 'flycheck-mode) flycheck-mode)
+      (flycheck-buffer))))
 
 (defun init/find-node-modules ()
   "Find path to node_modules directory.

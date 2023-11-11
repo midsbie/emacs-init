@@ -137,8 +137,12 @@
   (abbrev-mode -1)                  ; turn abbrev-mode off
   (subword-mode 1)
 
-  ;; Delete all trailing whitespace before saving
-  (add-hook 'before-save-hook 'delete-trailing-whitespace nil t) ; local hook
+  ;; Delete all trailing whitespace before saving.  -100 argument makes it so
+  ;; this particular hook runs before any other, which fixes a number of issues
+  ;; in some modes where LSP's own buffer formatting function would run ahead of
+  ;; 'delete-trailing-whitespace but the whitespace would not be removed for
+  ;; some reason.  Modes in which this was observed include `sh-mode'.
+  (add-hook 'before-save-hook 'delete-trailing-whitespace -100 t) ; local hook
   (setq-local show-trailing-whitespace t)
 
   ;; Attempt to run the language server for the active programming mode and

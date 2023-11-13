@@ -1,6 +1,6 @@
 ;;; grep.el --- grep command extensions
 
-;; Copyright (C) 2019  Miguel Guedes
+;; Copyright (C) 2019-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -29,11 +29,11 @@
 ; Don't ask to save buffers when running `grep-find'
 (setq-default grep-save-buffers nil)
 
-(setq git-grep-find-command '("git --no-pager grep -nP '%SUBJECT%' -- :/" . 26))
+(setq my/git-grep-find-command '("git --no-pager grep -nP '%SUBJECT%' -- :/" . 26))
 
 ;; Functions
 ;; ----------------------------------------
-(defun git-grep(command-args)
+(defun my/git-grep(command-args)
   "Run a grep search for QUERY using git.
 
 The arguments specified by COMMAND-ARGS are passed to \"git grep\" without any
@@ -45,15 +45,15 @@ repository and should be removed if the search is to be conducted from the
 current working directory."
   (interactive
    (progn
-     (let* ((word (get-word-at-point))
+     (let* ((word (my/get-word-at-point))
             (command (replace-regexp-in-string
                        (regexp-quote "%SUBJECT%")
                        word
-                       (car git-grep-find-command)
+                       (car my/git-grep-find-command)
                        t 'literal)))
        (list (read-shell-command
               "Run git-grep (like this): "
-              (car (acons command (+ (length word) (cdr git-grep-find-command)) '()))
+              (car (acons command (+ (length word) (cdr my/git-grep-find-command)) '()))
               'grep-find-history)))))
   (let* ((last-grep-use-null-device grep-use-null-device))
     ;; We must set `grep-use-null-device' to nil or we get a strange error
@@ -67,7 +67,7 @@ current working directory."
 ;; ----------------------------------------
 ;; The following function is kept for the purpose of future reference, in
 ;; particular as an illustration of how to use the universal argument.
-(defun git-grep-OLD (query)
+(defun my/git-grep-OLD (query)
   "Run a grep search for QUERY using git.
 
 When executed without the universal \

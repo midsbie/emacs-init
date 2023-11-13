@@ -98,25 +98,18 @@ language server is used.")
 (defconst init/defaults/light-theme nil
   "When nil, the default Emacs theme is turned into a dark theme.")
 
-(defun inclusion-path (path)
+(defun init/inclusion-path (path)
   (concat (file-name-as-directory init/path-base) path))
 
 (message "[init] starting")
 (add-hook 'after-init-hook 'init/post-init)
 (run-at-time "3 sec" nil #'init/delayed-init)
 
-;; set up include paths
-(add-to-list 'load-path "/usr/src")
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/elpa")
+;; Load our compatibility library
+(load (init/inclusion-path "./compat"))
 
-;; load our common libraries and the `package' feature
-(load (inclusion-path "lib/common"))
-(load (inclusion-path "lib/init"))
-(load (inclusion-path "./compat"))
-
-;; setup and load ELPA packages (and others) first and foremost
+;; Setup and load ELPA packages (and others) first and foremost
 (setq package-user-dir (concat init/dir-packages "../elpa/src"))
-
 ;; Avoid loading byte-compiled packages that are older than the source file.
 (setq load-prefer-newer t)
 
@@ -137,11 +130,20 @@ language server is used.")
 (package-initialize)
 (require 'use-package)
 
-;; This measure is needed to prevent tramp from hanging at startup as it tries
-;; to conduct a strange check on the system's host.
-;;
-;; More information here: https://debbugs.gnu.org/cgi/bugreport.cgi?bug=20015
-(setq tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ConnectTimeout=1 -o ControlPersist=no")
+;; Taken verbatim from: http://www.emacswiki.org/emacs/DotEmacsModular
+;; Must be interpreted before loading begins below.
+(defun my/load-directory (directory)
+  "Load recursively all `.el' files in DIRECTORY without the extension."
+  (dolist (element (directory-files-and-attributes directory nil nil nil))
+    (let* ((path (car element))
+           (fullpath (concat (file-name-as-directory directory) path))
+           (isdir (car (cdr element)))
+           (ignore (or (string= path ".") (string= path ".."))))
+      (cond
+       ((and (eq isdir t) (not ignore))
+        (my/load-directory fullpath))
+       ((and (eq isdir nil) (string= (substring path -3) ".el"))
+        (load (file-name-sans-extension fullpath)))))))
 
 ;; Now safe to load all ELISP source files in directories specified in
 ;; `init/dirs-load'
@@ -150,16 +152,16 @@ language server is used.")
     (let ((dir-loading (or (concat init/path-base
                                    loading))))
       (message "Loading ELISP files in: %s" dir-loading)
-      (load-directory dir-loading))))
+      (my/load-directory dir-loading))))
 
 
 ;; Load configurations specific to the environment
-(load (inclusion-path
+(load (init/inclusion-path
        (or (and (display-graphic-p) "environment/x")
            "environment/term")))
 
-;; Load files in `init/open-at-startup' list after a short delay so as
-;; enable the user to mutate the `init/open-at-startup' list.
+;; Load files in `init/open-at-startup' list after a short delay so as to enable
+;; the user to mutate the `init/open-at-startup' list.
 (dolist (file init/open-at-startup)
   (if (not (file-exists-p file))
       (message "%s" (concat "error: file does not exist: " file))

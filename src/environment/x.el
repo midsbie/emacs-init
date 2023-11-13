@@ -25,7 +25,7 @@
 ;;; Code:
 
 ;; Set default window size
-(defun set-frame-size-according-to-resolution ()
+(defun my/set-frame-size-according-to-resolution ()
   "Set the active frame's size according to the screen's
 resolution.  Frame size is set to 190 characters wide if the
 display width is larger than 1280, otherwise it is set to 90
@@ -40,13 +40,13 @@ characters wide."
     (add-to-list 'default-frame-alist (cons 'height 77))))
 
 ;; Function: Set current frame width
-(defun set-current-frame-width (arg)
+(defun my/set-current-frame-width (arg)
   "Set the active frame's width to ARG."
   (interactive "p")
   (set-frame-width (selected-frame) arg))
 
 ;; Function: Set current frame height
-(defun set-current-frame-height (arg)
+(defun my/set-current-frame-height (arg)
   "Set the active frame's height to ARG."
   (interactive "p")
   (set-frame-height (selected-frame) arg))
@@ -138,8 +138,8 @@ characters wide."
 
   (let* ((width (cdr (assoc 'width default-frame-alist)))
          (height (cdr (assoc 'height default-frame-alist))))
-    (and width (set-current-frame-width width))
-    (and height (set-current-frame-width height)))
+    (and width (my/set-current-frame-width width))
+    (and height (my/set-current-frame-height height)))
 
   ;; Re-balance windows now that the frame's size has been calculated
   (balance-windows)

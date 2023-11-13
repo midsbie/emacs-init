@@ -48,7 +48,7 @@ all JS/X buffers."
   :group 'init/prettier-mode
   :type 'boolean)
 
-(defun enable-prettier-mode-maybe ()
+(defun my/enable-prettier-mode-maybe ()
   "Turn on `prettier-mode' selectively.
 
 If the file associated with the current buffer is contained in a
@@ -60,8 +60,8 @@ The one exception to this rule is when the file is inside a
 \"node_modules\"."
   (ignore-errors
     (when (and (or init/enable-prettier-mode
-                   (locate-file-in-dominating-node-modules ".bin/prettier" buffer-file-name))
-               (not (dir-is-parent-p "node_modules" buffer-file-name)))
+                   (my/locate-file-in-dominating-node-modules ".bin/prettier" buffer-file-name))
+               (not (my/dir-is-parent-p "node_modules" buffer-file-name)))
       (prettier-mode 1))))
 
 (use-package prettier
@@ -80,6 +80,6 @@ The one exception to this rule is when the file is inside a
                     css-ts-mode typescript-ts-mode tsx-ts-mode js-ts-mode
                     ;; Deprecated modes
                     js2-mode)
-         . enable-prettier-mode-maybe))
+         . my/enable-prettier-mode-maybe))
 
 ;;; prettier-js.el ends here

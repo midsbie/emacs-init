@@ -94,7 +94,7 @@ Filter backends from `company-backends' that are specified in
                                      (when flycheck-mode
                                        (flycheck-clear))))))
 
-(defun smarter-yas-expand-next-field-complete ()
+(defun my/smarter-yas-expand-next-field-complete ()
   "Try to `yas-expand' and `yas-next-field' at current cursor position.
 
 If failed try to complete the common part with `company-complete-common'"
@@ -118,8 +118,8 @@ If failed try to complete the common part with `company-complete-common'"
 
   :bind
   (:map company-active-map
-        ([tab] . smarter-yas-expand-next-field-complete)
-        ("TAB" . smarter-yas-expand-next-field-complete))
+        ([tab] . my/smarter-yas-expand-next-field-complete)
+        ("TAB" . my/smarter-yas-expand-next-field-complete))
 
   :custom
   ;; Note that some modes may need to redefine a higher minimum prefix length to

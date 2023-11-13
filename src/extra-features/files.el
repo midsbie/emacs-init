@@ -1,6 +1,6 @@
 ;;; files.el --- Assorted filesystem functions
 
-;; Copyright (C) 2021  Miguel Guedes
+;; Copyright (C) 2021-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel@miguelguedes.org>
 ;; Keywords: tools
@@ -24,27 +24,41 @@
 
 ;;; Code:
 
-(defun locate-file-in-dominating-node-modules (file from-path)
+(defun my/locate-file-in-dominating-node-modules (file from-path)
   "Attempt to locate FILE inside a dominating node_modules
 directory from FROM-PATH."
-  (locate-file-recursive (concat "node_modules/" file) from-path))
+  (my/locate-file-recursive (concat "node_modules/" file) from-path))
 
-(defun locate-file-recursive (file path)
+(defun my/locate-file-recursive (file path)
   "Locate FILE recursively from PATH."
   (let (lpath)
     (cl-pushnew path lpath)
     (or (locate-file file lpath nil)
 ;;                     (lambda (f) (and (file-directory-p f) 'dir-ok)))
         (unless (string= "/" path)
-          (locate-file-recursive file
-                                 (file-name-directory (directory-file-name path)))))))
+          (my/locate-file-recursive file
+                                    (file-name-directory (directory-file-name path)))))))
 
-(defun dir-is-parent-p (dir path)
+(defun my/dir-is-parent-p (dir path)
   "Return t if DIR is parent of PATH."
   (let* ((parent (directory-file-name (file-name-directory (directory-file-name path))))
          (basename (file-name-nondirectory parent)))
     (unless (string= "/" path)
       (or (string= basename dir)
-          (dir-is-parent-p dir parent)))))
+          (my/dir-is-parent-p dir parent)))))
+
+(defun my/maybe-load-library (name)
+  "Attempt to load library NAME.
+Produces a message if it was not possible to load the library and
+does not interrupt execution."
+  (condition-case err
+      (load-library (name))
+    (error (princ (format "Failed to load library: %s (reason: %s)" name err)))))
+
+(defun my/read-lines (file)
+  "Return a list of lines of a file given by FILE."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (split-string (buffer-string) "\n" t)))
 
 ;;; files.el ends here

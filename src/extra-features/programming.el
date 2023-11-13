@@ -1,6 +1,7 @@
-;;; etc.el --- Assorted extra features
+;;; programming.el --- Assorted convenience features to improve programming
+;;; experience
 
-;; Copyright (C) 2020  Miguel Guedes
+;; Copyright (C) 2020-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel@softgeist.com>
 ;; Keywords: tools
@@ -24,15 +25,7 @@
 
 ;;; Code:
 
-(defun clear-before-save-hooks()
-  "Clear all `before-save-hook' lists in all buffers."
-  (interactive)
-  (dolist (buf (buffer-list))
-    (progn
-      (with-current-buffer buf
-        (setq before-save-hook nil)))))
-
-(defun fix-indent-inverted-behaviour()
+(defun my/fix-indent-inverted-behaviour()
   "Fix RET and C-j inverted newline and indentation behaviour.
 This function fixes the inverted indentation behaviour of RET and
 C-j that occurs in major modes (e.g. web-mode).
@@ -40,29 +33,7 @@ C-j that occurs in major modes (e.g. web-mode).
   (local-set-key (kbd "C-j") 'newline-and-indent)
   (local-set-key (kbd "RET") 'newline))
 
-(defun get-word (word &optional default-string)
-  "Return WORD if word, DEFAULT-STRING or \"\"."
-  (or (and word (not (string-match "[\s]" word)) word)
-      (or default-string "")))
-
-(defun get-word-at-point ()
-  "Return word at point or empty string if not word."
-  (get-word (thing-at-point 'sexp 'no-properties)))
-
-(defun get-kill-ring-word (&optional default-string)
-  "Return last entry in kill ring if word or DEFAULT-STRING."
-  (let ((top-entry (current-kill 0 t)))
-    (get-word top-entry default-string)))
-
-(defun copy-sexp-to-kill-ring ()
-  "Copy sexp at point to kill ring."
-  (interactive)
-  (let ((sexp (thing-at-point 'sexp 'no-properties)))
-    (when sexp
-      (kill-new sexp)
-      (message "copied: %s" sexp))))
-
-(defun better-next-error ()
+(defun my/better-next-error ()
 "Go to next error.
 Attempts to jump to the next error as managed by `tide-mode' if
 the active project's error buffer is not visible, otherwise
@@ -83,7 +54,7 @@ reverts to the default `next-error' defun."
      (error
       (next-error))))
 
-(defun better-previous-error ()
+(defun my/better-previous-error ()
 "Go to previous error.
 Attempts to jump to the previous error as managed by `tide-mode',
 otherwise reverts to the default `previous-error' defun."
@@ -98,15 +69,4 @@ otherwise reverts to the default `previous-error' defun."
      (error
       (previous-error))))
 
-;; The following meant to be exposed as a command; do not prefix the function name.
-(defun google(query)
-  "Open Google search with QUERY as parameter.
-Prompts the user for a query string, if not provided, that is
-constructed as a URL that causes the current browser provider to
-run and navigate to the Google search page showing results for
-the specified query string."
-  (interactive "sQuery string: ")
-  (browse-url (concat "https://google.com/search?q="
-               (mapconcat 'identity (split-string query " ") "+"))))
-
-;;; etc.el ends here
+;;; programming.el ends here

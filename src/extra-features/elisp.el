@@ -1,8 +1,8 @@
-;;; context.el --- Custom feature to help with contextual use of emacs
+;;; elisp.el --- Utilitarian functions related to ELISP
 
-;; Copyright (C) 2015-2020  Miguel Guedes
+;; Copyright (C) 2021-2023  Miguel Guedes
 
-;; Author: Miguel Guedes <miguel@miguelguedes.org>
+;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -24,15 +24,17 @@
 
 ;;; Code:
 
-(defun set-context (context)
-  "Set the active context of this Emacs instance.
-CONTEXT is a string containing the context to use, which is shown
-in Emacs' frame title."
-  (interactive "sContext: ")
+(defun my/add-suffix-to-symbol (sym suffix)
+  "Add a suffix to a symbol name."
+  (intern (concatenate 'string "" (symbol-name sym) suffix)))
 
-  (let ((title "%b - emacs"))
-    (when (> (length context) 0)
-      (setq title (concat context " - " title)))
-    (setq frame-title-format title)))
+(defun my/execute-first-in-list (function-list)
+  "Execute each function in FUNCTION-LIST in order, until one succeeds."
+    (dolist (fn function-list)
+      (condition-case nil
+          (progn
+            (funcall fn)
+            (return))
+        (error nil))))
 
-;;; context.el ends here
+;;; elisp.el ends here

@@ -35,7 +35,7 @@ Assumes currently open file is a C++ implementation source file."
 
 (defun yas/get-kill-ring-word (default-label)
   "Return last entry in kill ring if word or DEFAULT-LABEL."
-  (get-kill-ring-word default-label))
+  (my/get-kill-ring-word default-label))
 
 (defun init/yasnippet()
   "Initialize yasnippet."

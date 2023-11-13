@@ -59,7 +59,7 @@
   (global-set-key (kbd "C-c a a")   'org-agenda-list)
   (global-set-key (kbd "C-c a t")   'org-todo-list)
   (global-set-key (kbd "C-c c")     'org-capture)
-  (global-set-key (kbd "C-x K o")   'org-kill-all-buffers)
+  (global-set-key (kbd "C-x K o")   'my/org-kill-all-buffers)
 
   (custom-set-variables
    '(org-agenda-window-setup (quote current-window))))
@@ -74,7 +74,7 @@
   ;; Remaps
   (local-set-key (kbd "M-h") 'backward-kill-word))
 
-(defun org-kill-all-buffers ()
+(defun my/org-kill-all-buffers ()
   "Kill all `org-mode' buffers."
   (interactive)
   (mapc 'kill-buffer

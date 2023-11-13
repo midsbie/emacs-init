@@ -31,8 +31,8 @@
 (use-package ace-window
   :bind ("M-o" . ace-window))
 
-;; This package is required by `enable-prettier-mode-maybe' and all web-related
-;; source files..
+;; This package is required by `my/enable-prettier-mode-maybe' and all
+;; web-related source files..
 (use-package add-node-modules-path)
 
 (use-package autorevert

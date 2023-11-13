@@ -1,6 +1,6 @@
-;;; emacs.el --- Programming-related configuration
+;;; emacs.el --- Utilitarian functions related to Emacs itself
 
-;; Copyright (C) 2021  Miguel Guedes
+;; Copyright (C) 2021-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -39,5 +39,13 @@ This command should only be used with ELISP."
           (cl-return-from inner)))
 
     (message "buffer evaluated")))
+
+(defun my/clear-before-save-hooks()
+  "Clear all `before-save-hook' lists in all buffers."
+  (interactive)
+  (dolist (buf (buffer-list))
+    (progn
+      (with-current-buffer buf
+        (setq before-save-hook nil)))))
 
 ;;; emacs.el ends here

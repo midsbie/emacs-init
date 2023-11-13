@@ -36,16 +36,16 @@
 (global-set-key [M-right]             'windmove-right)
 (global-set-key [M-up]                'windmove-up)
 (global-set-key [M-down]              'windmove-down)
-(global-set-key (kbd "C-x p")         'other-previous-window)
+(global-set-key (kbd "C-x p")         'my/other-previous-window)
 
 ;; Define miscellaneous shortcuts.
 ; Note that ivy defines some keyboard mappings under F2
 ; F2 F2 originally invoked: `2C-two-columns'
 (global-set-key (kbd "<f2> <f2>")     'shell)
-(global-set-key [f3]                  'better-next-error)
-(global-set-key [S-f3]                'better-previous-error)
-(global-set-key (kbd "C-x k")         'kill-current-buffer)
-(global-set-key (kbd "C-x w")         'copy-sexp-to-kill-ring)
+(global-set-key [f3]                  'my/better-next-error)
+(global-set-key [S-f3]                'my/better-previous-error)
+(global-set-key (kbd "C-x k")         'my/kill-current-buffer)
+(global-set-key (kbd "C-x w")         'my/copy-sexp-to-kill-ring)
 (global-set-key (kbd "C-c y")         'browse-kill-ring)
 
 ;; Buffer-related
@@ -58,12 +58,12 @@
 (global-set-key (kbd "C-x C-b")       'ibuffer)
 ; C-c g runs counsel-git-grep but we favour our own version since counsel was
 ; found to hang too frequently and cause memory leaks.
-(global-set-key (kbd "C-c g")         'git-grep)
+(global-set-key (kbd "C-c g")         'my/git-grep)
 (global-set-key (kbd "C-c G")         'find-grep)
 (global-set-key (kbd "C-x /")         'bury-buffer)
-(global-set-key (kbd "C-x 4 k")       'kill-other-buffer)
-(global-set-key (kbd "C-x 4 /")       'bury-other-buffer)
-(global-set-key (kbd "C-x +")         'rearrange-desktop)
+(global-set-key (kbd "C-x 4 k")       'my/kill-other-buffer)
+(global-set-key (kbd "C-x 4 /")       'my/bury-other-buffer)
+(global-set-key (kbd "C-x +")         'my/rearrange-desktop)
 ; Prevents collision with ivy's C-x l
 (global-set-key (kbd "C-x L")         'count-lines-page)
 

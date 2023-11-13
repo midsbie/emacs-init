@@ -1,6 +1,6 @@
-;;; window-extra.el --- Utility functions for manipulating windows and buffers
+;;; window-extra.el --- Utility functions for manipulating windows
 
-;; Copyright (C) 2014-2020 Miguel Guedes
+;; Copyright (C) 2014-2023 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:
@@ -35,7 +35,7 @@
 ;; (ad-activate 'pop-to-buffer)
 
 ;; Toggle window dedication
-(defun toggle-window-dedicated ()
+(defun my/toggle-window-dedicated ()
   "Toggle whether the current active window is dedicated or not."
   (interactive)
   (message
@@ -47,9 +47,9 @@
    (current-buffer)))
 
 ;; Press [pause] key in each window you want to "freeze"
-(global-set-key [pause] 'toggle-window-dedicated)
+(global-set-key [pause] 'my/toggle-window-dedicated)
 
-(defun other-previous-window (count &optional all-frames)
+(defun my/other-previous-window (count &optional all-frames)
   "Select previous window in inverse cyclic ordering of windows.
 COUNT specifies the number of windows to skip, starting with the
 selected window, before making the selection.  If COUNT is
@@ -60,33 +60,7 @@ all currently active frames."
   (interactive "p")
   (other-window (* count -1) all-frames))
 
-(defun kill-other-buffer (count &optional all-frames)
-  "Select next window and kill buffer associated with it.
-COUNT specified the number of windows to skip, starting with the
-selected window, before making the selection.  If COUNT is
-positive, skip COUNT forwards.  If COUNT is negative, skip COUNT
-backwards.  In an interactive call, COUNT is the numeric prefix
-argument.  When non-nill, ALL-FRAMES specifies whether to take
-into account buffers in all frames."
-  (interactive "p")
-  (save-selected-window
-    (other-window (* count 1) all-frames)
-    (kill-buffer)))
-
-(defun bury-other-buffer (count &optional all-frames)
-  "Select next window and bury buffer associated with it.
-COUNT specified the number of windows to skip, starting with the
-selected window, before making the selection.  If COUNT is
-positive, skip COUNT forwards.  If COUNT is negative, skip COUNT
-backwards.  In an interactive call, COUNT is the numeric prefix
-argument.  When non-nill, ALL-FRAMES specifies whether to take
-into account buffers in all frames."
-  (interactive "p")
-  (save-selected-window
-    (other-window (* count 1) all-frames)
-    (bury-buffer)))
-
-(defun rearrange-desktop ()
+(defun my/rearrange-desktop ()
   "Rearrange the desktop.
 Rearrange the desktop by creating as many windows as possible
 that hold at least 85 characters.  Acts on the current frame

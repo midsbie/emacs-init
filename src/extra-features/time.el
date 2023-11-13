@@ -1,6 +1,6 @@
-;;; init --- Collection of useful defuns for use at initialisation time
+;;; time --- Collection of defuns for time manipulation
 
-;; Copyright (C) 2017-2023 Miguel Guedes
+;; Copyright (C) 2014-2023 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:
@@ -25,10 +25,12 @@
 
 ;;; Code:
 
-(defun init/lazy-run (function &rest args)
-  "Lazily run FUNCTION after a set amount of time elapses.
+;; Taken verbatim from: http://www.emacswiki.org/emacs/DotEmacsChallenge
+(defun my/date (&optional insert)
+  "Display the current date and time.
+With a prefix arg, INSERT it into the buffer."
+  (interactive "P")
+  (funcall (if insert 'insert 'message)
+           (format-time-string "%a, %d %b %Y %T %Z" (current-time))))
 
-The function is only executed when the editor is in an idle state."
-  (run-with-idle-timer 1 nil function))
-
-;;; init.el ends here
+;;; time.el ends here

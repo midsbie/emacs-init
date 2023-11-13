@@ -1,6 +1,6 @@
 ;;; eaf.el --- Customises the `eaf' package
 
-;; Copyright (C) 2021  Miguel Guedes
+;; Copyright (C) 2021-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -30,7 +30,7 @@
   ;; `nil` below is effectively disabling the eaf package
   :if (and nil (display-graphic-p) python-p pip-p
            (not (equal (shell-command-to-string "pip freeze | grep '^PyQt\\|PyQtWebEngine'") "")))
-  :bind (("C-c w g" . google)
+  :bind (("C-c w g" . my/google)
          ("C-c w b" . browse-web))
   :custom
   (eaf-find-alternate-file-in-dired t)

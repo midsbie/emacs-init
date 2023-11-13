@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(defun el/set-env-vars-from-file (filename)
+(defun my/set-env-vars-from-file (filename)
   "Set environment variables from a .env file specified by FILENAME."
   (interactive "FSelect .env file: ")
   (with-temp-buffer

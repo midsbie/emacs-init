@@ -174,6 +174,13 @@ to degrade under LSP"))
               (member major-mode init/lsp/format-buffer-major-mode-exceptions))
     (add-hook 'before-save-hook 'lsp-format-buffer nil t)))
 
+(defun init/lsp/after-open-hook ()
+  ;; Flycheck doesn't check buffers when first opened for some reason. We force
+  ;; a check below when the buffer is first connected.
+  (ignore-errors
+    (when (and (boundp 'flycheck-mode) flycheck-mode)
+      (flycheck-buffer))))
+
 (defun my/lsp/log-request (type method)
   "Log LSP request.
 Prints TYPE and METHOD to special 'lsp-output' buffer.  Meant to
@@ -189,8 +196,8 @@ be used when debugging `lsp'."
 ;; against.  The form in use calls for `lsp-deferred' to be invoked in the
 ;; major mode configuration module; e.g. typescript.el, csharp.el.
 (use-package lsp-mode
-  :hook ((lsp-mode . init/lsp/config))
-  :init (init/lsp)
+  :hook ((lsp-mode . init/lsp/config)
+         (lsp-after-open . init/lsp/after-open-hook))
   :config
   ;; Fix for error: json-parse-error \u0000 is not allowed without JSON_ALLOW_NUL
   ;; Taken literally from: https://github.com/adimit/config/blob/f84b34c04d101bdd33e180c07715ce481608ba9f/emacs/main.org#work-around-null-bytes-in-json-response

@@ -154,7 +154,19 @@ to degrade under LSP"))
 
   ;; Completion
   (setq lsp-completion-show-detail t)
-  (setq lsp-completion-show-kind t))
+  (setq lsp-completion-show-kind t)
+
+  ;; Fix for error: json-parse-error \u0000 is not allowed without JSON_ALLOW_NUL
+  ;; Taken literally from: https://github.com/adimit/config/blob/f84b34c04d101bdd33e180c07715ce481608ba9f/emacs/main.org#work-around-null-bytes-in-json-response
+  (advice-add 'json-parse-string :around
+              (lambda (orig string &rest rest)
+                (apply orig (s-replace "\\u0000" "" string)
+                       rest)))
+  (advice-add 'json-parse-buffer :around
+              (lambda (orig &rest rest)
+                (while (re-search-forward "\\u0000" nil t)
+                  (replace-match ""))
+                (apply orig rest))))
 
 (defun init/lsp/config ()
   (lsp-enable-which-key-integration)
@@ -199,17 +211,6 @@ be used when debugging `lsp'."
   :hook ((lsp-mode . init/lsp/config)
          (lsp-after-open . init/lsp/after-open-hook))
   :config
-  ;; Fix for error: json-parse-error \u0000 is not allowed without JSON_ALLOW_NUL
-  ;; Taken literally from: https://github.com/adimit/config/blob/f84b34c04d101bdd33e180c07715ce481608ba9f/emacs/main.org#work-around-null-bytes-in-json-response
-  (advice-add 'json-parse-string :around
-              (lambda (orig string &rest rest)
-                (apply orig (s-replace "\\u0000" "" string)
-                       rest)))
-  (advice-add 'json-parse-buffer :around
-              (lambda (orig &rest rest)
-                (while (re-search-forward "\\u0000" nil t)
-                  (replace-match ""))
-                (apply orig rest)))
-  )
+  (init/lsp))
 
 ;;; lsp.el ends here

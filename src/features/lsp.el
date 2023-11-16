@@ -187,8 +187,12 @@ to degrade under LSP"))
     (add-hook 'before-save-hook 'lsp-format-buffer nil t)))
 
 (defun init/lsp/after-open-hook ()
-  ;; Flycheck doesn't check buffers when first opened for some reason. We force
-  ;; a check below when the buffer is first connected.
+  "Set up buffer after connection to LSP.
+
+This function is used as a hook to perform certain actions after
+a buffer is opened.  One of the actions it performs is to check
+the buffer using Flycheck since this is not done by default in
+Typescript buffers and possibly other modes too."
   (ignore-errors
     (when (and (boundp 'flycheck-mode) flycheck-mode)
       (flycheck-buffer))))

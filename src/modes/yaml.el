@@ -1,6 +1,6 @@
 ;;; yaml.el --- Configures `yaml-mode'
 
-;; Copyright (C) 2019-2020  Miguel Guedes
+;; Copyright (C) 2019-2023  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: internal, tools
@@ -24,7 +24,11 @@
 
 ;;; Code:
 
+(defun init/yaml-mode/mode ()
+  (init/common-programming-mode))
+
 (use-package yaml-mode
+  :hook ((yaml-mode . init/yaml-mode/mode))
   :mode ("\\.eslintrc\\'"))
 
 ;;; yaml.el ends here

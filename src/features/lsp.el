@@ -191,11 +191,15 @@ to degrade under LSP"))
 
 This function is used as a hook to perform certain actions after
 a buffer is opened.  One of the actions it performs is to check
-the buffer using Flycheck since this is not done by default in
-Typescript buffers and possibly other modes too."
+the buffer using Flycheck since, for some reason, this is not
+done by default in Typescript buffers and possibly other modes
+too.  Note that a delay of 1 second is enforced otherwise
+flycheck fails to check the buffer (observed in
+`typescript-ts-mode'."
   (ignore-errors
     (when (and (boundp 'flycheck-mode) flycheck-mode)
-      (flycheck-buffer))))
+      (run-with-idle-timer 1 nil #'(lambda ()
+                                     (flycheck-buffer))))))
 
 (defun my/lsp/log-request (type method)
   "Log LSP request.

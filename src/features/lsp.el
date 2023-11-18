@@ -196,9 +196,9 @@ done by default in Typescript buffers and possibly other modes
 too.  Note that a delay of 1 second is enforced otherwise
 flycheck fails to check the buffer (observed in
 `typescript-ts-mode'."
-  (ignore-errors
-    (when (and (boundp 'flycheck-mode) flycheck-mode)
-      (run-with-idle-timer 1 nil #'(lambda ()
+  (run-with-idle-timer 1 nil #'(lambda ()
+                                 (ignore-errors
+                                   (when (and (boundp 'flycheck-mode) flycheck-mode)
                                      (flycheck-buffer))))))
 
 (defun my/lsp/log-request (type method)

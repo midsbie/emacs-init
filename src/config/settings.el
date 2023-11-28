@@ -120,6 +120,7 @@
 (global-so-long-mode t)                 ; better handling of long files
 (size-indication-mode t)                ; size indication mode
 (global-prettify-symbols-mode)          ; (lambda ... -> (λ ...
+(winner-mode)                           ; window configuration mutation undo
 
 (menu-bar-mode -1)                      ; disable menu bar
 (tool-bar-mode -1)                      ; disable toolbar

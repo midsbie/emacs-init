@@ -63,7 +63,7 @@ save. Strangely this only happens when LSP is active."
     (when (and (or init/enable-prettier-mode
                (my/locate-file-in-dominating-node-modules ".bin/prettier" buffer-file-name))
            (not (my/dir-is-parent-p "node_modules" buffer-file-name)))
-      (run-with-idle-timer 1 nil #'(lambda ()
+      (run-with-idle-timer .1 nil #'(lambda ()
                                      (prettier-mode 1))))))
 
 (use-package prettier

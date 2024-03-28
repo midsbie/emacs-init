@@ -1,6 +1,6 @@
 ;;; prettier-js.el --- Configures the prettier-js minor mode
 
-;; Copyright (C) 2017-2023  Miguel Guedes
+;; Copyright (C) 2017-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -51,23 +51,26 @@ all JS/X buffers."
 (defun my/enable-prettier-mode-maybe ()
   "Turn on `prettier-mode' selectively.
 
-If the file associated with the current buffer is contained in a
-repository in which the prettier executable can be found in the
-relative path \"node_modules/.bin/prettier\", `prettier-mode' is
-enabled.
+This function checks if the current buffer's file is within a repository
+that has a local Prettier installation (i.e., the prettier executable is
+found in the relative path \"node_modules/.bin/prettier\"). If so,
+`prettier-mode' is enabled.
 
-The one exception to this rule is when the file is inside a
-\"node_modules\"."
+Note that enabling of the mode is deferred to resolve an issue where
+some .prettierrc settings are ignored when formatting the buffer on
+save. Strangely this only happens when LSP is active."
   (ignore-errors
     (when (and (or init/enable-prettier-mode
-                   (my/locate-file-in-dominating-node-modules ".bin/prettier" buffer-file-name))
-               (not (my/dir-is-parent-p "node_modules" buffer-file-name)))
-      (prettier-mode 1))))
+               (my/locate-file-in-dominating-node-modules ".bin/prettier" buffer-file-name))
+           (not (my/dir-is-parent-p "node_modules" buffer-file-name)))
+      (run-with-idle-timer 1 nil #'(lambda ()
+                                     (prettier-mode 1))))))
 
 (use-package prettier
   :diminish "🧹"
   :init
-  ;; Resolve transient hang when saving files.
+  ;; Resolve transient hang when saving files. Note that this may no longer be
+  ;; necessary.
   ;; Ref: https://github.com/jscheid/prettier.el/issues/34#issuecomment-657508597
   (unless (getenv "NODE_PATH")
     (setenv "NODE_PATH" "/usr/lib/node_modules"))

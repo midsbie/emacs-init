@@ -1,6 +1,6 @@
 ;;; remaps.el --- General keyboard remappings
 
-;; Copyright (C) 2015-2023  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -49,7 +49,6 @@
 (global-set-key (kbd "C-c y")         'browse-kill-ring)
 
 ;; Buffer-related
-(global-set-key (kbd "C-x x")         'mark-whole-buffer)
 ; Was previously using `truncate-lines` but now using the much more useful
 ; visual lines mode:
 ;  (global-set-key (kbd "C-S-w")         'toggle-truncate-lines)
@@ -69,9 +68,9 @@
 
 (global-set-key (kbd "C-c C-t")       'c-toggle-hungry-state)
 
-;; Redefine C-h (help) as C-x h and define backspace as C-h
+;; Redefine C-h (help) as C-x h and define backspace as C-h. Note that Emacs
+;; help feature can still be accessed via F1.
 (global-set-key (kbd "C-h")           'delete-backward-char)
-(global-set-key (kbd "C-x h")         'help-command)
 
 ;; Replace mark-paragraph
 (global-set-key (kbd "M-h")           'backward-kill-word)

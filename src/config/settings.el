@@ -1,6 +1,6 @@
 ;;; settings.el --- Configures settings of emacs' internal features
 
-;; Copyright (C) 2015-2023  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -31,6 +31,8 @@
 ;; Set path override for Mono libraries or the Omnisharp Roslyn server may not
 ;; start or work as expected.
 (setenv "FrameworkPathOverride" "/lib/mono/4.5")
+;; Prevent Git from using pager in `shell-mode'.
+(setenv "GIT_PAGER" "cat")
 
 ;; GENERAL CONFIGURATION
 ;; -----------------------------------------------------------------------------

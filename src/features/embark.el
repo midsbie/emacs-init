@@ -30,7 +30,8 @@
   :bind
   (("C-." . embark-act)                 ; pick some comfortable binding
    ("C-;" . embark-dwim)                ; good alternative: M-.
-   ("<F1> B" . embark-bindings))        ; alternative for `describe-bindings'
+   ("<f1> B" . embark-bindings))        ; alternative for `describe-bindings'
+                                        ; which retains <f1> b chord
 
   :init
   ;; Optionally replace the key help with a completing-read interface

@@ -4,7 +4,7 @@
 
 * Synopsis
 
-Emacs' initialisation files.
+My personal Emacs initialisation files.
 
 * Configurations of note
 ** Jeremy Friesen's dotemacs configuration in literal programming format:

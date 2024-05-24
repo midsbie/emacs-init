@@ -27,6 +27,9 @@
 (defvar my/neotree/refresh-timer nil)
 (defvar my/neotree/last-buffer nil)
 
+(defun init/neotree/config ()
+  (setq neo-theme 'icons))
+
 (defun my/neotree/refresh-on-buffer-change ()
   "Refresh neotree when switching buffers.
 
@@ -44,6 +47,8 @@ updates from taking place."
                                           (neotree-refresh t))))))
 
 (use-package neotree
-  :hook ((buffer-list-update . my/neotree/refresh-on-buffer-change)))
+  :hook ((buffer-list-update . my/neotree/refresh-on-buffer-change))
+  :config
+  (init/neotree/config))
 
 ;;; neotree.el ends here

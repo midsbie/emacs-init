@@ -26,7 +26,7 @@
 
 (defun init/gptel ()
   "Initialize the gptel package."
-  (setq-default gptel-model "gpt-3.5-turbo-1106")
+  (setq-default gptel-model "gpt-4o")
 
   ;; Provide a more convenient list of updated models.  Note that
   ;; "gpt-3.5-turbo-instruct" is not supported because it is not a _chat_ model

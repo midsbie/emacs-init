@@ -1,6 +1,6 @@
-;;; shell.el --- Configures `sh-mode'
+;;; shell.el --- Configures the `shell' feature
 
-;; Copyright (C) 2015-2020  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools

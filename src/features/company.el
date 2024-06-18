@@ -129,8 +129,11 @@ If failed try to complete the common part with `company-complete-common'"
   (company-tooltip-align-annotations t)
   (company-begin-commands '(self-insert-command))
   (company-require-match 'never)
-  ;; Don't use company in the following modes
-  (company-global-modes '(not shell-mode eaf-mode))
+  ;; Don't use company in the following modes. Note that this doesn't really
+  ;; work for the shell script modes because they start out in
+  ;; `fundamental-mode'.
+  (company-global-modes '(not erc-mode message-mode eshell-mode bash-ts-mode
+                              sh-mode shell-mode))
   ;; DON'T set this to 0 to trigger immediate completion as it causes LSP to
   ;; spam the server it is connected to leading to degradation of performance
   ;; and, in some cases (e.g. Unity C# source files), rendering the editor

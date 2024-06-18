@@ -1,6 +1,6 @@
 ;;; sh.el --- Configures sh-mode
 
-;; Copyright (C) 2015-2022  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,20 +24,38 @@
 
 ;;; Code:
 
-(defun init/sh-script ()
+(defun init/sh/determine-script-mode ()
+  "Determine the appropriate mode for a script based on the shebang line."
+  (save-excursion
+    (goto-char (point-min))
+    (when (looking-at "#!\\(.*\\)")
+      (let ((interpreter (match-string 1)))
+        (cond
+         ((string-match "bash" interpreter)
+          (unless (eq major-mode 'bash-ts-mode)
+            (bash-ts-mode)))
+         )))))
+
+(defun init/sh/defaults ()
   "Configure the `sh-script' package."
   (setq-default  sh-basic-offset    2
                  sh-indentation     2))
 
-(defun init/sh-mode/config ()
+(defun init/sh/config ()
   "Initialise modes related to shell scripting development."
-  (init/common-nonweb-programming-mode)
-  (auto-fill-mode -1)
-  ;; Disable to prevent frequent freezes
-  (company-mode -1))
+  (unless (init/sh/determine-script-mode)
+    (init/common-nonweb-programming-mode)
+    (auto-fill-mode -1)
+    ;; Disable to prevent frequent freezes. Unfortunately, deinitialization has
+    ;; to be deferred or it won't take.
+    (run-with-idle-timer .5 nil #'(lambda() (company-mode -1)))))
 
 (use-package sh-script
-  :init (init/sh-script)
-  :hook ((sh-mode . init/sh-mode/config)))
+  :init (init/sh/defaults)
+  :hook ((sh-mode . init/sh/config)))
+
+(use-package bash-ts-mode
+  :init (init/sh/defaults)
+  :hook ((bash-ts-mode . init/sh/config)))
 
 ;;; sh.el ends here

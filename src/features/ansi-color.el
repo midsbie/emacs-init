@@ -1,6 +1,6 @@
 ;;; ansi-color.el --- Customises ANSI color palette
 
-;; Copyright (C) 2015-2023  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -31,10 +31,17 @@
         ansi-color-map          (ansi-color-make-color-map)))
 
 (defun my/colorize-buffer ()
+  "Colorize the entirety of the current buffer if not read-only."
+  (interactive)
+  (if buffer-read-only
+      (message "Unable to colorize read-only buffer")
+    (ansi-color-apply-on-region (point-min) (point-max))))
+
+(defun my/colorize-compilation-buffer ()
   (ansi-color-apply-on-region compilation-filter-start (point-max)))
 
 (use-package ansi-color
-  :hook ((compilation-filter . my/colorize-buffer))
+  :hook ((compilation-filter . my/colorize-compilation-buffer))
   :config
   (init/ansi-color))
 

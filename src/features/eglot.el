@@ -29,11 +29,11 @@
    "~/.emacs.d/.cache/lsp/npm/typescript-language-server/bin/typescript-language-server"))
 
 (defvar init/eglot/extra-server-programs
-  '(
+  `(
     (vala-mode . ("vala-language-server"))
-    (typescript-mode . ("typescript-language-server" "--stdio"))
-    (tsx-ts-mode . ("typescript-language-server" "--stdio"))
-    (typescript-ts-mode . ("typescript-language-server" "--stdio"))))
+    (typescript-mode . (,init/typescript-server-location "--stdio"))
+    (tsx-ts-mode . (,init/typescript-server-location "--stdio"))
+    (typescript-ts-mode . (,init/typescript-server-location "--stdio"))))
 
 (defun init/eglot ()
   "Configure `eglot' package."
@@ -55,9 +55,9 @@
   ;;
   ;;   (if (assoc 'web-mode eglot-server-programs)
   ;;       (setcdr (assoc 'web-mode eglot-server-programs)
-  ;;               '("typescript-language-server" "--stdio"))
+  ;;               '(,init/typescript-server-location "--stdio"))
   ;;     (add-to-list 'eglot-server-programs
-  ;;                  '(web-mode . ("typescript-language-server" "--stdio"))))
+  ;;                  '(web-mode . (,init/typescript-server-location "--stdio"))))
   )
 
 (defun init/eglot/config ()

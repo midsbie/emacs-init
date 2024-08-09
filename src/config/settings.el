@@ -235,6 +235,16 @@
 ;; Windows
 (setq-default split-height-threshold 100)
 
+;; Stop *Warnings* buffers from stealing focus.  Either it doesn't work at all
+;; or only only for all warning types.
+(add-to-list 'display-buffer-alist
+             `(,(rx bos "*Warnings*" eos)
+               (display-buffer-reuse-window
+                display-buffer-in-side-window)
+               (side            . bottom)
+               (reusable-frames . visible)
+               (window-height   . 0.2)))
+
 ;; Run a MAJORMODE-local-vars-hook when local vars are processed.
 ;; From: https://www.emacswiki.org/emacs/LocalVariables
 (defun my/run-local-vars-mode-hook ()

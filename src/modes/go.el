@@ -57,22 +57,27 @@
   (setq-local tab-width 8)
   (setq-local fill-column 100)
 
-  (auto-fill-mode -1))
+  (auto-fill-mode -1)
+
+  ;; Don't declare this in use-package sexp or it will be global
+  (add-hook 'before-save-hook #'init/go-mode/format nil t))
 
 (defun init/go-mode/format ()
   "Format buffer just before saving.
-Note that `lsp-format-buffer' should not be called here as this
-is automatically handled by a hook function setup elsewhere.
-Only additional formatting should be carried out in this
-function."
-  (ignore-errors
-    (lsp-organize-imports)))
+This uses `gofmt' when eglot is active. Otherwise, it carries out
+additional LSP-based formatting if `lsp-mode' is enabled."
+  (cond
+   ((bound-and-true-p eglot--managed-mode)
+    (ignore-errors
+      (eglot-format-buffer)))
+   (lsp-mode
+    (ignore-errors
+      (lsp-organize-imports)))))
 
 (use-package go-mode
   :mode (("\\.go\\'" . go-ts-mode))
   :hook ((go-mode . init/go-mode/mode)
-         (go-ts-mode . init/go-mode/mode)
-         (before-save . init/go-mode/format))
+         (go-ts-mode . init/go-mode/mode))
   :config (init/go-mode)
   :bind (
          (:map go-mode-map

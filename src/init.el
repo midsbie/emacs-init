@@ -36,7 +36,7 @@
   "Emacs initialisation mechanism."
   :group 'init)
 
-(defvar init/path-base (file-name-directory load-file-name)
+(defvar init/path-base (file-name-directory (or load-file-name (buffer-file-name)))
   "Absolute path to Emacs' init `src´ directory.
 If nil, `default-directory' is used instead.")
 

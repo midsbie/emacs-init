@@ -59,11 +59,10 @@
 
 (defun init/eglot/config ()
   "Configure `eglot' when enabled in a buffer."
-  ;; This may prove problematic for some modes and may need to be disabled or
-  ;; enabled conditionally on a per-mode basis.  If conditional configuration is
-  ;; required, please make sure to keep configuration centralized in this
-  ;; module.
-  (add-hook 'before-save-hook 'eglot-format-buffer nil t)
+  ;; The following proved too problematic for some modes and had to be disabled
+  ;; here.  It is now enabled conditionally on a per-mode basis.
+  ;;
+  ;; (add-hook 'before-save-hook 'eglot-format-buffer nil t)
 )
 
 (use-package eglot

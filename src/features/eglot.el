@@ -38,9 +38,6 @@
 (defun init/eglot ()
   "Configure `eglot' package."
 
-  ;; Do not persist server events for better performance
-  (setq eglot-events-buffer-size 0)
-
   (dolist (server-program init/eglot/extra-server-programs)
     (let ((mode (car server-program))
           (args (cdr server-program)))

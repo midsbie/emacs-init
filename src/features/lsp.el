@@ -1,6 +1,6 @@
 ;;; lsp.el --- Configures the `lsp' package
 
-;; Copyright (C) 2021-2023  Miguel Guedes
+;; Copyright (C) 2021-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -53,7 +53,10 @@
 ;;    $ ln -s /usr/lib/mono
 
 ;;; Commentary:
-;;
+
+;; This tutorial documents a user's journey to Eglot from LSP but also contains
+;; a great deal of information on how to set up the latter:
+;; https://andreyor.st/posts/2023-09-09-migrating-from-lsp-mode-to-eglot/
 
 ;;; Code:
 

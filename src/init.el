@@ -56,7 +56,7 @@ Absolute path to directory containing packages managed by the
 
 Files are only visited if the server hasn't yet been started.")
 
-(defvar init/default-language-server-client 'lsp
+(defvar init/default-language-server-client 'eglot
   "Indicates which language server should be used by default when an
 explicit entry does not exist in
 `init/language-server-map-to-major-modes'.  Can be one of 'eglot,

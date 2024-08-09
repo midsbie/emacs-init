@@ -1,6 +1,6 @@
 ;;; eglot.el --- Customises the Eglot package
 
-;; Copyright (C) 2022  Miguel Guedes
+;; Copyright (C) 2022-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -20,7 +20,8 @@
 
 ;;; Commentary:
 
-;;
+;; This tutorial documents a user's journey to Eglot from LSP:
+;; https://andreyor.st/posts/2023-09-09-migrating-from-lsp-mode-to-eglot/
 
 ;;; Code:
 
@@ -30,32 +31,21 @@
 
 (defvar init/eglot/extra-server-programs
   `(
-    (vala-mode . ("vala-language-server"))
-    (typescript-mode . (,init/typescript-server-location "--stdio"))
+    ;; All Typescript-related modes are now supported natively by Eglot but
+    ;; following configuration here for posteriority.
     (tsx-ts-mode . (,init/typescript-server-location "--stdio"))
-    (typescript-ts-mode . (,init/typescript-server-location "--stdio"))))
+    (typescript-mode . (,init/typescript-server-location "--stdio"))
+    (typescript-ts-mode . (,init/typescript-server-location "--stdio"))
+    (vala-mode . ("vala-language-server"))))
 
 (defun init/eglot ()
   "Configure `eglot' package."
 
   (dolist (server-program init/eglot/extra-server-programs)
-    (let ((mode (car server-program))
-          (args (cdr server-program)))
-      (unless (assoc mode eglot-server-programs)
-        (add-to-list 'eglot-server-programs `(,mode . ,args)))))
-
-  ;; Configure `eglot' to support Typescript source files when edited in
-  ;; `web-mode'.
-  ;;
-  ;; This is currently disabled because web-mode is no longer used for this
-  ;; purpose.
-  ;;
-  ;;   (if (assoc 'web-mode eglot-server-programs)
-  ;;       (setcdr (assoc 'web-mode eglot-server-programs)
-  ;;               '(,init/typescript-server-location "--stdio"))
-  ;;     (add-to-list 'eglot-server-programs
-  ;;                  '(web-mode . (,init/typescript-server-location "--stdio"))))
-  )
+    (let ((mode (car server-program)))
+      (unless (init/eglot/is-server-program-supported mode)
+        (message "adding eglot support for %s" mode)
+        (add-to-list 'eglot-server-programs `(,mode . ,(cdr server-program)))))))
 
 (defun init/eglot/config ()
   "Configure `eglot' when enabled in a buffer."
@@ -63,7 +53,26 @@
   ;; here.  It is now enabled conditionally on a per-mode basis.
   ;;
   ;; (add-hook 'before-save-hook 'eglot-format-buffer nil t)
-)
+  )
+
+(defun init/eglot/is-server-program-supported (major-mode)
+  "Check if the given MAJOR-MODE is supported by `eglot-server-programs'."
+  (let ((supported nil))
+    (dolist (entry eglot-server-programs supported)
+      (let ((mode (car entry)))
+        (cond
+         ;; If mode is a list, check if major-mode is an element of this list
+         ((listp mode)
+          (dolist (submode mode)
+            (cond
+             ;; Check if submode is a list that might contain a major mode and metadata
+             ((listp submode)
+              (when (eq major-mode (car submode)) (setq supported t)))
+             ;; Check if submode is a symbol that matches major-mode
+             ((eq major-mode submode) (setq supported t)))))
+         ;; If mode is a symbol, check if it matches major-mode
+         ((eq major-mode mode) (setq supported t))
+         )))))
 
 (use-package eglot
   :hook (eglot-managed-mode . init/eglot/config)

@@ -1,6 +1,6 @@
 ;;; programming.el --- Programming-related configuration
 
-;; Copyright (C) 2015-2023  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -301,9 +301,8 @@ running the eslint tool in blocking mode."
 
 (defun init/get-language-server (mode)
   (let ((lsl (assoc mode init/language-server-map-to-major-modes)))
-    (if lsl
-        (cdr lsl)
-      (or init/default-language-server-client 'lsp))))
+    (or (and lsl (cdr lsl))
+        (or init/default-language-server-client 'eglot))))
 
 (defun init/run--explicit-language-server (ls)
   (cl-case ls

@@ -1,6 +1,6 @@
 ;;; ido.el --- Configures ido and related packages
 
-;; Copyright (C) 2015-2023  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -28,7 +28,7 @@
 
 ;;; Code:
 
-(defun init/ido ()
+(defun init/ido/config ()
   "Initialize the `ido' package."
 
   (ido-mode 1)
@@ -43,6 +43,6 @@
 (use-package flx-ido
   :if (not (featurep 'consult))
   :after ido
-  :config (init/ido))
+  :config (init/ido/config))
 
 ;;; ido.el ends here

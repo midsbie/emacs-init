@@ -1,6 +1,6 @@
 ;;; orderless.el --- Configures the orderless package
 
-;; Copyright (C) 2022  Miguel Guedes
+;; Copyright (C) 2022-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -26,7 +26,6 @@
 
 (use-package orderless
   :demand
-  :init
   :config
   ;; Taken from:
   ;; https://www.reddit.com/r/emacs/comments/o9pue1/comment/h3cpr9x/

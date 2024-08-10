@@ -1,6 +1,6 @@
 ;;; server.el --- Configuration of Emacs `server' package
 
-;; Copyright (C) 2017-2022  Miguel Guedes
+;; Copyright (C) 2017-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(defun init/server ()
+(defun init/server/config ()
   "Start Emacs server.
 
 Also visits the files in the `init/open-at-startup' list if the
@@ -43,6 +43,6 @@ seconds after Emacs has launched."
                              (server-start)))))
 
 (use-package server
-  :config (init/server))
+  :config (init/server/config))
 
 ;;; server.el ends here

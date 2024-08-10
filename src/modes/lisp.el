@@ -34,9 +34,7 @@
 
 (use-package emacs-lisp-mode
   :mode ("\\.el\\'")
-  :hook ((lisp-mode . init/elisp)
-         (emacs-lisp-mode . init/elisp)
-         (lisp-interaction-mode . init/elisp))
+  :hook ((emacs-lisp-mode lisp-interaction-mode lisp-mode) . init/elisp)
   :bind (:map emacs-lisp-mode-map
               ("C-x C-k" . my/eval-buffer)))
 

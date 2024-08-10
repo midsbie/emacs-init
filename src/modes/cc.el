@@ -1,6 +1,6 @@
 ;;; cc.el --- Configures C and C++ modes
 
-;; Copyright (C) 2015-2023  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(defun init/cc/config ()
+(defun init/cc/enable ()
   "Initialise modes related to C and C++ development."
 
   (init/common-nonweb-programming-mode)
@@ -44,8 +44,7 @@
   ;; buftoggle not found
   ;;  :bind (("C-c o" . buftoggle))
 
-  :hook ((c-ts-mode . init/cc/config)
-         (c++-ts-mode . init/cc/config))
+  :hook ((c-ts-mode c++-ts-mode) . init/cc/enable)
 
   :init
   ;; Set environment for compilers to use, but only if not set.

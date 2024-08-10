@@ -1,6 +1,6 @@
 ;;; csharp.el --- Configures `csharp-mode'
 
-;; Copyright (C) 2021  Miguel Guedes
+;; Copyright (C) 2021-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(defun init/mode/csharp ()
+(defun init/csharp/enable ()
   "Initialise csharp mode."
   (setq-local c-basic-offset 4)
 
@@ -46,7 +46,7 @@
   )
 
 (use-package csharp-mode
-  :mode ("\\.cs\\'")
-  :hook (csharp-mode . init/mode/csharp))
+  :mode ("\\.cs\\'" . csharp-ts-mode)
+  :hook ((csharp-mode csharp-ts-mode) . init/csharp/enable))
 
 ;;; csharp.el ends here

@@ -1,6 +1,6 @@
 ;;; flycheck.el --- Configures the flycheck feature
 
-;; Copyright (C) 2015-2023  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -37,40 +37,7 @@
 
 ;;; Code:
 
-(defun init/flycheck/on-flyspell-mode()
-  ;; Deactivate annoying correction of previous misspelled error when C-; is hit.
-  (define-key flyspell-mode-map (kbd "C-;") nil))
-
-;; Setup flycheck with repository-local eslint executable.
-;;
-;; Taken from:
-;; http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
-;;
-;; ... which was taken originally from:
-;; https://emacs.stackexchange.com/q/21205/15089
-;;
-;; However, the original function was enhanced as to support mono-repositories
-;; that host multiple projects via a meta-package manager such as Lerna and
-;; where multiple `node_modules` directories may exist.
-;;
-;; This function now looks up the full directory tree looking for
-;; `node_modules` and the eslint binary inside of it, until it hits the
-;; filesystem root.
-(defun init/flycheck/use-eslint-from-node-modules ()
-  (let* ((curdir (locate-dominating-file
-                (or (buffer-file-name) default-directory)
-                "node_modules")))
-    (setq-local flycheck-javascript-eslint-executable nil)
-    (while (and curdir (not flycheck-javascript-eslint-executable))
-      (let ((eslint (expand-file-name "node_modules/.bin/eslint"
-                                      curdir)))
-        ;; Setting `flycheck-javascript-eslint-executable' terminates the loop
-        ;; above.
-        (if (and eslint (file-executable-p eslint))
-            (setq-local flycheck-javascript-eslint-executable eslint)
-          (setq curdir (file-name-directory (directory-file-name curdir))))))))
-
-(defun init/flycheck ()
+(defun init/flycheck/config ()
   "Configure `flycheck'."
 
   ;; Enable flycheck globally.
@@ -138,10 +105,43 @@
                  (reusable-frames . visible)
                  (window-height   . 0.15))))
 
-(defun init/flycheck/config ()
+(defun init/flycheck/enable ()
   ;; Flymake's configuration turns flycheck-mode off automatically if eglot is
   ;; found to be running.
   )
+
+(defun init/flycheck/on-flyspell-mode()
+  ;; Deactivate annoying correction of previous misspelled error when C-; is hit.
+  (define-key flyspell-mode-map (kbd "C-;") nil))
+
+;; Setup flycheck with repository-local eslint executable.
+;;
+;; Taken from:
+;; http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
+;;
+;; ... which was taken originally from:
+;; https://emacs.stackexchange.com/q/21205/15089
+;;
+;; However, the original function was enhanced as to support mono-repositories
+;; that host multiple projects via a meta-package manager such as Lerna and
+;; where multiple `node_modules` directories may exist.
+;;
+;; This function now looks up the full directory tree looking for
+;; `node_modules` and the eslint binary inside of it, until it hits the
+;; filesystem root.
+(defun init/flycheck/use-eslint-from-node-modules ()
+  (let* ((curdir (locate-dominating-file
+                (or (buffer-file-name) default-directory)
+                "node_modules")))
+    (setq-local flycheck-javascript-eslint-executable nil)
+    (while (and curdir (not flycheck-javascript-eslint-executable))
+      (let ((eslint (expand-file-name "node_modules/.bin/eslint"
+                                      curdir)))
+        ;; Setting `flycheck-javascript-eslint-executable' terminates the loop
+        ;; above.
+        (if (and eslint (file-executable-p eslint))
+            (setq-local flycheck-javascript-eslint-executable eslint)
+          (setq curdir (file-name-directory (directory-file-name curdir))))))))
 
 (defun init/flycheck/chain-eslint-checker ()
   "Add javascript-eslint checker.
@@ -155,14 +155,13 @@ because the checker does not exist."
 
 (use-package flycheck
   :diminish "🐞"
-  :hook ((flycheck-mode . init/flycheck/config)
-         (lsp-diagnostics-mode . init/flycheck/chain-eslint-checker))
-
   ;; Not activating flycheck-popup-tip-mode because error messages frequently
   ;; do not respect boundaries of the window, often making it impossible to
   ;; read the full message.
   ;;
   ;; :hook ((flycheck-mode . flycheck-popup-tip-mode))
-  :init (init/flycheck))
+  :config (init/flycheck/config)
+  :hook ((flycheck-mode . init/flycheck/enable)
+         (lsp-diagnostics-mode . init/flycheck/chain-eslint-checker)))
 
 ;;; flycheck.el ends here

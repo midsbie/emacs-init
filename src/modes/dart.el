@@ -1,6 +1,6 @@
 ;;; dart.el --- Configures `dart-mode'
 
-;; Copyright (C) 2022-2023  Miguel Guedes
+;; Copyright (C) 2022-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -55,7 +55,7 @@
 
 (defvar init/dart-mode/flutter-pid-file ".flutter-debug.pid")
 
-(defun init/dart-mode()
+(defun init/dart-mode/config ()
   "Initialise `dart-mode'."
 
   (setq
@@ -77,7 +77,7 @@
       (setq lsp-dart-flutter-sdk-dir
             (s-trim-right (shell-command-to-string "flutter sdk-path"))))))
 
-(defun init/dart-mode/config ()
+(defun init/dart-mode/enable ()
   "Configure `dart-mode' in the current buffer."
   ;; Start debugging session with `dap-debug'.
   (setq-local lsp-dart-dap-flutter-hot-reload-on-save t)
@@ -120,9 +120,7 @@
 (use-package dart-mode
   ;; Requiring the `s' package because `s-trim-right' is used above.
   :after (company flycheck s)
-  :hook ((dart-mode . init/dart-mode/config))
-  :init
-  (init/dart-mode)
-  )
+  :hook ((dart-mode . init/dart-mode/enable))
+  :config  (init/dart-mode/config))
 
 ;;; dart.el ends here

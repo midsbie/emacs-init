@@ -1,6 +1,6 @@
 ;;; sqlformat.el --- Customises the sqlformat package
 
-;; Copyright (C) 2023  Miguel Guedes
+;; Copyright (C) 2023-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,13 +24,13 @@
 
 ;;; Code:
 
-(defun init/config/sqlformat ()
+(defun init/sqlformat/config ()
   "Configure `sqlformat' package."
   (setq sqlformat-command 'pgformatter
         sqlformat-args '("-s2" "-g" "-w80"))
 )
 
 (use-package sqlformat
-  :config (init/config/sqlformat))
+  :config (init/sqlformat/config))
 
 ;;; sqlformat.el ends here

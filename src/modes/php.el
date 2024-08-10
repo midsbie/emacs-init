@@ -1,6 +1,6 @@
 ;;; php.el --- Configures `php-mode'
 
-;; Copyright (C) 2015-2021  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -33,7 +33,7 @@
 
   (c-add-style "default-php" '("drupal")))
 
-(defun init/php-mode/config ()
+(defun init/php-mode/enable ()
   "Configure `php-mode'."
   (init/common-programming-mode)
 
@@ -44,8 +44,9 @@
   (c-set-style "default-php")
   (c-toggle-auto-newline -1))
 
-(use-package php-mode
-  :hook ((php-mode . init/php-mode/config))
+(use-package php-ts-mode
+  :mode "\\.php\\'"
+  :hook ((php-mode php-ts-mode) . init/php-mode/enable)
   :init (init/php-mode))
 
 ;;; php.el ends here

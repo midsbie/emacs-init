@@ -78,7 +78,7 @@ buffer on save")
     (setq lsp-dart-dap--flutter-progress-reporter-timer
           (run-with-timer 0.2 0.2 #'lsp-dart-dap--flutter-tick-progress-update))))
 
-(defun init/lsp ()
+(defun init/lsp/config ()
   "Initialise LSP."
   ;; Enable plists when the required environment var is set to true.
   ;;
@@ -171,7 +171,7 @@ to degrade under LSP"))
                   (replace-match ""))
                 (apply orig rest))))
 
-(defun init/lsp/config ()
+(defun init/lsp/enable ()
   (lsp-enable-which-key-integration)
 
   ;; This is bugging out for some reason, causing the annotations to: not
@@ -219,9 +219,8 @@ be used when debugging `lsp'."
 ;; against.  The form in use calls for `lsp-deferred' to be invoked in the
 ;; major mode configuration module; e.g. typescript.el, csharp.el.
 (use-package lsp-mode
-  :hook ((lsp-mode . init/lsp/config)
-         (lsp-after-open . init/lsp/after-open-hook))
-  :config
-  (init/lsp))
+  :config (init/lsp/config)
+  :hook ((lsp-mode . init/lsp/enable)
+         (lsp-after-open . init/lsp/after-open-hook)))
 
 ;;; lsp.el ends here

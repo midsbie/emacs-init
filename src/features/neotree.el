@@ -47,8 +47,7 @@ updates from taking place."
                                           (neotree-refresh t))))))
 
 (use-package neotree
-  :hook ((buffer-list-update . my/neotree/refresh-on-buffer-change))
-  :config
-  (init/neotree/config))
+  :config (init/neotree/config)
+  :hook ((buffer-list-update . my/neotree/refresh-on-buffer-change)))
 
 ;;; neotree.el ends here

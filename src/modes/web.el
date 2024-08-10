@@ -1,6 +1,6 @@
 ;;; web.el --- Configures `web-mode'
 
-;; Copyright (C) 2015-2023  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -42,14 +42,8 @@
 
 ;;; Code:
 
-(defvar init/web-mode/exts-to-js-mode '("js" "jsx" "ts" "tsx")
-  "File extensions for switching to `javascript-mode'.
-Contains a list of extensions that cause
-`init/web-mode/toggle-js-mode' to switch to `javascript-mode'
-when a match occurs with the buffer's file name.")
-
-(defun init/web-mode/config ()
-  "Configures `web-mode'."
+(defun init/web-mode/enable ()
+  "Configures enabled `web-mode'."
   (init/common-web-programming-mode)
 
   (make-local-variable 'web-mode-indentation-params)
@@ -103,24 +97,6 @@ when a match occurs with the buffer's file name.")
         (cond ((eq var 'c-basic-offset)
                (setq-local web-mode-code-indent-offset val)))))))
 
-(defun init/web-mode/toggle-js-mode ()
-  "Switch to `javascript-mode'."
-  (interactive)
-  (when (member (file-name-extension buffer-file-name) init/web-mode/exts-to-js-mode)
-    (javascript-mode)))
-
-;; For better jsx syntax-highlighting in web-mode
-;; - courtesy of Patrick @halbtuerke
-;;
-;; Taken from: http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
-;;
-;; NOTE: deactivated as it seems to create issues
-;; (defadvice web-mode-highlight-part (around tweak-jsx activate)
-;;   (if (equal web-mode-content-type "jsx")
-;;     (let ((web-mode-enable-part-face nil))
-;;       ad-do-it)
-;;     ad-do-it))
-
 (defun init/web-mode/before-save ()
   ;; Set web-mode's content-type to "typescript" when editing TS source files or
   ;; it'll default to JSX, causing prettier to error out on Typescript-specific
@@ -143,15 +119,13 @@ when a match occurs with the buffer's file name.")
   )
 
 (use-package web-mode
-  ;; Do not specify the "jsx" extension here as that is handled in the js.el
-  ;; module.
   :mode ("\\.html?\\'")
 
   :bind (:map web-mode-map
               ("C-c C-c" . init/web-mode/toggle-js-mode))
 
   :hook ((web-mode-local-vars . init/web/load-local-vars)
-         (web-mode . init/web-mode/config))
+         (web-mode . init/web-mode/enable))
 
   :init
   ;; Set content type to jsx for source files with "js", "jsx" or "tsx" suffix.

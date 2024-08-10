@@ -1,6 +1,6 @@
 ;;; json.el --- Configures `json-mode'
 
-;; Copyright (C) 2016-2021  Miguel Guedes
+;; Copyright (C) 2016-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,8 +24,8 @@
 
 ;;; Code:
 
-(use-package json-mode
+(use-package json-ts-mode
   :mode ("\\.json\\'")
-  :hook ((json-mode . init/common-nonweb-programming-mode)))
+  :hook ((json-mode json-ts-mode) . init/common-nonweb-programming-mode))
 
 ;;; json.el ends here

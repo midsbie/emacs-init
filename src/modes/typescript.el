@@ -1,6 +1,6 @@
 ;;; typescript.el --- Configures `typescript-mode'
 
-;; Copyright (C) 2020-2023  Miguel Guedes
+;; Copyright (C) 2020-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -39,6 +39,14 @@
 (cl-defmethod project-root ((project (head eglot-project)))
   (cdr project))
 
+(defun init/typescript/config ()
+  "Configure Typescript-related modes."
+  (when (eq (init/get-language-server major-mode) 'eglot)
+    ;; This is required to ensure Eglot is configured correctly for monorepository
+    ;; projects.
+    (add-hook 'project-find-functions
+              'init/typescript/try-tsconfig-json nil nil)))
+
 (defun init/typescript/try-tsconfig-json (dir)
   "Locate the tsconfig.json file in a sub-tree of DIR.
 
@@ -50,7 +58,7 @@ configured correctly for monorepositories."
   (when-let* ((found (locate-dominating-file dir "tsconfig.json")))
     (cons 'eglot-project found)))
 
-(defun init/typescript/config/ts-tsx ()
+(defun init/typescript/enable ()
   "Configure buffer for Typescript development."
   (setq-local typescript-ts-mode-indent-offset 2)
   (setq-local lsp-eslint-enable nil)
@@ -67,15 +75,7 @@ configured correctly for monorepositories."
   :diminish "TS"
   :mode (("\\.ts\\'" . typescript-ts-mode)
          ("\\.tsx\\'" . tsx-ts-mode))
-  :hook ((typescript-ts-mode . init/typescript/config/ts-tsx)
-         (tsx-ts-mode . init/typescript/config/ts-tsx))
-
-  :config
-  (when (eq (init/get-language-server major-mode) 'eglot)
-    ;; This is required to ensure Eglot is configured correctly for monorepository
-    ;; projects.
-    (add-hook 'project-find-functions
-              'init/typescript/try-tsconfig-json nil nil))
-  )
+  :hook ((typescript-ts-mode tsx-ts-mode) . init/typescript/enable)
+  :config (init/typescript/config))
 
 ;;; typescript.el ends here

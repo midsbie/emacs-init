@@ -1,6 +1,6 @@
 ;;; js.el --- Configures `js-mode'
 
-;; Copyright (C) 2015-2023  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -63,8 +63,8 @@ particular FILE-NAME and MODE."
         (tsx-ts-mode)
     (js-ts-mode)))
 
-(defun init/js-mode/config ()
-  "Initialise modes related to Javascript development."
+(defun init/js-mode/enable ()
+  "Configures modes related to Javascript development."
   (init/common-web-programming-mode))
 
 (use-package lsp
@@ -77,6 +77,6 @@ particular FILE-NAME and MODE."
   :diminish "JS"
   :mode (("\\.jsx?\\'" . init/determine-js-mode)
          ("\\.mjs\\'" . init/determine-js-mode))
-  :hook (((js-ts-mode js-mode js-jsx-mode) . init/js-mode/config)))
+  :hook (((js-ts-mode js-mode js-jsx-mode) . init/js-mode/enable)))
 
 ;;; js.el ends here

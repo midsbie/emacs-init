@@ -1,6 +1,6 @@
 ;;; text.el --- Configures `text-mode'
 
-;; Copyright (C) 2015-2020  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(defun init/text-mode ()
+(defun init/text-mode/enable ()
   "Initialises `text-mode'."
   (auto-fill-mode)                  ; auto fill
   (flyspell-mode)                   ; turn spell check on
@@ -32,6 +32,6 @@
   )
 
 (use-package text-mode
-  :hook (text-mode . init/text-mode))
+  :hook (text-mode . init/text-mode/enable))
 
 ;;; text.el ends here

@@ -81,7 +81,7 @@ language server can be 'eglot, 'lsp or nil.  When nil, no
 language server is used.")
 
 (defvar init/format-buffer-on-save-mode-exclusions
-  '()
+  '(tsx-ts-mode)
   "List of major modes for which buffers should not be automatically
 formatted on save by the LSP server.")
 

@@ -1,6 +1,6 @@
 ;;; python.el --- Configures `python-mode'
 
-;; Copyright (C) 2016-2023  Miguel Guedes
+;; Copyright (C) 2016-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -59,7 +59,7 @@
 
 ;;; Code:
 
-(defun init/python-mode/config ()
+(defun init/python-mode/enable ()
   "Customise `python-mode'."
 
   (init/common-nonweb-programming-mode)
@@ -78,10 +78,9 @@
 
 (use-package python
   :mode (("\\.py\\'" . python-ts-mode))
-  :hook ((python-ts-mode . init/python-mode/config)))
+  :hook ((python-mode python-ts-mode) . init/python-mode/enable))
 
 (use-package pylint
   :after python-mode)
-
 
 ;;; python.el ends here

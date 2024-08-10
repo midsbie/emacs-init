@@ -1,6 +1,6 @@
 ;;; features.el --- master configuration module of features
 
-;; Copyright (C) 2022-2023  Miguel Guedes
+;; Copyright (C) 2022-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -31,7 +31,7 @@
 (use-package ace-window
   :bind ("M-o" . ace-window))
 
-;; This package is required by `my/enable-prettier-mode-maybe' and all
+;; This package is required by `init/prettier-mode/maybe-enable' and all
 ;; web-related source files..
 (use-package add-node-modules-path)
 

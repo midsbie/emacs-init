@@ -1,6 +1,6 @@
 ;;; org.el --- Configuration for the `org' package
 
-;; Copyright (C) 2015-2023  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -64,7 +64,7 @@
   (custom-set-variables
    '(org-agenda-window-setup (quote current-window))))
 
-(defun init/org-mode/mode ()
+(defun init/org-mode/enable ()
   ;; Turn on indent and visual line modes by default
   (org-indent-mode 1)
   (visual-line-mode)
@@ -89,7 +89,7 @@
     (message "Killed all org-mode buffers")))
 
 (use-package org
-  :hook (org-mode . init/org-mode/mode)
+  :hook (org-mode . init/org-mode/enable)
   ;; The `ein' package requires org-mode to be available when it loads (or it
   ;; used to), which in turn requires the `speedbar' package to have been
   ;; loaded.

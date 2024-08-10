@@ -1,6 +1,6 @@
 ;;; sql.el --- Customises the sql Emacs package
 
-;; Copyright (C) 2022-2023  Miguel Guedes
+;; Copyright (C) 2022-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,15 +24,15 @@
 
 ;;; Code:
 
-(defun init/sql-interactive-mode/config ()
+(defun init/sql-interactive-mode/enable ()
   (auto-fill-mode -1)
   (display-fill-column-indicator-mode -1))
 
-(defun init/sql-mode/config ()
+(defun init/sql-mode/enable ()
   (init/common-programming-mode))
 
 (use-package sql
-  :hook ((sql-interactive-mode . init/sql-interactive-mode/config)
-         (sql-mode . init/sql-mode/config)))
+  :hook ((sql-interactive-mode . init/sql-interactive-mode/enable)
+         (sql-mode . init/sql-mode/enable)))
 
 ;;; sql.el ends here

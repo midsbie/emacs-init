@@ -1,6 +1,6 @@
 ;;; magit.el --- Configures the magit feature
 
-;; Copyright (C) 2015-2018  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel@miguelguedes.org>
 ;; Keywords: tools
@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(defun init/magit()
+(defun init/magit/config()
   ; As per installation instructions at: https://github.com/sigma/magit-gh-pulls
   ;; (require 'magit-gh-pulls)
   ;; (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
@@ -45,7 +45,7 @@
   )
 
 (use-package magit-status
-  :bind ("C-x g" . magit-status)
-  :config (init/magit))
+  :config (init/magit/config)
+  :bind ("C-x g" . magit-status))
 
 ;;; magit.el ends here

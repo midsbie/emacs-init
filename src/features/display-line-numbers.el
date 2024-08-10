@@ -1,6 +1,6 @@
 ;;; display-line-numbers.el --- Configures `display-line-numbers-mode-mode'
 
-;; Copyright (C) 2015-2021  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -36,13 +36,13 @@
 
 ;;; Code:
 
-(defun init/display-line-numbers-mode ()
+(defun init/display-line-numbers/config ()
   "Lazily load the `display-line-numbers-mode' package and initialise it."
 
   ;; display line numbers in left margin
   (global-display-line-numbers-mode t))
 
 (use-package display-line-numbers
-  :config (init/display-line-numbers-mode))
+  :config (init/display-line-numbers/config))
 
 ;;; display-line-numbers.el ends here

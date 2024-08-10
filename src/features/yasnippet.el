@@ -1,6 +1,6 @@
 ;;; yasnippet.el --- Configures the yasnippet feature
 
-;; Copyright (C) 2015-2023  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools, internal
@@ -24,20 +24,7 @@
 
 ;;; Code:
 
-(defun yas/c++/get-header-extension ()
-  "Guess appropriate extension for header file.
-Assumes currently open file is a C++ implementation source file."
-  (let ((ext (file-name-extension (buffer-file-name))))
-    (cond
-     ((string= ext "cxx") "hxx")
-     ((string= ext "C") "H")
-     (t "h"))))
-
-(defun yas/get-kill-ring-word (default-label)
-  "Return last entry in kill ring if word or DEFAULT-LABEL."
-  (my/get-kill-ring-word default-label))
-
-(defun init/yasnippet()
+(defun init/yasnippet/config ()
   "Initialize yasnippet."
   (define-key yas-minor-mode-map (kbd "C-x y") 'yas/visit-snippet-file)
 
@@ -53,11 +40,24 @@ Assumes currently open file is a C++ implementation source file."
   ;; :hook ((yasnippet-minor-mode . init/yasnippet/config))
   (diminish 'yas-minor-mode "✀"))
 
+(defun yas/c++/get-header-extension ()
+  "Guess appropriate extension for header file.
+Assumes currently open file is a C++ implementation source file."
+  (let ((ext (file-name-extension (buffer-file-name))))
+    (cond
+     ((string= ext "cxx") "hxx")
+     ((string= ext "C") "H")
+     (t "h"))))
+
+(defun yas/get-kill-ring-word (default-label)
+  "Return last entry in kill ring if word or DEFAULT-LABEL."
+  (my/get-kill-ring-word default-label))
+
 (use-package yasnippet
+  :config (init/yasnippet/config)
   :bind (
          ;; Careful if changing in future as backtab binding is replaced in
          ;; `dart-mode'.
-         ("<C-tab>" . yas-expand))
-  :config (init/yasnippet))
+         ("<C-tab>" . yas-expand)))
 
 ;;; yasnippet.el ends here

@@ -1,6 +1,6 @@
 ;;; html.el --- Configures `html-mode'
 
-;; Copyright (C) 2015-2020  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -20,12 +20,12 @@
 
 ;;; Commentary:
 
-;;
+;; `web-mode' is currently used for editing HTML files.
 
 ;;; Code:
 
-(use-package sgml-mode
-  :mode ("\\.html?\\'" "\\.xml\\'")
-  :hook (html-mode . init/common-web-programming-mode))
+(use-package html-ts-mode
+  :mode ("\\.html?\\'")
+  :hook ((html-mode html-ts-mode) . init/common-web-programming-mode))
 
 ;;; html.el ends here

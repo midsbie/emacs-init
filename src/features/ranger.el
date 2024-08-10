@@ -1,6 +1,6 @@
 ;;; ranger.el --- Customises Ace Window package
 
-;; Copyright (C) 2021  Miguel Guedes
+;; Copyright (C) 2021-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -30,12 +30,11 @@
 
 ;;; Code:
 
-(defun init/ranger ()
+(defun init/ranger/config ()
   (setq ranger-show-literal nil))
 
 (use-package ranger
-  :bind ("C-x D" . ranger)
-  :init
-  (init/ranger))
+  :config (init/ranger/config)
+  :bind ("C-x D" . ranger))
 
 ;;; ranger.el ends here

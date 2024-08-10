@@ -48,7 +48,7 @@ all JS/X buffers."
   :group 'init/prettier-mode
   :type 'boolean)
 
-(defun my/enable-prettier-mode-maybe ()
+(defun init/prettier-mode/maybe-enable ()
   "Turn on `prettier-mode' selectively.
 
 This function checks if the current buffer's file is within a repository
@@ -83,6 +83,6 @@ save. Strangely this only happens when LSP is active."
                     css-ts-mode typescript-ts-mode tsx-ts-mode js-ts-mode
                     ;; Deprecated modes
                     js2-mode)
-         . my/enable-prettier-mode-maybe))
+         . init/prettier-mode/maybe-enable))
 
 ;;; prettier-js.el ends here

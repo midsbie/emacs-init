@@ -74,6 +74,7 @@
          )))))
 
 (use-package eglot
+  :config (init/eglot/config)
   :hook (eglot-managed-mode . init/eglot/enable)
 
   :bind (
@@ -106,8 +107,6 @@
      :documentOnTypeFormattingProvider
      :colorProvider
      :foldingRangeProvider))
-  (eglot-stay-out-of '(yasnippet))
-
-  :config (init/eglot/config))
+  (eglot-stay-out-of '(yasnippet)))
 
 ;;; eglot.el ends here

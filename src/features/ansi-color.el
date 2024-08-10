@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(defun init/ansi-color ()
+(defun init/ansi-color/config ()
   "Initialize the `ansi-color' package."
   (setq ansi-color-names-vector ["black" "red" "lawn green" "yellow"
                                  "cornflower blue" "magenta" "cyan" "white"]
@@ -42,7 +42,6 @@
 
 (use-package ansi-color
   :hook ((compilation-filter . my/colorize-compilation-buffer))
-  :config
-  (init/ansi-color))
+  :config (init/ansi-color/config))
 
 ;;; ansi-color.el ends here

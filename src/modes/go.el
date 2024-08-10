@@ -34,7 +34,7 @@
 
 ;;; Code:
 
-(defun init/go-mode ()
+(defun init/go-mode/config ()
   "One-time configuration sequence for `go-mode'."
 
   ;; Warn when "go" binary not found in path.
@@ -45,7 +45,7 @@
   (unless (executable-find "gopls")
       (warn "Unable to find 'gopls' for Go source files: eglot will not run")))
 
-(defun init/go-mode/mode ()
+(defun init/go-mode/enable ()
   "Configure `go-mode' major mode."
   (init/common-nonweb-programming-mode)
 
@@ -59,11 +59,10 @@
 
   (auto-fill-mode -1))
 
-(use-package go-mode
+(use-package go-ts-mode
   :mode (("\\.go\\'" . go-ts-mode))
-  :hook ((go-mode . init/go-mode/mode)
-         (go-ts-mode . init/go-mode/mode))
-  :config (init/go-mode)
+  :hook ((go-mode go-ts-mode) . init/go-mode/enable)
+  :config (init/go-mode/config)
   :bind (
          (:map go-mode-map
                ("C-c C-c" . compile)

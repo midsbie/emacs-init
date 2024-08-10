@@ -1,6 +1,6 @@
 ;;; show-paren.el --- Configures the `paren'
 
-;; Copyright (C) 2015-2020  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,12 +24,12 @@
 
 ;;; Code:
 
-(defun init/paren()
-  "Initialises the `paren' package."
+(defun init/paren/enable()
+  "Configures the enabled `paren' package."
   (show-paren-mode t)                     ; show parenthesis next to cursor
 )
 
 (use-package paren
-  :hook (prog-mode . init/paren))
+  :hook (prog-mode . init/paren/enable))
 
 ;;; show-paren.el ends here

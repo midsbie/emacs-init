@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(defun init/vala ()
+(defun init/vala/config ()
   "Initialise `vala-mode'."
   ;; Add this mode to LSP's formatting indent alist to ensure that the buffer is
   ;; formatted correctly.
@@ -34,7 +34,7 @@
   (unless (assoc 'vala-mode c-default-style)
     (add-to-list 'c-default-style '(vala-mode . "vala"))))
 
-(defun init/vala/config ()
+(defun init/vala/enable ()
   "Configure `vala-mode'."
 
   (init/common-nonweb-programming-mode)
@@ -44,7 +44,7 @@
   (setq-local indent-tabs-mode nil))
 
 (use-package vala-mode
-  :hook ((vala-mode . init/vala/config))
-  :config (init/vala))
+  :config (init/vala/config)
+  :hook ((vala-mode . init/vala/enable)))
 
 ;;; c++.el ends here

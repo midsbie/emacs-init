@@ -1,6 +1,6 @@
 ;;; gptel.el --- Customises the gptel package
 
-;; Copyright (C) 2023  Miguel Guedes
+;; Copyright (C) 2023-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(defun init/gptel ()
+(defun init/gptel/config ()
   "Initialize the gptel package."
   (setq-default gptel-model "gpt-4o")
 
@@ -46,6 +46,6 @@
 
 (use-package gptel
   :config
-  (init/gptel))
+  (init/gptel/config))
 
 ;;; gptel.el ends here

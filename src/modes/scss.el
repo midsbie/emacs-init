@@ -1,6 +1,6 @@
 ;;; scss.el --- Configures `scss-mode'
 
-;; Copyright (C) 2015-2023  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,13 +24,12 @@
 
 ;;; Code:
 
-(defun init/scss/mode ()
+(defun init/scss/enable ()
   "Configure `scss-mode'."
+  (init/common-nonweb-programming-mode)
   (auto-fill-mode -1))
 
 (use-package scss-mode
-  :defer t
-  :hook ((scss-mode . init/common-nonweb-programming-mode)
-         (scss-mode . init/scss/mode)))
+  :hook ((scss-mode . init/scss/enable)))
 
 ;;; scss.el ends here

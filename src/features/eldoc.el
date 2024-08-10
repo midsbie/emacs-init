@@ -1,6 +1,6 @@
 ;;; eldoc.el --- Customises eldoc
 
-;; Copyright (C) 2015-2023  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,13 +24,13 @@
 
 ;;; Code:
 
-(defun init/eldoc ()
+(defun init/eldoc/config ()
   (set-face-attribute 'eldoc-highlight-function-argument nil
                       :underline t ; :foreground "green"
                       :weight 'bold))
 
 (use-package eldoc
   :diminish "📚"
-  :config (init/eldoc))
+  :config (init/eldoc/config))
 
 ;;; eldoc.el ends here

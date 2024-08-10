@@ -1,6 +1,6 @@
 ;;; meson.el --- Configures `meson-mode'
 
-;; Copyright (C) 2023  Miguel Guedes
+;; Copyright (C) 2023-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,11 +24,10 @@
 
 ;;; Code:
 
-(defun init/meson/config ()
+(defun init/meson/enable ()
   (init/common-nonweb-programming-mode))
 
 (use-package meson-mode
-  :defer t
-  :hook ((meson-mode . init/meson/config)))
+  :hook ((meson-mode . init/meson/enable)))
 
 ;;; meson.el ends here

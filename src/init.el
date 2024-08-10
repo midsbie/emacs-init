@@ -1,6 +1,6 @@
 ;;; init.el --- Master emacs initialisation file
 
-;; Copyright (C) 2014-2023 Miguel Guedes
+;; Copyright (C) 2014-2024 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:
@@ -79,6 +79,11 @@ explicit entry does not exist in
   "List of mapping between major mode and a language server.  The
 language server can be 'eglot, 'lsp or nil.  When nil, no
 language server is used.")
+
+(defvar init/format-buffer-on-save-mode-exclusions
+  '()
+  "List of major modes for which buffers should not be automatically
+formatted on save by the LSP server.")
 
 (defvar init/beginning-of-statement-fn '(c-backward-sexp backward-sexp backward-sentence)
   "List containing the order of functions to execute when M-a is pressed.")

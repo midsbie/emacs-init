@@ -1,6 +1,6 @@
 ;;; go.el --- Configures `go-mode'
 
-;; Copyright (C) 2015-2023  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -57,22 +57,7 @@
   (setq-local tab-width 8)
   (setq-local fill-column 100)
 
-  (auto-fill-mode -1)
-
-  ;; Don't declare this in use-package sexp or it will be global
-  (add-hook 'before-save-hook #'init/go-mode/format nil t))
-
-(defun init/go-mode/format ()
-  "Format buffer just before saving.
-This uses `gofmt' when eglot is active. Otherwise, it carries out
-additional LSP-based formatting if `lsp-mode' is enabled."
-  (cond
-   ((bound-and-true-p eglot--managed-mode)
-    (ignore-errors
-      (eglot-format-buffer)))
-   (lsp-mode
-    (ignore-errors
-      (lsp-organize-imports)))))
+  (auto-fill-mode -1))
 
 (use-package go-mode
   :mode (("\\.go\\'" . go-ts-mode))

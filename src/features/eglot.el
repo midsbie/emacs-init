@@ -49,11 +49,10 @@
 
 (defun init/eglot/enable ()
   "Configure `eglot' when enabled in a buffer."
-  ;; The following proved too problematic for some modes and had to be disabled
-  ;; here.  It is now enabled conditionally on a per-mode basis.
-  ;;
-  ;; (add-hook 'before-save-hook 'eglot-format-buffer nil t)
-  )
+  (unless (memq major-mode init/format-buffer-on-save-mode-exclusions)
+    (add-hook 'before-save-hook #'(lambda ()
+                                    (ignore-errors
+                                      (eglot-format-buffer))) nil t)))
 
 (defun init/eglot/is-server-program-supported (major-mode)
   "Check if the given MAJOR-MODE is supported by `eglot-server-programs'."
@@ -90,14 +89,20 @@
   (eglot-extend-to-xref nil)
   ;; Other features one might consider disabling:
   ;;
-  ;;      :hoverProvider
-  ;;      :documentHighlightProvider
+  ;; * :hoverProvider
+  ;;   :documentHighlightProvider
   ;;
-  ;; Note that :documentHighlightProvider seems to require :hoverProvider .
+  ;;    The latter capability seems to require the former.
+  ;;
+  ;; * :documentFormattingProvider
+  ;;   :documentRangeFormattingProvider
+  ;;
+  ;;   There does not seem to be any point in disabling these capabilities
+  ;;   because they have to be explicitly invoked by the user; i.e. they don't
+  ;;   run automatically on save.  Disabling them means `eglot-format-buffer'
+  ;;   will not work.
   (eglot-ignored-server-capabilities
    '(
-     :documentFormattingProvider
-     :documentRangeFormattingProvider
      :documentOnTypeFormattingProvider
      :colorProvider
      :foldingRangeProvider))

@@ -1,6 +1,6 @@
 ;;; vala.el --- Configures `vala-mode'
 
-;; Copyright (C) 2023  Miguel Guedes
+;; Copyright (C) 2023-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -32,17 +32,7 @@
 
   ;; Ensure that the idiomatic "vala" style is used in `vala-mode'.
   (unless (assoc 'vala-mode c-default-style)
-    (add-to-list 'c-default-style '(vala-mode . "vala")))
-
-  ;; DISABLED because it doesn't seem to support lambdas and sometimes deletes
-  ;; code.
-  ;;
-  ;;   (if (executable-find "uncrustify")
-  ;;       (setq init/lsp/format-buffer-major-mode-exceptions
-  ;;             (cl-remove 'vala-mode init/lsp/format-buffer-major-mode-exceptions))
-  ;;     (add-to-list 'init/lsp/format-buffer-major-mode-exceptions 'vala-mode)
-  ;;     (warn "uncrustify executable not found: buffer formatting unavailable"))
-  )
+    (add-to-list 'c-default-style '(vala-mode . "vala"))))
 
 (defun init/vala/config ()
   "Configure `vala-mode'."

@@ -62,10 +62,6 @@
 (use-package go-ts-mode
   :mode (("\\.go\\'" . go-ts-mode))
   :hook ((go-mode go-ts-mode) . init/go-mode/enable)
-  :config (init/go-mode/config)
-  :bind (
-         (:map go-mode-map
-               ("C-c C-c" . compile)
-               ("C-c C-r" . go-remove-unused-imports))))
+  :config (init/go-mode/config))
 
 ;;; go.el ends here

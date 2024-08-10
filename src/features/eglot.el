@@ -38,7 +38,7 @@
     (typescript-ts-mode . (,init/typescript-server-location "--stdio"))
     (vala-mode . ("vala-language-server"))))
 
-(defun init/eglot ()
+(defun init/eglot/config ()
   "Configure `eglot' package."
 
   (dolist (server-program init/eglot/extra-server-programs)
@@ -47,7 +47,7 @@
         (message "adding eglot support for %s" mode)
         (add-to-list 'eglot-server-programs `(,mode . ,(cdr server-program)))))))
 
-(defun init/eglot/config ()
+(defun init/eglot/enable ()
   "Configure `eglot' when enabled in a buffer."
   ;; The following proved too problematic for some modes and had to be disabled
   ;; here.  It is now enabled conditionally on a per-mode basis.
@@ -75,7 +75,7 @@
          )))))
 
 (use-package eglot
-  :hook (eglot-managed-mode . init/eglot/config)
+  :hook (eglot-managed-mode . init/eglot/enable)
 
   :bind (
          :map eglot-mode-map
@@ -83,6 +83,26 @@
               ("C-c l r r" . eglot-rename)
               )
 
-  :config (init/eglot))
+  ;; Most the customizations below were inspired by the tutorial referenced in
+  ;; the Commentary section.
+  :custom
+  (eglot-autoshutdown t)
+  (eglot-extend-to-xref nil)
+  ;; Other features one might consider disabling:
+  ;;
+  ;;      :hoverProvider
+  ;;      :documentHighlightProvider
+  ;;
+  ;; Note that :documentHighlightProvider seems to require :hoverProvider .
+  (eglot-ignored-server-capabilities
+   '(
+     :documentFormattingProvider
+     :documentRangeFormattingProvider
+     :documentOnTypeFormattingProvider
+     :colorProvider
+     :foldingRangeProvider))
+  (eglot-stay-out-of '(yasnippet))
+
+  :config (init/eglot/config))
 
 ;;; eglot.el ends here

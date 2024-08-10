@@ -1,6 +1,6 @@
 ;;; flymake.el --- Configures the flymake feature
 
-;; Copyright (C) 2022-2023  Miguel Guedes
+;; Copyright (C) 2022-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,40 +24,43 @@
 
 ;;; Code:
 
-(defun init/flymake/config ()
+(defun init/flymake/enable ()
   "Configure flymake.
 
 This function disables `flycheck-mode', if enabled, and
 configures `flymake-eslint' correctly if it finds `eslint' in the
 variable `exec-path'."
-  (when (and (eglot-managed-p) flycheck-mode)
+  (when (and (eglot-managed-p) (boundp 'flycheck-mode) flycheck-mode)
     (flycheck-mode -1))
 
-  (flymake-diagnostic-at-point-mode 1)
+  ;; The following block may not be needed anymore.
+  ;; ---
+  ;;   ;; Requires `init/add-node-modules-to-exec-path' to have been called during
+  ;;   ;; mode configuration.  Enabling `flymake-eslint' by directly mutating
+  ;;   ;; `flymake-diagnostic-functions' because calling `flymake-eslint-enable'
+  ;;   ;; doesn't seem to work.
+  ;;   (unless (or (boundp 'flymake-deferred-init)
+  ;;               (not (executable-find flymake-eslint-executable-name)))
+  ;;     (ignore-errors
+  ;;       (setq-local flymake-eslint-project-root (project-root (project-current))))
 
-  ;; This was taken from `flymake-eslint-enable' and may be necessary for the
-  ;; checker to work.  Note that we shouldn't call this function here because
-  ;; it'll lead to a never ending loop (it calls `flymake-mode').
-  (when (fboundp 'flymake-eslint--ensure-binary-exists)
-    (unless flymake-eslint-defer-binary-check
-      (flymake-eslint--ensure-binary-exists)))
-  (when (boundp 'flymake-eslint-project-root)
-    (make-local-variable 'flymake-eslint-project-root))
+  ;;     ;; Unfortunately this reinitializes flymake but there doesn't seem to be any
+  ;;     ;; other way.  Deferred initialization on timer required to prevent flymake
+  ;;     ;; entering stack-busting recursion.
+  ;;     (setq-local flymake-deferred-init
+  ;;                 (run-with-idle-timer .5 nil #'(lambda ()
+  ;;                                                 (flymake-eslint-enable)
+  ;;                                                 (makunbound 'flymake-deferred-init)))))
 
-  ;; Requires `init/add-node-modules-to-exec-path' to have been called during
-  ;; mode configuration.  Enabling `flymake-eslint' by directly mutating
-  ;; `flymake-diagnostic-functions' because calling `flymake-eslint-enable'
-  ;; doesn't seem to work.
-  (when (and (boundp 'flymake-eslint-executable-name)
-             (executable-find flymake-eslint-executable-name))
-    (ignore-errors
-      (setq-local flymake-eslint-project-root (project-root (project-current))))
-    (add-hook 'flymake-diagnostic-functions 'flymake-eslint--checker nil t)))
+  (flymake-diagnostic-at-point-mode 1))
+
+(use-package flymake
+  :demand
+  :hook ((flymake-mode . init/flymake/enable)))
 
 (use-package flymake-diagnostic-at-point
   :demand
   :after flymake
-  :hook ((flymake-mode . init/flymake/config))
   :bind ((:map flymake-mode-map
                ("C-c ! p" . flymake-goto-prev-error)
                ("C-c ! n" . flymake-goto-next-error)

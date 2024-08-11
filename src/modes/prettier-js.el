@@ -61,8 +61,8 @@ some .prettierrc settings are ignored when formatting the buffer on
 save. Strangely this only happens when LSP is active."
   (ignore-errors
     (when (and (or init/enable-prettier-mode
-               (my/locate-file-in-dominating-node-modules ".bin/prettier" buffer-file-name))
-           (not (my/dir-is-parent-p "node_modules" buffer-file-name)))
+               (my/locate-file-in-dominating-node-modules ".bin/prettier" default-directory))
+           (not (my/dir-is-parent-p "node_modules" default-directory)))
       (run-with-idle-timer .1 nil #'(lambda ()
                                      (prettier-mode 1))))))
 

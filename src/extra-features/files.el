@@ -24,20 +24,17 @@
 
 ;;; Code:
 
-(defun my/locate-file-in-dominating-node-modules (file from-path)
-  "Attempt to locate FILE inside a dominating node_modules
-directory from FROM-PATH."
-  (my/locate-file-recursive (concat "node_modules/" file) from-path))
+(defun my/locate-file-in-dominating-directory (file dir-name from-path)
+  "Attempt to locate FILE inside a dominating DIR-NAME directory from FROM-PATH."
+  (let ((dominating-dir (locate-dominating-file from-path dir-name)))
+    (when dominating-dir
+      (let ((file-path (expand-file-name (concat dir-name "/" file) dominating-dir)))
+        (when (file-exists-p file-path)
+          file-path)))))
 
-(defun my/locate-file-recursive (file path)
-  "Locate FILE recursively from PATH."
-  (let (lpath)
-    (cl-pushnew path lpath)
-    (or (locate-file file lpath nil)
-;;                     (lambda (f) (and (file-directory-p f) 'dir-ok)))
-        (unless (string= "/" path)
-          (my/locate-file-recursive file
-                                    (file-name-directory (directory-file-name path)))))))
+(defun my/locate-file-in-dominating-node-modules (file from-path)
+  "Attempt to locate FILE inside a dominating node_modules directory from FROM-PATH."
+  (my/locate-file-in-dominating-directory file "node_modules" from-path))
 
 (defun my/locate-topmost-file (file from-path)
   "Locate the topmost FILE in FROM-PATH."
@@ -53,11 +50,18 @@ directory from FROM-PATH."
 
 (defun my/dir-is-parent-p (dir path)
   "Return t if DIR is parent of PATH."
-  (let* ((parent (directory-file-name (file-name-directory (directory-file-name path))))
-         (basename (file-name-nondirectory parent)))
-    (unless (string= "/" path)
-      (or (string= basename dir)
-          (my/dir-is-parent-p dir parent)))))
+  (let ((found nil)
+        (cur path))
+    (while (and (not found) cur)
+      (setq found (string= (file-name-nondirectory (directory-file-name cur)) dir))
+      (setq cur (my/parent-directory cur)))
+    found))
+
+(defun my/parent-directory (path)
+  "Return the parent directory of PATH, or nil if it is the root."
+  (let ((parent (file-name-directory (directory-file-name path))))
+    (unless (equal parent path)
+      parent)))
 
 (defun my/maybe-load-library (name)
   "Attempt to load library NAME.
@@ -67,7 +71,7 @@ does not interrupt execution."
       (load-library (name))
     (error (princ (format "Failed to load library: %s (reason: %s)" name err)))))
 
-(defun my/read-lines (file)
+(defun my/read-file-lines (file)
   "Return a list of lines of a file given by FILE."
   (with-temp-buffer
     (insert-file-contents file)

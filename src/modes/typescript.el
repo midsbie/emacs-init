@@ -55,8 +55,12 @@ we are indeed in a Typescript repository.
 
 More importantly this function allows for `eglot' to be
 configured correctly for monorepositories."
-  (when-let* ((found (my/locate-topmost-file "tsconfig.json" dir)))
-    (cons 'eglot-project found)))
+  ;; This no longer seems to be required to get Eglot to work with
+  ;; monorepositories.
+  ;; ---
+  ;;   (when-let* ((found (my/locate-topmost-file "tsconfig.json" dir)))
+  ;;     (cons 'eglot-project found)))
+  nil)
 
 (defun init/typescript/enable ()
   "Configure buffer for Typescript development."

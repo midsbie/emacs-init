@@ -1,6 +1,6 @@
 ;;; files.el --- Assorted filesystem functions
 
-;; Copyright (C) 2021-2023  Miguel Guedes
+;; Copyright (C) 2021-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel@miguelguedes.org>
 ;; Keywords: tools
@@ -38,6 +38,18 @@ directory from FROM-PATH."
         (unless (string= "/" path)
           (my/locate-file-recursive file
                                     (file-name-directory (directory-file-name path)))))))
+
+(defun my/locate-topmost-file (file from-path)
+  "Locate the topmost FILE in FROM-PATH."
+  (let ((last nil))
+    (while from-path
+      (let ((file-dir (locate-dominating-file from-path file)))
+        (if file-dir
+            (progn
+              (setq last file-dir)
+              (setq from-path (my/parent-directory (file-name-directory file-dir))))
+          (setq from-path nil))))
+    last))
 
 (defun my/dir-is-parent-p (dir path)
   "Return t if DIR is parent of PATH."

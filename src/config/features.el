@@ -47,6 +47,13 @@
          ("<C-S-left>" . buf-move-left)
          ("<C-S-right>" . buf-move-right)))
 
+(use-package dabbrev
+  :custom
+  ;; Make it so matching and expansion respects case.  May need to be set for
+  ;; prog modes only.
+  (dabbrev-case-fold-search nil)
+  (dabbrev-case-replace nil))
+
 (use-package erc
   :init
   (setq erc-modules

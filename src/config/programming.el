@@ -300,9 +300,18 @@ running the eslint tool in blocking mode."
   (init/run--explicit-language-server (init/get-language-server major-mode)))
 
 (defun init/get-language-server (mode)
+  "Retrieve the appropriate Language Server Protocol (LSP) client for the given MODE.
+
+This function checks the `init/language-server-map-to-major-modes' alist
+to determine the LSP client associated with the specified MODE. If an
+explicit entry is found, the corresponding LSP client is
+returned. Otherwise, it defaults to the value of
+`init/default-language-server-client'. If no default is set, the
+function returns `eglot' as the fallback LSP client."
   (let ((lsl (assoc mode init/language-server-map-to-major-modes)))
-    (or (and lsl (cdr lsl))
-        (or init/default-language-server-client 'eglot))))
+    (if lsl
+        (cdr lsl)
+      (or init/default-language-server-client 'eglot))))
 
 (defun init/run--explicit-language-server (ls)
   (cl-case ls

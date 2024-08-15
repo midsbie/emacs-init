@@ -50,7 +50,7 @@
   "Configure `eglot' when enabled in a buffer."
   (add-hook 'before-save-hook
             (or (init/get-mode-format-function major-mode)
-                init/eglot/format-buffer) nil t))
+                #'init/eglot/format-buffer) nil t))
 
 (defun init/eglot/format-buffer ()
   (unless (init/buffer-formatting-inhibited-p)

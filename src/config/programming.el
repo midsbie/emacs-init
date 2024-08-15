@@ -316,7 +316,8 @@ enabled."
 
 (defun init/maybe-format-buffer ()
   "Conditionally format Prettier buffer."
-  (unless (or (init/buffer-formatting-inhibited-p) prettier-mode)
+  (unless (or (init/buffer-formatting-inhibited-p)
+              (and (boundp 'prettier-mode) prettier-mode))
     (cond
      (eglot--managed-mode (eglot-format-buffer))
      ;; Disabled because it currently formats the buffer automatically anyway.

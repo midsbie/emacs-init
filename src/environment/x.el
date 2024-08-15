@@ -77,9 +77,10 @@ characters wide."
   ;; Dynamically setting active project name.
   ;; From: https://emacs.stackexchange.com/a/35443
   (setq frame-title-format '((:eval
-                              (let ((project-name (projectile-project-name)))
-                                (unless (string= "-" project-name)
-                                  (format "%s :: " project-name))))
+                              (ignore-errors
+                                (let ((project-name (project-name (project-current))))
+                                  (unless (string= "" project-name)
+                                    (format "%s :: " project-name)))))
                              "%b"))
 
   ;; The following themes in order of reverse preference:

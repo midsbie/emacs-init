@@ -235,6 +235,9 @@
 ;; Windows
 (setq-default split-height-threshold 100)
 
+;; Project
+(global-set-key (kbd "C-c C-p") project-prefix-map)
+
 ;; Stop *Warnings* buffers from stealing focus.  Either it doesn't work at all
 ;; or only only for all warning types.
 (add-to-list 'display-buffer-alist

@@ -32,8 +32,6 @@
     (consult-flycheck)))
 
 (use-package consult
-  ;; Requires `projectile' because of key rebindings on its map
-  :after (projectile)
   ;; Replace bindings. Lazily loaded due by `use-package'.
   :bind (
          ;; C-c bindings (mode-specific-map)
@@ -87,13 +85,6 @@
          :map minibuffer-local-map
          ("M-s" . consult-history)                 ; was: next-matching-history-element
          ("M-r" . consult-history)                 ; was: previous-matching-history-element
-         ;; Projectile
-         :map projectile-command-map
-         ("b" . consult-projectile-switch-to-buffer)    ; was: project-switch-to-buffer
-         ("p" . consult-projectile-switch-project)
-         ("d" . consult-projectile-find-dir)
-         ("f" . consult-projectile-find-file)
-         ("r" . consult-projectile-recentf)
          ;; end bindings
          )
 

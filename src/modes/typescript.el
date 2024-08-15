@@ -38,15 +38,13 @@
 
 ;;; Code:
 
-;; Unclear why but it isrequired to prevent error when removed/not present.
+;; Required to prevent an error when removed/not present.
 (cl-defmethod project-root ((project (head eglot-project)))
   (cdr project))
 
 (defun init/typescript/config ()
   "Configure Typescript-related modes."
   (when (eq (init/get-language-server major-mode) 'eglot)
-    ;; This is required to ensure Eglot is configured correctly for monorepository
-    ;; projects.
     (add-hook 'project-find-functions
               'init/typescript/try-tsconfig-json nil nil)))
 

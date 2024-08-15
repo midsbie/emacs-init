@@ -213,12 +213,6 @@ characters wide."
         (set-face-attribute 'magit-diff-removed nil :foreground "white smoke")
         (set-face-attribute 'magit-diff-removed-highlight nil :foreground "white smoke"))
 
-      (use-package company
-        :config
-        (set-face-attribute 'company-tooltip nil :background "gray10")
-        (set-face-attribute 'company-tooltip-selection nil :inherit 'highlight)
-        (set-face-attribute 'company-tooltip-search nil :inherit 'consult-highlight-match))
-
       ;; Doesn't seem to be defined:
       ;; (set-face-attribute 'pulse-highlight-start-face nil :foreground "dark blue")
       (set-face-attribute 'speedbar-highlight-face nil :foreground "dark blue")
@@ -264,7 +258,6 @@ characters wide."
             ((t (:foreground ,(cdr (assoc 'cyan-2fg solarized-zenburn-color-palette-alist))))))
           `(font-lock-property-use-face
             ((t (:foreground ,(cdr (assoc 'base0 solarized-zenburn-color-palette-alist))))))
-          `(company-tooltip-selection ((t (:background "#606060" :weight bold))))
           `(region ((t (:foreground nil :background "#4f5f60")))))))
   )
 

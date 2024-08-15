@@ -34,9 +34,10 @@
   (unless (init/sh/determine-script-mode)
     (init/common-nonweb-programming-mode)
     (auto-fill-mode -1)
-    ;; Disable to prevent frequent freezes. Unfortunately, deinitialization has
-    ;; to be deferred or it won't take.
-    (run-with-idle-timer .5 nil #'(lambda() (company-mode -1)))))
+    (when (and (boundp company-mode) company-mode)
+      ;; Disable to prevent frequent freezes. Unfortunately, deinitialization has
+      ;; to be deferred or it won't take.
+      (run-with-idle-timer .5 nil #'(lambda() (company-mode -1))))))
 
 (defun init/sh/determine-script-mode ()
   "Determine the appropriate mode for a script based on the shebang line."

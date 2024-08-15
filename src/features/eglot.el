@@ -40,7 +40,6 @@
 
 (defun init/eglot/config ()
   "Configure `eglot' package."
-
   (dolist (server-program init/eglot/extra-server-programs)
     (let ((mode (car server-program)))
       (unless (init/eglot/server-program-supported-p mode)
@@ -49,10 +48,13 @@
 
 (defun init/eglot/enable ()
   "Configure `eglot' when enabled in a buffer."
-  (unless (memq major-mode init/format-buffer-on-save-mode-exclusions)
-    (add-hook 'before-save-hook #'(lambda ()
-                                    (ignore-errors
-                                      (eglot-format-buffer))) nil t)))
+  (add-hook 'before-save-hook
+            (or (init/get-mode-format-function major-mode)
+                init/eglot/format-buffer) nil t))
+
+(defun init/eglot/format-buffer ()
+  (unless (init/buffer-formatting-inhibited-p)
+    (eglot-format-buffer)))
 
 (defun init/eglot/server-program-supported-p (major-mode)
   "Check if the given MAJOR-MODE is supported by `eglot-server-programs'."
@@ -77,8 +79,7 @@
   :config (init/eglot/config)
   :hook (eglot-managed-mode . init/eglot/enable)
 
-  :bind (
-         :map eglot-mode-map
+  :bind (:map eglot-mode-map
               ("C-c l a a" . eglot-code-actions)
               ("C-c l r r" . eglot-rename)
               )

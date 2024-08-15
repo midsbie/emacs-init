@@ -80,10 +80,14 @@ explicit entry does not exist in
 language server can be 'eglot, 'lsp or nil.  When nil, no
 language server is used.")
 
-(defvar init/format-buffer-on-save-mode-exclusions
-  '(tsx-ts-mode)
-  "List of major modes for which buffers should not be automatically
-formatted on save by the LSP server.")
+(defvar-local init/inhibit-buffer-formatting nil
+  "When non-nil, disable all automatic buffer formatting through LSP.")
+
+(defvar init/buffer-format-handlers-alist
+  '(((js-mode js-ts-mode typescript typescript-ts-mode tsx-ts-mode) . init/maybe-format-buffer))
+  "List of major modes for which to run a special function when saving the
+buffer.  If none is specified for the mode associated with the buffer,
+the LSP client's default formatting function is invoked.")
 
 (defvar init/beginning-of-statement-fn '(c-backward-sexp backward-sexp backward-sentence)
   "List containing the order of functions to execute when M-a is pressed.")

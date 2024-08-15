@@ -309,4 +309,29 @@ running the eslint tool in blocking mode."
     ('eglot (eglot-ensure))
     ('lsp (lsp-deferred))))
 
+(defun init/buffer-formatting-inhibited-p ()
+  "Returns t if master circuit breaker preventing buffer formatting is
+enabled."
+  (and (boundp 'init/inhibit-buffer-formatting) init/inhibit-buffer-formatting))
+
+(defun init/maybe-format-buffer ()
+  "Conditionally format Prettier buffer."
+  (unless (or (init/buffer-formatting-inhibited-p) prettier-mode)
+    (cond
+     (eglot--managed-mode (eglot-format-buffer))
+     ;; Disabled because it currently formats the buffer automatically anyway.
+     ;; (lsp-mode (lsp-format-buffer))
+     )))
+
+(defun init/get-mode-format-function (mode)
+  "Get the save function for the current buffer's major mode."
+  (let ((pair
+         (cl-some (lambda (pair)
+                    (when (or (and (listp (car pair))
+                                   (memq mode (car pair)))
+                              (eq mode (car pair)))
+                      pair))
+                  init/buffer-format-handlers-alist)))
+    (and pair (cdr pair))))
+
 ;;; programming.el ends here

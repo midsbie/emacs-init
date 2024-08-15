@@ -31,9 +31,6 @@
 
   ; DON'T ask to save buffers!
   (setq magit-save-repository-buffers nil)
-  ; Prevent Emacs' own VC package from managing Git repositories.
-  ; https://magit.vc/manual/magit/Performance.html#The-Built_002dIn-VC-Package
-  (setq vc-handled-backends (delq 'Git vc-handled-backends))
 
   ;; NOTE: the following is disabled as it causes 'magit-status to not load.
   ;; Unclear why.

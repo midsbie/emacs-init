@@ -43,7 +43,7 @@
 
   (dolist (server-program init/eglot/extra-server-programs)
     (let ((mode (car server-program)))
-      (unless (init/eglot/is-server-program-supported mode)
+      (unless (init/eglot/server-program-supported-p mode)
         (message "adding eglot support for %s" mode)
         (add-to-list 'eglot-server-programs `(,mode . ,(cdr server-program)))))))
 
@@ -54,7 +54,7 @@
                                     (ignore-errors
                                       (eglot-format-buffer))) nil t)))
 
-(defun init/eglot/is-server-program-supported (major-mode)
+(defun init/eglot/server-program-supported-p (major-mode)
   "Check if the given MAJOR-MODE is supported by `eglot-server-programs'."
   (let ((supported nil))
     (dolist (entry eglot-server-programs supported)

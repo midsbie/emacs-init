@@ -24,6 +24,9 @@
 
 ;;; Log:
 ;;
+;; ??0824 Transitioned again to the `eglot' package as it is now a core Emacs
+;;        package and works much better than `lsp'.
+;;
 ;; 260323 Reverted to using `lsp' as an experiment to solve weird performance
 ;;        issues under eglot.
 ;;
@@ -48,19 +51,22 @@
               'init/typescript/try-tsconfig-json nil nil)))
 
 (defun init/typescript/try-tsconfig-json (dir)
-  "Locate the tsconfig.json file in a sub-tree of DIR.
+  "Search for the nearest tsconfig.json file in a subdirectory of DIR.
 
-Successfully locating Typescript's configuration file means that
-we are indeed in a Typescript repository.
+This function helps identify if the current directory is part of a
+Typescript project by locating a 'tsconfig.json' file within its
+subtree.  If found, it returns a configuration suitable for the `eglot'
+LSP client.
 
-More importantly this function allows for `eglot' to be
-configured correctly for monorepositories."
-  ;; This no longer seems to be required to get Eglot to work with
-  ;; monorepositories.
-  ;; ---
-  ;;   (when-let* ((found (my/locate-topmost-file "tsconfig.json" dir)))
-  ;;     (cons 'eglot-project found)))
-  nil)
+This is particularly useful for handling monorepositories with complex
+structures, which may have one or more of the following characteristics:
+
+a) Multiple 'tsconfig.json' files due to the presence of multiple packages.
+
+b) A single 'tsconfig.json' file that is not located at the repository's root.
+"
+  (when-let* ((found (my/locate-topmost-file "tsconfig.json" dir)))
+    (cons 'eglot-project found)))
 
 (defun init/typescript/enable ()
   "Configure buffer for Typescript development."

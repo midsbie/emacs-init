@@ -119,7 +119,6 @@
 (defun init/common-programming-mode ()
   ;; NOTE: we are explicitly disabling `flyspell-mode' since it suffers from
   ;; very annoying, intrusive issues that actually impede development.
-  (setq-local programming-buffer t)
 
   ;; Providing navigation between code blocks designated by curly brackets and parentheses.
   (local-set-key (kbd "C-x [") 'backward-up-list)

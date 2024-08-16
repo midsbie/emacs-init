@@ -224,25 +224,22 @@
 (defun init/find-node-modules ()
   "Find path to node_modules directory.
 
-This defun attempts to determine the path to the repository's
-node_modules directory by recursively traversing all the
-directories of the current buffer and returning the path to the
-last node_modules seen."
-  (let* ((p (locate-dominating-file (or (buffer-file-name) default-directory)
-                                    "node_modules"))
-         (last nil))
-    (while (and p (not (string= p "/")))
-    (setq p (expand-file-name p))
-      (when (and (file-directory-p (expand-file-name "node_modules" p)))
-        (setq last p))
-      (setq p (file-name-directory (directory-file-name p))))
-    last))
+Attempts to determine the path to the repository's topmost node_modules
+directory by recursively traversing all the directories of the current
+buffer."
+  (when-let* ((path (my/locate-topmost-file (or (buffer-file-name) default-directory)
+                                            "node_modules"))
+              (full-path (expand-file-name "node_modules" path)))
+    (when (file-directory-p full-path)
+      full-path)))
 
 (defun init/add-node-modules-to-exec-path ()
-  "Add special node_modules/.bin directory to `exec-path', if found
-in the buffer's directory tree."
+  "Add node_modules/.bin directory to buffer-local `exec-path' when present.
+
+Searches for node_modules/.bin in the buffer's directory tree and adds
+it to the buffer-local `exec-path' if found."
   (let* ((p (init/find-node-modules))
-         (binp (and p (expand-file-name "node_modules/.bin" p))))
+         (binp (and p (expand-file-name ".bin" p))))
     (when (and binp (file-directory-p binp))
       (make-local-variable 'exec-path)
       (add-to-list 'exec-path binp))))

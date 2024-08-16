@@ -1,6 +1,6 @@
 ;;; consult.el --- Configures the consult package
 
-;; Copyright (C) 2022  Miguel Guedes
+;; Copyright (C) 2022-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -38,7 +38,6 @@
          ("C-c h" . consult-history)
          ("C-c m" . consult-mode-command)
          ("C-c k" . consult-kmacro)
-         ("C-c p" . consult-projectile)
          ;; C-x bindings (ctl-x-map)
          ("C-x M-:" . consult-complex-command)     ; was: repeat-complex-command
          ("C-x b" . consult-buffer)                ; was: switch-to-buffer

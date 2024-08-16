@@ -117,9 +117,6 @@
   (electric-indent-local-mode -1))
 
 (defun init/common-programming-mode ()
-  ;; NOTE: we are explicitly disabling `flyspell-mode' since it suffers from
-  ;; very annoying, intrusive issues that actually impede development.
-
   ;; Providing navigation between code blocks designated by curly brackets and parentheses.
   (local-set-key (kbd "C-x [") 'backward-up-list)
   (local-set-key (kbd "C-x ]") 'up-list)
@@ -152,10 +149,9 @@
   "Perform initialisation of aspects common to all programming-related modes."
   (auto-fill-mode)                  ; auto fill
 
-;;(flyspell-prog-mode)              ; turn spell check for strings and comments
-;;(ac-flyspell-workaround)          ; this defun must be executed to prevent
-                                    ; flyspell from messing with
-                                    ; auto-complete-mode
+  ;; NOTE: we are explicitly disabling `flyspell-mode' since it suffers from
+  ;; very annoying, intrusive issues that actually impede development.
+  ;;(flyspell-prog-mode)              ; turn spell check for strings and comments
 
   ;; `c-auto-newline' was previously disabled and done so for a reason. Have
   ;; just tested it and seemed fine whilst editing a C source file but may not

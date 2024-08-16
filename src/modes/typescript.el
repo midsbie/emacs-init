@@ -63,7 +63,7 @@ a) Multiple 'tsconfig.json' files due to the presence of multiple packages.
 
 b) A single 'tsconfig.json' file that is not located at the repository's root.
 "
-  (when-let* ((found (my/locate-topmost-file "tsconfig.json" dir)))
+  (when-let* ((found (my/locate-topmost-file dir "tsconfig.json")))
     (cons 'eglot-project found)))
 
 (defun init/typescript/enable ()

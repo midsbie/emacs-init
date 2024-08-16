@@ -36,8 +36,9 @@
   "Attempt to locate FILE inside a dominating node_modules directory from FROM-PATH."
   (my/locate-file-in-dominating-directory file "node_modules" from-path))
 
-(defun my/locate-topmost-file (file from-path)
-  "Locate the topmost FILE in FROM-PATH."
+(defun my/locate-topmost-file (from-path file)
+  "Starting at FROM-PATH, look up directory hierarchy for the topmost directory
+containing FILE."
   (let ((last nil))
     (while from-path
       (let ((file-dir (locate-dominating-file from-path file)))

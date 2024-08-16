@@ -89,6 +89,10 @@ language server is used.")
 buffer.  If none is specified for the mode associated with the buffer,
 the LSP client's default formatting function is invoked.")
 
+(defconst init/web-programming-modes
+  '(js-mode js-ts-mode typescript-mode typescript-ts-mode tsx-ts-mode)
+  "List of major modes that are related to web programming.")
+
 (defvar init/beginning-of-statement-fn '(c-backward-sexp backward-sexp backward-sentence)
   "List containing the order of functions to execute when M-a is pressed.")
 

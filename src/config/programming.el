@@ -248,15 +248,13 @@ in the buffer's directory tree."
       (add-to-list 'exec-path binp))))
 
 (defun init/is-web-programming-mode-p ()
-  (or (eq major-mode 'js-mode)
-            (eq major-mode 'typescript-mode)
-            (eq major-mode 'typescript-ts-mode)
-            (eq major-mode 'tsx-ts-mode)
-            (and
-             (eq major-mode 'web-mode)
-             (or
-              (string= web-mode-content-type "js")
-              (string= web-mode-content-type "jsx")))))
+  "Return t if current `major-mode' is a web programming mode."
+  (or (memq major-mode init/web-programming-modes)
+      (and
+       (eq major-mode 'web-mode)
+       (or
+        (string= web-mode-content-type "js")
+        (string= web-mode-content-type "jsx")))))
 
 (defun init/run-eslint-autofix-if-applicable ()
   (when (init/is-web-programming-mode-p)

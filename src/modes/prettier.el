@@ -1,4 +1,4 @@
-;;; prettier-js.el --- Configures the prettier-js minor mode
+;;; prettier.el --- Configures the prettier minor mode
 
 ;; Copyright (C) 2017-2024  Miguel Guedes
 
@@ -79,4 +79,4 @@ save. Strangely this only happens when LSP is active."
                     js2-mode)
          . init/prettier-mode/maybe-enable))
 
-;;; prettier-js.el ends here
+;;; prettier.el ends here

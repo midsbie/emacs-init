@@ -68,12 +68,6 @@ save. Strangely this only happens when LSP is active."
 
 (use-package prettier
   :diminish "🧹"
-  :init
-  ;; Resolve transient hang when saving files. Note that this may no longer be
-  ;; necessary.
-  ;; Ref: https://github.com/jscheid/prettier.el/issues/34#issuecomment-657508597
-  (unless (getenv "NODE_PATH")
-    (setenv "NODE_PATH" "/usr/lib/node_modules"))
 
   :hook ((
           ;; Actively used modes

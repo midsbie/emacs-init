@@ -170,13 +170,11 @@
 
 (defun init/common-web-programming-mode ()
   "Initialise modes related to web development."
+  (auto-fill-mode -1)
 
-  (auto-fill-mode -1)                   ; unclear why this is enabled in common
-                                        ; non-web
-
-  (setq-local fill-column init/defaults/fill-column)
-  (setq-local tab-width   2)
+  (setq-local tab-width       2)
   (setq-local c-basic-offset  2)
+  (setq-local fill-column     init/defaults/fill-column)
 
   ;; Add node_modules path to `exec-path' to enable:
   ;;
@@ -199,23 +197,29 @@
   (init/add-node-modules-to-exec-path)
 
   (init/common-programming-mode)
+  (run-with-idle-timer 1 nil #'init/common-web-programming-mode--deferred))
 
-  ;; Disabled as it would likely turn into a nuisance.  Can still be run via
-  ;; `init/run-eslint-autofix'.
-  ;; (add-hook 'after-save-hook #'init/run-eslint-autofix-if-applicable nil t)
-
-  ;; For some reason preemptively setting the fill column above is now not
-  ;; taking hold in the following modes: `tide-mode', `js-mode'.
-  ;;
-  ;; Leave this statement at the end of this defun or it may not run.
+(defun init/common-web-programming-mode--deferred ()
+  "Deferred initialization of common settings for web-related modes."
+  ;; For some reason preemptively setting the fill column above is
+  ;; now not taking hold in `js-mode' buffers.
   (setq-local fill-column init/defaults/fill-column)
-  (run-with-idle-timer .1 nil #'(lambda ()
-                                  (setq-local fill-column init/defaults/fill-column)))
 
-  ;; Provide default command for `compile' that should apply to all web-related
-  ;; major modes.
-  (when (or (not compile-command) (string= compile-command "make -k "))
-    (setq-local compile-command "yarn run test")))
+  ;; Provide default command for `compile' that should apply to all
+  ;; web-related major modes.
+  (when (string= compile-command (default-value 'compile-command))
+    (setq-local compile-command
+                (concat (if (and (executable-find "yarn")
+                                 (locate-dominating-file default-directory "yarn.lock"))
+                            "yarn"
+                          "npm") " run test")))
+
+  ;; `flymake-mode' is automatically enabled by `eglot' but this isn't done
+  ;; preemptively.
+  (when (and (boundp 'flymake-mode) flymake-mode)
+    (ignore-errors
+      (when (flymake-eslint-enable)
+        (flymake-start)))))
 
 (defun init/find-node-modules ()
   "Find path to node_modules directory.

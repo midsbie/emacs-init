@@ -32,7 +32,7 @@
 (defvar init/eglot/extra-server-programs
   `(
     ;; All Typescript-related modes are now supported natively by Eglot but
-    ;; following configuration here for posteriority.
+    ;; keeping following configuration here for posteriority.
     (tsx-ts-mode . (,init/typescript-server-location "--stdio"))
     (typescript-mode . (,init/typescript-server-location "--stdio"))
     (typescript-ts-mode . (,init/typescript-server-location "--stdio"))

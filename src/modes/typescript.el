@@ -22,49 +22,27 @@
 ;; Configuration of `eglot' by locating the `tsconfig.json' file found at:
 ;; https://notes.alexkehayias.com/setting-up-typescript-and-eslint-with-eglot/
 
-;;; Log:
+;; Eglot may fail to start if the TypeScript server (`tsserver`) is not found in
+;; the default location (`./node_modules/.bin`) relative to the project's root
+;; directory. To resolve this issue, you need to customize the command that
+;; Eglot uses to start the server by specifying the path to `tsserver` manually
+;; in the `tsserver.path` option under `initializationOptions`.
 ;;
-;; ??0824 Transitioned again to the `eglot' package as it is now a core Emacs
-;;        package and works much better than `lsp'.
+;; The recommended approach is to create a `.dir-locals.el` file in your project
+;; root with the following configuration:
 ;;
-;; 260323 Reverted to using `lsp' as an experiment to solve weird performance
-;;        issues under eglot.
-;;
-;; 050622 Transitioned to the amazing `eglot' package
-;;
-;; 171121 Moving back to TIDE as LSP is too slow
-;;
-;; 030921 Disabling TIDE in favour of LSP
+;; (((js-mode js-ts-mode tsx-ts-mode typescript-ts-mode typescript-mode)
+;;   . ((eglot-server-programs
+;;       . ((((js-mode :language-id "javascript")
+;;            (js-ts-mode :language-id "javascript")
+;;            (tsx-ts-mode :language-id "typescriptreact")
+;;            (typescript-ts-mode :language-id "typescript")
+;;            (typescript-mode :language-id "typescript"))
+;;           . ("typescript-language-server" "--stdio"
+;;              :initializationOptions
+;;              (:tsserver (:path "./server/node_modules/.bin/tsserver")))))))))
 
 ;;; Code:
-
-;; Required to prevent an error when removed/not present.
-(cl-defmethod project-root ((project (head eglot-project)))
-  (cdr project))
-
-(defun init/typescript/config ()
-  "Configure Typescript-related modes."
-  (when (eq (init/get-language-server major-mode) 'eglot)
-    (add-hook 'project-find-functions
-              'init/typescript/try-tsconfig-json nil nil)))
-
-(defun init/typescript/try-tsconfig-json (dir)
-  "Search for the nearest tsconfig.json file in a subdirectory of DIR.
-
-This function helps identify if the current directory is part of a
-Typescript project by locating a 'tsconfig.json' file within its
-subtree.  If found, it returns a configuration suitable for the `eglot'
-LSP client.
-
-This is particularly useful for handling monorepositories with complex
-structures, which may have one or more of the following characteristics:
-
-a) Multiple 'tsconfig.json' files due to the presence of multiple packages.
-
-b) A single 'tsconfig.json' file that is not located at the repository's root.
-"
-  (when-let* ((found (my/locate-topmost-file dir "tsconfig.json")))
-    (cons 'eglot-project found)))
 
 (defun init/typescript/enable ()
   "Configure buffer for Typescript development."
@@ -83,7 +61,6 @@ b) A single 'tsconfig.json' file that is not located at the repository's root.
   :diminish "TS"
   :mode (("\\.ts\\'" . typescript-ts-mode)
          ("\\.tsx\\'" . tsx-ts-mode))
-  :hook ((typescript-ts-mode tsx-ts-mode) . init/typescript/enable)
-  :config (init/typescript/config))
+  :hook ((typescript-ts-mode tsx-ts-mode) . init/typescript/enable))
 
 ;;; typescript.el ends here

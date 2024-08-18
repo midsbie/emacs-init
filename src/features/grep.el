@@ -1,6 +1,6 @@
 ;;; grep.el --- grep command extensions
 
-;; Copyright (C) 2019-2023  Miguel Guedes
+;; Copyright (C) 2019-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -55,7 +55,8 @@ current working directory."
               "Run git-grep (like this): "
               (car (acons command (+ (length word) (cdr my/git-grep-find-command)) '()))
               'grep-find-history)))))
-  (let* ((last-grep-use-null-device grep-use-null-device))
+  (let* ((last-grep-use-null-device
+          (and (boundp 'grep-use-null-device) grep-use-null-device)))
     ;; We must set `grep-use-null-device' to nil or we get a strange error
     ;; involving output redirection to /dev/null
     (setq grep-use-null-device nil)

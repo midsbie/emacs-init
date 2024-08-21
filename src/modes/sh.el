@@ -34,7 +34,7 @@
   (unless (init/sh/determine-script-mode)
     (init/common-nonweb-programming-mode)
     (auto-fill-mode -1)
-    (when (and (boundp company-mode) company-mode)
+    (when (and (boundp 'company-mode) company-mode)
       ;; Disable to prevent frequent freezes. Unfortunately, deinitialization has
       ;; to be deferred or it won't take.
       (run-with-idle-timer .5 nil #'(lambda() (company-mode -1))))))

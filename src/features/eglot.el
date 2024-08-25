@@ -44,7 +44,8 @@
     (let ((mode (car server-program)))
       (unless (init/eglot/server-program-supported-p mode)
         (message "adding eglot support for %s" mode)
-        (add-to-list 'eglot-server-programs `(,mode . ,(cdr server-program)))))))
+        (add-to-list 'eglot-server-programs `(,mode . ,(cdr server-program))))))
+  (advice-add 'eglot-rename :around #'init/eglot/rename-advice))
 
 (defun init/eglot/enable ()
   "Configure `eglot' when enabled in a buffer."
@@ -74,6 +75,16 @@
          ;; If mode is a symbol, check if it matches major-mode
          ((eq major-mode mode) (setq supported t))
          )))))
+
+(defun init/eglot/rename-advice (orig-fun &rest args)
+  "Advice to pre-fill the current symbol name in `eglot-rename' prompt."
+  (interactive
+   (let ((current-symbol (thing-at-point 'symbol t)))
+     (list (read-from-minibuffer
+            (format "Rename `%s' to: " (or current-symbol "unknown symbol"))
+            (symbol-name (symbol-at-point)))))
+  )
+  (apply orig-fun args))
 
 (use-package eglot
   :config (init/eglot/config)

@@ -30,10 +30,6 @@
 
 ;; Mode is `makefile-mode' in make-mode.el, provides `make-mode'.
 (use-package make-mode
-  :hook ((makefile-mode . init/makefile-mode/enable))
-  :config
-  ;; Reassign the key binding that conflicts with `project-prefix-map', then
-  ;; expose `project' bindings.
-  (define-key makefile-mode-map (kbd "C-c C-p") nil))
+  :hook ((makefile-mode . init/makefile-mode/enable)))
 
 ;;; makefile.el ends here

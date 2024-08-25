@@ -25,12 +25,6 @@
 ;;; Code:
 
 (use-package markdown-mode
-  :config
-  ;; Reassign the key binding that conflicts with `project-prefix-map', then
-  ;; expose `project' bindings.
-  (define-key markdown-mode-map (kbd "C-c C-p") nil)
-  (define-key markdown-mode-map (kbd "C-c M-p") 'markdown-outline-previous)
-
-  (define-key markdown-mode-map (kbd "C-c p") project-prefix-map))
+  :defer t)
 
 ;;; markdown.el ends here

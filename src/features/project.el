@@ -24,6 +24,10 @@
 
 ;;; Code:
 
+(defun init/project/config ()
+  ;; Don't use C-c C-p as it clashes with many major mode default bindings.
+  (global-set-key (kbd "C-c P") project-prefix-map))
+
 (defun my/project-find-file-other-window (&optional include-all)
   "Open FILENAME from a project in another window."
   (interactive)
@@ -35,6 +39,7 @@
 
 (use-package project
   :bind (:map project-prefix-map
-              ("4 f" . my/project-find-file-other-window)))
+              ("4 f" . my/project-find-file-other-window))
+  :config (init/project/config))
 
 ;;; project.el ends here

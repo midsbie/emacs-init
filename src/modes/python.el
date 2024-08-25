@@ -68,11 +68,6 @@
 
   (setq-local fill-column init/defaults/fill-column/narrow)
 
-  ;; Undoing replacement of projectile's key bindings when `elpy-mode' enabled.
-  (when (and (boundp 'elpy-mode-map) elpy-mode-map)
-    (define-key elpy-mode-map (kbd "C-c C-p") nil)
-    (define-key elpy-mode-map (kbd "C-c C-n") nil))
-
   (py-autopep8-mode)
   (auto-fill-mode -1))
 

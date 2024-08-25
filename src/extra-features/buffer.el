@@ -82,13 +82,13 @@ attempt to provide a similar result using alternative methods."
   (let ((top-entry (current-kill 0 t)))
     (my/get-word top-entry default-string)))
 
-(defun my/copy-sexp-to-kill-ring ()
-  "Copy sexp at point to kill ring."
+(defun my/copy-symbol-to-kill-ring ()
+  "Copy symbol at point to kill ring."
   (interactive)
-  (let ((sexp (thing-at-point 'sexp 'no-properties)))
-    (when sexp
-      (kill-new sexp)
-      (message "copied: %s" sexp))))
+  (let ((symbol (symbol-name (symbol-at-point))))
+    (when symbol
+      (kill-new symbol)
+      (message "copied: %s" symbol))))
 
 (defun my/kill-other-buffer (count &optional all-frames)
   "Select next window and kill buffer associated with it.

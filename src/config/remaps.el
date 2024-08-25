@@ -45,7 +45,7 @@
 (global-set-key [f3]                  'my/better-next-error)
 (global-set-key [S-f3]                'my/better-previous-error)
 (global-set-key (kbd "C-x k")         'my/kill-current-buffer)
-(global-set-key (kbd "C-x w")         'my/copy-sexp-to-kill-ring)
+(global-set-key (kbd "C-x w")         'my/copy-symbol-to-kill-ring)
 (global-set-key (kbd "C-c y")         'browse-kill-ring)
 
 ;; Buffer-related

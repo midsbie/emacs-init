@@ -24,9 +24,6 @@
 
 ;;; Code:
 
-;; Turn on native compilation, if supported.
-(setq comp-deferred-compilation t)
-
 (eval-when-compile
   (require 'cl)
   (require 'cl-lib)

@@ -52,7 +52,8 @@
   ;; Enable the following if flycheck should only check the buffer on load and
   ;; save.
   ;; (setq-local flycheck-check-syntax-automatically '(mode-enabled save))
-  (init/common-nonweb-programming-mode))
+  (init/common-nonweb-programming-mode)
+  (format-all-mode))
 
 (use-package csharp-mode
   :mode ("\\.cs\\'" . csharp-ts-mode)

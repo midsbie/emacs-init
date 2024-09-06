@@ -45,7 +45,9 @@
       (unless (init/eglot/server-program-supported-p mode)
         (message "adding eglot support for %s" mode)
         (add-to-list 'eglot-server-programs `(,mode . ,(cdr server-program))))))
-  (advice-add 'eglot-rename :around #'init/eglot/rename-advice))
+  (advice-add 'eglot-rename :around #'init/eglot/rename-advice)
+  (advice-add 'eglot-uri-to-path :around #'init/eglot/uri-to-path-advice)
+  (advice-add 'eglot--TextDocumentIdentifier :around #'init/eglot/TextDocumentIdentifier))
 
 (defun init/eglot/enable ()
   "Configure `eglot' when enabled in a buffer."
@@ -79,6 +81,82 @@
             (symbol-name (symbol-at-point)))))
   )
   (apply orig-fun args))
+
+(defun init/eglot/special-uri-to-path (uri)
+  "Convert PATH, a file name, to LSP URI string and return it.
+TRUENAMEP indicated PATH is already a truename."
+  (cond
+   ((string-prefix-p "csharp:/" uri)
+    (init/eglot/csharp-cls-metadata-uri-handler uri))
+   (t
+    uri)))
+
+(defun init/eglot/uri-to-path-advice (orig-fun uri)
+  "Custom function to handle special URIs in Eglot."
+  (funcall orig-fun (init/eglot/special-uri-to-path uri)))
+
+(defun init/eglot/csharp-cls-metadata-uri-handler (uri)
+  "Handle `csharp:/(metadata)' URI from csharp-ls server in Eglot.
+
+A cache file is created in the project root that stores this metadata,
+and the filename is returned so Eglot can display the file.
+
+Function mostly lifted from lsp-charp.el."
+  (let* ((workspace (eglot--current-server-or-lose))
+         (metadata-req (list :textDocument (list :uri uri)))
+         (metadata (jsonrpc-request workspace "csharp/metadata" metadata-req))
+         ;; Access metadata fields using plist-get
+         (project-name (plist-get metadata :projectName))
+         (assembly-name (plist-get metadata :assemblyName))
+         (symbol-name (plist-get metadata :symbolName))
+         (source (plist-get metadata :source))
+         (filename (concat ".cache/lsp-csharp/metadata/projects/" project-name
+                           "/assemblies/" assembly-name "/" symbol-name ".cs"))
+         (file-location (expand-file-name filename (project-root (eglot--current-project))))
+         (metadata-file-location (concat file-location ".metadata-uri"))
+         (path (file-name-directory file-location)))
+
+    (unless (file-exists-p file-location)
+      (unless (file-directory-p path)
+        (make-directory path t))
+
+      (with-temp-file metadata-file-location
+        (insert uri))
+
+      (with-temp-file file-location
+        (insert source)))
+
+    file-location))
+
+(defun init/eglot/TextDocumentIdentifier (orig-fun &rest args)
+  "Advice for `eglot--TextDocumentIdentifier`.
+
+This function initialized `eglot--TextDocumentIdentifier-cache' with the
+true URI of the active buffer.  Doing so makes it possible to visit
+decompiled C# assemblies without triggering errors such as the following:
+
+The type 'GameObject' exists in both 'Unity.Timeline, Version=1.0.0.0,
+Culture=neutral, PublicKeyToken=null' and 'UnityEngine.CoreModule,
+Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'
+"
+  (unless eglot--TextDocumentIdentifier-cache
+    (when-let ((metadata-uri (init/eglot/determine-true-buffer-uri)))
+      (setq-local eglot--TextDocumentIdentifier-cache
+            `(,buffer-file-name . (:uri ,metadata-uri :truenamep t)))))
+  (apply orig-fun args))
+
+(defun init/eglot/determine-true-buffer-uri ()
+  "Determine the true URI of the buffer.
+
+This function determines the URI that should be communicated to the LSP
+server.  Currently this is only valid for C# scripts for which a file
+exists with the suffix .metadata-uri file; in this particular scenario,
+the contents of the metadata file is returned.  In all other cases, nil
+is returned."
+  (let ((metadata-file-name (concat buffer-file-name ".metadata-uri")))
+    (when (file-exists-p metadata-file-name)
+      (with-temp-buffer (insert-file-contents metadata-file-name)
+                        (buffer-string)))))
 
 (use-package eglot
   :config (init/eglot/config)

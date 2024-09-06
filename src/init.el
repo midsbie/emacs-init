@@ -68,8 +68,8 @@ explicit entry does not exist in
     (sql-mode . nil)
     ;; Explicitly specifying language server override for the major modes below
     ;; ------------------------------------------------------------------------
-    (csharp-ts-mode . lsp)
-    (csharp-mode . lsp)
+    (csharp-mode . eglot)
+    (csharp-ts-mode . eglot)
     (vala-mode . eglot)
     ;; lsp-dart did not work particularly well under `dart-mode' in the past.
     ;; If this continues to be true, revert to eglot.

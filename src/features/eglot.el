@@ -49,13 +49,7 @@
 
 (defun init/eglot/enable ()
   "Configure `eglot' when enabled in a buffer."
-  (add-hook 'before-save-hook
-            (or (init/get-mode-format-function major-mode)
-                #'init/eglot/format-buffer) nil t))
-
-(defun init/eglot/format-buffer ()
-  (unless (init/buffer-formatting-inhibited-p)
-    (eglot-format-buffer)))
+  (add-hook 'before-save-hook #'init/maybe-format-buffer nil t))
 
 (defun init/eglot/server-program-supported-p (major-mode)
   "Check if the given MAJOR-MODE is supported by `eglot-server-programs'."

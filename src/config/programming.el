@@ -318,16 +318,24 @@ enabled."
   (and (boundp 'init/inhibit-buffer-formatting) init/inhibit-buffer-formatting))
 
 (defun init/maybe-format-buffer ()
-  "Conditionally format Prettier buffer."
-  (unless (or (init/buffer-formatting-inhibited-p)
-              (and (boundp 'prettier-mode) prettier-mode))
-    (cond
-     (eglot--managed-mode (eglot-format-buffer))
-     ;; Disabled because it currently formats the buffer automatically anyway.
-     ;; (lsp-mode (lsp-format-buffer))
-     )))
+  "Conditionally format buffer.
 
-(defun init/get-mode-format-function (mode)
+Formats the current buffer if formatting isn't inhibited.  Runs a custom
+formatter function, if one is specified in
+`init/buffer-format-handlers-alist', otherwise runs default LSP server
+formatter if neither `prettier-mode' nor `format-all-mode' are enabled."
+  (unless (init/buffer-formatting-inhibited-p)
+    (if-let ((formatter (init/get-format-buffer-function-for-mode major-mode)))
+        (funcall formatter)
+      (unless (or
+               (and (boundp 'prettier-mode) prettier-mode)
+               (and (boundp 'format-all-mode) format-all-mode))
+        (cond
+         (eglot--managed-mode (eglot-format-buffer))
+         (lsp-mode (lsp-format-buffer))
+         )))))
+
+(defun init/get-format-buffer-function-for-mode (mode)
   "Get the save function for the current buffer's major mode."
   (let ((pair
          (cl-some (lambda (pair)

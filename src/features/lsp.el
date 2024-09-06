@@ -60,10 +60,6 @@
 
 ;;; Code:
 
-(defvar init/lsp/format-buffer-major-mode-exceptions '()
-  "List containing major modes that cause LSP to skip formatting the
-buffer on save")
-
 ;; Make sure that the following function is patched correctly to prevent
 ;; serious performance degradation after some time as a result of setting up
 ;; the timer multiple times.  This must be done every time lsp is upgraded.
@@ -182,12 +178,7 @@ to degrade under LSP"))
   ;; This can't be in the initializing defun above or it'll error out.
   ;; Ref: https://github.com/emacs-lsp/lsp-mode/issues/1532#issuecomment-602384182
   (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
-
-  ;; Don't use `lsp-format-buffer' if prettier enabled OR the major-mode isn't
-  ;; supported.
-  (unless (or (and (boundp 'prettier-mode) prettier-mode)
-              (member major-mode init/lsp/format-buffer-major-mode-exceptions))
-    (add-hook 'before-save-hook 'lsp-format-buffer nil t)))
+  (add-hook 'before-save-hook #'init/maybe-format-buffer nil t))
 
 (defun init/lsp/after-open-hook ()
   "Set up buffer after connection to LSP.

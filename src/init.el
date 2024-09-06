@@ -83,10 +83,14 @@ language server is used.")
   "When non-nil, disable all automatic buffer formatting through LSP.")
 
 (defvar init/buffer-format-handlers-alist
-  '(((js-mode js-ts-mode typescript typescript-ts-mode tsx-ts-mode) . init/maybe-format-buffer))
+  '()
   "List of major modes for which to run a special function when saving the
 buffer.  If none is specified for the mode associated with the buffer,
-the LSP client's default formatting function is invoked.")
+the LSP client's default formatting function is invoked.
+
+Example:
+  '(((js-mode js-ts-mode typescript typescript-ts-mode tsx-ts-mode) . my/special-formatter))
+")
 
 (defconst init/web-programming-modes
   '(js-mode js-ts-mode typescript-mode typescript-ts-mode tsx-ts-mode)

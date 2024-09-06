@@ -120,7 +120,9 @@ to degrade under LSP"))
   ;; code.
   (setq lsp-ui-doc-enable nil)
 
-  ;; Disable lens
+  ;; Disable lens.  This is bugging out for some reason, causing the annotations
+  ;; to: not update timely and become misaligned; be captured by text selection;
+  ;; other oddities.
   (setq lsp-lens-enable nil)
   ;; Enable headerline showing source file location in workspace
   (setq lsp-headerline-breadcrumb-enable t)
@@ -156,7 +158,8 @@ to degrade under LSP"))
   (setq lsp-completion-show-kind t)
 
   ;; Fix for error: json-parse-error \u0000 is not allowed without JSON_ALLOW_NUL
-  ;; Taken literally from: https://github.com/adimit/config/blob/f84b34c04d101bdd33e180c07715ce481608ba9f/emacs/main.org#work-around-null-bytes-in-json-response
+  ;; Taken literally from:
+  ;; https://github.com/adimit/config/blob/f84b34c04d101bdd33e180c07715ce481608ba9f/emacs/main.org#work-around-null-bytes-in-json-response
   (advice-add 'json-parse-string :around
               (lambda (orig string &rest rest)
                 (apply orig (s-replace "\\u0000" "" string)
@@ -170,11 +173,6 @@ to degrade under LSP"))
 (defun init/lsp/enable ()
   (lsp-enable-which-key-integration)
 
-  ;; This is bugging out for some reason, causing the annotations to: not
-  ;; update timely and become misaligned; be captured by text selection; other
-  ;; oddities.  Shouldn't be enabled but forcefully disabling it anyway.
-  (lsp-lens-mode -1)
-
   ;; This can't be in the initializing defun above or it'll error out.
   ;; Ref: https://github.com/emacs-lsp/lsp-mode/issues/1532#issuecomment-602384182
   (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
@@ -183,13 +181,12 @@ to degrade under LSP"))
 (defun init/lsp/after-open-hook ()
   "Set up buffer after connection to LSP.
 
-This function is used as a hook to perform certain actions after
-a buffer is opened.  One of the actions it performs is to check
-the buffer using Flycheck since, for some reason, this is not
-done by default in Typescript buffers and possibly other modes
-too.  Note that a delay of 1 second is enforced otherwise
-flycheck fails to check the buffer (observed in
-`typescript-ts-mode'."
+This function is used as a hook to perform certain actions after a
+buffer is opened.  One of the actions it performs is to check the buffer
+using Flycheck since, for some reason, this is not done by default in
+Typescript buffers and possibly other modes too.  Note that a delay of 1
+second is enforced otherwise flycheck fails to check the
+buffer (observed in `typescript-ts-mode'."
   (run-with-idle-timer 1 nil #'(lambda ()
                                  (ignore-errors
                                    (when (and (boundp 'flycheck-mode) flycheck-mode)

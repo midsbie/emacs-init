@@ -41,7 +41,8 @@
   ;; (corfu-on-exact-match nil)     ; Configure handling of exact matches
   ;; (corfu-scroll-margin 5)        ; Use scroll margin
   :bind (:map corfu-map
-         ("S-SPC" . corfu-insert-separator)))
+              ("S-SPC" . corfu-insert-separator)
+              ("M-h" . backward-kill-word)))
 
 ;; Configuration of Emacs' completion-at-point settings
 (use-package emacs

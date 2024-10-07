@@ -131,7 +131,7 @@ Function mostly lifted from lsp-charp.el."
 (defun init/eglot/TextDocumentIdentifier (orig-fun &rest args)
   "Advice for `eglot--TextDocumentIdentifier`.
 
-This function initialized `eglot--TextDocumentIdentifier-cache' with the
+This function initializes `eglot--TextDocumentIdentifier-cache' with the
 true URI of the active buffer.  Doing so makes it possible to visit
 decompiled C# assemblies without triggering errors such as the following:
 

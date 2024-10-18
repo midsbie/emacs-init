@@ -24,28 +24,8 @@
 
 ;;; Code:
 
-(defun init/gptel/config ()
-  "Initialize the gptel package."
-  (setq-default gptel-model "gpt-4o")
-
-  ;; The following is disabled as the models seem to now be up-to-date.
-  ;; --
-  ;; Provide a more convenient list of updated models.  Note that
-  ;; "gpt-3.5-turbo-instruct" is not supported because it is not a _chat_ model
-  ;; and is not available through the v1/completions endpoint.  Unfortunately
-  ;; gptel uses v1/chat/completions, thus rendering the model unavailable.
-  ;;   (setq gptel--openai
-  ;;         (gptel-make-openai
-  ;;          "ChatGPT"
-  ;;          :header (lambda () `(("Authorization" . ,(concat "Bearer " (gptel--get-api-key)))))
-  ;;          :key 'gptel-api-key
-  ;;          :stream t
-  ;;          :models '("gpt-3.5-turbo-1106" "gpt-3.5-turbo" "gpt-3.5-turbo-16k"
-  ;;                    "gpt-4-1106-preview" "gpt-4" "gpt-4-32k")))
-  )
-
 (use-package gptel
-  :config
-  (init/gptel/config))
+  :custom
+  (gptel-model 'gpt-4o-mini))
 
 ;;; gptel.el ends here

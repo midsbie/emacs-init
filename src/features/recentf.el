@@ -1,6 +1,6 @@
 ;;; recentf.el --- Configures `recentf' package
 
-;; Copyright (C) 2015-2022  Miguel Guedes
+;; Copyright (C) 2015-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -29,16 +29,9 @@
   ;; The following replaces default binding to `ido-find-file-read-only'
   ;; :bind ("C-x C-r" . recentf-open-files)
 
-  :init
-  (setq recentf-auto-cleanup    'never
-        recentf-max-menu-items  100)
-
-  ;; Save files every 2 minutes, suppressing the message printed in the
-  ;; minibuffer.
-  ;; Ref: https://superuser.com/questions/669701/
-  (run-at-time nil (* 2 60) #'(lambda ()
-                                (let ((inhibit-message t))
-                                  (recentf-save-list))))
+  :custom
+  (recentf-auto-cleanup    'never)
+  (recentf-max-menu-items  100)
 
   :config
   (recentf-mode 1)

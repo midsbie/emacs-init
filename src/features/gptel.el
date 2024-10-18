@@ -28,4 +28,10 @@
   :custom
   (gptel-model 'gpt-4o-mini))
 
+(use-package gptel
+  :config
+  (when (and (boundp 'gptel--openai-models)
+             (assoc 'gpt-4o-mini gptel--openai-models))
+    (customize-set-variable 'gptel-model 'gpt-4o-mini)))
+
 ;;; gptel.el ends here

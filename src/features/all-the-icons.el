@@ -1,6 +1,6 @@
 ;;; all-the-icons.el --- Configures all-the-icons and related packages
 
-;; Copyright (C) 2021-2022  Miguel Guedes
+;; Copyright (C) 2021-2024  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -26,20 +26,17 @@
 
 ;;; Code:
 
-(defun init/all-the-icons-completion ()
-  ;; This package doesn't seem to do anything but here for now while it is
-  ;; evaluated.
-  ;; Ref: https://github.com/iyefrat/all-the-icons-completion
-  (all-the-icons-completion-mode))
-
-(use-package all-the-icons-completion
-  :config
-  (init/all-the-icons-completion))
-
 ;; Ref: https://github.com/domtronn/all-the-icons.el
 (use-package all-the-icons
   ;; Ref: https://github.com/wyuenho/all-the-icons-dired
   :hook ((dired-mode . all-the-icons-dired-mode)))
+
+(use-package all-the-icons-completion
+  :config
+  ;; This package doesn't seem to do anything but here for now while it is
+  ;; evaluated.
+  ;; Ref: https://github.com/iyefrat/all-the-icons-completion
+  (all-the-icons-completion-mode))
 
 ;; Ref: https://github.com/seagle0128/all-the-icons-ibuffer
 (use-package all-the-icons-ibuffer

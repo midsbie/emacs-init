@@ -236,6 +236,7 @@ characters wide."
 ;; These customizations kept for posteriority in case a decision is made to go
 ;; back to a solarized-based theme.
 (use-package solarized-theme
+  :if (locate-library "solarized-theme")
   :config
   (cond ((member 'solarized-zenburn custom-enabled-themes)
          (require 'solarized-palettes)

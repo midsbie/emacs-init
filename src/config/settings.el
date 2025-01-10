@@ -232,8 +232,10 @@
 ;; adds newlines when some characters are types (e.g. `{').
 (electric-layout-mode -1)
 
-;; Windows
-(setq-default split-height-threshold 100)
+;; This should be improved upon to take into account the dimensions of the
+;; display and make splitting behave accordingly.
+(setq split-width-threshold   nil
+      split-height-threshold  nil)
 
 ;; Stop annoying warnings causing the *Warnings* buffer from popping up
 ;; intrusively and stealing focus.

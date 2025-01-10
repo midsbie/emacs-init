@@ -52,11 +52,6 @@ characters wide."
   (set-frame-height (selected-frame) arg))
 
 (when window-system
-  ;; This should be improved upon to take into account the dimensions of the
-  ;; display and make splitting behave accordingly.
-  (setq split-width-threshold nil
-        split-height-threshold nil)
-
   (setq speedbar-use-images nil)          ; do not use icons in `speedbar-mode'
 
   ;; Uncomment if desired that the window should be maximised

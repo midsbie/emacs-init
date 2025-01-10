@@ -257,6 +257,15 @@
 
 (advice-add 'display-buffer :around #'my/suppress-warnings-buffer)
 
+;; The motivation behind the following advice is to clear out overlays that some
+;; minor modes prone to glitching out, such as Copilot, create but do not clean
+;; up after.  Overlays are now cleared whenever the buffer is reverted.
+(defun my/clear-overlays-on-revert (&rest _args)
+  "Remove all overlays in the buffer after it is reverted."
+  (remove-overlays))
+
+(advice-add 'revert-buffer :after #'my/clear-overlays-on-revert)
+
 ;; Run a MAJORMODE-local-vars-hook when local vars are processed.
 ;; From: https://www.emacswiki.org/emacs/LocalVariables
 (defun my/run-local-vars-mode-hook ()

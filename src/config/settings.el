@@ -235,15 +235,27 @@
 ;; Windows
 (setq-default split-height-threshold 100)
 
-;; Stop *Warnings* buffers from stealing focus.  Either it doesn't work at all
-;; or only only for all warning types.
-(add-to-list 'display-buffer-alist
-             `(,(rx bos "*Warnings*" eos)
-               (display-buffer-reuse-window
-                display-buffer-in-side-window)
-               (side            . bottom)
-               (reusable-frames . visible)
-               (window-height   . 0.2)))
+;; Stop annoying warnings causing the *Warnings* buffer from popping up
+;; intrusively and stealing focus.
+;;
+;; The following strategy didn't work:
+;;
+;; (add-to-list 'display-buffer-alist
+;;       `(,(rx bos "*Warnings*" eos)
+;;         (display-buffer-reuse-window
+;;          display-buffer-in-side-window)
+;;         (inhibit-switch-frame . t)
+;;         (side            . bottom)
+;;         (reusable-frames . visible)))
+;;
+;; Now using a forceful approach with advice.
+(defun my/suppress-warnings-buffer (orig-fun buffer-or-name &rest args)
+  "Suppress the *Warnings* buffer from being displayed."
+  (if (string-equal (buffer-name (get-buffer buffer-or-name)) "*Warnings*")
+      nil ; Prevent display
+    (apply orig-fun buffer-or-name args)))
+
+(advice-add 'display-buffer :around #'my/suppress-warnings-buffer)
 
 ;; Run a MAJORMODE-local-vars-hook when local vars are processed.
 ;; From: https://www.emacswiki.org/emacs/LocalVariables

@@ -1,6 +1,6 @@
 ;;; gptel.el --- Customises the gptel package
 
-;; Copyright (C) 2023-2024  Miguel Guedes
+;; Copyright (C) 2023-2025  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -68,8 +68,13 @@ approachable.")
      (chat . "You are a helpful conversation partner. Respond concisely.")))
 
   :config
+  (gptel-make-ollama "deepseek-coder-v2"
+    :host "localhost:11434"
+    :stream t
+    :models '(deepseek-coder-v2))
+
   (when (and (boundp 'gptel--openai-models)
              (assoc 'gpt-4o-mini gptel--openai-models))
-    (customize-set-variable 'gptel-model 'gpt-4o-mini)))
+    (customize-set-variable 'gptel-model 'gpt-4o)))
 
 ;;; gptel.el ends here

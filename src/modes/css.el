@@ -1,6 +1,6 @@
 ;;; css.el --- Configures `css-mode'
 
-;; Copyright (C) 2015-2024  Miguel Guedes
+;; Copyright (C) 2015-2025  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -40,12 +40,11 @@
   (local-set-key ";"  #'(lambda ()
                           (interactive)
                           (insert-char ?\;)
-                          (indent-for-tab-command)))
-
-    (turn-on-css-eldoc))
+                          (indent-for-tab-command))))
 
 (use-package css-mode
   :mode (("\\.css\\'" . css-ts-mode))
+  :config (css-eldoc-enable)
   :hook ((css-mode css-ts-mode) . init/css-mode/enable))
 
 ;;; css.el ends here

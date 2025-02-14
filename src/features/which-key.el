@@ -1,6 +1,6 @@
 ;;; which-key.el --- Configures the which-key package
 
-;; Copyright (C) 2021-2024  Miguel Guedes
+;; Copyright (C) 2021-2025  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -47,12 +47,8 @@
       :config
       (which-key-setup-side-window-right-bottom)
       (which-key-mode))
-  (use-package emacs
-    :diminish
-    :init
-    (init/which-key)
-    :config
-    (which-key-setup-side-window-right-bottom)
-    (which-key-mode)))
+  (init/which-key)
+  (which-key-setup-side-window-right-bottom)
+  (which-key-mode))
 
 ;;; which-key.el ends here

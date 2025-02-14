@@ -27,6 +27,11 @@
 
 (defun init/setup-aidermacs ()
   (interactive)
+
+  ;; Check if 'aider' is available
+  (unless (executable-find "aider")
+    (user-error "Aider is not found. Please install it."))
+
   (global-unset-key (kbd "C-c a"))
 
   (use-package aidermacs

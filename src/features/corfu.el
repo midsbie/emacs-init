@@ -1,6 +1,6 @@
 ;;; corfu.el --- Customises the Corfu package
 
-;; Copyright (C) 2024  Miguel Guedes
+;; Copyright (C) 2024-2025  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -35,7 +35,7 @@
   (corfu-separator ?\s)          ; Orderless field separator
   (corfu-quit-at-boundary 'separator)
   ;; (corfu-cycle t)                ; Enable cycling for `corfu-next/previous'
-  ;; (corfu-quit-no-match nil)      ; Never quit, even if there is no match
+  (corfu-quit-no-match nil)         ; Quit when there is no match
   ;; (corfu-preview-current nil)    ; Disable current candidate preview
   ;; (corfu-preselect 'prompt)      ; Preselect the prompt
   ;; (corfu-on-exact-match nil)     ; Configure handling of exact matches

@@ -1,6 +1,6 @@
 ;;; remaps.el --- General keyboard remappings
 
-;; Copyright (C) 2015-2024  Miguel Guedes
+;; Copyright (C) 2015-2025  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -47,6 +47,7 @@
 (global-set-key (kbd "C-x k")         'my/kill-current-buffer)
 (global-set-key (kbd "C-x w")         'my/copy-symbol-to-kill-ring)
 (global-set-key (kbd "C-c y")         'browse-kill-ring)
+(global-set-key (kbd "C-c w")         #'my/select-current-word)
 
 ;; Buffer-related
 ; Was previously using `truncate-lines` but now using the much more useful

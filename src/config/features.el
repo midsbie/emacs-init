@@ -1,6 +1,6 @@
 ;;; features.el --- master configuration module of features
 
-;; Copyright (C) 2022-2024  Miguel Guedes
+;; Copyright (C) 2022-2025  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,9 +24,6 @@
 ;; for which a dedicated configuration module was thought to be unjustified.
 
 ;;; Code:
-
-(use-package emacs
-  :bind ("C-c w" . my/select-current-word))
 
 (use-package ace-window
   :bind ("M-o" . ace-window))

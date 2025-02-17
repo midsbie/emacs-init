@@ -26,6 +26,10 @@
 ;;; Code:
 
 (defun init/setup-aidermacs ()
+  "Set up the aidermacs package.
+This function checks if 'aider' is available, unsets the keybinding for
+C-c a, configures the aidermacs package, and sets the keybinding for C-c
+a to initialize aidermacs on first use."
   (interactive)
 
   ;; Check if 'aider' is available
@@ -39,19 +43,14 @@
               :rev :newest
               :branch "main")
     :config
-    ;; "o3-mini" is available only for higher usage tiers for the time being
+    ;; Notes regarding models:
+    ;;
+    ;; - "o3-mini" is available only for higher usage tiers for the time being
+    ;; - "o3-mini-high" may be available
+    ;; - "codestral/codestral-latest" seems to be free for the moment.
     (setq aidermacs-args '("--model" "gpt-4o-mini"))
-    (setenv "OPENAI_API_KEY" (if-let ((secret
-                                       (plist-get
-                                        (car (auth-source-search
-                                              :host "api.openai.com"
-                                              :user "apikey"
-                                              :require '(:secret)))
-                                        :secret)))
-                                 (if (functionp secret)
-                                     (encode-coding-string (funcall secret) 'utf-8)
-                                   secret)
-                               ))
+    (setenv "OPENAI_API_KEY" (my/read-authsource-secret "api.openai.com" "apikey"))
+    (setenv "CODESTRAL_API_KEY" (my/read-authsource-secret "codestral.mistral.ai" "apikey"))
     (global-set-key (kbd "C-c a") 'aidermacs-transient-menu))
   (aidermacs-transient-menu))
 

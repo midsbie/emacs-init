@@ -34,8 +34,11 @@
   (corfu-auto-prefix 1)
   (corfu-separator ?\s)          ; Orderless field separator
   (corfu-quit-at-boundary 'separator)
-  ;; (corfu-cycle t)                ; Enable cycling for `corfu-next/previous'
-  (corfu-quit-no-match nil)         ; Quit when there is no match
+
+  ;; Quit when there is no match, otherwise "No match" is printed and double RET
+  ;; is required.
+  (corfu-quit-no-match t)
+
   ;; (corfu-preview-current nil)    ; Disable current candidate preview
   ;; (corfu-preselect 'prompt)      ; Preselect the prompt
   ;; (corfu-on-exact-match nil)     ; Configure handling of exact matches

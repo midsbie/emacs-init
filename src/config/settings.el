@@ -1,6 +1,6 @@
 ;;; settings.el --- Configures settings of emacs' internal features
 
-;; Copyright (C) 2015-2024  Miguel Guedes
+;; Copyright (C) 2015-2025  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -241,6 +241,14 @@
 (setq minibuffer-prompt-properties
       '(read-only t cursor-intangible t face minibuffer-prompt))
 (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
+;; Disable `corfu-mode` in `comint-mode` and buffers starting with
+;; `*aidermacs:`."
+(add-hook 'comint-mode-hook
+          #'(lambda ()
+              (when (and (eq major-mode 'comint-mode)
+                         (string-prefix-p "*aidermacs:" (buffer-name)))
+                (corfu-mode -1))))
 
 ;; Add prompt indicator to `completing-read-multiple'.
 ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.

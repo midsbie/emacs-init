@@ -68,7 +68,17 @@ a to initialize aidermacs on first use."
     (setenv "MISTRAL_API_KEY" (my/read-authsource-secret "codestral.mistral.ai" "apikey"))
     (setenv "OPENAI_API_KEY" (my/read-authsource-secret "api.openai.com" "apikey"))
     (global-set-key (kbd "C-c a") 'aidermacs-transient-menu))
+
   (aidermacs-transient-menu))
+
+(defun my/aidermacs-switch-to-buffer-advice (orig-fun &rest args)
+  "Advice to run when `aidermacs-switch-to-buffer` is called.
+Prevent intrusive switching to the aidermacs buffer unless it detects
+that the call is interactive."
+  (when (called-interactively-p 'interactive)
+    (apply orig-fun args)))
+
+(advice-add 'aidermacs-switch-to-buffer :around #'my/aidermacs-switch-to-buffer-advice)
 
 ;; Bind C-c a to initialize aidermacs on first use.
 (global-set-key (kbd "C-c a") #'init/setup-aidermacs)

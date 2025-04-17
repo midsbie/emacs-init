@@ -79,6 +79,8 @@
   :config
   (org-clock-persistence-insinuate)
   (setq org-default-notes-file (concat org-directory "/notes.org"))
+
+  (add-hook 'org-babel-after-execute-hook #'org-display-inline-images)
 )
 
 

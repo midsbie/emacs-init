@@ -61,6 +61,17 @@ to be added as a flymake backend."
 
 (use-package flymake-ruff
   :ensure t
-  :hook (((python-mode python-ts-mode) . init/flymake-ruff-load)))
+  :hook (((python-mode python-ts-mode) . init/flymake-ruff-load))
+  :config
+  ;; Adding -n to the default args to bypass ruff's internal cache and ensure
+  ;; diagnostics match buffer contents.  Note that it may still defer to its
+  ;; internal cache in some cases, in which case running ruff in watch mode
+  ;; could prove to be a useful workaround since it will be constantly
+  ;; repopulating the cache on every file change.  Command:
+  ;;   `ruff check --watch src/`.
+  (setq flymake-ruff-program-args
+        (let ((default-args flymake-ruff-program-args))
+          (when (equal (car default-args) "check")
+            (append '("check" "-n") (cdr default-args))))))
 
 ;;; flymake.el ends here

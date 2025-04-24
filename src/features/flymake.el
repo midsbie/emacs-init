@@ -54,7 +54,10 @@ variable `exec-path'."
 
 Loading is deferred due to an unidentified interaction preventing ruff
 to be added as a flymake backend."
-  (run-with-idle-timer 1 nil #'flymake-ruff-load))
+  (run-with-idle-timer 1 nil #'(lambda()
+                                 (flymake-ruff-load)
+                                 ;; First buffer check doesn't trigger somehow
+                                 (flymake-start))))
 
 (use-package flymake-ruff
   :ensure t

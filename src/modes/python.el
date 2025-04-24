@@ -1,6 +1,6 @@
 ;;; python.el --- Configures `python-mode'
 
-;; Copyright (C) 2016-2024  Miguel Guedes
+;; Copyright (C) 2016-2025  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -23,7 +23,35 @@
 ;;        and tree-sitter packages.
 ;;
 ;; ## INSTALLATION
-;; ### LINTERS
+;; ### MODERN LINTER
+;; `ruff' is a modern Python linter written in Rust, designed to be a drop-in
+;; replacement for `flake8', pyflake and other tools.
+;;
+;; The pylsp server enables pycodestyle hints by default, which can be annoying
+;; and redundant if using ruff.  Disable pycodestyle via .dir-locals.el as given
+;; below:
+;;
+;;   ((python-mode
+;;     . ((eval . (ruff-format-on-save-mode))
+;;        (init/inhibit-buffer-formatting t)
+;;        (eglot-workspace-configuration
+;;         . ((:pylsp . (:plugins (:pycodestyle (:enabled :json-false)
+;;                                              :autopep8 (:enabled :json-false)
+;;                                              :flake8 (:enabled :json-false)
+;;                                              )))))))
+;;
+;;    (python-ts-mode
+;;     . ((eval . (ruff-format-on-save-mode))
+;;        (init/inhibit-buffer-formatting t)
+;;        (eglot-workspace-configuration
+;;         . ((:pylsp . (:plugins (:pycodestyle (:enabled :json-false)
+;;                                              :autopep8 (:enabled :json-false)
+;;                                              :flake8 (:enabled :json-false)
+;;                                              ))))))))
+;;
+;; This setup requires `flymake-ruff' to be installed.
+;;
+;; ### OLD LINTERS
 ;; Install the following PIP packages to ensure that elpy and flycheck work as
 ;; expected:
 ;;
@@ -63,19 +91,18 @@
   "Customise `python-mode'."
 
   (init/common-nonweb-programming-mode)
-  (pylint-add-menu-items)
-  (pylint-add-key-bindings)
-
   (setq-local fill-column init/defaults/fill-column/narrow)
 
-  (py-autopep8-mode)
+  ;; Now relying on ruff
+  ;;
+  ;; (pylint-add-menu-items)
+  ;; (pylint-add-key-bindings)
+  ;; (py-autopep8-mode)
+
   (auto-fill-mode -1))
 
 (use-package python
   :mode (("\\.py\\'" . python-ts-mode))
   :hook ((python-mode python-ts-mode) . init/python-mode/enable))
-
-(use-package pylint
-  :after python-mode)
 
 ;;; python.el ends here

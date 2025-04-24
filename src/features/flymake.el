@@ -1,6 +1,6 @@
 ;;; flymake.el --- Configures the flymake feature
 
-;; Copyright (C) 2022-2024  Miguel Guedes
+;; Copyright (C) 2022-2025  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -48,5 +48,16 @@ variable `exec-path'."
                ("C-c ! l" . flymake-show-project-diagnostics)
                ("C-c ! b" . flymake-show-buffer-diagnostics)
                ("C-c ! c" . flymake-start))))
+
+(defun init/flymake-ruff-load ()
+  "Load the backend for ruff under flymake for the current buffer.
+
+Loading is deferred due to an unidentified interaction preventing ruff
+to be added as a flymake backend."
+  (run-with-idle-timer 1 nil #'flymake-ruff-load))
+
+(use-package flymake-ruff
+  :ensure t
+  :hook (((python-mode python-ts-mode) . init/flymake-ruff-load)))
 
 ;;; flymake.el ends here

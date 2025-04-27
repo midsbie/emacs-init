@@ -63,15 +63,26 @@ to be added as a flymake backend."
   :ensure t
   :hook (((python-mode python-ts-mode) . init/flymake-ruff-load))
   :config
-  ;; Adding -n to the default args to bypass ruff's internal cache and ensure
-  ;; diagnostics match buffer contents.  Note that it may still defer to its
-  ;; internal cache in some cases, in which case running ruff in watch mode
+  ;; Adding --no-cache to the default args to bypass ruff's internal cache and
+  ;; ensure diagnostics match buffer contents.  Note that it may still defer to
+  ;; its internal cache in some cases, in which case running ruff in watch mode
   ;; could prove to be a useful workaround since it will be constantly
-  ;; repopulating the cache on every file change.  Command:
-  ;;   `ruff check --watch src/`.
+  ;; repopulating the cache on every file change.  Command: `ruff check --watch
+  ;; src/`.
+  ;;
+  ;; Another possibility is to hotfix the ruff code to never pass the
+  ;; --stdin-filename arg. In `flymake-ruff--severity-for-code', locate the
+  ;; block below:
+  ;;              (args (if code-filename
+  ;;                   (append args `("--stdin-filename" ,code-filename))
+  ;;                 args))
+  ;;
+  ;; Change the first line to: (args (if (and nil code-filename)
   (setq flymake-ruff-program-args
         (let ((default-args flymake-ruff-program-args))
-          (when (equal (car default-args) "check")
-            (append '("check" "-n") (cdr default-args))))))
+          (if (and (equal (car default-args) "check")
+                   (not (member "--no-cache" default-args)))
+              (append '("check" "--no-cache") (cdr default-args))
+            default-args))))
 
 ;;; flymake.el ends here

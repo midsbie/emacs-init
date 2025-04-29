@@ -39,6 +39,10 @@
   ;; is required.
   (corfu-quit-no-match t)
 
+  ;; Configure `global-corfu-mode' to only enable `corfu-mode' per the following
+  ;; settings:
+  (global-corfu-modes '((not shell-mode eshell-mode term-mode vterm-mode)))
+
   ;; (corfu-preview-current nil)    ; Disable current candidate preview
   ;; (corfu-preselect 'prompt)      ; Preselect the prompt
   ;; (corfu-on-exact-match nil)     ; Configure handling of exact matches

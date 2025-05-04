@@ -41,7 +41,7 @@
 
   ;; Configure `global-corfu-mode' to only enable `corfu-mode' per the following
   ;; settings:
-  (global-corfu-modes '((not shell-mode eshell-mode term-mode vterm-mode)))
+  (global-corfu-modes '((not shell-mode eshell-mode term-mode vterm-mode) t))
 
   ;; (corfu-preview-current nil)    ; Disable current candidate preview
   ;; (corfu-preselect 'prompt)      ; Preselect the prompt

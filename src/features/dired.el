@@ -1,6 +1,6 @@
 ;;; dired.el --- Configures `dired-mode'
 
-;; Copyright (C) 2015-2024  Miguel Guedes
+;; Copyright (C) 2015-2025  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: internal, tools
@@ -34,7 +34,9 @@
 
 (use-package dired
   :hook ((dired-load . init/dired/enable))
-  :init (init/dired))
+  :init (init/dired)
+  :custom
+  (dired-dwim-target t))
 
 (use-package "dired-x"
   :after (dired))

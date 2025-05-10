@@ -62,6 +62,9 @@ to be added as a flymake backend."
 (use-package flymake-ruff
   :ensure t
   :hook (((python-mode python-ts-mode) . init/flymake-ruff-load))
+  ;; :vc (:url "git@github.com:midsbie/flymake-ruff.git"
+  ;;             :rev :newest
+  ;;             :branch "master")
   :config
   ;; Adding --no-cache to the default args to bypass ruff's internal cache and
   ;; ensure diagnostics match buffer contents.  Note that it may still defer to

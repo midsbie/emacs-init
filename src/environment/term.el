@@ -1,6 +1,6 @@
 ;;; term.el --- Initialisation sequence when run from the terminal
 
-;; Copyright (C) 2014-2018 Miguel Guedes
+;; Copyright (C) 2014-2025 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:
@@ -43,5 +43,18 @@
   ;; UPDATE: disabled as it was degrading performance
   ;; (global-hl-line-mode 1)
 )
+
+;; Use xclip to push copied text to clipboard
+(when (and (executable-find "xclip")
+           (getenv "DISPLAY"))
+  (defun copy-to-xclip (text &optional push)
+    (condition-case nil
+        (let ((process-connection-type nil))
+          (let ((proc (start-process "xclip" "*Messages*" "xclip" "-selection" "clipboard")))
+            (process-send-string proc text)
+            (process-send-eof proc)))
+      (error (message "Failed to copy to clipboard (xclip error)"))))
+  (setq interprogram-cut-function 'copy-to-xclip))
+
 
 ;;; term.el ends here

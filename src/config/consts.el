@@ -49,7 +49,4 @@
       (executable-find "/usr/local/opt/llvm/bin/clangd"))  ;; macOS
   "Do we have clangd?")
 
-(defconst display-graphic-p (eq window-system 'x)
-  "X server in use?")
-
 ;;; consts.el ends here

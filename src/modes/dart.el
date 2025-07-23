@@ -1,6 +1,6 @@
 ;;; dart.el --- Configures `dart-mode'
 
-;; Copyright (C) 2022-2024  Miguel Guedes
+;; Copyright (C) 2022-2025  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -121,7 +121,7 @@
 
 (use-package dart-mode
   ;; Requiring the `s' package because `s-trim-right' is used above.
-  :after (company flycheck s)
+  :after (s)
   :hook ((dart-mode . init/dart-mode/enable))
   :config  (init/dart-mode/config))
 

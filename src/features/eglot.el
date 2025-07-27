@@ -51,6 +51,12 @@
   ;; when editing Dart files that are part of a Flutter project.
   (setq eglot-events-buffer-config '(:size 0 :format nil))
 
+  ;; If performance is still a concern in some modes, consider making the
+  ;; following additional tweaks:
+  ;;
+  ;; (setq eglot-send-changes-idle-time 1.0) ;; send edits less frequently
+  ;; (setq eglot-extend-to-xref t)           ;; avoid aggressive reanalysis
+
   (advice-add 'eglot-rename :around #'init/eglot/rename-advice)
   (advice-add 'eglot-uri-to-path :around #'init/eglot/uri-to-path-advice)
   (advice-add 'eglot--TextDocumentIdentifier :around #'init/eglot/TextDocumentIdentifier))

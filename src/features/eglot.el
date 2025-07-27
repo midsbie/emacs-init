@@ -1,6 +1,6 @@
 ;;; eglot.el --- Customises the Eglot package
 
-;; Copyright (C) 2022-2024  Miguel Guedes
+;; Copyright (C) 2022-2025  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -45,6 +45,12 @@
       (unless (init/eglot/server-program-supported-p mode)
         (message "adding eglot support for %s" mode)
         (add-to-list 'eglot-server-programs `(,mode . ,(cdr server-program))))))
+
+  ;; Completely disable the events buffer for maximum performance.  Eglot keeps
+  ;; 2000000 events by default, which are suspected to cause performance issues
+  ;; when editing Dart files that are part of a Flutter project.
+  (setq eglot-events-buffer-config '(:size 0 :format nil))
+
   (advice-add 'eglot-rename :around #'init/eglot/rename-advice)
   (advice-add 'eglot-uri-to-path :around #'init/eglot/uri-to-path-advice)
   (advice-add 'eglot--TextDocumentIdentifier :around #'init/eglot/TextDocumentIdentifier))

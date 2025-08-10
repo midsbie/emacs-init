@@ -40,26 +40,11 @@ a to initialize aidermacs on first use."
 
   (use-package aidermacs
     :ensure t
-    :vc (:url "git@github.com:MatthewZMD/aidermacs.git"
-              :rev :newest
-              :branch "main")
 
     :custom
+    (aidermacs-default-chat-mode 'architect)
     (aidermacs-default-model "deepseek/deepseek-chat")
-    (aidermacs-architect-model "deepseek/deepseek-reasoner")
-    (aidermacs-popular-models
-     '("anthropic/claude-3-5-sonnet-20241022" ;; really good
-       "openai/o3-mini"                       ;; very powerful
-       "openai/o3-mini-high"                  ;; great for coding tasks
-       "openai/gpt-4o-mini"
-       "openai/gpt-4o"
-       "gemini/gemini-2.0-flash"              ;; free
-       "gemini/gemini-1.5-pro"                ;;
-       "mistral/codestral-latest"
-       ;; chatgpt-4o level performance, price is 1/100. weakness: small context
-       "deepseek/deepseek-chat"
-       "deepseek/deepseek-reasoner"
-       ))
+    (aidermacs-architect-model "deepseek/deepseek-chat")
 
     :config
     (setenv "ANTHROPIC_API_KEY" (my/read-authsource-secret "api.anthropic.com" "apikey"))

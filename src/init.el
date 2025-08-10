@@ -134,7 +134,9 @@ Example:
       '(("GNU ELPA" . "https://elpa.gnu.org/packages/")
         ("MELPA stable" . "https://stable.melpa.org/packages/")
         ("MELPA unstable" . "https://melpa.org/packages/")
-        ("ORG" . "http://orgmode.org/elpa/"))
+        ("ORG" . "http://orgmode.org/elpa/")
+        ;; Required by aidermacs and possibly other packages
+        ("NON-GNU" . "https://elpa.nongnu.org/nongnu/"))
       package-archive-priorities
       '(
         ;; MELPA stable disabled as not all packages support stable channel

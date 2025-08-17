@@ -1,6 +1,6 @@
 ;;; files.el --- Assorted filesystem functions
 
-;; Copyright (C) 2021-2024  Miguel Guedes
+;; Copyright (C) 2021-2025  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel@miguelguedes.org>
 ;; Keywords: tools
@@ -33,8 +33,27 @@
           file-path)))))
 
 (defun my/locate-file-in-dominating-node-modules (file from-path)
-  "Attempt to locate FILE inside a dominating node_modules directory from FROM-PATH."
-  (my/locate-file-in-dominating-directory file "node_modules" from-path))
+  "Return absolute path to FILE inside any ancestor node_modules, starting at FROM-PATH.
+Walks up the directory tree; at each ancestor, if a node_modules exists,
+checks for FILE inside it. Returns the first match or nil."
+  (let* ((start (expand-file-name from-path))
+         ;; If FROM-PATH is a file, search from its directory.
+         (dir (if (file-directory-p start)
+                  start
+                (file-name-directory start)))
+         (found nil))
+    (while (and dir (not found))
+      (let* ((nm (expand-file-name "node_modules" dir))
+             (candidate (expand-file-name file nm)))
+        (when (and (file-directory-p nm)
+                   (file-exists-p candidate))
+          (setq found candidate)))
+      ;; move to parent; stop at filesystem root
+      (let ((parent (file-name-directory (directory-file-name dir))))
+        (setq dir (unless (or (null parent)
+                              (string= parent dir))
+                    parent))))
+    found))
 
 (defun my/locate-topmost-file (from-path file)
   "Starting at FROM-PATH, look up directory hierarchy for the topmost directory

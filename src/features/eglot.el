@@ -49,8 +49,14 @@
   ;; Completely disable the events buffer for maximum performance.  Eglot keeps
   ;; 2000000 events by default, which are suspected to cause performance issues
   ;; when editing Dart files that are part of a Flutter project.
-  (setq eglot-events-buffer-config '(:size 0 :format nil))
-
+  ;;
+  ;; NOTE: This setting WILL make debugging Eglot issues more difficult and
+  ;; isn't necessary in all cases observed.  Disabling the events buffer should
+  ;; be a project-specific override done via .dir-locals.el and NEVER globally.
+  ;; Keeping the line below here for future reference.
+  ;;
+  ;; (setq eglot-events-buffer-config '(:size 0 :format nil))
+  ;;
   ;; If performance is still a concern in some modes, consider making the
   ;; following additional tweaks:
   ;;

@@ -1,6 +1,6 @@
-;;; js.el --- Configures `js-mode'
+;;; js.el --- Configures Javascript buffers
 
-;; Copyright (C) 2015-2024  Miguel Guedes
+;; Copyright (C) 2015-2025  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -59,8 +59,17 @@ particular FILE-NAME and MODE."
            (lsp-clients-flow-tag-file-present-p file-name))))
 
 (defun init/determine-js-mode ()
+  ;; Do not add `:after flycheck-flow` clause to the use-package declaration
+  ;; below or it'll have unintended side-effects.  The biggest is that
+  ;; use-package won't run until `flycheck' is loaded, causing JS buffers to be
+  ;; misconfigured.
+  (when (not (fboundp 'flycheck-flow--predicate))
+    (require 'flycheck-flow))
+
   (if (flycheck-flow--predicate)
-        (tsx-ts-mode)
+      (tsx-ts-mode)
+    ;; Don't use typescript-ts-mode as it will cause the tsserver to type-check
+    ;; Javascript code.
     (js-ts-mode)))
 
 (defun init/js-mode/enable ()
@@ -73,7 +82,6 @@ particular FILE-NAME and MODE."
                 :override #'init/js/lsp-clients-flow-activate-p))
 
 (use-package js
-  :after (flycheck)
   :diminish "JS"
   :mode (("\\.jsx?\\'" . init/determine-js-mode)
          ("\\.mjs\\'" . init/determine-js-mode))

@@ -1,6 +1,6 @@
-;;; typescript.el --- Configures `typescript-mode'
+;;; typescript.el --- Configures Typescript buffers
 
-;; Copyright (C) 2020-2024  Miguel Guedes
+;; Copyright (C) 2020-2025  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools

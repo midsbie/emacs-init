@@ -41,6 +41,9 @@
   (visual-line-mode 1)
   (auto-fill-mode -1)
   (display-fill-column-indicator-mode -1)
+  ;; Org-mode relies on a tab-width of 8 for correct table alignment and
+  ;; proper functioning of certain navigation commands.
+  (setq-local tab-width 8)
   (local-set-key (kbd "M-h") #'backward-kill-word))
 
 (use-package org

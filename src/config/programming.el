@@ -167,8 +167,6 @@
   ;; code.  It (mostly) works fine when writing new code though.
   (setq c-auto-newline nil)
 
-  ;; The following disabled:
-  ;; (doxymacs-mode)                    ; turn doxymacs on
   (init/common-programming-mode))
 
 

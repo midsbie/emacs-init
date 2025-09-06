@@ -28,9 +28,6 @@
 
 ;;; Code:
 
-;; Set path override for Mono libraries or the Omnisharp Roslyn server may not
-;; start or work as expected.
-(setenv "FrameworkPathOverride" "/lib/mono/4.5")
 ;; Prevent Git from using pager in `shell-mode'.
 (setenv "GIT_PAGER" "cat")
 

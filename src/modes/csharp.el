@@ -1,6 +1,6 @@
 ;;; csharp.el --- Configures `csharp-mode'
 
-;; Copyright (C) 2021-2024  Miguel Guedes
+;; Copyright (C) 2021-2025  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -33,7 +33,15 @@
 
 ;;; Code:
 
-(defun init/csharp/enable ()
+(defun init/csharp-mode ()
+  "Initialise csharp mode."
+  ;; Set path override for Mono libraries or the Omnisharp Roslyn server may not
+  ;; start or work as expected.
+  (if (file-directory-p "/lib/mono/4.5")
+      (setenv "FrameworkPathOverride" "/lib/mono/4.5")
+    (message "Warning: /lib/mono/4.5 not found, Omnisharp Roslyn may not work as expected")))
+
+(defun init/csharp-mode/enable ()
   "Initialise csharp mode."
   (setq-local c-basic-offset 4)
 
@@ -57,6 +65,7 @@
 
 (use-package csharp-mode
   :mode ("\\.cs\\'" . csharp-ts-mode)
-  :hook ((csharp-mode csharp-ts-mode) . init/csharp/enable))
+  :init (init/csharp-mode)
+  :hook ((csharp-mode csharp-ts-mode) . init/csharp-mode/enable))
 
 ;;; csharp.el ends here

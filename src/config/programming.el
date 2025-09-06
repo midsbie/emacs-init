@@ -1,6 +1,6 @@
 ;;; programming.el --- Programming-related configuration
 
-;; Copyright (C) 2015-2024  Miguel Guedes
+;; Copyright (C) 2015-2025  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -133,6 +133,10 @@
   (abbrev-mode -1)                  ; turn abbrev-mode off
   (subword-mode 1)
 
+  ;; `global-auto-revert-mode' is enabled but some major modes disable it, for
+  ;; some reason.  One such mode is `python-ts-mode'.
+  (auto-revert-mode 1)
+
   ;; Delete all trailing whitespace before saving.  -100 argument makes it so
   ;; this particular hook runs before any other, which fixes a number of issues
   ;; in some modes where LSP's own buffer formatting function would run ahead of
@@ -147,7 +151,7 @@
 
 (defun init/common-nonweb-programming-mode ()
   "Perform initialisation of aspects common to all programming-related modes."
-  (auto-fill-mode)                  ; auto fill
+  (auto-fill-mode 1)
 
   ;; NOTE: we are explicitly disabling `flyspell-mode' since it suffers from
   ;; very annoying, intrusive issues that actually impede development.

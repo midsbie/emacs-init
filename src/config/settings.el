@@ -208,8 +208,8 @@
 
 ;; To make it easier for newcomers to Emacs, the developers decided to swap out
 ;; the mechanics of C-j and RET when `electric-indent-mode' is enabled.  In the
-;; hook below, we make sure to retain the desired behaviour whereby C-j
-;; produces a newline and indention and C-m or RET only a newline.
+;; hook below, we make sure to retain the desired behaviour whereby C-j produces
+;; a newline with indentation, and C-m or RET only a newline.
 ;;
 ;; Ref: https://lists.gnu.org/archive/html/bug-gnu-emacs/2014-12/msg00098.html
 (add-hook 'electric-indent-mode-hook

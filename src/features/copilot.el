@@ -1,6 +1,6 @@
 ;;; copilot.el --- Customises the copilot package
 
-;; Copyright (C) 2024  Miguel Guedes
+;; Copyright (C) 2024-2025  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -25,6 +25,12 @@
 
 ;;; Code:
 
+(defun init/copilot/complete ()
+  "Complete at the current point."
+  (interactive)
+  (corfu-quit)
+  (copilot-complete))
+
 (use-package copilot
   :vc (:url "https://github.com/copilot-emacs/copilot.el"
             :rev :newest
@@ -37,6 +43,14 @@
               ("C-<tab>" . 'copilot-accept-completion-by-word)
               ("C-n" . 'copilot-next-completion)
               ("C-p" . 'copilot-previous-completion))
+  (:map copilot-mode-map
+        ("C-TAB" . 'init/copilot/complete)
+        ("C-<tab>" . 'init/copilot/complete))
+  (:map global-map
+        ("C-c p m" . copilot-mode))     ; Toggle on/off
+  :custom
+  (copilot-idle-delay 0)
+
   :config
   ;; Known language identifiers:
   ;; https://code.visualstudio.com/docs/languages/identifiers

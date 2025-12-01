@@ -1,9 +1,9 @@
 ;;; programming.el --- Assorted convenience features to improve programming
 ;;; experience
 
-;; Copyright (C) 2020-2023  Miguel Guedes
+;; Copyright (C) 2020-2025  Miguel Guedes
 
-;; Author: Miguel Guedes <miguel@softgeist.com>
+;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
 
 ;; This program is free software; you can redistribute it and/or modify

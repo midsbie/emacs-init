@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2021-2025  Miguel Guedes
 
-;; Author: Miguel Guedes <miguel@miguelguedes.org>
+;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
 
 ;; This program is free software; you can redistribute it and/or modify

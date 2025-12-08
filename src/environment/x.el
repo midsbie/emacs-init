@@ -186,22 +186,6 @@ characters wide."
 
       (set-face-attribute 'widget-field nil :foreground "black")
 
-      ;; Inherited by `swiper-match-face-1'
-      (set-face-attribute 'lazy-highlight nil :foreground "white" :background "blue4")
-      ;; Inherited by `swiper-match-face-2'
-      (set-face-attribute 'isearch nil :foreground "black")
-
-      (set-face-attribute 'isearch-group-1 nil :foreground "dark blue")
-      (set-face-attribute 'isearch-group-2 nil :foreground "dark blue")
-
-      ;; Doesn't seem to be defined:
-      ;; (set-face-attribute 'popup-isearch-match nil :foreground "dark blue")
-
-      (set-face-attribute 'swiper-match-face-1 nil :foreground "white")
-      (set-face-attribute 'swiper-match-face-2 nil :foreground "black")
-      (set-face-attribute 'swiper-match-face-3 nil :foreground "white")
-      (set-face-attribute 'swiper-match-face-4 nil :foreground "white")
-
       (use-package magit
         :config
         (set-face-attribute 'magit-diff-added nil :foreground "white smoke")

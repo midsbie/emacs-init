@@ -42,10 +42,4 @@
 (use-package all-the-icons-ibuffer
   :config (all-the-icons-ibuffer-mode 1))
 
-;; Ref: https://github.com/seagle0128/all-the-icons-ivy-rich
-(use-package all-the-icons-ivy-rich
-  ;; Only loads after the ivy-rich package does
-  :after (ivy-rich)
-  :config (all-the-icons-ivy-rich-mode 1))
-
 ;;; all-the-icons.el ends here

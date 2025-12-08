@@ -63,6 +63,8 @@
          ("M-g i" . consult-imenu)
          ("M-g I" . consult-imenu-multi)
          ;; M-s bindings (search-map)
+         ("C-s" . consult-line)                    ; was using swiper before,
+                                                   ; now replaces `isearch-forward'
          ("M-s d" . consult-find)
          ("M-s D" . consult-locate)
          ("M-s g" . consult-grep)

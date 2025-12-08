@@ -19,9 +19,6 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;; Documentation can be found at the following locations:
-;;
-;;   * https://oremacs.com/swiper/
 ;;
 ;; Note that there advanced support for intricate actions in the mini-buffer
 ;; involving multiple selections and whatnot.  These are not fully understood
@@ -39,7 +36,6 @@
 (global-set-key (kbd "C-x p")         #'my/other-previous-window)
 
 ;; Define miscellaneous shortcuts.
-; Note that ivy defines some keyboard mappings under F2
 ; F2 F2 originally invoked: `2C-two-columns'
 (global-set-key (kbd "<f2> <f2>")     #'shell)
 (global-set-key [f3]                  #'my/better-next-error)
@@ -64,8 +60,6 @@
 (global-set-key (kbd "C-x 4 k")       #'my/kill-other-buffer)
 (global-set-key (kbd "C-x 4 /")       #'my/bury-other-buffer)
 (global-set-key (kbd "C-x +")         #'my/rearrange-desktop)
-; Prevents collision with ivy's C-x l
-(global-set-key (kbd "C-x L")         #'count-lines-page)
 
 (global-set-key (kbd "C-c C-t")       #'c-toggle-hungry-state)
 

@@ -113,8 +113,4 @@
 (use-package subword
   :diminish)
 
-(use-package swiper
-  :demand
-  :bind ("C-s" . swiper-isearch))
-
 ;;; features.el ends here

@@ -117,8 +117,4 @@
   :demand
   :bind ("C-s" . swiper-isearch))
 
-(use-package visual-regexp
-  :bind (("C-c r" . vr/replace)
-         ("C-c q" . vr/query-replace)))
-
 ;;; features.el ends here

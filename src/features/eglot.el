@@ -104,7 +104,7 @@
   "Convert PATH, a file name, to LSP URI string and return it.
 TRUENAMEP indicated PATH is already a truename."
   (cond
-   ((string-prefix-p "csharp:/" uri)
+   ((and (stringp uri) (string-prefix-p "csharp:/" uri))
     (init/eglot/csharp-cls-metadata-uri-handler uri))
    (t
     uri)))

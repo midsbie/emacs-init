@@ -63,6 +63,22 @@
   ;; (setq eglot-send-changes-idle-time 1.0) ;; send edits less frequently
   ;; (setq eglot-extend-to-xref t)           ;; avoid aggressive reanalysis
 
+  ;; Configure Typescript language server with inlay hints enabled by default.
+  (add-to-list
+   'eglot-server-programs
+   `((typescript-ts-mode tsx-ts-mode js-ts-mode typescript-mode js-mode)
+     . ("typescript-language-server" "--stdio"
+        :initializationOptions
+        (:preferences
+         (:includeInlayParameterNameHints "all"
+                                          :includeInlayParameterNameHintsWhenArgumentMatchesName t
+                                          :includeInlayFunctionParameterTypeHints t
+                                          :includeInlayVariableTypeHints t
+                                          :includeInlayVariableTypeHintsWhenTypeMatchesName t
+                                          :includeInlayPropertyDeclarationTypeHints t
+                                          :includeInlayFunctionLikeReturnTypeHints t
+                                          :includeInlayEnumMemberValueHints t)))))
+
   (advice-add 'eglot-rename :around #'init/eglot/rename-advice)
   (advice-add 'eglot-uri-to-path :around #'init/eglot/uri-to-path-advice)
   (advice-add 'eglot--TextDocumentIdentifier :around #'init/eglot/TextDocumentIdentifier))

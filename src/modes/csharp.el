@@ -1,6 +1,6 @@
 ;;; csharp.el --- Configures `csharp-mode'
 
-;; Copyright (C) 2021-2025  Miguel Guedes
+;; Copyright (C) 2021-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -31,6 +31,10 @@
 
 ;;; Log:
 
+;; `format-all-mode' is now enabled conditionally when a .clang-format file
+;; detected in the project.  See `init/format-all/csharp-maybe-enable' for
+;; details.
+
 ;;; Code:
 
 (defun init/csharp-mode ()
@@ -60,8 +64,7 @@
   ;; Enable the following if flycheck should only check the buffer on load and
   ;; save.
   ;; (setq-local flycheck-check-syntax-automatically '(mode-enabled save))
-  (init/common-nonweb-programming-mode)
-  (format-all-mode))
+  (init/common-nonweb-programming-mode))
 
 (use-package csharp-mode
   :mode ("\\.cs\\'" . csharp-ts-mode)

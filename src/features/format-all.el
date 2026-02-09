@@ -1,6 +1,6 @@
 ;;; format-all.el --- Configures `format-all'
 
-;; Copyright (C) 2024  Miguel Guedes
+;; Copyright (C) 2024-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: internal, tools
@@ -24,10 +24,27 @@
 
 ;;; Code:
 
-(defun init/format-all/enable ()
-  (setq-local format-all-formatters '(("C#" clang-format))))
+(require 'project)
+(require 'subr-x)
+
+(defun init/format-all--clang-format-in-project-p ()
+  (when-let* ((proj   (project-current nil default-directory))
+              (root   (file-name-as-directory (file-truename (project-root proj))))
+              (cfgdir (locate-dominating-file default-directory ".clang-format"))
+              (cfgdir (file-name-as-directory (file-truename cfgdir))))
+    (file-in-directory-p cfgdir root)))
+
+(defun init/format-all/maybe-enable (lang)
+  (if (init/format-all--clang-format-in-project-p)
+      (progn
+        (setq-local format-all-formatters `((,lang clang-format)))
+        (format-all-mode 1))
+    (format-all-mode -1)))
+
+(defun init/format-all/csharp-maybe-enable ()
+  (init/format-all/maybe-enable "C#"))
 
 (use-package format-all
-  :hook (format-all-mode . init/format-all/enable))
+  :hook (csharp-mode . init/format-all/csharp-maybe-enable))
 
 ;;; format-all.el ends here

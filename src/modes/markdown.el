@@ -1,6 +1,6 @@
 ;;; markdown.el --- Configures markdown-mode.
 
-;; Copyright (C) 2024  Miguel Guedes
+;; Copyright (C) 2024-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -25,6 +25,13 @@
 ;;; Code:
 
 (use-package markdown-mode
-  :defer t)
+  :defer t
+  :custom
+  (markdown-fontify-code-blocks-natively t)
+  (markdown-enable-math t)
+  (markdown-enable-wiki-links t)
+
+  :config
+  (auto-fill-mode -1))
 
 ;;; markdown.el ends here

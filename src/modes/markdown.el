@@ -32,6 +32,7 @@
   (markdown-enable-wiki-links t)
 
   :config
-  (auto-fill-mode -1))
+  (auto-fill-mode -1)
+  (visual-line-mode 1))
 
 ;;; markdown.el ends here

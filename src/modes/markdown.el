@@ -24,15 +24,17 @@
 
 ;;; Code:
 
+(defun init/markdown-mode/enable ()
+  "Configure `markdown-mode' buffers."
+  (auto-fill-mode -1)
+  (visual-line-mode 1))
+
 (use-package markdown-mode
   :defer t
+  :hook (markdown-mode . init/markdown-mode/enable)
   :custom
   (markdown-fontify-code-blocks-natively t)
   (markdown-enable-math t)
-  (markdown-enable-wiki-links t)
-
-  :config
-  (auto-fill-mode -1)
-  (visual-line-mode 1))
+  (markdown-enable-wiki-links t))
 
 ;;; markdown.el ends here

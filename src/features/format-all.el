@@ -27,7 +27,7 @@
 (require 'project)
 (require 'subr-x)
 
-(defun init/format-all--clang-format-in-project-p ()
+(defun init/format-all/clang-format-in-project-p ()
   (when-let* ((proj   (project-current nil default-directory))
               (root   (file-name-as-directory (file-truename (project-root proj))))
               (cfgdir (locate-dominating-file default-directory ".clang-format"))
@@ -35,7 +35,7 @@
     (file-in-directory-p cfgdir root)))
 
 (defun init/format-all/maybe-enable (lang)
-  (if (init/format-all--clang-format-in-project-p)
+  (if (init/format-all/clang-format-in-project-p)
       (progn
         (setq-local format-all-formatters `((,lang clang-format)))
         (format-all-mode 1))

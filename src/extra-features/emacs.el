@@ -1,6 +1,6 @@
 ;;; emacs.el --- Utilitarian functions related to Emacs itself
 
-;; Copyright (C) 2021-2023  Miguel Guedes
+;; Copyright (C) 2021-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-;; Defun invoked after pressing C-x C-k (see `init/elisp').
+;; Defun invoked after pressing C-x C-k (see `init/elisp/enable').
 ;; Evals the current buffer and displays a message.
 (defun my/eval-buffer ()
   "Evaluate the current buffer.

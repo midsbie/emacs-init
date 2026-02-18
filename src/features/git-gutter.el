@@ -1,6 +1,6 @@
 ;;; git-gutter.el --- Configures the `git-gutter' package
 
-;; Copyright (C) 2021  Miguel Guedes
+;; Copyright (C) 2021-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools

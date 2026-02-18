@@ -1,6 +1,6 @@
 ;;; web.el --- Configures `web-mode'
 
-;; Copyright (C) 2015-2024  Miguel Guedes
+;; Copyright (C) 2015-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -88,7 +88,7 @@
              (message "warn: flycheck-mode disabled")
              (flycheck-mode -1))))))
 
-(defun init/web/load-local-vars ()
+(defun init/web-mode/load-local-vars ()
   "Map the value of `c-basic-offset' to `web-mode-code-indent-offset'."
   (when file-local-variables-alist
     (dolist (elt file-local-variables-alist)
@@ -124,7 +124,7 @@
   :bind (:map web-mode-map
               ("C-c C-c" . init/web-mode/toggle-js-mode))
 
-  :hook ((web-mode-local-vars . init/web/load-local-vars)
+  :hook ((web-mode-local-vars . init/web-mode/load-local-vars)
          (web-mode . init/web-mode/enable))
 
   :init

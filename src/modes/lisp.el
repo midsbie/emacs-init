@@ -1,6 +1,6 @@
 ;;; lisp.el --- Configures `lisp-mode'
 
-;; Copyright (C) 2015-2022  Miguel Guedes
+;; Copyright (C) 2015-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(defun init/elisp ()
+(defun init/elisp/enable ()
   "Initialise modes related to ELISP development."
 
   (turn-on-eldoc-mode)
@@ -34,7 +34,7 @@
 
 (use-package emacs-lisp-mode
   :mode ("\\.el\\'")
-  :hook ((emacs-lisp-mode lisp-interaction-mode lisp-mode) . init/elisp)
+  :hook ((emacs-lisp-mode lisp-interaction-mode lisp-mode) . init/elisp/enable)
   :bind (:map emacs-lisp-mode-map
               ("C-x C-k" . my/eval-buffer)))
 

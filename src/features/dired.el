@@ -1,6 +1,6 @@
 ;;; dired.el --- Configures `dired-mode'
 
-;; Copyright (C) 2015-2025  Miguel Guedes
+;; Copyright (C) 2015-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: internal, tools
@@ -24,17 +24,12 @@
 
 ;;; Code:
 
-(defun init/dired ()
-  ;; (setq dired-guess-shell-gnutar "gtar")
-  )
-
 (defun init/dired/enable ()
   ;; (dired-omit-mode 1)
   )
 
 (use-package dired
   :hook ((dired-load . init/dired/enable))
-  :init (init/dired)
   :custom
   (dired-dwim-target t))
 

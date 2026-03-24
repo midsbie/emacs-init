@@ -1,6 +1,6 @@
 ;;; eglot.el --- Customises the Eglot package
 
-;; Copyright (C) 2022-2025  Miguel Guedes
+;; Copyright (C) 2022-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -192,6 +192,24 @@ is returned."
       (with-temp-buffer (insert-file-contents metadata-file-name)
                         (buffer-string)))))
 
+(defun init/eglot/toggle-inlay-hints (&optional global)
+  "Toggle `eglot-inlay-hints-mode' in the current buffer.
+With prefix argument GLOBAL, also set all other eglot-managed buffers
+to the same state."
+  (interactive "P")
+  (eglot-inlay-hints-mode 'toggle)
+  (when global
+    (let ((state (if eglot-inlay-hints-mode 1 -1))
+          (current (current-buffer)))
+      (dolist (buf (buffer-list))
+        (unless (eq buf current)
+          (with-current-buffer buf
+            (when (eglot-managed-p)
+              (eglot-inlay-hints-mode state)))))))
+  (message "Inlay hints %s%s"
+           (if eglot-inlay-hints-mode "enabled" "disabled")
+           (if global " globally" "")))
+
 (use-package eglot
   :config (init/eglot/config)
   :hook (eglot-managed-mode . init/eglot/enable)
@@ -199,6 +217,7 @@ is returned."
   :bind (:map eglot-mode-map
               ("C-c l a a" . eglot-code-actions)
               ("C-c l r r" . eglot-rename)
+              ("C-c l t h" . init/eglot/toggle-inlay-hints)
               )
 
   ;; Most the customizations below were inspired by the tutorial referenced in

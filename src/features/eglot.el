@@ -25,6 +25,19 @@
 
 ;;; Code:
 
+(defgroup init/eglot nil
+  "Customisations for `eglot'."
+  :group 'init
+  :prefix "init/eglot")
+
+(defcustom init/eglot/inlay-hints-enabled t
+  "Whether `eglot-inlay-hints-mode' should be enabled.
+This variable is persisted across sessions via the Customize
+framework and is updated automatically when toggling inlay hints
+with `init/eglot/toggle-inlay-hints'."
+  :group 'init/eglot
+  :type 'boolean)
+
 (defvar init/typescript-server-location
   (expand-file-name
    "~/.emacs.d/.cache/lsp/npm/typescript-language-server/bin/typescript-language-server"))
@@ -79,12 +92,15 @@
                                           :includeInlayFunctionLikeReturnTypeHints t
                                           :includeInlayEnumMemberValueHints t)))))
 
+  (add-hook 'eglot-managed-mode-hook #'init/eglot/enable t)
   (advice-add 'eglot-rename :around #'init/eglot/rename-advice)
   (advice-add 'eglot-uri-to-path :around #'init/eglot/uri-to-path-advice)
   (advice-add 'eglot--TextDocumentIdentifier :around #'init/eglot/TextDocumentIdentifier))
 
 (defun init/eglot/enable ()
   "Configure `eglot' when enabled in a buffer."
+  (unless init/eglot/inlay-hints-enabled
+    (eglot-inlay-hints-mode -1))
   (add-hook 'before-save-hook #'init/maybe-format-buffer nil t))
 
 (defun init/eglot/server-program-supported-p (major-mode)
@@ -198,6 +214,7 @@ With prefix argument GLOBAL, also set all other eglot-managed buffers
 to the same state."
   (interactive "P")
   (eglot-inlay-hints-mode 'toggle)
+  (customize-save-variable 'init/eglot/inlay-hints-enabled eglot-inlay-hints-mode)
   (when global
     (let ((state (if eglot-inlay-hints-mode 1 -1))
           (current (current-buffer)))
@@ -212,7 +229,9 @@ to the same state."
 
 (use-package eglot
   :config (init/eglot/config)
-  :hook (eglot-managed-mode . init/eglot/enable)
+  ;; NOTE: the hook is appended via `init/eglot/config' so that it runs AFTER
+  ;; eglot's own default hooks (which auto-enable `eglot-inlay-hints-mode').
+  ;; Using :hook here would prepend, causing our state to be overridden.
 
   :bind (:map eglot-mode-map
               ("C-c l a a" . eglot-code-actions)

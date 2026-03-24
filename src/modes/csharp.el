@@ -45,6 +45,16 @@
       (setenv "FrameworkPathOverride" "/lib/mono/4.5")
     (message "Warning: /lib/mono/4.5 not found, Omnisharp Roslyn may not work as expected")))
 
+(defun init/csharp-mode/toggle-ts ()
+  "Toggle between `csharp-mode' and `csharp-ts-mode'.
+`csharp-ts-mode' is preferred but has indentation edge cases that
+can be worked around by temporarily switching to `csharp-mode'."
+  (interactive)
+  (pcase major-mode
+    ('csharp-mode (csharp-ts-mode))
+    ('csharp-ts-mode (csharp-mode))
+    (_ (user-error "Not in a C# buffer"))))
+
 (defun init/csharp-mode/enable ()
   "Initialise csharp mode."
   (setq-local c-basic-offset 4)
@@ -69,6 +79,10 @@
 (use-package csharp-mode
   :mode ("\\.cs\\'" . csharp-ts-mode)
   :init (init/csharp-mode)
-  :hook ((csharp-mode csharp-ts-mode) . init/csharp-mode/enable))
+  :hook ((csharp-mode csharp-ts-mode) . init/csharp-mode/enable)
+  :bind (:map csharp-mode-map
+         ("C-c C-t" . init/csharp-mode/toggle-ts)
+         :map csharp-ts-mode-map
+         ("C-c C-t" . init/csharp-mode/toggle-ts)))
 
 ;;; csharp.el ends here

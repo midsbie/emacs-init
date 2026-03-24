@@ -61,8 +61,6 @@
 (global-set-key (kbd "C-x 4 /")       #'my/bury-other-buffer)
 (global-set-key (kbd "C-x +")         #'my/rearrange-desktop)
 
-(global-set-key (kbd "C-c C-t")       #'c-toggle-hungry-state)
-
 ;; Redefine C-h (help) as C-x h and define backspace as C-h. Note that Emacs
 ;; help feature can still be accessed via F1.
 (global-set-key (kbd "C-h")           #'delete-backward-char)

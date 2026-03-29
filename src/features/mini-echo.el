@@ -30,11 +30,11 @@
   (mini-echo-blue ((t (:foreground "#729fcf"))))
   :custom
   (mini-echo-buffer-status-style 'both)
+  (mini-echo-persistent-rule
+   '(:long  ("major-mode" "shrink-path" "vcs" "buffer-position"
+             "buffer-size" "flymake" "flycheck" "eglot")
+     :short ("buffer-name" "buffer-position" "flymake" "flycheck")))
   :config
-  (setq mini-echo-persistent-rule
-        '(:long  ("major-mode" "shrink-path" "vcs" "buffer-position"
-                  "buffer-size" "flymake" "flycheck" "eglot")
-          :short ("buffer-name" "buffer-position" "flymake" "flycheck")))
   (mini-echo-mode 1))
 
 ;;; mini-echo.el ends here

@@ -28,6 +28,8 @@
 (use-package mini-echo
   :custom-face
   (mini-echo-blue ((t (:foreground "#729fcf"))))
+  :custom
+  (mini-echo-buffer-status-style 'both)
   :config
   (setq mini-echo-persistent-rule
         '(:long  ("major-mode" "shrink-path" "vcs" "buffer-position"

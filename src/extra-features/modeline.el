@@ -138,8 +138,10 @@
       (cons "?" 'my/modeline-missing))
      (t (cons "" nil)))))
 
-(defvar-local my/modeline--project-root nil
-  "Cached project root for mode line display.")
+(defvar-local my/modeline--project-root 'unset
+  "Cached project root for mode line display.
+Value is `unset' when not yet computed, nil when no project was found,
+or a string with the project root path.")
 
 (defun my/modeline--update-project-root ()
   "Update the cached project root."
@@ -156,8 +158,9 @@ Shows: [read-only] [project/a/b/c/]filename[status]"
   (let* ((ro (when buffer-read-only
                (propertize "%% " 'face 'my/modeline-read-only)))
          (filepath (buffer-file-name))
-         (project (or my/modeline--project-root
-                      (my/modeline--update-project-root)))
+         (project (if (eq my/modeline--project-root 'unset)
+                      (my/modeline--update-project-root)
+                    my/modeline--project-root))
          (status (my/modeline--buffer-status))
          (sign (car status))
          (status-face (cdr status))

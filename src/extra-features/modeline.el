@@ -25,7 +25,8 @@
 ;; counters, and contextual indicators (macro recording, narrowing, selection,
 ;; remote host, process status).
 ;;
-;; Uses Tango color palette for consistency with the default theme.
+;; All faces inherit from standard Emacs faces (error, warning, success, shadow,
+;; font-lock-*) so they adapt automatically to any theme.
 
 ;;; Code:
 
@@ -33,29 +34,10 @@
   (require 'cl-lib))
 
 ;; ---------------------------------------------------------------------------
-;; Tango color palette
-;; ---------------------------------------------------------------------------
-(defconst my/modeline-tango-green       "#4e9a06")
-(defconst my/modeline-tango-green-light "#8ae234")
-(defconst my/modeline-tango-yellow      "#c4a000")
-(defconst my/modeline-tango-yellow-light "#fce94f")
-(defconst my/modeline-tango-blue        "#3465a4")
-(defconst my/modeline-tango-blue-light  "#729fcf")
-(defconst my/modeline-tango-red         "#cc0000")
-(defconst my/modeline-tango-red-light   "#ef2929")
-(defconst my/modeline-tango-magenta     "#75507b")
-(defconst my/modeline-tango-magenta-light "#ad7fa8")
-(defconst my/modeline-tango-cyan        "#06989a")
-(defconst my/modeline-tango-cyan-light  "#34e2e2")
-(defconst my/modeline-tango-orange      "#f57900")
-(defconst my/modeline-tango-gray        "#888a85")
-(defconst my/modeline-tango-gray-dark   "#555753")
-
-;; ---------------------------------------------------------------------------
-;; Faces
+;; Faces — inherit from standard Emacs faces for theme portability
 ;; ---------------------------------------------------------------------------
 (defface my/modeline-major-mode
-  `((t (:weight bold :foreground ,my/modeline-tango-blue-light)))
+  '((t (:inherit font-lock-function-name-face)))
   "Face for major mode name in mode line."
   :group 'init)
 
@@ -65,7 +47,7 @@
   :group 'init)
 
 (defface my/modeline-project
-  `((t (:foreground ,my/modeline-tango-blue-light)))
+  '((t (:inherit font-lock-keyword-face)))
   "Face for project name in mode line."
   :group 'init)
 
@@ -75,67 +57,67 @@
   :group 'init)
 
 (defface my/modeline-modified
-  `((t (:weight bold :foreground ,my/modeline-tango-green-light)))
+  '((t (:inherit (bold success))))
   "Face for buffer modified indicator."
   :group 'init)
 
 (defface my/modeline-modified-external
-  `((t (:weight bold :foreground ,my/modeline-tango-yellow-light)))
+  '((t (:inherit (bold warning))))
   "Face for buffer modified externally indicator."
   :group 'init)
 
 (defface my/modeline-missing
-  `((t (:weight bold :foreground ,my/modeline-tango-red-light)))
+  '((t (:inherit (bold error))))
   "Face for missing file indicator."
   :group 'init)
 
 (defface my/modeline-read-only
-  `((t (:weight bold :foreground ,my/modeline-tango-yellow)))
+  '((t (:inherit (bold warning))))
   "Face for read-only indicator."
   :group 'init)
 
 (defface my/modeline-position
-  `((t (:foreground ,my/modeline-tango-magenta-light)))
+  '((t (:inherit font-lock-constant-face)))
   "Face for cursor position in mode line."
   :group 'init)
 
 (defface my/modeline-diagnostic-error
-  `((t (:weight bold :foreground ,my/modeline-tango-red-light)))
+  '((t (:inherit (bold error))))
   "Face for error count in mode line."
   :group 'init)
 
 (defface my/modeline-diagnostic-warning
-  `((t (:weight bold :foreground ,my/modeline-tango-orange)))
+  '((t (:inherit (bold warning))))
   "Face for warning count in mode line."
   :group 'init)
 
 (defface my/modeline-diagnostic-note
-  `((t (:weight bold :foreground ,my/modeline-tango-cyan-light)))
+  '((t (:inherit (bold font-lock-type-face))))
   "Face for note/info count in mode line."
   :group 'init)
 
 (defface my/modeline-diagnostic-running
-  `((t (:foreground ,my/modeline-tango-gray)))
+  '((t (:inherit shadow)))
   "Face for running/checking indicator."
   :group 'init)
 
 (defface my/modeline-status-local
-  `((t (:weight bold :foreground ,my/modeline-tango-yellow)))
+  '((t (:inherit (bold warning))))
   "Face for local buffer status indicators (selection, narrow, etc.)."
   :group 'init)
 
 (defface my/modeline-status-global
-  `((t (:weight bold :foreground ,my/modeline-tango-cyan-light)))
+  '((t (:inherit (bold font-lock-type-face))))
   "Face for global status indicators (macro, process, etc.)."
   :group 'init)
 
 (defface my/modeline-remote
-  `((t (:weight bold :foreground ,my/modeline-tango-red)))
+  '((t (:inherit (bold error))))
   "Face for remote host indicator."
   :group 'init)
 
 (defface my/modeline-eglot-active
-  `((t (:foreground ,my/modeline-tango-green)))
+  '((t (:inherit success :weight normal)))
   "Face for active eglot indicator."
   :group 'init)
 

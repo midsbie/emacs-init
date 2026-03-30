@@ -22,39 +22,21 @@
 
 ;;; Commentary:
 
+;; Loaded by `init.el' when `display-graphic-p' is nil (terminal Emacs).
+;; All forms are evaluated at top level on load.
+
 ;;; Code:
 
-(defun init/env/term()
-  ;; Load an appropriate theme for a terminal and set the background color to
-  ;; as close to black as we can.
-  (load-theme 'wombat)
-  (set-background-color "color232")
+;; Load wombat as the base, then layer our terminal theme on top.
+(add-to-list 'custom-theme-load-path
+             (concat init/path-base "environment"))
+(load-theme 'wombat t)
+(load-theme 'my-term-dark t)
 
-  ;; Customize faces that turn out not to support a terminal environment.
-  (custom-set-faces
-   ;; custom-set-faces was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   '(magit-section-highlight ((t (:background "color-235"))))
-   '(hl-line ((t (:background "color-235" :underline nil)))))
-
-  ;; Turn highlight one globally (configuration is above)
-  ;; UPDATE: disabled as it was degrading performance
-  ;; (global-hl-line-mode 1)
-)
-
-;; Use xclip to push copied text to clipboard
-(when (and (executable-find "xclip")
-           (getenv "DISPLAY"))
-  (defun copy-to-xclip (text &optional push)
-    (condition-case nil
-        (let ((process-connection-type nil))
-          (let ((proc (start-process "xclip" "*Messages*" "xclip" "-selection" "clipboard")))
-            (process-send-string proc text)
-            (process-send-eof proc)))
-      (error (message "Failed to copy to clipboard (xclip error)"))))
-  (setq interprogram-cut-function 'copy-to-xclip))
+;; Enable system clipboard integration in terminal (Emacs 29+)
+(use-package xclip
+  :config
+  (xclip-mode 1))
 
 
 ;;; term.el ends here

@@ -70,53 +70,21 @@ characters wide."
   (setq select-enable-clipboard     t)
 
 
-  ;; The following themes in order of reverse preference:
-  ;;
-  ;; - Difficult to read lighter faces.
-  ;; - Integration with `vertico' could be improved.
-  ;; (load-theme 'solarized-selenized-light t)
-  ;;
-  ;; - An improvement over solarized light but still feels a little washed out,
-  ;;   making it difficult to distinguish some faces whose foreground color are
-  ;;   approximate the background color.
-  ;; + GREAT harmonized face colors for programming.
-  ;; (load-theme 'solarized-zenburn t)
-  ;;
-  ;; + THE BEST theme in terms of readability.
-  ;; - BAD choise of face colors for programming; e.g. purple for keywords
-  ;; (load-theme 'tango t)
-  ;;
-  ;; * Evaluating themes below:
-  ;; (load-theme 'gruvbox-dark-soft t)
-  ;; (load-theme 'modus-operandi t)
-
-  ;; Disabled
-  ;;
-  ;;   (setq solarized-distinct-fringe-background  t
-  ;;         solarized-distinct-doc-face           t
-  ;;         solarized-high-contrast-mode-line     t)
-  ;;   (load-theme 'solarized-zenburn t)
-
+  ;; Default face font (theme handles colors)
   (custom-set-faces
-   ;; Default face; note that any subsequent face customization calls on
-   ;; 'default are likely to not result in the intended result; consider using
-   ;; `set-face-attribute' instead.
    '(default ((t (:inherit nil :stipple nil
                            :inverse-video nil :box nil
                            :strike-through nil :overline nil :underline nil
                            :slant normal :weight normal :height 85 :width normal
-                           :family "Hack"))))
-   '(lsp-headerline-breadcrumb-path-face ((t (:inherit font-lock-builtin-face :weight normal))))
-   ;; Not set by default, for some reason.
-   '(font-lock-number-face ((t (:inherit font-lock-warning-face :weight normal))))
-   '(font-lock-operator-face ((t (:inherit font-lock-builtin-face)))))
+                           :family "Hack")))))
 
-  (add-hook 'emacs-startup-hook #'init/customize-default-theme)
+  ;; Load personal GUI theme
+  (add-to-list 'custom-theme-load-path
+               (concat init/path-base "environment"))
+  (when init/theme
+    (load-theme init/theme t))
 
-  ;; Eval the following statement when debugging or trying out new faces:
-  ;; (custom-set-faces '(region ((t (:background "#4f5f60" :foreground nil)))))
-
-  ;; Let's now perform last initialization steps.
+  ;; Frame size and other window configuration.
   ;;
   ;; Properties can be accessed with the following form:
   ;;
@@ -136,108 +104,6 @@ characters wide."
   ;; We forcefully disable them here.
   (when (boundp 'horizontal-scroll-bar-mode)
     (horizontal-scroll-bar-mode -1))
-  )
-
-(defun init/customize-default-theme ()
-  "Customize default theme if no custom theme loaded."
-  (unless custom-enabled-themes
-    ;; Tango color scheme for ANSI faces
-    (set-face-attribute 'ansi-color-black nil :foreground "#2e3436" :background "#2e3436")
-    (set-face-attribute 'ansi-color-red nil :foreground "#cc0000" :background "#cc0000")
-    (set-face-attribute 'ansi-color-green nil :foreground "#4e9a06" :background "#4e9a06")
-    (set-face-attribute 'ansi-color-yellow nil :foreground "#c4a000" :background "#c4a000")
-    (set-face-attribute 'ansi-color-blue nil :foreground "#3465a4" :background "#3465a4")
-    (set-face-attribute 'ansi-color-magenta nil :foreground "#75507b" :background "#75507b")
-    (set-face-attribute 'ansi-color-cyan nil :foreground "#06989a" :background "#06989a")
-    (set-face-attribute 'ansi-color-white nil :foreground "#d3d7cf" :background "#d3d7cf")
-    (set-face-attribute 'ansi-color-bright-black nil :foreground "#555753" :background "#555753")
-    (set-face-attribute 'ansi-color-bright-red nil :foreground "#ef2929" :background "#ef2929")
-    (set-face-attribute 'ansi-color-bright-green nil :foreground "#8ae234" :background "#8ae234")
-    (set-face-attribute 'ansi-color-bright-yellow nil :foreground "#fce94f" :background "#fce94f")
-    (set-face-attribute 'ansi-color-bright-blue nil :foreground "#729fcf" :background "#729fcf")
-    (set-face-attribute 'ansi-color-bright-magenta nil :foreground "#ad7fa8" :background "#ad7fa8")
-    (set-face-attribute 'ansi-color-bright-cyan nil :foreground "#34e2e2" :background "#34e2e2")
-
-    (cond
-     (init/defaults/light-theme
-      (set-face-attribute 'hl-line nil :inherit 'highlight :background "#ceeace")
-
-      (set-face-attribute 'font-lock-doc-face nil :foreground "DarkRed")
-      (set-face-attribute 'font-lock-property-use-face nil :foreground "SaddleBrown")
-      (set-face-attribute 'font-lock-function-call-face nil
-                          :inherit nil :foreground "Gray20"))
-
-     ((not init/defaults/light-theme)
-      ;; Calling `custom-set-faces' a second time on 'default will not work
-      ;; because the settings would be merged and, it seems, the first call's
-      ;; settings would win resulting in a nil foreground and background.  Must
-      ;; therefore use `set-face-attribute'.
-      (set-face-attribute 'default nil
-                          :foreground "#ffffff"
-                          :background "#080808")
-
-      (set-face-attribute 'widget-field nil :foreground "black")
-
-      (use-package magit
-        :config
-        (set-face-attribute 'magit-diff-added nil :foreground "white smoke")
-        (set-face-attribute 'magit-diff-added-highlight nil :foreground "white smoke")
-        (set-face-attribute 'magit-diff-removed nil :foreground "white smoke")
-        (set-face-attribute 'magit-diff-removed-highlight nil :foreground "white smoke"))
-
-      ;; Doesn't seem to be defined:
-      ;; (set-face-attribute 'pulse-highlight-start-face nil :foreground "dark blue")
-      (set-face-attribute 'speedbar-highlight-face nil :foreground "dark blue")
-
-      (set-face-attribute 'font-lock-doc-face nil :foreground "dark salmon")
-      (set-face-attribute 'font-lock-property-use-face nil :foreground "cornsilk")
-      (set-face-attribute 'font-lock-function-call-face nil
-                          :inherit nil :foreground "LightBlue")
-
-      (set-face-attribute 'mode-line-active nil
-                          :foreground "#d3d7cf"
-                          :background "grey20"
-                          :box '(:line-width 1 :color "grey30"))
-      (set-face-attribute 'mode-line-inactive nil
-                          :inherit 'mode-line-active
-                          :foreground "grey50"
-                          :background "grey15"
-                          :box '(:line-width 1 :color "grey25"))
-
-      ;; Another possibility here is "midnight blue", or considering a darker
-      ;; still variation of the dark green #004225, possibly with a blue-ish ink.
-      (set-face-attribute 'highlight nil :background "#004225")
-      (set-face-attribute 'hl-line nil :inherit 'highlight :background "#000f08")
-      ))))
-
-;; These customizations kept for posteriority in case a decision is made to go
-;; back to a solarized-based theme.
-(use-package solarized-theme
-  :if (locate-library "solarized-theme")
-  :config
-  (cond ((member 'solarized-zenburn custom-enabled-themes)
-         (require 'solarized-palettes)
-         (custom-theme-set-faces
-          'solarized-zenburn
-          `(font-lock-preprocessor-face
-            ((t (:weight bold :foreground ,(cdr (assoc 'red-l solarized-zenburn-color-palette-alist))))))
-          `(font-lock-string-face
-            ((t (:foreground ,(cdr (assoc 'orange solarized-zenburn-color-palette-alist))))))
-          `(font-lock-number-face
-            ((t (:foreground ,(cdr (assoc 'orange-2fg solarized-zenburn-color-palette-alist))))))
-          `(font-lock-constant-face
-            ((t (:foreground ,(cdr (assoc 'orange-2fg solarized-zenburn-color-palette-alist))))))
-          `(font-lock-function-name-face
-            ((t (:foreground ,(cdr (assoc 'magenta solarized-zenburn-color-palette-alist))))))
-          `(my-function-call-face
-            ((t ( :foreground ,(cdr (assoc 'magenta-2fg solarized-zenburn-color-palette-alist))))))
-          `(font-lock-function-call-face
-            ((t (:override t :inherit my-function-call-face :foreground ,(cdr (assoc 'magenta-2fg solarized-zenburn-color-palette-alist))))))
-          `(font-lock-variable-use-face
-            ((t (:foreground ,(cdr (assoc 'cyan-2fg solarized-zenburn-color-palette-alist))))))
-          `(font-lock-property-use-face
-            ((t (:foreground ,(cdr (assoc 'base0 solarized-zenburn-color-palette-alist))))))
-          `(region ((t (:foreground nil :background "#4f5f60")))))))
   )
 
 ;;; x.el ends here

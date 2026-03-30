@@ -111,8 +111,12 @@ Example:
 (defconst init/defaults/fill-column/narrow 80
   "Default narrow `fill-column' value.")
 
-(defconst init/defaults/light-theme nil
-  "When nil, the default Emacs theme is turned into a dark theme.")
+(defcustom init/theme 'my-gui-dark
+  "Theme to load during GUI initialization.
+Can be `my-gui-dark', `my-gui-light', or any other installed theme.
+Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
+  :group 'init
+  :type 'symbol)
 
 (defun init/inclusion-path (path)
   (concat (file-name-as-directory init/path-base) path))

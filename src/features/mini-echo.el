@@ -25,6 +25,7 @@
 
 ;;; Code:
 
+;; Mode activation disabled in favour of `solo-modeline-mode'.
 (use-package mini-echo
   :custom-face
   (mini-echo-blue ((t (:foreground "#729fcf"))))
@@ -34,7 +35,8 @@
    '(:long  ("major-mode" "shrink-path" "vcs" "buffer-position"
              "buffer-size" "flymake" "flycheck" "eglot")
      :short ("buffer-name" "buffer-position" "flymake" "flycheck")))
-  :config
-  (mini-echo-mode 1))
+  ;; :config
+  ;; (mini-echo-mode 1)
+  )
 
 ;;; mini-echo.el ends here

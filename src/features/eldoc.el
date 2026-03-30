@@ -30,7 +30,7 @@
                       :weight 'bold))
 
 (use-package eldoc
-  :diminish "📚"
+  :diminish
   :config (init/eldoc/config))
 
 ;;; eldoc.el ends here

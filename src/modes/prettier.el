@@ -67,7 +67,7 @@ save. Strangely this only happens when LSP is active."
                                      (prettier-mode 1))))))
 
 (use-package prettier
-  :diminish "🧹"
+  :diminish " P"
 
   :hook ((
           ;; Actively used modes

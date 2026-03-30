@@ -154,7 +154,7 @@ because the checker does not exist."
     (flycheck-add-next-checker 'lsp 'javascript-eslint)))
 
 (use-package flycheck
-  :diminish "🐞"
+  :diminish
   ;; Not activating flycheck-popup-tip-mode because error messages frequently
   ;; do not respect boundaries of the window, often making it impossible to
   ;; read the full message.

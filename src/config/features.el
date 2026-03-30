@@ -99,6 +99,7 @@
 
 (use-package recursion-indicator
   :demand t
+  :diminish
   :config
   (recursion-indicator-mode t))
 

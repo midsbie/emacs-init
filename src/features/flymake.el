@@ -37,10 +37,12 @@ variable `exec-path'."
 
 (use-package flymake
   :demand
+  :diminish
   :hook ((flymake-mode . init/flymake/enable)))
 
 (use-package flymake-diagnostic-at-point
   :demand
+  :diminish
   :after flymake
   :bind ((:map flymake-mode-map
                ("C-c ! p" . flymake-goto-prev-error)

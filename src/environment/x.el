@@ -194,9 +194,15 @@ characters wide."
       (set-face-attribute 'font-lock-function-call-face nil
                           :inherit nil :foreground "LightBlue")
 
+      (set-face-attribute 'mode-line-active nil
+                          :foreground "#d3d7cf"
+                          :background "grey20"
+                          :box '(:line-width 1 :color "grey30"))
       (set-face-attribute 'mode-line-inactive nil
                           :inherit 'mode-line-active
-                          :background "grey30")
+                          :foreground "grey50"
+                          :background "grey15"
+                          :box '(:line-width 1 :color "grey25"))
 
       ;; Another possibility here is "midnight blue", or considering a darker
       ;; still variation of the dark green #004225, possibly with a blue-ish ink.

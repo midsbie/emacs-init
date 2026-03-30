@@ -45,11 +45,6 @@
  ;; Speedbar
  '(speedbar-highlight-face ((t (:foreground "dark blue"))))
 
- ;; Magit
- '(magit-diff-added ((t (:foreground "white smoke"))))
- '(magit-diff-added-highlight ((t (:foreground "white smoke"))))
- '(magit-diff-removed ((t (:foreground "white smoke"))))
- '(magit-diff-removed-highlight ((t (:foreground "white smoke"))))
 )
 
 (provide-theme 'my-gui-dark)

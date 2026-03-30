@@ -1,6 +1,6 @@
 ;;; corfu.el --- Customises the Corfu package
 
-;; Copyright (C) 2024-2025  Miguel Guedes
+;; Copyright (C) 2024-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -43,6 +43,7 @@
   ;; settings:
   (global-corfu-modes '((not shell-mode eshell-mode term-mode vterm-mode
                              aidermacs-comint-mode) t))
+  (global-corfu-minibuffer nil)
 
   ;; (corfu-preview-current nil)    ; Disable current candidate preview
   ;; (corfu-preselect 'prompt)      ; Preselect the prompt

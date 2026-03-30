@@ -1,4 +1,4 @@
-;;; my-gui-dark-theme.el --- Personal dark GUI theme with Tango ANSI colors  -*- lexical-binding: t; -*-
+;;; my-gui-dark-theme.el --- Personal dark GUI theme  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2014-2026  Miguel Guedes
 
@@ -6,14 +6,15 @@
 
 ;;; Commentary:
 
-;; Dark GUI theme built on the default Emacs theme with Tango ANSI colors
-;; and curated programming face colors for readability on a near-black
-;; background.  See also `my-term-dark' for the terminal counterpart.
+;; Dark GUI theme built on the default Emacs theme with curated programming
+;; face colors for readability on a near-black background.  Pair with
+;; `my-tango-ansi' for ANSI colors.  See also `my-term-dark' for the
+;; terminal counterpart.
 
 ;;; Code:
 
 (deftheme my-gui-dark
-  "Personal dark theme with Tango ANSI colors.")
+  "Personal dark GUI theme.")
 
 (custom-theme-set-faces
  'my-gui-dark
@@ -49,24 +50,7 @@
  '(magit-diff-added-highlight ((t (:foreground "white smoke"))))
  '(magit-diff-removed ((t (:foreground "white smoke"))))
  '(magit-diff-removed-highlight ((t (:foreground "white smoke"))))
-
- ;; ANSI colors (Tango palette)
- '(ansi-color-black ((t (:foreground "#2e3436" :background "#2e3436"))))
- '(ansi-color-red ((t (:foreground "#cc0000" :background "#cc0000"))))
- '(ansi-color-green ((t (:foreground "#4e9a06" :background "#4e9a06"))))
- '(ansi-color-yellow ((t (:foreground "#c4a000" :background "#c4a000"))))
- '(ansi-color-blue ((t (:foreground "#3465a4" :background "#3465a4"))))
- '(ansi-color-magenta ((t (:foreground "#75507b" :background "#75507b"))))
- '(ansi-color-cyan ((t (:foreground "#06989a" :background "#06989a"))))
- '(ansi-color-white ((t (:foreground "#d3d7cf" :background "#d3d7cf"))))
- '(ansi-color-bright-black ((t (:foreground "#555753" :background "#555753"))))
- '(ansi-color-bright-red ((t (:foreground "#ef2929" :background "#ef2929"))))
- '(ansi-color-bright-green ((t (:foreground "#8ae234" :background "#8ae234"))))
- '(ansi-color-bright-yellow ((t (:foreground "#fce94f" :background "#fce94f"))))
- '(ansi-color-bright-blue ((t (:foreground "#729fcf" :background "#729fcf"))))
- '(ansi-color-bright-magenta ((t (:foreground "#ad7fa8" :background "#ad7fa8"))))
- '(ansi-color-bright-cyan ((t (:foreground "#34e2e2" :background "#34e2e2"))))
- '(ansi-color-bright-white ((t (:foreground "#eeeeec" :background "#eeeeec")))))
+)
 
 (provide-theme 'my-gui-dark)
 

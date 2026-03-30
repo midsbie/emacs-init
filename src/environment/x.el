@@ -81,6 +81,7 @@ characters wide."
   ;; Load personal GUI theme
   (add-to-list 'custom-theme-load-path
                (concat init/path-base "environment"))
+  (load-theme 'my-tango-ansi t)
   (when init/theme
     (load-theme init/theme t))
 

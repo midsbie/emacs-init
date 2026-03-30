@@ -311,8 +311,8 @@ function returns `eglot' as the fallback LSP client."
 
 (defun init/run--explicit-language-server (ls)
   (cl-case ls
-    ('eglot (eglot-ensure))
-    ('lsp (lsp-deferred))))
+    (eglot (eglot-ensure))
+    (lsp (lsp-deferred))))
 
 (defun init/buffer-formatting-inhibited-p ()
   "Returns t if master circuit breaker preventing buffer formatting is

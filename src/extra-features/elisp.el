@@ -30,11 +30,12 @@
 
 (defun my/execute-first-in-list (function-list)
   "Execute each function in FUNCTION-LIST in order, until one succeeds."
+  (catch 'done
     (dolist (fn function-list)
       (condition-case nil
           (progn
             (funcall fn)
-            (return))
-        (error nil))))
+            (throw 'done nil))
+        (error nil)))))
 
 ;;; elisp.el ends here

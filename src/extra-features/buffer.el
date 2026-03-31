@@ -1,6 +1,6 @@
 ;;; buffer.el --- Extra features for buffer manipulation
 
-;; Copyright (C) 2023-2025  Miguel Guedes
+;; Copyright (C) 2023-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -67,6 +67,14 @@ attempt to provide a similar result using alternative methods."
   "Convert tabs to spaces in the current buffer."
   (interactive)
   (untabify (point-min) (point-max)))
+
+(defun my/unfill-paragraph (&optional region)
+  "Inverse of `fill-paragraph'.
+Join lines in the current paragraph into a single long line.
+With active region, unfill all paragraphs in the region."
+  (interactive (list t))
+  (let ((fill-column most-positive-fixnum))
+    (fill-paragraph nil region)))
 
 (defun my/get-word (word &optional default-string)
   "Return WORD if word, DEFAULT-STRING or \"\"."

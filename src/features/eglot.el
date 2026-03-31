@@ -103,23 +103,18 @@ with `init/eglot/toggle-inlay-hints'."
     (eglot-inlay-hints-mode -1))
   (add-hook 'before-save-hook #'init/maybe-format-buffer nil t))
 
-(defun init/eglot/server-program-supported-p (major-mode)
-  "Check if the given MAJOR-MODE is supported by `eglot-server-programs'."
+(defun init/eglot/server-program-supported-p (mode)
+  "Check if the given MODE is supported by `eglot-server-programs'."
   (let ((supported nil))
     (dolist (entry eglot-server-programs supported)
-      (let ((mode (car entry)))
+      (let ((entry-mode (car entry)))
         (cond
-         ;; If mode is a list, check if major-mode is an element of this list
-         ((listp mode)
-          (dolist (submode mode)
+         ((listp entry-mode)
+          (dolist (submode entry-mode)
             (cond
-             ;; Check if submode is a list that might contain a major mode and metadata
-             ((listp submode)
-              (when (eq major-mode (car submode)) (setq supported t)))
-             ;; Check if submode is a symbol that matches major-mode
-             ((eq major-mode submode) (setq supported t)))))
-         ;; If mode is a symbol, check if it matches major-mode
-         ((eq major-mode mode) (setq supported t))
+             ((listp submode) (when (eq mode (car submode)) (setq supported t)))
+             ((eq mode submode) (setq supported t)))))
+         ((eq mode entry-mode) (setq supported t))
          )))))
 
 (defun init/eglot/rename-advice (orig-fun &rest args)

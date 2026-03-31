@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(use-package indent-bars-mode
+(use-package indent-bars
   :hook ((python-mode python-ts-mode yaml-mode yaml-ts-mode) . indent-bars-mode))
 
 ;;; indent-bars.el ends here

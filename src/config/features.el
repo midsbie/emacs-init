@@ -1,6 +1,6 @@
 ;;; features.el --- master configuration module of features
 
-;; Copyright (C) 2022-2025  Miguel Guedes
+;; Copyright (C) 2022-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -78,7 +78,7 @@
   )
 
 (use-package gcmh
-  :diminish 'gcmh-mode
+  :diminish
   :init
   (setq gcmh-idle-delay 5
 	      gcmh-high-cons-threshold (* 16 1024 1024))  ; 16mb

@@ -1,6 +1,6 @@
 ;;; elisp.el --- Utilitarian functions related to ELISP
 
-;; Copyright (C) 2021-2023  Miguel Guedes
+;; Copyright (C) 2021-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -26,7 +26,7 @@
 
 (defun my/add-suffix-to-symbol (sym suffix)
   "Add a suffix to a symbol name."
-  (intern (concatenate 'string "" (symbol-name sym) suffix)))
+  (intern (concat (symbol-name sym) suffix)))
 
 (defun my/execute-first-in-list (function-list)
   "Execute each function in FUNCTION-LIST in order, until one succeeds."

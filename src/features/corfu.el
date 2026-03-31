@@ -49,15 +49,6 @@
   ;; (corfu-preselect 'prompt)      ; Preselect the prompt
   ;; (corfu-on-exact-match nil)     ; Configure handling of exact matches
   ;; (corfu-scroll-margin 5)        ; Use scroll margin
-  :bind (:map corfu-map
-              ("S-SPC" . corfu-insert-separator)
-              ("M-h" . backward-kill-word)))
-
-;; Configuration of Emacs' completion-at-point settings
-(use-package emacs
-  :custom
-  ;; TAB cycle if there are only few candidates
-  ;; (completion-cycle-threshold 3)
 
   ;; Enable indentation+completion using the TAB key.
   ;; `completion-at-point' is often bound to M-TAB.
@@ -72,6 +63,9 @@
   ;; setting is useful beyond Corfu.
   (read-extended-command-predicate #'command-completion-default-include-p)
 
-  :bind ("M-RET" . completion-at-point))
+  :bind (("M-RET" . completion-at-point)
+         :map corfu-map
+         ("S-SPC" . corfu-insert-separator)
+         ("M-h" . backward-kill-word)))
 
 ;;; corfu.el ends here

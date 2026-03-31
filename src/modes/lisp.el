@@ -27,7 +27,6 @@
 (defun init/elisp/enable ()
   "Initialise modes related to ELISP development."
 
-  (turn-on-eldoc-mode)
   (setq-local fill-column init/defaults/fill-column/narrow)
 
   (init/common-programming-mode))

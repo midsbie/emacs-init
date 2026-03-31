@@ -29,7 +29,6 @@
   (init/common-nonweb-programming-mode)
 
   (setq-default css-indent-offset            2)
-  (eldoc-mode 1)
 
   (local-set-key "}"  #'(lambda ()
                           (interactive)

@@ -40,7 +40,6 @@
   (setq-local comment-start "/* ")
   (setq-local comment-end   " */")
 
-  (eldoc-mode 1)
   (c-set-style "default-php")
   (c-toggle-auto-newline -1))
 

@@ -28,7 +28,8 @@
   "Initialise `vala-mode'."
   ;; Add this mode to LSP's formatting indent alist to ensure that the buffer is
   ;; formatted correctly.
-  (push '(vala-mode . c-basic-offset) lsp--formatting-indent-alist)
+  (when (boundp 'lsp--formatting-indent-alist)
+    (push '(vala-mode . c-basic-offset) lsp--formatting-indent-alist))
 
   ;; Ensure that the idiomatic "vala" style is used in `vala-mode'.
   (unless (assoc 'vala-mode c-default-style)

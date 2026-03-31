@@ -1,6 +1,6 @@
-;;; programming.el --- Programming-related configuration
+;;; programming.el --- Programming-related configuration  -*- lexical-binding: t -*-
 
-;; Copyright (C) 2015-2025  Miguel Guedes
+;; Copyright (C) 2015-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -199,7 +199,13 @@
   (init/add-node-modules-to-exec-path)
 
   (init/common-programming-mode)
-  (run-with-idle-timer 1 nil #'init/common-web-programming-mode--deferred))
+  (let ((buf (current-buffer)))
+    (run-with-idle-timer
+     1 nil
+     (lambda ()
+       (when (buffer-live-p buf)
+         (with-current-buffer buf
+           (init/common-web-programming-mode--deferred)))))))
 
 (defun init/common-web-programming-mode--deferred ()
   "Deferred initialization of common settings for web-related modes."

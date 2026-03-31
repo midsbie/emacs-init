@@ -62,7 +62,9 @@ can be worked around by temporarily switching to `csharp-mode'."
   ;; Don't set this to a value less than `lsp-idle-delay' above to prevent
   ;; unnecessary messages being sent to the server and potentially overloading
   ;; it.  Currently enforcing a minimum of 1s.
-  (setq-local flycheck-idle-change-delay (if (< lsp-idle-delay 1) 1 lsp-idle-delay))
+  (when (boundp 'lsp-idle-delay)
+    (setq-local flycheck-idle-change-delay
+                (if (< lsp-idle-delay 1) 1 lsp-idle-delay)))
 
   ;; Explicitly forcing to default syncronization method of `nil`, which
   ;; defaults to `lsp--sync-full', as supported by omnisharp-roslyn.  This

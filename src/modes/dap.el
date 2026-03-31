@@ -1,6 +1,6 @@
 ;;; dap.el --- Customises DAP
 
-;; Copyright (C) 2022  Miguel Guedes
+;; Copyright (C) 2022-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -37,7 +37,7 @@
   ;; https://github.com/emacs-lsp/dap-mode/issues/372#issuecomment-939248097
   (advice-add 'dap-debug :after #'init/dap/disable-dap-ui-controls-mode))
 
-(defun init/dap/disable-dap-ui-controls-mode (orig-fun &rest args)
+(defun init/dap/disable-dap-ui-controls-mode (&rest _args)
   (dap-ui-controls-mode -1))
 
 (use-package dap-mode

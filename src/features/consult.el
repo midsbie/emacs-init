@@ -51,7 +51,6 @@
          ("C-M-#" . consult-register)
          ;; Other custom bindings
          ("M-y" . consult-yank-pop)                ; was: yank-pop
-         ("<help> a" . consult-apropos)            ; was: apropos-command
          ;; M-g bindings (goto-map)
          ("M-g e" . consult-compile-error)
          ("M-g f" . init/consult/choose-fly-diagnostic)

@@ -25,9 +25,8 @@
 ;;; Code:
 
 (defun init/desktop/update-minor-mode-table()
-  (when (boundp 'loop)
-    (cl-loop for mode in minor-mode-list do
-             (add-to-list 'desktop-minor-mode-table (list mode nil)))))
+  (cl-loop for mode in minor-mode-list do
+           (add-to-list 'desktop-minor-mode-table (list mode nil))))
 
 (use-package desktop
   :defer t

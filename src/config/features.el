@@ -61,10 +61,12 @@
 
 (use-package display-fill-column-indicator
   :diminish
-  :config
-  ;; This feature, now native to Emacs 27, replaces the old package
-  ;; `fill-column-indicator' that was previously in use.
-  (global-display-fill-column-indicator-mode))
+  ;; Opt-in rather than global: avoids the indicator in buffers where
+  ;; fill-column is meaningless (terminals, org, special buffers).
+  ;; conf-mode and yaml-ts-mode don't derive from prog-mode so they
+  ;; need explicit hooks.
+  :hook ((prog-mode markdown-mode conf-mode yaml-ts-mode)
+         . display-fill-column-indicator-mode))
 
 (use-package highlight-parentheses
   :diminish

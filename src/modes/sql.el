@@ -25,8 +25,7 @@
 ;;; Code:
 
 (defun init/sql-interactive-mode/enable ()
-  (auto-fill-mode -1)
-  (display-fill-column-indicator-mode -1))
+  (auto-fill-mode -1))
 
 (defun init/sql-mode/enable ()
   (init/common-programming-mode))

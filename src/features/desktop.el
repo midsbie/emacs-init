@@ -24,23 +24,12 @@
 
 ;;; Code:
 
-(defun init/desktop/update-minor-mode-table()
-  (cl-loop for mode in minor-mode-list do
-           (add-to-list 'desktop-minor-mode-table (list mode nil))))
-
 (use-package desktop
   :defer t
   :hook (;; Set our preferred window arrangement after successfully loading a
          ;; desktop configuration.
-         (desktop-after-read . my/rearrange-desktop)
-         ;; Add all known minor modes to `desktop-minor-mode-table' to prevent
-         ;; `desktop-save' from saving the minor modes associated with each file.
-         (find-file-hook . init/desktop/update-minor-mode-table)
-         )
+         (desktop-after-read . my/rearrange-desktop))
   :config
-  (unless (boundp 'desktop-minor-mode-table)
-    (setq desktop-minor-mode-table nil))
-
   ;; Make it so `desktop-change-dir' and `desktop-save' prompt for the current
   ;; working directory by default.
   (add-to-list 'desktop-path ".")

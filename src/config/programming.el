@@ -151,8 +151,6 @@
 
 (defun init/common-nonweb-programming-mode ()
   "Perform initialisation of aspects common to all programming-related modes."
-  (auto-fill-mode 1)
-
   ;; NOTE: we are explicitly disabling `flyspell-mode' since it suffers from
   ;; very annoying, intrusive issues that actually impede development.
   ;;(flyspell-prog-mode)              ; turn spell check for strings and comments
@@ -172,8 +170,6 @@
 
 (defun init/common-web-programming-mode ()
   "Initialise modes related to web development."
-  (auto-fill-mode -1)
-
   (setq-local tab-width       2)
   (setq-local c-basic-offset  2)
   (setq-local fill-column     init/defaults/fill-column)

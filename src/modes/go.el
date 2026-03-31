@@ -1,6 +1,6 @@
 ;;; go.el --- Configures `go-mode'
 
-;; Copyright (C) 2015-2024  Miguel Guedes
+;; Copyright (C) 2015-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -55,9 +55,7 @@
 
   ;; Mode-specific settings
   (setq-local tab-width 8)
-  (setq-local fill-column 100)
-
-  (auto-fill-mode -1))
+  (setq-local fill-column 100))
 
 (use-package go-ts-mode
   :mode (("\\.go\\'" . go-ts-mode))

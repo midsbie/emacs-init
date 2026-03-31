@@ -1,6 +1,6 @@
 ;;; rust.el --- Configures `rust-mode'
 
-;; Copyright (C) 2025  Miguel Guedes
+;; Copyright (C) 2025-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -46,9 +46,7 @@
     (setq-local compile-command "cargo build "))
 
   ;; Mode-specific settings
-  (setq-local fill-column 100)
-
-  (auto-fill-mode -1))
+  (setq-local fill-column 100))
 
 (use-package rust-ts-mode
   :mode (("\\.rs\\'" . rust-ts-mode))

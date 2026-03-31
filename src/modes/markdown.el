@@ -26,7 +26,6 @@
 
 (defun init/markdown-mode/enable ()
   "Configure `markdown-mode' buffers."
-  (auto-fill-mode -1)
   (visual-line-mode 1))
 
 (use-package markdown-mode

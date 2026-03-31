@@ -1,6 +1,6 @@
 ;;; sh.el --- Configures sh-mode
 
-;; Copyright (C) 2015-2024  Miguel Guedes
+;; Copyright (C) 2015-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -33,7 +33,6 @@
   "Initialise modes related to shell scripting development."
   (unless (init/sh/determine-script-mode)
     (init/common-nonweb-programming-mode)
-    (auto-fill-mode -1)
     (when (and (boundp 'company-mode) company-mode)
       ;; Disable to prevent frequent freezes. Unfortunately, deinitialization has
       ;; to be deferred or it won't take.

@@ -1,6 +1,6 @@
 ;;; org.el --- Configuration for the `org' package
 
-;; Copyright (C) 2015-2025  Miguel Guedes
+;; Copyright (C) 2015-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -39,7 +39,6 @@
   "Enhance `org-mode' with visual and behavior tweaks."
   (org-indent-mode 1)
   (visual-line-mode 1)
-  (auto-fill-mode -1)
   ;; Org-mode relies on a tab-width of 8 for correct table alignment and
   ;; proper functioning of certain navigation commands.
   (setq-local tab-width 8)

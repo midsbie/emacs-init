@@ -1,6 +1,6 @@
 ;;; text.el --- Configures `text-mode'
 
-;; Copyright (C) 2015-2024  Miguel Guedes
+;; Copyright (C) 2015-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -26,7 +26,8 @@
 
 (defun init/text-mode/enable ()
   "Initialises `text-mode'."
-  (auto-fill-mode)                  ; auto fill
+  (when (eq major-mode 'text-mode)
+    (auto-fill-mode 1))
   (flyspell-mode)                   ; turn spell check on
   (abbrev-mode -1)                  ; turn abbrev-mode off
   )

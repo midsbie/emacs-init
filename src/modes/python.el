@@ -1,6 +1,6 @@
 ;;; python.el --- Configures `python-mode'
 
-;; Copyright (C) 2016-2025  Miguel Guedes
+;; Copyright (C) 2016-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -98,8 +98,7 @@
   ;; (pylint-add-menu-items)
   ;; (pylint-add-key-bindings)
   ;; (py-autopep8-mode)
-
-  (auto-fill-mode -1))
+)
 
 (use-package python
   :mode (("\\.py\\'" . python-ts-mode))

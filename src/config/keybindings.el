@@ -35,9 +35,6 @@
 (global-set-key [M-down]              #'windmove-down)
 (global-set-key (kbd "C-x p")         #'my/other-previous-window)
 
-;; Define miscellaneous shortcuts.
-; F2 F2 originally invoked: `2C-two-columns'
-(global-set-key (kbd "<f2> <f2>")     #'shell)
 (global-set-key [f3]                  #'my/better-next-error)
 (global-set-key [S-f3]                #'my/better-previous-error)
 (global-set-key (kbd "C-x k")         #'my/kill-current-buffer)
@@ -73,5 +70,19 @@
 ;; keys work consistently when subword-mode is active.
 (global-set-key (kbd "C-<left>")      #'backward-word)
 (global-set-key (kbd "C-<right>")     #'forward-word)
+
+;; Define miscellaneous shortcuts.
+(defun my/terminal ()
+  "Open a terminal buffer.
+Runs `vterm' if available, otherwise falls back to `shell'.
+With a prefix argument, creates a new terminal buffer."
+  (interactive)
+  (if (fboundp 'vterm)
+      (if current-prefix-arg
+          (vterm t)
+        (vterm))
+    (shell (when current-prefix-arg
+             (generate-new-buffer-name "*shell*")))))
+(global-set-key (kbd "C-c t")         #'my/terminal)
 
 ;;; keybindings.el ends here

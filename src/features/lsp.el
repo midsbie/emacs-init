@@ -166,8 +166,9 @@ to degrade under LSP"))
                        rest)))
   (advice-add 'json-parse-buffer :around
               (lambda (orig &rest rest)
-                (while (re-search-forward "\\u0000" nil t)
-                  (replace-match ""))
+                (save-excursion
+                  (while (re-search-forward "\\u0000" nil t)
+                    (replace-match "")))
                 (apply orig rest))))
 
 (defun init/lsp/enable ()

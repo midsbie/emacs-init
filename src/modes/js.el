@@ -76,10 +76,9 @@ particular FILE-NAME and MODE."
   "Configures modes related to Javascript development."
   (init/common-web-programming-mode))
 
-(use-package lsp
-  :config
-    (advice-add 'lsp-clients-flow-activate-p
-                :override #'init/js/lsp-clients-flow-activate-p))
+(with-eval-after-load 'lsp
+  (advice-add 'lsp-clients-flow-activate-p
+              :override #'init/js/lsp-clients-flow-activate-p))
 
 (use-package js
   :diminish "JS"

@@ -45,6 +45,7 @@ remapping the `cursor' face and suppressing cursor blink."
     (when (bound-and-true-p vterm--copy-mode-cursor-remap)
       (face-remap-remove-relative vterm--copy-mode-cursor-remap)
       (kill-local-variable 'vterm--copy-mode-cursor-remap)
+      (kill-local-variable 'cursor-type)
       (kill-local-variable 'blink-cursor-alist))))
 
 (use-package vterm

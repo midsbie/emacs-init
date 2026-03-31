@@ -1,6 +1,6 @@
 ;;; term.el --- Initialisation sequence when run from the terminal
 
-;; Copyright (C) 2014-2025 Miguel Guedes
+;; Copyright (C) 2014-2026 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:
@@ -34,9 +34,11 @@
 (load-theme 'my-term-dark t)
 
 ;; Enable system clipboard integration in terminal (Emacs 29+)
-(use-package xclip
-  :config
-  (xclip-mode 1))
+(if (package-installed-p 'xclip)
+    (use-package xclip
+      :config
+      (xclip-mode 1))
+  (warn "Package 'xclip' is not available; clipboard integration disabled"))
 
 
 ;;; term.el ends here

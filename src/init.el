@@ -1,6 +1,6 @@
 ;;; init.el --- Master emacs initialisation file
 
-;; Copyright (C) 2014-2024 Miguel Guedes
+;; Copyright (C) 2014-2026 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:
@@ -138,7 +138,6 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
       '(("GNU ELPA" . "https://elpa.gnu.org/packages/")
         ("MELPA stable" . "https://stable.melpa.org/packages/")
         ("MELPA unstable" . "https://melpa.org/packages/")
-        ("ORG" . "http://orgmode.org/elpa/")
         ;; Required by aidermacs and possibly other packages
         ("NON-GNU" . "https://elpa.nongnu.org/nongnu/"))
       package-archive-priorities
@@ -146,7 +145,6 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
         ;; MELPA stable disabled as not all packages support stable channel
         ;; ("MELPA stable" . 10)
         ("MELPA unstable" . 9)
-        ("ORG" . 6)
         ("GNU ELPA" . 5)))
 
 (package-initialize)

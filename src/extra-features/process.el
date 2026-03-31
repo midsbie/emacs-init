@@ -37,9 +37,9 @@ hasn't been loaded, LIBRARY is loaded via a call to `load-library'."
   "Return a lambda that can be attached to a key handler or similar handlers.
 See documentation of `run-or-load' for a description of the FUNC
 and LIBRARY variables."
-  #'(lambda()
-      (interactive)
-      (run-or-load ,func ,library)))
+  `(lambda ()
+     (interactive)
+     (my/run-or-load ,func ,library)))
 
 (defun my/kill-current-buffer ()
   "Simply deletes the currently active buffer.  Overcomes the

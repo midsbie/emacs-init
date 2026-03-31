@@ -1,6 +1,6 @@
 ;;; desktop.el --- Configures the desktop feature
 
-;; Copyright (C) 2015-2023  Miguel Guedes
+;; Copyright (C) 2015-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -44,8 +44,7 @@
 
   ;; Make it so `desktop-change-dir' and `desktop-save' prompt for the current
   ;; working directory by default.
-  (eval-after-load 'desktop-change-dir
-    '(add-to-list 'desktop-path "."))
+  (add-to-list 'desktop-path ".")
   )
 
 ;;; desktop.el ends here

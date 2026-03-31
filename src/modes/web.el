@@ -121,9 +121,6 @@
 (use-package web-mode
   :mode ("\\.html?\\'")
 
-  :bind (:map web-mode-map
-              ("C-c C-c" . init/web-mode/toggle-js-mode))
-
   :hook ((web-mode-local-vars . init/web-mode/load-local-vars)
          (web-mode . init/web-mode/enable))
 

@@ -33,7 +33,7 @@
   :defer t
   :hook (;; Set our preferred window arrangement after successfully loading a
          ;; desktop configuration.
-         (desktop-after-read-hook . my/rearrange-desktop)
+         (desktop-after-read . my/rearrange-desktop)
          ;; Add all known minor modes to `desktop-minor-mode-table' to prevent
          ;; `desktop-save' from saving the minor modes associated with each file.
          (find-file-hook . init/desktop/update-minor-mode-table)

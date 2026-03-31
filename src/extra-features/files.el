@@ -88,7 +88,7 @@ containing FILE."
 Produces a message if it was not possible to load the library and
 does not interrupt execution."
   (condition-case err
-      (load-library (name))
+      (load-library name)
     (error (princ (format "Failed to load library: %s (reason: %s)" name err)))))
 
 (defun my/read-file-lines (file)

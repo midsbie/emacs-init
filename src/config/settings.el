@@ -80,7 +80,6 @@
 ;; Coding-related
 (setq-default comment-multi-line    t
   comment-style                     'multi
-  diff-switches                     '-u ; set diff to use unified format
   vc-follow-symlinks                t   ; follow symlinks instead of prompting
   )
 

@@ -334,6 +334,10 @@ formatter if neither `prettier-mode' nor `format-all-mode' are enabled."
       (unless (or
                (and (boundp 'prettier-mode) prettier-mode)
                (and (boundp 'format-all-mode) format-all-mode))
+        ;; Safe: this hook is only buffer-local in eglot/lsp-managed buffers
+        ;; (see `init/eglot/enable' and `init/lsp/enable'), so the respective
+        ;; package is always loaded when this runs.  `eglot' is also built-in
+        ;; since Emacs 29.
         (cond
          (eglot--managed-mode (eglot-format-buffer))
          (lsp-mode (lsp-format-buffer))

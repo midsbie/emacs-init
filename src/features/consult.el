@@ -27,6 +27,8 @@
 (defun init/consult/choose-fly-diagnostic ()
   "Pick between flymake and flycheck and show diagnostics."
   (interactive)
+  ;; Safe: `flymake' is built-in and loaded by `eglot' (its diagnostic
+  ;; backend), so `flymake-mode' is bound by the time the user invokes this.
   (if flymake-mode
       (consult-flymake)
     (consult-flycheck)))

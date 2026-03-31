@@ -150,6 +150,8 @@ This function adds the javascript-eslint checker to the current
 checkers after `lsp-diagnostics-mode' is loaded.  Attempting to
 add the the checker before the load occurs fails with an error
 because the checker does not exist."
+  ;; Safe: hooked to `lsp-diagnostics-mode' (guarantees lsp-mode is loaded)
+  ;; from within `use-package flycheck' (guarantees flycheck is loaded).
   (when (and flycheck-mode lsp-diagnostics-mode)
     (flycheck-add-next-checker 'lsp 'javascript-eslint)))
 

@@ -127,7 +127,7 @@
   :init
   ;; Set content type to jsx for source files with "js", "jsx" or "tsx" suffix.
   ;; Source: http://cha1tanya.com/2015/06/20/configuring-web-mode-with-jsx.html
-  (setq-default web-mode-content-types-alist '(("jsx" . "^\\(jsx?\\|tsx\\)\\'$")))
+  (setq-default web-mode-content-types-alist '(("jsx" . "\\.\\(jsx?\\|tsx\\)\\'")))
 
   (advice-add 'prettier--maybe-prettify-on-save :before #'init/web-mode/before-save)
   (advice-add 'prettier--maybe-prettify-on-save :after #'init/web-mode/after-save)

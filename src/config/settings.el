@@ -1,6 +1,6 @@
 ;;; settings.el --- Configures settings of emacs' internal features
 
-;; Copyright (C) 2015-2025  Miguel Guedes
+;; Copyright (C) 2015-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -60,13 +60,6 @@
 ;; More information here: https://debbugs.gnu.org/cgi/bugreport.cgi?bug=20015
 (setq tramp-ssh-controlmaster-options
       "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ConnectTimeout=1 -o ControlPersist=no")
-
-;; Modes
-(setq default-major-mode 'text-mode     ; set text-mode as default mode
-      ;; The following fucks with certain major modes (i.e. yasnippet) and must
-      ;; be disabled at ALL times
-      mode-require-final-newline nil
-      )
 
 ;; Column
 (setq-default column-number-mode    t

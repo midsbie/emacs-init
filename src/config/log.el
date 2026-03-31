@@ -27,7 +27,4 @@
 (eval-after-load 'add-log
   '(setq change-log-default-name "CHANGELOG"))
 
-;; FIXME: `init/common-text' does not seem to be declared anywhere.
-(add-hook 'log-edit-mode-hook 'init/common-text)
-
 ;;; log.el ends here

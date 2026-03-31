@@ -1,4 +1,4 @@
-;;; remaps.el --- General keyboard remappings
+;;; keybindings.el --- General keyboard keybindings
 
 ;; Copyright (C) 2015-2026  Miguel Guedes
 
@@ -74,4 +74,4 @@
 (global-set-key (kbd "C-<left>")      #'backward-word)
 (global-set-key (kbd "C-<right>")     #'forward-word)
 
-;;; remaps.el ends here
+;;; keybindings.el ends here

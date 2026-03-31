@@ -1,6 +1,6 @@
 ;;; copilot.el --- Customises the copilot package
 
-;; Copyright (C) 2024-2025  Miguel Guedes
+;; Copyright (C) 2024-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -47,8 +47,6 @@
   (:map copilot-mode-map
         ("C-TAB" . 'init/copilot/complete)
         ("C-<tab>" . 'init/copilot/complete))
-  (:map global-map
-        ("C-c p m" . copilot-mode))     ; Toggle on/off
   :custom
   (copilot-idle-delay 0)
 

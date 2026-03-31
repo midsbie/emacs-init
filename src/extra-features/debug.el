@@ -1,6 +1,6 @@
 ;;; debug.el --- Utility functions for debugging     -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2024  Miguel Guedes
+;; Copyright (C) 2024-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: convenience
@@ -46,9 +46,7 @@ buffer scrolled to the bottom."
     (format "'%s" (mapconcat #'format-like-print object " ")))
    ((vectorp object)       ; Convert vector to list and format
     (format "[ %s ]" (mapconcat #'format-like-print (append object nil) " ")))
-   ((or (numberp object)   ; Numbers and symbols can be converted directly
-        (symbolp object)
-        t)                 ; Fallback for other types
+   (t                       ; Numbers, symbols, and other types
     (format "%s" object))))
 
 ;;; debug.el ends here

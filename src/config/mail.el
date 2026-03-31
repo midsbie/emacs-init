@@ -28,11 +28,11 @@
 (eval-after-load 'gnus
   '(progn
      (setq gnus-select-method '(nntp "eunews.blocknews.net")
-           gnus-select-method ;; gnus-secondary-select-methods
-           '(nnimap "Personal"
-                    (nnimap-address "imap.gmail.com")
-                    (nnimap-server-port 993)
-                    (nnimap-stream ssl)))
+           gnus-secondary-select-methods
+           '((nnimap "Personal"
+                     (nnimap-address "imap.gmail.com")
+                     (nnimap-server-port 993)
+                     (nnimap-stream ssl))))
      ))
 
 ;; SMTP

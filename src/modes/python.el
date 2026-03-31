@@ -98,7 +98,7 @@
   ;; (pylint-add-menu-items)
   ;; (pylint-add-key-bindings)
   ;; (py-autopep8-mode)
-)
+  )
 
 (use-package python
   :mode (("\\.py\\'" . python-ts-mode))

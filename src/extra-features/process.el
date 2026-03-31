@@ -28,7 +28,6 @@
   "Execute FUNC or load LIBRARY if FUNC not defined.
 Checks that the defun FUNC has been loaded before invoking it.  If it
 hasn't been loaded, LIBRARY is loaded via a call to `load-library'."
-  (message "checking: %s" (or (and (fboundp func) "YES") "NO") )
   (unless (fboundp func)
     (load-library (symbol-name library)))
   (call-interactively func))

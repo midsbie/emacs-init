@@ -43,7 +43,7 @@ Contains directories to automatically load as part of the
 initialisation process.  Directories must be relative to
 `init/path-base'.")
 
-(defvar init/dir-packages (expand-file-name init/path-base "/elpa")
+(defvar init/dir-packages (expand-file-name "../elpa" init/path-base)
   "Directory to packages.
 Absolute path to directory containing packages managed by the
 `package' feature.")
@@ -129,7 +129,7 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
 (load (init/inclusion-path "./compat"))
 
 ;; Setup and load ELPA packages (and others) first and foremost
-(setq package-user-dir (concat init/dir-packages "../elpa/src"))
+(setq package-user-dir (expand-file-name "src" init/dir-packages))
 ;; Avoid loading byte-compiled packages that are older than the source file.
 (setq load-prefer-newer t)
 

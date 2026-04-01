@@ -36,6 +36,8 @@
   (magit-save-repository-buffers nil)
   ;; Always display magit buffers in the current window.
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+  ;; Enable word-level diff highlighting in all hunks.
+  (magit-diff-refine-hunk 'all)
 
   :bind (("C-x g"   . magit-status)
          ("C-x 4 g" . my/magit/status-other-window)))

@@ -28,8 +28,18 @@
   "Configure `vterm' package."
   (advice-add 'vterm-copy-mode :after #'init/vterm/copy-mode-cursor-fix))
 
-(defun init/vterm/set-hollow-cursor ()
-  "Use a hollow cursor in vterm buffers.
+(defun init/vterm/restore-cursor ()
+  "Restore cursor settings based on `init/vterm/hollow-cursor-mode' state.
+When the mode is active, set cursor to `hollow'; otherwise, remove the
+buffer-local cursor overrides."
+  (if init/vterm/hollow-cursor-mode
+      (setq-local cursor-type 'hollow
+                  blink-cursor-alist '((hollow . hollow)))
+    (kill-local-variable 'cursor-type)
+    (kill-local-variable 'blink-cursor-alist)))
+
+(define-minor-mode init/vterm/hollow-cursor-mode
+  "Use a hollow cursor in the current vterm buffer.
 
 Some TUI applications render their own cursor at point (e.g. Claude
 Code) using terminal escape sequences (reverse video, custom colors,
@@ -41,9 +51,12 @@ making the cursor invisible.
 A `hollow' (outline-only) cursor avoids this: it does not fill the
 character cell, so the TUI application's cursor shows through.  The
 blink off-state is also set to `hollow' so that `blink-cursor-mode'
-never hides the outline."
-  (setq-local cursor-type 'hollow
-              blink-cursor-alist '((hollow . hollow))))
+never hides the outline.
+
+Toggle this mode off to restore the default cursor when no longer
+running a TUI that conflicts."
+  :lighter " Hollow"
+  (init/vterm/restore-cursor))
 
 (defun init/vterm/copy-mode-cursor-fix (&rest _)
   "Force a visible cursor in `vterm-copy-mode'.
@@ -53,10 +66,10 @@ Emacs cursor to become invisible in copy mode.  This works around the issue by
 temporarily remapping the `cursor' face to use the default foreground color and
 switching to a filled `box' cursor for the duration of copy mode.
 
-On exit, the cursor is restored to `hollow' (see `init/vterm/set-hollow-cursor'
-for the rationale)."
+The workaround only activates when `init/vterm/hollow-cursor-mode' is enabled.
+On exit, cursor settings are restored according to the mode's state."
   (if vterm-copy-mode
-      (progn
+      (when init/vterm/hollow-cursor-mode
         (when (bound-and-true-p vterm--copy-mode-cursor-remap)
           (face-remap-remove-relative vterm--copy-mode-cursor-remap))
         (setq-local cursor-type 'box
@@ -65,11 +78,11 @@ for the rationale)."
                     (face-remap-add-relative 'cursor :background (face-foreground 'default))))
     (when (bound-and-true-p vterm--copy-mode-cursor-remap)
       (face-remap-remove-relative vterm--copy-mode-cursor-remap)
-      (kill-local-variable 'vterm--copy-mode-cursor-remap))
-    (init/vterm/set-hollow-cursor)))
+      (kill-local-variable 'vterm--copy-mode-cursor-remap)
+      (init/vterm/restore-cursor))))
 
 (use-package vterm
-  :hook (vterm-mode . init/vterm/set-hollow-cursor)
+  :hook (vterm-mode . init/vterm/hollow-cursor-mode)
   :bind (:map vterm-mode-map
          ([remap delete-backward-char] . vterm-send-backspace))
   :config (init/vterm/config))

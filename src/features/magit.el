@@ -1,6 +1,6 @@
 ;;; magit.el --- Configures the magit feature
 
-;; Copyright (C) 2015-2025  Miguel Guedes
+;; Copyright (C) 2015-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,25 +24,20 @@
 
 ;;; Code:
 
-(defun init/magit/config()
-  ; As per installation instructions at: https://github.com/sigma/magit-gh-pulls
-  ;; (require 'magit-gh-pulls)
-  ;; (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
-
-  ; DON'T ask to save buffers!
-  (setq magit-save-repository-buffers nil)
-
-  ;; NOTE: the following is disabled as it causes 'magit-status to not load.
-  ;; Unclear why.
-  ;; --
-  ;; This undoes the advice found in magit-autoloads.el and allows our shortcut
-  ;; to work (see `../internals/remaps.el`).
-  ;(define-key ido-completion-map (kbd "C-x g") 'find-grep)
-  ;(define-key ido-common-completion-map (kbd "C-x g") 'find-grep)
-  )
+(defun my/magit/status-other-window ()
+  "Show magit status in the other window."
+  (interactive)
+  (let ((magit-display-buffer-function #'magit-display-buffer-traditional))
+    (magit-status)))
 
 (use-package magit-status
-  :config (init/magit/config)
-  :bind ("C-x g" . magit-status))
+  :custom
+  ;; Don't ask to save buffers
+  (magit-save-repository-buffers nil)
+  ;; Always display magit buffers in the current window.
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+
+  :bind (("C-x g"   . magit-status)
+         ("C-x 4 g" . my/magit/status-other-window)))
 
 ;;; magit.el ends here

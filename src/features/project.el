@@ -1,6 +1,6 @@
 ;;; project.el --- Configures the Emacs `project' package  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2024  Miguel Guedes
+;; Copyright (C) 2024-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,10 +24,6 @@
 
 ;;; Code:
 
-(defun init/project/config ()
-  ;; Don't use C-c C-p as it clashes with many major mode default bindings.
-  (global-set-key (kbd "C-c P") project-prefix-map))
-
 (defun my/project-find-file-other-window (&optional include-all)
   "Open FILENAME from a project in another window."
   (interactive)
@@ -38,8 +34,9 @@
     (advice-remove 'find-file #'find-file-other-window)))
 
 (use-package project
+  ;; Don't use C-c C-p as it clashes with many major mode default bindings.
+  :bind-keymap ("C-c P" . project-prefix-map)
   :bind (:map project-prefix-map
-              ("4 f" . my/project-find-file-other-window))
-  :config (init/project/config))
+              ("4 f" . my/project-find-file-other-window)))
 
 ;;; project.el ends here

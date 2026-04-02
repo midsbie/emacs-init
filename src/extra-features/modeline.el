@@ -107,13 +107,6 @@
  '(vc-locked-state        ((t (:inherit font-lock-constant-face))))
  '(vc-ignored-state       ((t (:inherit shadow)))))
 
-;; -- Major mode face ----------------------------------------------------------
-(defun my/modeline--fontify-mode-name ()
-  "Propertize `mode-name' with `my/modeline-major-mode' face."
-  (setq mode-name (propertize (format-mode-line mode-name)
-                               'face 'my/modeline-major-mode)))
-
-(add-hook 'after-change-major-mode-hook #'my/modeline--fontify-mode-name)
 
 ;; -- Segment: VCS branch ------------------------------------------------------
 (defun my/modeline-vcs ()
@@ -258,7 +251,7 @@ Shows: [read-only] [project/a/b/c/]filename[status]"
 ;;   indicators)
 ;; - Right-aligned flymake/flycheck diagnostic counters appended
 (setq-default mode-line-format
-              '("%e"
+              `("%e"
                 mode-line-front-space
                 (:propertize ("" mode-line-mule-info mode-line-client mode-line-remote)
                              display (min-width (5.0)))
@@ -267,8 +260,15 @@ Shows: [read-only] [project/a/b/c/]filename[status]"
                 "   "
                 mode-line-position
                 (:eval (my/modeline-vcs))
-                "  "
-                mode-line-modes
+                " "
+                (:propertize ("" mode-name)
+                             face my/modeline-major-mode
+                             mouse-face mode-line-highlight
+                             local-map ,mode-line-major-mode-keymap)
+                ("" mode-line-process)
+                (:propertize ("" minor-mode-alist)
+                             mouse-face mode-line-highlight
+                             local-map ,mode-line-minor-mode-keymap)
                 mode-line-misc-info
                 mode-line-format-right-align
                 (:eval (when-let* ((s (my/modeline-flymake))) (concat s " ")))

@@ -26,11 +26,11 @@
  '(hl-line ((t (:inherit highlight :background "#000f08"))))
 
  ;; Mode line
- '(mode-line-active ((t (:foreground "#d3d7cf" :background "grey20"
-                          :box (:line-width 1 :color "grey30")))))
+ '(mode-line-active ((t (:foreground "#d3d7cf" :background "grey22"
+                          :box (:line-width 1 :color "grey32")))))
  '(mode-line-inactive ((t (:inherit mode-line-active
-                            :foreground "grey50" :background "grey15"
-                            :box (:line-width 1 :color "grey25")))))
+                            :foreground "grey50" :background "grey10"
+                            :box (:line-width 1 :color "grey14")))))
 
  ;; Font lock
  '(font-lock-doc-face ((t (:foreground "dark salmon"))))

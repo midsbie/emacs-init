@@ -40,6 +40,8 @@
          ("C-c h" . consult-history)
          ("C-c m" . consult-mode-command)
          ("C-c k" . consult-kmacro)
+         ("C-c i" . consult-info)
+         ([remap Info-search] . consult-info)
          ;; C-x bindings (ctl-x-map)
          ("C-x M-:" . consult-complex-command)     ; was: repeat-complex-command
          ("C-x b" . consult-buffer)                ; was: switch-to-buffer
@@ -55,6 +57,7 @@
          ("M-y" . consult-yank-pop)                ; was: yank-pop
          ;; M-g bindings (goto-map)
          ("M-g e" . consult-compile-error)
+         ("M-g r" . consult-grep-match)
          ("M-g f" . init/consult/choose-fly-diagnostic)
          ("M-g g" . consult-goto-line)             ; was: goto-line
          ("M-g M-g" . consult-goto-line)           ; was: goto-line

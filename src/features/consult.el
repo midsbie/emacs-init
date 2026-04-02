@@ -70,7 +70,7 @@
          ("C-s" . consult-line)                    ; was using swiper before,
                                                    ; now replaces `isearch-forward'
          ("M-s d" . consult-find)
-         ("M-s D" . consult-locate)
+         ("M-s c" . consult-locate)
          ("M-s g" . consult-grep)
          ("M-s G" . consult-git-grep)
          ("M-s r" . consult-ripgrep)

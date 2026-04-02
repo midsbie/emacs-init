@@ -27,8 +27,7 @@
 (defun init/vterm/enable ()
   "Enable vterm buffer settings.
 Called from `vterm-mode-hook' to set up per-buffer defaults."
-  (display-line-numbers-mode -1)
-  (init/vterm/hollow-cursor-mode 1))
+  (display-line-numbers-mode -1))
 
 (defun init/vterm/config ()
   "Configure `vterm' package."
@@ -72,10 +71,13 @@ Emacs cursor to become invisible in copy mode.  This works around the issue by
 temporarily remapping the `cursor' face to use the default foreground color and
 switching to a filled `box' cursor for the duration of copy mode.
 
-The workaround only activates when `init/vterm/hollow-cursor-mode' is enabled.
-On exit, cursor settings are restored according to the mode's state."
+On the first entry into copy mode, `init/vterm/hollow-cursor-mode' is
+automatically enabled so that subsequent normal-mode editing uses a hollow
+cursor.  On exit, cursor settings are restored according to the mode's state."
   (if vterm-copy-mode
-      (when init/vterm/hollow-cursor-mode
+      (progn
+        (unless init/vterm/hollow-cursor-mode
+          (init/vterm/hollow-cursor-mode 1))
         (when (bound-and-true-p vterm--copy-mode-cursor-remap)
           (face-remap-remove-relative vterm--copy-mode-cursor-remap))
         (setq-local cursor-type 'box

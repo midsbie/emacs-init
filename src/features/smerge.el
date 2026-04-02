@@ -1,6 +1,6 @@
 ;;; smerge.el --- Customises the smerge package
 
-;; Copyright (C) 2024  Miguel Guedes
+;; Copyright (C) 2024-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -28,6 +28,7 @@
 ;; Used by the `elysium' package.
 (use-package smerge-mode
   :ensure nil
+  :diminish
   :hook
   (prog-mode . smerge-mode))
 

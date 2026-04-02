@@ -1,6 +1,6 @@
 ;;; all-the-icons.el --- Configures all-the-icons and related packages
 
-;; Copyright (C) 2021-2024  Miguel Guedes
+;; Copyright (C) 2021-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -28,6 +28,7 @@
 
 ;; Ref: https://github.com/domtronn/all-the-icons.el
 (use-package all-the-icons
+  :diminish all-the-icons-dired-mode
   ;; Ref: https://github.com/wyuenho/all-the-icons-dired
   :hook ((dired-mode . all-the-icons-dired-mode)))
 

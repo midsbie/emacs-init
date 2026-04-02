@@ -33,7 +33,7 @@
 (use-package add-node-modules-path)
 
 (use-package autorevert
-  :diminish
+  :diminish auto-revert-mode
   :config
   ;; Revert buffer if file associated with it changes outside of emacs.
   (global-auto-revert-mode 1))
@@ -77,6 +77,7 @@
   :config (global-highlight-parentheses-mode))
 
 (use-package flyspell
+  :diminish
   :config
   ;; Deactivate annoying correction of previous misspelled error when C-; is hit.
   ;; NOTE: currently enabled

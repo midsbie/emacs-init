@@ -24,6 +24,12 @@
 
 ;;; Code:
 
+(defun init/vterm/enable ()
+  "Enable vterm buffer settings.
+Called from `vterm-mode-hook' to set up per-buffer defaults."
+  (display-line-numbers-mode -1)
+  (init/vterm/hollow-cursor-mode 1))
+
 (defun init/vterm/config ()
   "Configure `vterm' package."
   (advice-add 'vterm-copy-mode :after #'init/vterm/copy-mode-cursor-fix))
@@ -82,7 +88,7 @@ On exit, cursor settings are restored according to the mode's state."
       (init/vterm/restore-cursor))))
 
 (use-package vterm
-  :hook (vterm-mode . init/vterm/hollow-cursor-mode)
+  :hook (vterm-mode . init/vterm/enable)
   :bind (:map vterm-mode-map
          ([remap delete-backward-char] . vterm-send-backspace))
   :config (init/vterm/config))

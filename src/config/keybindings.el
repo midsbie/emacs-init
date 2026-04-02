@@ -85,4 +85,8 @@ With a prefix argument, creates a new terminal buffer."
              (generate-new-buffer-name "*shell*")))))
 (global-set-key (kbd "C-c t")         #'my/terminal)
 
+;; Disable the two-column minor mode keymap entirely as it is easy to trigger
+;; accidentally and disrupts the window layout.
+(global-set-key [f2]                  nil)
+
 ;;; keybindings.el ends here

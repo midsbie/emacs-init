@@ -25,6 +25,7 @@
 ;;; Code:
 
 (use-package solo-modeline
-  :config (solo-modeline-mode 1))
+  ;; Preserving configuration should we want to re-enable it in future.
+  :config (solo-modeline-mode -1))
 
 ;;; solo-modeline.el ends here

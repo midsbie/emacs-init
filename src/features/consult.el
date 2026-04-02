@@ -129,7 +129,7 @@
   ;; `:preview-key' on a per-command basis using the `consult-customize' macro.
   (consult-customize
    consult-theme
-   :preview-key '(:debounce 0.2 any)
+   :preview-key '(:debounce 0.5 any)
    consult-ripgrep consult-git-grep consult-grep consult-man
    consult-bookmark consult-recent-file consult-xref
    consult-source-bookmark consult-source-file-register

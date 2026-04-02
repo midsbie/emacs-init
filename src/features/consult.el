@@ -34,7 +34,8 @@
     (consult-flycheck)))
 
 (use-package consult
-  ;; Replace bindings. Lazily loaded due by `use-package'.
+  :ensure t
+  ;; Replace bindings. Lazily loaded by `use-package'.
   :bind (
          ;; C-c bindings (mode-specific-map)
          ("C-c h" . consult-history)

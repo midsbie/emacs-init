@@ -25,8 +25,8 @@
  '(highlight ((t (:background "#004225"))))
  '(hl-line ((t (:inherit highlight :background "#000f08"))))
 
- ;; Mode line
- '(mode-line-active ((t (:foreground "#d3d7cf" :background "grey22"
+ ;; Mode line (original background: "grey22")
+ '(mode-line-active ((t (:foreground "#d3d7cf" :background "#433c4e"
                           :box (:line-width 1 :color "grey32")))))
  '(mode-line-inactive ((t (:inherit mode-line-active
                             :foreground "grey50" :background "grey10"

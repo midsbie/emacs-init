@@ -45,8 +45,6 @@
                  (window-parameters (mode-line-format . none)))))
 
 (use-package embark-consult
-  :after (embark consult)
-  :demand t ; only necessary if you have the hook below
-  )
+  :ensure t)
 
 ;;; embark.el ends here

@@ -24,6 +24,24 @@
 
 ;;; Code:
 
+(defun my/project-bury-buffers ()
+  "Bury all buffers belonging to the current project in every window of the frame.
+Each window is cycled until it displays a non-project buffer or all buffers have
+been tried."
+  (interactive)
+  (let ((pr (project-current)))
+    (if (not pr)
+        (message "Current buffer is not part of a project")
+      (let ((project-bufs (project-buffers pr)))
+        (dolist (win (window-list))
+          (let ((attempts 0)
+                (limit (length (buffer-list))))
+            (while (and (memq (window-buffer win) project-bufs)
+                        (< attempts limit))
+              (with-selected-window win
+                (bury-buffer))
+              (setq attempts (1+ attempts)))))))))
+
 (defun my/project-find-file-other-window (&optional include-all)
   "Open FILENAME from a project in another window."
   (interactive)
@@ -37,6 +55,7 @@
   ;; Don't use C-c C-p as it clashes with many major mode default bindings.
   :bind-keymap ("C-c P" . project-prefix-map)
   :bind (:map project-prefix-map
-              ("4 f" . my/project-find-file-other-window)))
+              ("4 f" . my/project-find-file-other-window)
+              ("/" . my/project-bury-buffers)))
 
 ;;; project.el ends here

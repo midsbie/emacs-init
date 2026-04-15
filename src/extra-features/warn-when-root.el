@@ -1,6 +1,6 @@
 ;;; warn-when-root.el --- Change modeline background when acting as root user
 
-;; Copyright (C) 2015-2023  Miguel Guedes
+;; Copyright (C) 2015-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -26,20 +26,19 @@
 
 
 (defun my/warn-when-root-visits-file ()
-  "Warn when root user.
-
-Displays the mode line with a red background when visiting a file
-with root privileges."
-  (when (string-match "^/su\\(do\\)?:" default-directory)
+  "Warn when visiting a buffer whose default directory belongs to root.
+Displays the mode line with a red background when the effective
+user is root via TRAMP (sudo, su, doas, or multi-hop)."
+  (when (and (not (bound-and-true-p my/--root-warning-applied))
+             (file-remote-p default-directory)
+             (string= "root" (file-remote-p default-directory 'user)))
     (face-remap-add-relative
-     'mode-line
-     '(:background "red3" :foreground "white"))
+     'mode-line-active
+     '(:background "red3" :foreground "white" :box nil))
     (face-remap-add-relative
      'mode-line-inactive
-     '(:background "red4" :foreground "dark gray"
-                   :box nil))
-    )
-  )
+     '(:background "red4" :foreground "dark gray" :box nil))
+    (setq-local my/--root-warning-applied t)))
 
 ;; Change mode line background colour if file being edited as root.
 (add-hook 'after-change-major-mode-hook 'my/warn-when-root-visits-file)

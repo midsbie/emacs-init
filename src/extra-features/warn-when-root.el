@@ -37,7 +37,7 @@ user is root via TRAMP (sudo, su, doas, or multi-hop)."
      '(:background "red3" :foreground "white" :box nil))
     (face-remap-add-relative
      'mode-line-inactive
-     '(:background "red4" :foreground "dark gray" :box nil))
+     '(:background "#4a0000" :foreground "gray40" :box nil))
     (setq-local my/--root-warning-applied t)))
 
 ;; Change mode line background colour if file being edited as root.

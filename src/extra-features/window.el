@@ -1,6 +1,6 @@
-;;; window-extra.el --- Utility functions for manipulating windows
+;;; window.el --- Utility functions for manipulating windows
 
-;; Copyright (C) 2014-2023 Miguel Guedes
+;; Copyright (C) 2014-2026 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:
@@ -85,4 +85,4 @@ only."
           (setq current-buffer (1+ current-buffer)))
         (other-window 1))))
 
-;;; window-extra.el ends here
+;;; window.el ends here

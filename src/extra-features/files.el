@@ -1,6 +1,6 @@
 ;;; files.el --- Assorted filesystem functions
 
-;; Copyright (C) 2021-2025  Miguel Guedes
+;; Copyright (C) 2021-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -96,5 +96,17 @@ does not interrupt execution."
   (with-temp-buffer
     (insert-file-contents file)
     (split-string (buffer-string) "\n" t)))
+
+(defun my/find-dired-backup (dir)
+  "Run `find-dired' in DIR for Emacs backup and auto-save files.
+Matches auto-save files (`#NAME#'), simple backups (`NAME~') and
+version-numbered backups (`NAME.~N~').
+DIR defaults to the current project root when available, otherwise
+to `default-directory'."
+  (interactive
+   (let* ((proj (project-current))
+          (default (if proj (project-root proj) default-directory)))
+     (list (read-directory-name "Find backups in directory: " default))))
+  (find-dired dir "\\( -name '#*#' -o -name '*~' \\)"))
 
 ;;; files.el ends here

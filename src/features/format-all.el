@@ -45,6 +45,6 @@
   (init/format-all/maybe-enable "C#"))
 
 (use-package format-all
-  :hook (csharp-mode . init/format-all/csharp-maybe-enable))
+  :hook ((csharp-mode csharp-ts-mode) . init/format-all/csharp-maybe-enable))
 
 ;;; format-all.el ends here

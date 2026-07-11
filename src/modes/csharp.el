@@ -76,6 +76,15 @@ can be worked around by temporarily switching to `csharp-mode'."
   ;; Enable the following if flycheck should only check the buffer on load and
   ;; save.
   ;; (setq-local flycheck-check-syntax-automatically '(mode-enabled save))
+
+  ;; Teach `M-q' to reflow `"..." + "..."' string concatenations (only in the
+  ;; tree-sitter mode).  Chain to the mode's own filler for everything else so
+  ;; comment filling keeps working.  See `extra-features/csharp-strings.el'.
+  (when (treesit-parser-list nil 'c-sharp)
+    (unless (eq fill-paragraph-function #'my/csharp-fill-paragraph)
+      (setq-local my/csharp--prev-fill-paragraph-function fill-paragraph-function))
+    (setq-local fill-paragraph-function #'my/csharp-fill-paragraph))
+
   (init/common-nonweb-programming-mode))
 
 (use-package csharp-mode

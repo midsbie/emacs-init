@@ -92,6 +92,15 @@ with `init/eglot/toggle-inlay-hints'."
                                           :includeInlayFunctionLikeReturnTypeHints t
                                           :includeInlayEnumMemberValueHints t)))))
 
+  ;; csharp-ls answers go-to-definition on symbols in compiled assemblies (BCL,
+  ;; NuGet) with an empty result unless `metadata-uris' is enabled; with it, the
+  ;; server returns `csharp:/' URIs, resolved by
+  ;; `init/eglot/csharp-cls-metadata-uri-handler'.  Registered directly rather
+  ;; than via `init/eglot/extra-server-programs' because Eglot's built-in C#
+  ;; entry already covers these modes.
+  (add-to-list 'eglot-server-programs
+               '((csharp-mode csharp-ts-mode) . ("csharp-ls" "--features" "metadata-uris")))
+
   (add-hook 'eglot-managed-mode-hook #'init/eglot/enable t)
   (advice-add 'eglot-rename :around #'init/eglot/rename-advice)
   (advice-add 'eglot-uri-to-path :around #'init/eglot/uri-to-path-advice)

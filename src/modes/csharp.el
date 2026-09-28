@@ -45,24 +45,6 @@ can be worked around by temporarily switching to `csharp-mode'."
   "Initialise csharp mode."
   (setq-local c-basic-offset 4)
 
-  ;; Don't set this to a value less than `lsp-idle-delay' above to prevent
-  ;; unnecessary messages being sent to the server and potentially overloading
-  ;; it.  Currently enforcing a minimum of 1s.
-  (when (boundp 'lsp-idle-delay)
-    (setq-local flycheck-idle-change-delay
-                (if (< lsp-idle-delay 1) 1 lsp-idle-delay)))
-
-  ;; Explicitly forcing to default syncronization method of `nil`, which
-  ;; defaults to `lsp--sync-full', as supported by omnisharp-roslyn.  This
-  ;; statement is here to document the fact that lsp supports the
-  ;; `lsp--sync-incremental', which may turn out to be more performant for some
-  ;; specific projects.
-  (setq-local lsp-document-sync-method nil)
-
-  ;; Enable the following if flycheck should only check the buffer on load and
-  ;; save.
-  ;; (setq-local flycheck-check-syntax-automatically '(mode-enabled save))
-
   ;; Teach `M-q' to reflow `"..." + "..."' string concatenations (only in the
   ;; tree-sitter mode).  Chain to the mode's own filler for everything else so
   ;; comment filling keeps working.  See `extra-features/csharp-strings.el'.

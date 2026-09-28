@@ -103,7 +103,8 @@ with `init/eglot/toggle-inlay-hints'."
   (add-hook 'eglot-managed-mode-hook #'init/eglot/enable t)
   (advice-add 'eglot-rename :around #'init/eglot/rename-advice)
   (advice-add 'eglot-uri-to-path :around #'init/eglot/uri-to-path-advice)
-  (advice-add 'eglot-path-to-uri :around #'init/eglot/path-to-uri-advice))
+  (advice-add 'eglot-path-to-uri :around #'init/eglot/path-to-uri-advice)
+  (add-hook 'find-file-hook #'init/eglot/csharp-metadata-read-only))
 
 (defun init/eglot/enable ()
   "Set up the current buffer as `eglot' starts or stops managing it.
@@ -191,6 +192,14 @@ The file lives under the project root next to a sidecar recording URI
       (with-temp-buffer
         (insert-file-contents sidecar)
         (buffer-string)))))
+
+(defun init/eglot/csharp-metadata-read-only ()
+  "Make a buffer visiting a decompiled C# cache file read-only.
+Edits could never reach the assembly, and would desync the buffer from the
+source csharp-ls holds for its `csharp:/' URI."
+  (when (and buffer-file-name
+             (file-exists-p (init/eglot/csharp-metadata-uri-file buffer-file-name)))
+    (read-only-mode 1)))
 
 (defun init/eglot/path-to-uri-advice (orig-fun path &rest args)
   "Address decompiled C# cache files by their `csharp:/' URI.

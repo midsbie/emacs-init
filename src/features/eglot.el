@@ -54,11 +54,10 @@ with `init/eglot/toggle-inlay-hints'."
   ;;
   ;; (setq eglot-events-buffer-config '(:size 0 :format nil))
   ;;
-  ;; If performance is still a concern in some modes, consider making the
-  ;; following additional tweaks:
+  ;; If performance is still a concern in some modes, consider sending edits
+  ;; less frequently:
   ;;
-  ;; (setq eglot-send-changes-idle-time 1.0) ;; send edits less frequently
-  ;; (setq eglot-extend-to-xref t)           ;; avoid aggressive reanalysis
+  ;; (setq eglot-send-changes-idle-time 1.0)
 
   ;; Configure Typescript language server with inlay hints enabled by default.
   (add-to-list
@@ -213,7 +212,6 @@ to the same state."
   ;; the Commentary section.
   :custom
   (eglot-autoshutdown t)
-  (eglot-extend-to-xref nil)
   ;; Other features one might consider disabling:
   ;;
   ;; * :hoverProvider

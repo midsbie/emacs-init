@@ -103,7 +103,7 @@ with `init/eglot/toggle-inlay-hints'."
   (add-hook 'eglot-managed-mode-hook #'init/eglot/enable t)
   (advice-add 'eglot-rename :around #'init/eglot/rename-advice)
   (advice-add 'eglot-uri-to-path :around #'init/eglot/uri-to-path-advice)
-  (advice-add 'eglot--TextDocumentIdentifier :around #'init/eglot/TextDocumentIdentifier))
+  (advice-add 'eglot-path-to-uri :around #'init/eglot/path-to-uri-advice))
 
 (defun init/eglot/enable ()
   "Set up the current buffer as `eglot' starts or stops managing it.
@@ -184,35 +184,21 @@ The file lives under the project root next to a sidecar recording URI
   "Return the sidecar recording the `csharp:/' URI FILE was fetched from."
   (concat file ".metadata-uri"))
 
-(defun init/eglot/TextDocumentIdentifier (orig-fun &rest args)
-  "Advice for `eglot--TextDocumentIdentifier`.
+(defun init/eglot/csharp-metadata-uri (file)
+  "Return the `csharp:/' URI FILE was fetched from, or nil if it wasn't."
+  (let ((sidecar (init/eglot/csharp-metadata-uri-file file)))
+    (when (file-exists-p sidecar)
+      (with-temp-buffer
+        (insert-file-contents sidecar)
+        (buffer-string)))))
 
-This function initializes `eglot--TextDocumentIdentifier-cache' with the
-true URI of the active buffer.  Doing so makes it possible to visit
-decompiled C# assemblies without triggering errors such as the following:
-
-The type 'GameObject' exists in both 'Unity.Timeline, Version=1.0.0.0,
-Culture=neutral, PublicKeyToken=null' and 'UnityEngine.CoreModule,
-Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'
-"
-  (unless eglot--TextDocumentIdentifier-cache
-    (when-let ((metadata-uri (init/eglot/determine-true-buffer-uri)))
-      (setq-local eglot--TextDocumentIdentifier-cache
-            `(,buffer-file-name . (:uri ,metadata-uri :truenamep t)))))
-  (apply orig-fun args))
-
-(defun init/eglot/determine-true-buffer-uri ()
-  "Determine the true URI of the buffer.
-
-This function determines the URI that should be communicated to the LSP
-server.  Currently this is only valid for C# scripts for which a file
-exists with the suffix .metadata-uri file; in this particular scenario,
-the contents of the metadata file is returned.  In all other cases, nil
-is returned."
-  (let ((metadata-file-name (init/eglot/csharp-metadata-uri-file buffer-file-name)))
-    (when (file-exists-p metadata-file-name)
-      (with-temp-buffer (insert-file-contents metadata-file-name)
-                        (buffer-string)))))
+(defun init/eglot/path-to-uri-advice (orig-fun path &rest args)
+  "Address decompiled C# cache files by their `csharp:/' URI.
+csharp-ls tracks decompiled documents only by that URI, so requests made
+from a buffer visiting the cache file under its `file:' URI find nothing.
+Other paths go to ORIG-FUN with ARGS."
+  (or (init/eglot/csharp-metadata-uri path)
+      (apply orig-fun path args)))
 
 (defun init/eglot/toggle-inlay-hints (&optional global)
   "Toggle `eglot-inlay-hints-mode' in the current buffer.

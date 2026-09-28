@@ -132,13 +132,13 @@ once the buffer is no longer managed."
          )))))
 
 (defun init/eglot/rename-advice (orig-fun &rest args)
-  "Advice to pre-fill the current symbol name in `eglot-rename' prompt."
+  "Pre-fill the `eglot-rename' prompt with the symbol at point.
+ORIG-FUN is called with ARGS, the new name."
   (interactive
    (let ((current-symbol (thing-at-point 'symbol t)))
      (list (read-from-minibuffer
             (format "Rename `%s' to: " (or current-symbol "unknown symbol"))
-            (symbol-name (symbol-at-point)))))
-  )
+            current-symbol))))
   (apply orig-fun args))
 
 (defun init/eglot/uri-to-path-advice (orig-fun uri)

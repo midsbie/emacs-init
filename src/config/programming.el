@@ -334,14 +334,11 @@ formatter if neither `prettier-mode' nor `format-all-mode' are enabled."
       (unless (or
                (and (boundp 'prettier-mode) prettier-mode)
                (and (boundp 'format-all-mode) format-all-mode))
-        ;; Safe: this hook is only buffer-local in eglot/lsp-managed buffers
-        ;; (see `init/eglot/enable' and `init/lsp/enable'), so the respective
-        ;; package is always loaded when this runs.  `eglot' is also built-in
-        ;; since Emacs 29.
+        ;; Both clients load lazily, and their mode hooks also run when a
+        ;; buffer stops being managed, so either mode variable may be unbound.
         (cond
-         (eglot--managed-mode (eglot-format-buffer))
-         (lsp-mode (lsp-format-buffer))
-         )))))
+         ((bound-and-true-p eglot--managed-mode) (eglot-format-buffer))
+         ((bound-and-true-p lsp-mode) (lsp-format-buffer)))))))
 
 (defun init/get-format-buffer-function-for-mode (mode)
   "Get the save function for the current buffer's major mode."

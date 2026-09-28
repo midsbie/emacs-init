@@ -107,10 +107,15 @@ with `init/eglot/toggle-inlay-hints'."
   (advice-add 'eglot--TextDocumentIdentifier :around #'init/eglot/TextDocumentIdentifier))
 
 (defun init/eglot/enable ()
-  "Configure `eglot' when enabled in a buffer."
-  (unless init/eglot/inlay-hints-enabled
-    (eglot-inlay-hints-mode -1))
-  (add-hook 'before-save-hook #'init/maybe-format-buffer nil t))
+  "Set up the current buffer as `eglot' starts or stops managing it.
+`eglot-managed-mode-hook' runs on both transitions, so undo the setup
+once the buffer is no longer managed."
+  (if (eglot-managed-p)
+      (progn
+        (unless init/eglot/inlay-hints-enabled
+          (eglot-inlay-hints-mode -1))
+        (add-hook 'before-save-hook #'init/maybe-format-buffer nil t))
+    (remove-hook 'before-save-hook #'init/maybe-format-buffer t)))
 
 (defun init/eglot/server-program-supported-p (mode)
   "Check if the given MODE is supported by `eglot-server-programs'."

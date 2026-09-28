@@ -31,14 +31,6 @@
 
 ;;; Code:
 
-(defun init/csharp-mode ()
-  "Initialise csharp mode."
-  ;; Set path override for Mono libraries or the Omnisharp Roslyn server may not
-  ;; start or work as expected.
-  (if (file-directory-p "/lib/mono/4.5")
-      (setenv "FrameworkPathOverride" "/lib/mono/4.5")
-    (message "Warning: /lib/mono/4.5 not found, Omnisharp Roslyn may not work as expected")))
-
 (defun init/csharp-mode/toggle-ts ()
   "Toggle between `csharp-mode' and `csharp-ts-mode'.
 `csharp-ts-mode' is preferred but has indentation edge cases that
@@ -83,7 +75,6 @@ can be worked around by temporarily switching to `csharp-mode'."
 
 (use-package csharp-mode
   :mode ("\\.cs\\'" . csharp-ts-mode)
-  :init (init/csharp-mode)
   :hook ((csharp-mode csharp-ts-mode) . init/csharp-mode/enable)
   :bind (:map csharp-mode-map
          ("C-c C-t" . init/csharp-mode/toggle-ts)

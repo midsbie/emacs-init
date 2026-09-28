@@ -38,26 +38,10 @@ with `init/eglot/toggle-inlay-hints'."
   :group 'init/eglot
   :type 'boolean)
 
-(defvar init/typescript-server-location
-  (expand-file-name
-   "~/.emacs.d/.cache/lsp/npm/typescript-language-server/bin/typescript-language-server"))
-
-(defvar init/eglot/extra-server-programs
-  `(
-    ;; All Typescript-related modes are now supported natively by Eglot but
-    ;; keeping following configuration here for posteriority.
-    (tsx-ts-mode . (,init/typescript-server-location "--stdio"))
-    (typescript-mode . (,init/typescript-server-location "--stdio"))
-    (typescript-ts-mode . (,init/typescript-server-location "--stdio"))
-    (vala-mode . ("vala-language-server"))))
-
 (defun init/eglot/config ()
   "Configure `eglot' package."
-  (dolist (server-program init/eglot/extra-server-programs)
-    (let ((mode (car server-program)))
-      (unless (init/eglot/server-program-supported-p mode)
-        (message "adding eglot support for %s" mode)
-        (add-to-list 'eglot-server-programs `(,mode . ,(cdr server-program))))))
+  ;; Eglot has no built-in entry for Vala.
+  (add-to-list 'eglot-server-programs '(vala-mode . ("vala-language-server")))
 
   ;; Completely disable the events buffer for maximum performance.  Eglot keeps
   ;; 2000000 events by default, which are suspected to cause performance issues
@@ -95,8 +79,7 @@ with `init/eglot/toggle-inlay-hints'."
   ;; csharp-ls answers go-to-definition on symbols in compiled assemblies (BCL,
   ;; NuGet) with an empty result unless `metadata-uris' is enabled; with it, the
   ;; server returns `csharp:/' URIs, resolved by `init/eglot/uri-to-path-advice'.
-  ;; Registered directly rather than via `init/eglot/extra-server-programs'
-  ;; because Eglot's built-in C# entry already covers these modes.
+  ;; `add-to-list' prepends, so this entry shadows Eglot's built-in C# one.
   (add-to-list 'eglot-server-programs
                '((csharp-mode csharp-ts-mode) . ("csharp-ls" "--features" "metadata-uris")))
 
@@ -116,20 +99,6 @@ once the buffer is no longer managed."
           (eglot-inlay-hints-mode -1))
         (add-hook 'before-save-hook #'init/maybe-format-buffer nil t))
     (remove-hook 'before-save-hook #'init/maybe-format-buffer t)))
-
-(defun init/eglot/server-program-supported-p (mode)
-  "Check if the given MODE is supported by `eglot-server-programs'."
-  (let ((supported nil))
-    (dolist (entry eglot-server-programs supported)
-      (let ((entry-mode (car entry)))
-        (cond
-         ((listp entry-mode)
-          (dolist (submode entry-mode)
-            (cond
-             ((listp submode) (when (eq mode (car submode)) (setq supported t)))
-             ((eq mode submode) (setq supported t)))))
-         ((eq mode entry-mode) (setq supported t))
-         )))))
 
 (defun init/eglot/rename-advice (orig-fun &rest args)
   "Pre-fill the `eglot-rename' prompt with the symbol at point.

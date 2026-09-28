@@ -42,9 +42,7 @@ can be worked around by temporarily switching to `csharp-mode'."
     (_ (user-error "Not in a C# buffer"))))
 
 (defun init/csharp-mode/enable ()
-  "Initialise csharp mode."
-  (setq-local c-basic-offset 4)
-
+  "Set up a buffer in `csharp-mode' or `csharp-ts-mode'."
   ;; Teach `M-q' to reflow `"..." + "..."' string concatenations (only in the
   ;; tree-sitter mode).  Chain to the mode's own filler for everything else so
   ;; comment filling keeps working.  See `extra-features/csharp-strings.el'.

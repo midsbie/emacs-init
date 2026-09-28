@@ -20,14 +20,8 @@
 
 ;;; Commentary:
 
-;; At the moment Eglot cannot be used as the LSP server because it is unable to
-;; open C# scripts that have been decompiled as a result of, say, following a
-;; reference to its source file.  LSP handles this correctly in
-;; `lsp-csharp--cls-metadata-uri-handler' and seems to resolve the path returned
-;; by the server to an internal path under .cache/lsp-csharp/metadata that seems
-;; to be specific to each vsproj.  More info here:
-;; https://github.com/razzmatazz/csharp-language-server?tab=readme-ov-file.
-;; Bottom line is, supporting Eglot will require investigation.
+;; C# buffers are served by csharp-ls through Eglot.  Navigation into compiled
+;; assemblies (decompiled `csharp:/' sources) is handled in features/eglot.el.
 
 ;;; Log:
 

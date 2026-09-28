@@ -94,10 +94,9 @@ with `init/eglot/toggle-inlay-hints'."
 
   ;; csharp-ls answers go-to-definition on symbols in compiled assemblies (BCL,
   ;; NuGet) with an empty result unless `metadata-uris' is enabled; with it, the
-  ;; server returns `csharp:/' URIs, resolved by
-  ;; `init/eglot/csharp-cls-metadata-uri-handler'.  Registered directly rather
-  ;; than via `init/eglot/extra-server-programs' because Eglot's built-in C#
-  ;; entry already covers these modes.
+  ;; server returns `csharp:/' URIs, resolved by `init/eglot/uri-to-path-advice'.
+  ;; Registered directly rather than via `init/eglot/extra-server-programs'
+  ;; because Eglot's built-in C# entry already covers these modes.
   (add-to-list 'eglot-server-programs
                '((csharp-mode csharp-ts-mode) . ("csharp-ls" "--features" "metadata-uris")))
 
@@ -141,51 +140,49 @@ once the buffer is no longer managed."
   )
   (apply orig-fun args))
 
-(defun init/eglot/special-uri-to-path (uri)
-  "Convert PATH, a file name, to LSP URI string and return it.
-TRUENAMEP indicated PATH is already a truename."
-  (cond
-   ((and (stringp uri) (string-prefix-p "csharp:/" uri))
-    (init/eglot/csharp-cls-metadata-uri-handler uri))
-   (t
-    uri)))
-
 (defun init/eglot/uri-to-path-advice (orig-fun uri)
-  "Custom function to handle special URIs in Eglot."
-  (funcall orig-fun (init/eglot/special-uri-to-path uri)))
+  "Resolve csharp-ls `csharp:/' URIs to cache files; pass others to ORIG-FUN."
+  (if (and (stringp uri) (string-prefix-p "csharp:/" uri))
+      (init/eglot/csharp-metadata-file uri)
+    (funcall orig-fun uri)))
 
-(defun init/eglot/csharp-cls-metadata-uri-handler (uri)
-  "Handle `csharp:/(metadata)' URI from csharp-ls server in Eglot.
+(defvar init/eglot/csharp-metadata-files (make-hash-table :test #'equal)
+  "Cache files written this session, keyed by csharp-ls `csharp:/' URI.
+Eglot resolves a URI once per location in a result, so this saves a
+`csharp/metadata' round trip for each.  Starting empty every session means
+a file left behind by an older csharp-ls or SDK is rewritten on first use.")
 
-A cache file is created in the project root that stores this metadata,
-and the filename is returned so Eglot can display the file.
+(defun init/eglot/csharp-metadata-file (uri)
+  "Return the cache file holding the decompiled source for URI."
+  (let ((file (gethash uri init/eglot/csharp-metadata-files)))
+    (if (and file (file-exists-p file))
+        file
+      (puthash uri (init/eglot/csharp-fetch-metadata uri)
+               init/eglot/csharp-metadata-files))))
 
-Function mostly lifted from lsp-charp.el."
-  (let* ((workspace (eglot--current-server-or-lose))
-         (metadata-req (list :textDocument (list :uri uri)))
-         (metadata (jsonrpc-request workspace "csharp/metadata" metadata-req))
-         ;; Access metadata fields using plist-get
-         (project-name (plist-get metadata :projectName))
-         (assembly-name (plist-get metadata :assemblyName))
-         (symbol-name (plist-get metadata :symbolName))
-         (source (plist-get metadata :source))
-         (filename (concat ".cache/lsp-csharp/metadata/projects/" project-name
-                           "/assemblies/" assembly-name "/" symbol-name ".cs"))
-         (file-location (expand-file-name filename (project-root (eglot--current-project))))
-         (metadata-file-location (concat file-location ".metadata-uri"))
-         (path (file-name-directory file-location)))
+(defun init/eglot/csharp-fetch-metadata (uri)
+  "Write the source for URI, fetched via `csharp/metadata', to the cache.
+The file lives under the project root next to a sidecar recording URI
+\(see `init/eglot/csharp-metadata-uri-file'); its name is returned."
+  (let* ((server (or (eglot-current-server)
+                     (user-error "No Eglot server to resolve %s" uri)))
+         (metadata (jsonrpc-request server "csharp/metadata" `(:textDocument (:uri ,uri))))
+         (source (or (plist-get metadata :source)
+                     (user-error "csharp-ls returned no source for %s" uri)))
+         (file (expand-file-name
+                (format ".cache/lsp-csharp/metadata/projects/%s/assemblies/%s/%s.cs"
+                        (plist-get metadata :projectName)
+                        (plist-get metadata :assemblyName)
+                        (plist-get metadata :symbolName))
+                (project-root (project-current t)))))
+    (make-directory (file-name-directory file) t)
+    (with-temp-file file (insert source))
+    (with-temp-file (init/eglot/csharp-metadata-uri-file file) (insert uri))
+    file))
 
-    (unless (file-exists-p file-location)
-      (unless (file-directory-p path)
-        (make-directory path t))
-
-      (with-temp-file metadata-file-location
-        (insert uri))
-
-      (with-temp-file file-location
-        (insert source)))
-
-    file-location))
+(defun init/eglot/csharp-metadata-uri-file (file)
+  "Return the sidecar recording the `csharp:/' URI FILE was fetched from."
+  (concat file ".metadata-uri"))
 
 (defun init/eglot/TextDocumentIdentifier (orig-fun &rest args)
   "Advice for `eglot--TextDocumentIdentifier`.
@@ -212,7 +209,7 @@ server.  Currently this is only valid for C# scripts for which a file
 exists with the suffix .metadata-uri file; in this particular scenario,
 the contents of the metadata file is returned.  In all other cases, nil
 is returned."
-  (let ((metadata-file-name (concat buffer-file-name ".metadata-uri")))
+  (let ((metadata-file-name (init/eglot/csharp-metadata-uri-file buffer-file-name)))
     (when (file-exists-p metadata-file-name)
       (with-temp-buffer (insert-file-contents metadata-file-name)
                         (buffer-string)))))

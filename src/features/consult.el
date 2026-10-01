@@ -1,6 +1,6 @@
 ;;; consult.el --- Configures the consult package
 
-;; Copyright (C) 2022-2024  Miguel Guedes
+;; Copyright (C) 2022-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -32,6 +32,20 @@
   (if flymake-mode
       (consult-flymake)
     (consult-flycheck)))
+
+(defvar-local init/consult/xref-references-initial-input nil
+  "Initial minibuffer input when `consult-xref' shows references.
+Mode `enable' functions set a default; `.dir-locals.el' can override it per
+repository, e.g. to pre-fill an orderless exclusion like \"!Testing \".")
+(put 'init/consult/xref-references-initial-input 'safe-local-variable
+     #'string-or-null-p)
+
+(defun init/consult/xref-initial-input ()
+  "Return the initial `consult-xref' input for the current command.
+Only reference lookups are pre-filled; definitions and `project-find-regexp'
+also go through `consult-xref' and are left alone."
+  (when (memq this-command '(xref-find-references xref-find-references-at-mouse))
+    init/consult/xref-references-initial-input))
 
 (use-package consult
   :ensure t
@@ -118,8 +132,8 @@
   ;; Configure other variables and modes in the :config section, after lazily
   ;; loading the package.
   :config
-  ;; Optionally configure preview. The default value
-  ;; is 'any, such that any key triggers the preview.
+  ;; Optionally configure preview. The default value is 'any, such that any key
+  ;; triggers the preview.
   ;;
   ;; (setq consult-preview-key 'any)
   ;; (setq consult-preview-key (kbd "M-."))
@@ -134,7 +148,10 @@
    consult-bookmark consult-recent-file consult-xref
    consult-source-bookmark consult-source-file-register
    consult-source-recent-file consult-source-project-recent-file
-   :preview-key "M-.")
+   :preview-key "M-."
+   ;; Evaluated on each invocation, so it follows the current buffer.
+   consult-xref
+   :initial (init/consult/xref-initial-input))
 
   ;; Optionally configure the narrowing key.
   ;; Both < and C-+ work reasonably well.

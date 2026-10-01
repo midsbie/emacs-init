@@ -51,7 +51,10 @@ can be worked around by temporarily switching to `csharp-mode'."
       (setq-local my/csharp--prev-fill-paragraph-function fill-paragraph-function))
     (setq-local fill-paragraph-function #'my/csharp-fill-paragraph))
 
-  (init/common-nonweb-programming-mode))
+  (init/common-nonweb-programming-mode)
+
+  ;; Hide test sources from `M-?' by default.  See `features/consult.el'.
+  (setq-local init/consult/xref-references-initial-input "!Testing "))
 
 (use-package csharp-mode
   :mode ("\\.cs\\'" . csharp-ts-mode)

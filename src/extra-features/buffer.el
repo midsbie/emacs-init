@@ -93,7 +93,7 @@ With active region, unfill all paragraphs in the region."
 (defun my/copy-symbol-to-kill-ring ()
   "Copy symbol at point to kill ring."
   (interactive)
-  (let ((symbol (symbol-name (symbol-at-point))))
+  (let ((symbol (thing-at-point 'symbol t)))
     (when symbol
       (kill-new symbol)
       (message "copied: %s" symbol))))

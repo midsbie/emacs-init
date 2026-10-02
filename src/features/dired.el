@@ -33,7 +33,7 @@
   :custom
   (dired-dwim-target t))
 
-(use-package "dired-x"
+(use-package dired-x
   :after (dired))
 
 ;;; dired.el ends here

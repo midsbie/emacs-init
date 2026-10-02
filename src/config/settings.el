@@ -239,47 +239,14 @@
                          (string-prefix-p "*aidermacs:" (buffer-name)))
                 (corfu-mode -1))))
 
-;; Add prompt indicator to `completing-read-multiple'.
-;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
-(defun my/crm-indicator (args)
-  (cons (format "[CRM%s] %s"
-                (replace-regexp-in-string
-                 "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-                 crm-separator)
-                (car args))
-        (cdr args)))
-(advice-add #'completing-read-multiple :filter-args #'my/crm-indicator)
-
-;; Stop annoying warnings causing the *Warnings* buffer from popping up
-;; intrusively and stealing focus.
-;;
-;; The following strategy didn't work:
-;;
-;; (add-to-list 'display-buffer-alist
-;;       `(,(rx bos "*Warnings*" eos)
-;;         (display-buffer-reuse-window
-;;          display-buffer-in-side-window)
-;;         (inhibit-switch-frame . t)
-;;         (side            . bottom)
-;;         (reusable-frames . visible)))
-;;
-;; Now using a forceful approach with advice.
-(defun my/suppress-warnings-buffer (orig-fun buffer-or-name &rest args)
-  "Suppress the *Warnings* buffer from being displayed."
-  (if (string-equal (buffer-name (get-buffer buffer-or-name)) "*Warnings*")
-      nil ; Prevent display
-    (apply orig-fun buffer-or-name args)))
-
-(advice-add 'display-buffer :around #'my/suppress-warnings-buffer)
-
-;; The motivation behind the following advice is to clear out overlays that some
-;; minor modes prone to glitching out, such as Copilot, create but do not clean
-;; up after.  Overlays are now cleared whenever the buffer is reverted.
-(defun my/clear-overlays-on-revert (&rest _args)
-  "Remove all overlays in the buffer after it is reverted."
-  (remove-overlays))
-
-(advice-add 'revert-buffer :after #'my/clear-overlays-on-revert)
+;; Stop the *Warnings* buffer from popping up intrusively and stealing focus.
+;; `display-warning' tags its display request with the `warning' category, so
+;; this only suppresses the automatic pop-up; the buffer can still be shown
+;; deliberately (e.g. `C-x b *Warnings*').
+(add-to-list 'display-buffer-alist
+             '((category . warning)
+               (display-buffer-no-window)
+               (allow-no-window . t)))
 
 ;; Run a MAJORMODE-local-vars-hook when local vars are processed.
 ;; From: https://www.emacswiki.org/emacs/LocalVariables

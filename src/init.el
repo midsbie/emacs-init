@@ -153,16 +153,20 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
 ;; Taken verbatim from: http://www.emacswiki.org/emacs/DotEmacsModular
 ;; Must be interpreted before loading begins below.
 (defun my/load-directory (directory)
-  "Load recursively all `.el' files in DIRECTORY without the extension."
+  "Load recursively all `.el' files in DIRECTORY without the extension.
+Dot-files (e.g. `.dir-locals.el', `.#' lock files) and flycheck's
+temporary `flycheck_*.el' files are skipped."
   (dolist (element (directory-files-and-attributes directory nil nil nil))
     (let* ((path (car element))
            (fullpath (concat (file-name-as-directory directory) path))
-           (isdir (car (cdr element)))
-           (ignore (or (string= path ".") (string= path ".."))))
+           (isdir (car (cdr element))))
       (cond
-       ((and (eq isdir t) (not ignore))
+       ((string-prefix-p "." path))
+       ((eq isdir t)
         (my/load-directory fullpath))
-       ((and (eq isdir nil) (string= (substring path -3) ".el"))
+       ((and (null isdir)
+             (string-suffix-p ".el" path)
+             (not (string-prefix-p "flycheck_" path)))
         (load (file-name-sans-extension fullpath)))))))
 
 ;; Now safe to load all ELISP source files in directories specified in

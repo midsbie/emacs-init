@@ -1,6 +1,6 @@
 ;;; php.el --- Configures `php-mode'
 
-;; Copyright (C) 2015-2024  Miguel Guedes
+;; Copyright (C) 2015-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -29,19 +29,14 @@
   (setq-default php-mode-coding-style      'default ; DISABLED: drupal
                 php-lineup-cascaded-calls  t
                 flycheck-phpmd-rulesets
-                '("cleancode" "codesize" "unusedcode" "design"))
-
-  (c-add-style "default-php" '("drupal")))
+                '("cleancode" "codesize" "unusedcode" "design")))
 
 (defun init/php-mode/enable ()
   "Configure `php-mode'."
   (init/common-programming-mode)
 
   (setq-local comment-start "/* ")
-  (setq-local comment-end   " */")
-
-  (c-set-style "default-php")
-  (c-toggle-auto-newline -1))
+  (setq-local comment-end   " */"))
 
 (use-package php-ts-mode
   :mode "\\.php\\'"

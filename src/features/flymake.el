@@ -46,19 +46,21 @@ diagnostic at point is shown through eldoc (`flymake-eldoc-function')."
                ("C-c ! b" . flymake-show-buffer-diagnostics)
                ("C-c ! c" . flymake-start))))
 
-(defun init/flymake-ruff-load ()
-  "Load the backend for ruff under flymake for the current buffer.
+(defun init/flymake-ruff/enable ()
+  "Add the ruff backend to flymake in the current Python buffer.
 
-Loading is deferred due to an unidentified interaction preventing ruff
-to be added as a flymake backend."
-  (run-with-idle-timer 1 nil #'(lambda()
-                                 (flymake-ruff-load)
-                                 ;; First buffer check doesn't trigger somehow
-                                 (flymake-start))))
+Eglot replaces `flymake-diagnostic-functions' when it starts managing a
+buffer, dropping the ruff backend, so this also runs from
+`eglot-managed-mode-hook' to add it back.  That hook runs in every
+Eglot-managed buffer, so check the mode before loading ruff."
+  (when (derived-mode-p 'python-base-mode)
+    (flymake-ruff-load)
+    (when flymake-mode
+      (flymake-start))))
 
 (use-package flymake-ruff
   :ensure t
-  :hook (((python-mode python-ts-mode) . init/flymake-ruff-load))
+  :hook (((python-mode python-ts-mode eglot-managed-mode) . init/flymake-ruff/enable))
   ;; :vc (:url "git@github.com:midsbie/flymake-ruff.git"
   ;;             :rev :newest
   ;;             :branch "master")

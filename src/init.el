@@ -174,9 +174,9 @@ temporary `flycheck_*.el' files are skipped."
 
 ;; Print useful diagnostic messages
 (if (and (fboundp 'native-comp-available-p)
-       (native-comp-available-p))
-  (message "Native compilation is available")
-(message "Native compilation is *not* available"))
+         (native-comp-available-p))
+    (message "Native compilation is available")
+  (message "Native compilation is *not* available"))
 
 (message "[init] done.")
 

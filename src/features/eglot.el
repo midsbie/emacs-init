@@ -99,14 +99,20 @@ once the buffer is no longer managed."
         (add-hook 'before-save-hook #'init/maybe-format-buffer nil t))
     (remove-hook 'before-save-hook #'init/maybe-format-buffer t)))
 
+(defun init/eglot/insert-minibuffer-default ()
+  "Insert the minibuffer's default value as editable input."
+  (when (stringp minibuffer-default)
+    (insert minibuffer-default)))
+
 (defun init/eglot/rename-advice (orig-fun &rest args)
-  "Pre-fill the `eglot-rename' prompt with the symbol at point.
-ORIG-FUN is called with ARGS, the new name."
+  "Pre-fill the `eglot-rename' prompt with the name being renamed.
+Eglot offers the name as the minibuffer default; insert it instead.  The
+original interactive spec still runs, so the server's `prepareRename'
+check and suggested name are kept.  ORIG-FUN is called with ARGS."
   (interactive
-   (let ((current-symbol (thing-at-point 'symbol t)))
-     (list (read-from-minibuffer
-            (format "Rename `%s' to: " (or current-symbol "unknown symbol"))
-            current-symbol))))
+   (lambda (spec)
+     (minibuffer-with-setup-hook #'init/eglot/insert-minibuffer-default
+       (advice-eval-interactive-spec spec))))
   (apply orig-fun args))
 
 (defun init/eglot/uri-to-path-advice (orig-fun uri)

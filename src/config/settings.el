@@ -196,19 +196,14 @@
 (fset 'yes-or-no-p 'y-or-n-p)           ; accept 'y' or 'n' instead of yes/no
 
 ;; To make it easier for newcomers to Emacs, the developers decided to swap out
-;; the mechanics of C-j and RET when `electric-indent-mode' is enabled.  In the
-;; hook below, we make sure to retain the desired behaviour whereby C-j produces
-;; a newline with indentation, and C-m or RET only a newline.
+;; the mechanics of C-j and RET when `electric-indent-mode' is enabled.  Retain
+;; the desired behaviour whereby C-j produces a newline with indentation, and
+;; C-m or RET only a newline, regardless of whether electric indentation is
+;; enabled in the buffer.
 ;;
 ;; Ref: https://lists.gnu.org/archive/html/bug-gnu-emacs/2014-12/msg00098.html
-(add-hook 'electric-indent-mode-hook
-          #'(lambda ()
-              (if electric-indent-mode
-                  (progn
-                    (global-set-key (kbd "C-j") 'newline)
-                    (global-set-key (kbd "RET") 'electric-newline-and-maybe-indent))
-                (global-set-key (kbd "C-j") 'electric-newline-and-maybe-indent)
-                (global-set-key (kbd "RET") 'newline))))
+(global-set-key (kbd "RET") #'electric-indent-just-newline)
+(global-set-key (kbd "C-j") #'newline-and-indent)
 (electric-indent-mode 1)
 ;; Also enabling `electric-pair-mode' because it works great with indent above.
 ;; Note that pair requires indent or indentation will be missing in some

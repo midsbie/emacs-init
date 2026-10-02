@@ -63,6 +63,7 @@ explicit entry does not exist in
     ;; Explicitly disabling language server for the major modes below
     ;; ------------------------------------------------------------------------
     (emacs-lisp-mode . nil)
+    (lisp-mode . nil)
     (meson-mode . nil)
     (sql-mode . nil)
     ;; Explicitly specifying language server override for the major modes below

@@ -1,6 +1,6 @@
 ;;; jinja2.el --- Configures `jinja2-mode'
 
-;; Copyright (C) 2015-2021  Miguel Guedes
+;; Copyright (C) 2015-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -25,6 +25,6 @@
 ;;; Code:
 
 (use-package jinja2-mode
-  :mode ("\\.j2?\\'"))
+  :mode ("\\.j2\\'"))
 
 ;;; jinja2.el ends here

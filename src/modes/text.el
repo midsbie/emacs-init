@@ -28,7 +28,11 @@
   "Initialises `text-mode'."
   (when (eq major-mode 'text-mode)
     (auto-fill-mode 1))
-  (flyspell-mode)                   ; turn spell check on
+  ;; The YAML modes derive from `text-mode' too; only check their comments and
+  ;; strings, not keys and values.
+  (if (derived-mode-p 'yaml-mode 'yaml-ts-mode)
+      (flyspell-prog-mode)
+    (flyspell-mode 1))
   (abbrev-mode -1)                  ; turn abbrev-mode off
   )
 

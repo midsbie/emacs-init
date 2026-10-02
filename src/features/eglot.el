@@ -40,9 +40,6 @@ with `init/eglot/toggle-inlay-hints'."
 
 (defun init/eglot/config ()
   "Configure `eglot' package."
-  ;; Eglot has no built-in entry for Vala.
-  (add-to-list 'eglot-server-programs '(vala-mode . ("vala-language-server")))
-
   ;; Completely disable the events buffer for maximum performance.  Eglot keeps
   ;; 2000000 events by default, which are suspected to cause performance issues
   ;; when editing Dart files that are part of a Flutter project.

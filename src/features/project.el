@@ -56,6 +56,18 @@ been tried."
   :bind-keymap ("C-c P" . project-prefix-map)
   :bind (:map project-prefix-map
               ("4 f" . my/project-find-file-other-window)
-              ("/" . my/project-bury-buffers)))
+              ("/" . my/project-bury-buffers)
+              ("m" . magit-project-status))
+  :custom
+  ;; Menu shown by `project-switch-project' once a project is chosen.  Each
+  ;; command's key is looked up in `project-prefix-map'.  Magit replaces VC-Dir.
+  (project-switch-commands
+   '((project-find-file "Find file")
+     (project-find-regexp "Find regexp")
+     (project-find-dir "Find directory")
+     (project-dired "Dired")
+     (magit-project-status "Magit")
+     (project-eshell "Eshell")
+     (project-any-command "Other"))))
 
 ;;; project.el ends here

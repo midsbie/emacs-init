@@ -35,7 +35,7 @@
 (global-set-key [M-down]              #'windmove-down)
 (global-set-key (kbd "C-x p")         #'my/other-previous-window)
 
-(global-set-key (kbd "C-x k")         #'my/kill-current-buffer)
+(global-set-key (kbd "C-x k")         #'kill-current-buffer)
 (global-set-key (kbd "C-x W")         #'my/copy-symbol-to-kill-ring)
 (global-set-key (kbd "C-c w")         #'my/select-current-word)
 (global-set-key (kbd "C-c y")         #'browse-kill-ring)
@@ -57,6 +57,8 @@
 (global-set-key (kbd "C-x 4 /")       #'my/bury-other-buffer)
 ;; Next to the built-in window commands; `C-x +' stays `balance-windows'.
 (define-key window-prefix-map (kbd "=") #'my/rearrange-desktop)
+;; Press [pause] in each window you want to "freeze" (also on `C-x w d').
+(global-set-key [pause]               #'toggle-window-dedicated)
 
 ;; Redefine C-h (help) as C-x h and define backspace as C-h. Note that Emacs
 ;; help feature can still be accessed via F1.

@@ -24,10 +24,6 @@
 
 ;;; Code:
 
-(defun my/add-suffix-to-symbol (sym suffix)
-  "Add a suffix to a symbol name."
-  (intern (concat (symbol-name sym) suffix)))
-
 (defun my/execute-first-in-list (function-list)
   "Execute each function in FUNCTION-LIST in order, until one succeeds."
   (catch 'done

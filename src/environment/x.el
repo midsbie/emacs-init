@@ -24,21 +24,6 @@
 
 ;;; Code:
 
-;; Set default window size
-(defun my/set-frame-size-according-to-resolution ()
-  "Set the active frame's size according to the screen's
-resolution.  Frame size is set to 190 characters wide if the
-display width is larger than 1280, otherwise it is set to 90
-characters wide."
-  (interactive)
-  (when window-system
-    ;; use 190 char wide window for largeish displays
-    ;; and smaller 90 column windows for smaller displays
-    (if (> (x-display-pixel-width) 1280)
-        (add-to-list 'default-frame-alist (cons 'width 190))
-      (add-to-list 'default-frame-alist (cons 'width 90)))
-    (add-to-list 'default-frame-alist (cons 'height 77))))
-
 ;; Function: Set current frame width
 (defun my/set-current-frame-width (arg)
   "Set the active frame's width to ARG."

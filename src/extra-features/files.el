@@ -24,14 +24,6 @@
 
 ;;; Code:
 
-(defun my/locate-file-in-dominating-directory (file dir-name from-path)
-  "Attempt to locate FILE inside a dominating DIR-NAME directory from FROM-PATH."
-  (let ((dominating-dir (locate-dominating-file from-path dir-name)))
-    (when dominating-dir
-      (let ((file-path (expand-file-name (concat dir-name "/" file) dominating-dir)))
-        (when (file-exists-p file-path)
-          file-path)))))
-
 (defun my/locate-file-in-dominating-node-modules (file from-path)
   "Return absolute path to FILE inside any ancestor node_modules, starting at FROM-PATH.
 Walks up the directory tree; at each ancestor, if a node_modules exists,
@@ -82,20 +74,6 @@ containing FILE."
   (let ((parent (file-name-directory (directory-file-name path))))
     (unless (equal parent path)
       parent)))
-
-(defun my/maybe-load-library (name)
-  "Attempt to load library NAME.
-Produces a message if it was not possible to load the library and
-does not interrupt execution."
-  (condition-case err
-      (load-library name)
-    (error (princ (format "Failed to load library: %s (reason: %s)" name err)))))
-
-(defun my/read-file-lines (file)
-  "Return a list of lines of a file given by FILE."
-  (with-temp-buffer
-    (insert-file-contents file)
-    (split-string (buffer-string) "\n" t)))
 
 (defun my/find-dired-backup (dir)
   "Run `find-dired' in DIR for Emacs backup and auto-save files.

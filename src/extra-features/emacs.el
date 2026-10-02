@@ -24,22 +24,6 @@
 
 ;;; Code:
 
-;; Defun invoked after pressing C-x C-k (see `init/elisp/enable').
-;; Evals the current buffer and displays a message.
-(defun my/eval-buffer ()
-  "Evaluate the current buffer.
-This command should only be used with ELISP."
-  (interactive)
-  (cl-block inner
-      (cond
-       ((or (eq major-mode 'emacs-lisp-mode)
-            (eq major-mode 'lisp-interaction-mode))
-        (eval-buffer))
-       (t (message "unsupported mode: %s" major-mode)
-          (cl-return-from inner)))
-
-    (message "buffer evaluated")))
-
 (defun my/clear-before-save-hooks()
   "Clear all `before-save-hook' lists in all buffers."
   (interactive)

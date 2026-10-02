@@ -34,21 +34,6 @@
 ;;
 ;; (ad-activate 'pop-to-buffer)
 
-;; Toggle window dedication
-(defun my/toggle-window-dedicated ()
-  "Toggle whether the current active window is dedicated or not."
-  (interactive)
-  (message
-   (if (let ((window (selected-window)))
-         (set-window-dedicated-p window
-                                 (not (window-dedicated-p window))))
-       "Window '%s' is dedicated"
-     "Window '%s' is normal")
-   (current-buffer)))
-
-;; Press [pause] key in each window you want to "freeze"
-(global-set-key [pause] 'my/toggle-window-dedicated)
-
 (defun my/other-previous-window (count &optional all-frames)
   "Select previous window in inverse cyclic ordering of windows.
 COUNT specifies the number of windows to skip, starting with the

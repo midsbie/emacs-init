@@ -64,36 +64,4 @@ current working directory."
     ;; Restore variable state
     (setq grep-use-null-device last-grep-use-null-device)))
 
-;; Deprecated functions
-;; ----------------------------------------
-;; The following function is kept for the purpose of future reference, in
-;; particular as an illustration of how to use the universal argument.
-(defun my/git-grep-OLD (query)
-  "Run a grep search for QUERY using git.
-
-When executed without the universal \
-argument (\\[universal-argument]), runs \ \"git grep\" from the \
-repository's root directory.  When the universal argument is \
-specified but no number, \"git grep\" is executed from the current working \
-directory.  If \"1\" is specified as the universal argument, a regex \
-search is conducted.  Otherwise, a case insensitive search is run."
-  (interactive "sgit grep: ")
-
-  (let ((end "") (args ""))
-    ; This gem about the presence of the universal argument was derived from
-    ; the answer at https://stackoverflow.com/a/56853097
-    (cond ((eq current-prefix-arg 1) (setq args "-e"))
-          ((eq current-prefix-arg nil)
-           (setq args "-i"
-                 end " -- :/")))
-
-    (let* ((last-grep-use-null-device grep-use-null-device))
-      ; We must set `grep-use-null-device' to nil or we get a strange error
-      ; involving output redirection to /dev/null
-      (setq grep-use-null-device nil)
-      (grep (concat "git --no-pager grep -n " args " \"" query "\"" end))
-      ; Restore variable state
-      (setq grep-use-null-device last-grep-use-null-device)))
-  )
-
 ;;; grep.el ends here

@@ -85,11 +85,6 @@ With active region, unfill all paragraphs in the region."
   "Return word at point or empty string if not word."
   (my/get-word (thing-at-point 'sexp 'no-properties)))
 
-(defun my/get-kill-ring-word (&optional default-string)
-  "Return last entry in kill ring if word or DEFAULT-STRING."
-  (let ((top-entry (current-kill 0 t)))
-    (my/get-word top-entry default-string)))
-
 (defun my/copy-symbol-to-kill-ring ()
   "Copy symbol at point to kill ring."
   (interactive)

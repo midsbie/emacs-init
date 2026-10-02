@@ -27,9 +27,6 @@
 (defun init/server/config ()
   "Start Emacs server.
 
-Also visits the files in the `init/open-at-startup' list if the
-server hasn't yet been started.
-
 Strangely, the call to `server-start' needs to be issued a few
 seconds after Emacs has launched."
 

@@ -29,8 +29,7 @@
   (require 'package))
 
 (defgroup init nil
-  "Emacs initialisation mechanism."
-  :group 'init)
+  "Emacs initialisation mechanism.")
 
 (defvar init/path-base (file-name-directory (or load-file-name (buffer-file-name)))
   "Absolute path to Emacs' init `src´ directory.
@@ -46,11 +45,6 @@ initialisation process.  Directories must be relative to
   "Directory to packages.
 Absolute path to directory containing packages managed by the
 `package' feature.")
-
-(defvar init/open-at-startup nil
-  "List containing files to visit when Emacs finishes loading.
-
-Files are only visited if the server hasn't yet been started.")
 
 (defvar init/default-language-server-client 'eglot
   "Indicates which language server should be used by default when an
@@ -123,10 +117,6 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
 
 (message "[init] starting")
 (add-hook 'after-init-hook 'init/post-init)
-(run-at-time "3 sec" nil #'init/delayed-init)
-
-;; Load our compatibility library
-(load (init/inclusion-path "./compat"))
 
 ;; Setup and load ELPA packages (and others) first and foremost
 (setq package-user-dir (expand-file-name "src" init/dir-packages))
@@ -173,8 +163,7 @@ temporary `flycheck_*.el' files are skipped."
 ;; `init/dirs-load'
 (when load-file-name
   (dolist (loading init/dirs-load)
-    (let ((dir-loading (or (concat init/path-base
-                                   loading))))
+    (let ((dir-loading (concat init/path-base loading)))
       (message "Loading ELISP files in: %s" dir-loading)
       (my/load-directory dir-loading))))
 
@@ -184,26 +173,11 @@ temporary `flycheck_*.el' files are skipped."
        (or (and (display-graphic-p) "environment/x")
            "environment/term")))
 
-;; Load files in `init/open-at-startup' list after a short delay so as to enable
-;; the user to mutate the `init/open-at-startup' list.
-(dolist (file init/open-at-startup)
-  (if (not (file-exists-p file))
-      (message "%s" (concat "error: file does not exist: " file))
-    (find-file file)
-    (with-current-buffer (current-buffer)
-      (when (eq major-mode 'org-mode)
-        (org-shifttab 2)))
-    (other-window 1)))
-
 ;; Print useful diagnostic messages
 (if (and (fboundp 'native-comp-available-p)
        (native-comp-available-p))
   (message "Native compilation is available")
-(message "Native complation is *not* available"))
-
-(if (functionp 'json-serialize)
-  (message "Native JSON is available")
-(message "Native JSON is *not* available"))
+(message "Native compilation is *not* available"))
 
 (message "[init] done.")
 
@@ -213,15 +187,5 @@ temporary `flycheck_*.el' files are skipped."
   ;; Show how long it took to initialise emacs after 1 idle second.
   (run-with-idle-timer 1 nil #'(lambda ()
                                  (message "init took %s" (emacs-init-time)))))
-
-(defun init/delayed-init ()
-  "Delayed initializations steps."
-  ;; Disable 'buffer * still has clients' message shown when killing buffers
-  ;; spawned by emacsclient.
-  ;;
-  ;; NOTE: for some reason the call to remove-hook needs to take place a few
-  ;; seconds after emacs has launched.
-  (remove-hook 'kill-buffer-query-functions
-               'server-kill-buffer-query-function))
 
 ;;; init.el ends here

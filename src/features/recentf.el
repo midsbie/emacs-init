@@ -1,6 +1,6 @@
 ;;; recentf.el --- Configures `recentf' package
 
-;; Copyright (C) 2015-2024  Miguel Guedes
+;; Copyright (C) 2015-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -31,7 +31,8 @@
 
   :custom
   (recentf-auto-cleanup    'never)
-  (recentf-max-menu-items  100)
+  ;; Caps `recentf-list', which `consult-recent-file' (C-x C-r) reads.
+  (recentf-max-saved-items 100)
 
   :config
   (recentf-mode 1)

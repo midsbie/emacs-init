@@ -43,14 +43,12 @@
  enable-recursive-minibuffers t         ; allow recursive editing in minibuffer
  help-window-select           'other    ; focus on help window when spawning
  truncate-lines               t         ; don't wrap, truncate lines by default
- idle-update-delay            1.1       ; reduce rate at which UI updates
  echo-keystrokes              0.2       ; show keystrokes as they're happen
  ring-bell-function           'ignore   ; don't ring any bell
  ;; Recommendation from https://protesilaos.com/emacs/modus-themes
  ;; found in: https://github.com/jeremyf/dotemacs/blob/main/emacs.d/configuration.org
  x-underline-at-descent-line  t
  password-cache-expiry        nil       ; disable password cache expiration
- save-place                   t         ; save position in buffer
  uniquify-buffer-name-style   'forward
  )
 
@@ -112,6 +110,7 @@
 (size-indication-mode t)                ; size indication mode
 (global-prettify-symbols-mode)          ; (lambda ... -> (λ ...
 (winner-mode)                           ; window configuration mutation undo
+(save-place-mode 1)                     ; save position in buffer
 
 (menu-bar-mode -1)                      ; disable menu bar
 (tool-bar-mode -1)                      ; disable toolbar
@@ -147,22 +146,8 @@
 
 ;; PERFORMANCE OPTIMIZATIONS
 ;; -----------------------------------------------------------------------------
-;; The following settings as per the documentation on improving the performance
-;; of LSP at:
-;; https://emacs-lsp.github.io/lsp-mode/page/performance/
+;; `gc-cons-threshold' is managed by `gcmh-mode' (see config/features.el).
 ;;
-;; Set higher threshold before GC kicks in. Changing this setting seems to make
-;; emacs snappier for some specific workflows.
-;;
-;; It may be wise to set the GC threshold to a reasonable value or we may end up
-;; hindering performance.  Might be best to have more frequent clean ups taking
-;; an imperceptible amount of time to complete, rather less frequent ones that
-;; momentarily block editing.
-;;
-;; Noting that on Emacs 29.0.90 it no longer seems possible to set this value.
-(setq gc-cons-threshold (* 16 1024 1024)       ; 16 MiB
-      )
-
 ;; Documentation of `read-process-output-max' states that "on GNU/Linux systems,
 ;; the value should not exceed /proc/sys/fs/pipe-max-size".
 (setq read-process-output-max (with-temp-buffer
@@ -171,8 +156,8 @@
 
 ;; Some settings that may help with redisplay
 ;; Ref: [4:25] https://200ok.ch/posts/2020-10-01_introduction_to_profiling_in_emacs.html
-(setq bidi-paragraph-direction  'left-to-right
-      bidi-inhibit-bpa          t)
+(setq-default bidi-paragraph-direction 'left-to-right)
+(setq bidi-inhibit-bpa t)
 
 ;; The `list-timers' command is super useful when debugging high CPU usage
 ;; where timers, idle or otherwise, are involved, but for some reason it is

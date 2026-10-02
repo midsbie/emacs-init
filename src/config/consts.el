@@ -31,22 +31,4 @@
 (defalias 'replace-query-regexp 'query-replace-regexp)
 (defalias 'replace-query-regexp-eval 'query-replace-regexp-eval)
 
-;; From: https://github.com/MatthewZMD/.emacs.d#define-constants
-(defconst python-p
-  (or (executable-find "python3")
-      (and (executable-find "python")
-           (> (length (shell-command-to-string "python --version | grep 'Python 3'")) 0)))
-  "Do we have python3?")
-
-(defconst pip-p
-  (or (executable-find "pip3")
-      (and (executable-find "pip")
-           (> (length (shell-command-to-string "pip --version | grep 'python 3'")) 0)))
-  "Do we have pip3?")
-
-(defconst clangd-p
-  (or (executable-find "clangd")  ;; usually
-      (executable-find "/usr/local/opt/llvm/bin/clangd"))  ;; macOS
-  "Do we have clangd?")
-
 ;;; consts.el ends here

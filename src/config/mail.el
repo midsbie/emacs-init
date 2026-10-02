@@ -40,8 +40,7 @@
   '(setq message-send-mail-function 'smtpmail-send-it))
 
 (eval-after-load 'smtpmail
-  '(setq smtpmail-default-smtp-server "smtp.gmail.com"
-         smtpmail-smtp-server "smtp.gmail.com"
+  '(setq smtpmail-smtp-server "smtp.gmail.com"
          smtpmail-smtp-service 587
          smtpmail-local-domain "miguelguedes.org"))
 

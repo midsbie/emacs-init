@@ -1,6 +1,6 @@
 ;;; prettier.el --- Configures the prettier minor mode
 
-;; Copyright (C) 2017-2024  Miguel Guedes
+;; Copyright (C) 2017-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -48,6 +48,12 @@ all JS/X buffers."
   :group 'init/prettier-mode
   :type 'boolean)
 
+(defun init/prettier-mode/enable-in-buffer (buffer)
+  "Turn on `prettier-mode' in BUFFER if it is still live."
+  (when (buffer-live-p buffer)
+    (with-current-buffer buffer
+      (prettier-mode 1))))
+
 (defun init/prettier-mode/maybe-enable ()
   "Turn on `prettier-mode' selectively.
 
@@ -63,8 +69,8 @@ save. Strangely this only happens when LSP is active."
     (when (and (or init/enable-prettier-mode
                (my/locate-file-in-dominating-node-modules ".bin/prettier" default-directory))
            (not (my/dir-is-parent-p "node_modules" default-directory)))
-      (run-with-idle-timer .1 nil #'(lambda ()
-                                     (prettier-mode 1))))))
+      (run-with-idle-timer .1 nil #'init/prettier-mode/enable-in-buffer
+                           (current-buffer)))))
 
 (use-package prettier
   :diminish " P"

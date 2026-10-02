@@ -1,6 +1,6 @@
 ;;; cc.el --- Configures C and C++ modes
 
-;; Copyright (C) 2015-2024  Miguel Guedes
+;; Copyright (C) 2015-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -28,7 +28,6 @@
   "Initialise modes related to C and C++ development."
 
   (init/common-nonweb-programming-mode)
-  (c-toggle-auto-hungry-state -1)
 
   (setq-local comment-start "/* ")
   (setq-local comment-end   " */"))
@@ -45,6 +44,12 @@
   ;;  :bind (("C-c o" . buftoggle))
 
   :hook ((c-ts-mode c++-ts-mode) . init/cc/enable)
+
+  :custom
+  ;; Closest built-in match for the CC Mode "default" style
+  ;; (config/programming.el): "bsd" keeps braces of substatements flush with the
+  ;; statement (`substatement-open' 0).  `c-ts-indent-offset' is already 2.
+  (c-ts-mode-indent-style 'bsd)
 
   :init
   ;; Set environment for compilers to use, but only if not set.

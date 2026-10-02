@@ -1,6 +1,6 @@
 ;;; net.el --- Utility functions related to web and networking
 
-;; Copyright (C) 2023-2025  Miguel Guedes
+;; Copyright (C) 2023-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -32,7 +32,6 @@ constructed as a URL that causes the current browser provider to
 run and navigate to the Google search page showing results for
 the specified query string."
   (interactive "sQuery string: ")
-  (browse-url (concat "https://google.com/search?q="
-               (mapconcat 'identity (split-string query " ") "+"))))
+  (browse-url (concat "https://google.com/search?q=" (url-hexify-string query))))
 
 ;;; net.el ends here

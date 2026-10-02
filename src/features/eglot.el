@@ -233,7 +233,10 @@ to the same state."
    '(
      :documentOnTypeFormattingProvider
      :colorProvider
-     :foldingRangeProvider))
+     :foldingRangeProvider
+     ;; Eglot 1.20 (Emacs 31) paints LSP semantic tokens over tree-sitter's
+     ;; faces, e.g. mapping the `static' modifier to `font-lock-keyword-face'.
+     :semanticTokensProvider))
   (eglot-stay-out-of '(yasnippet)))
 
 ;;; eglot.el ends here

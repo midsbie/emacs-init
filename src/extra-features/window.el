@@ -39,7 +39,7 @@
   "Toggle whether the current active window is dedicated or not."
   (interactive)
   (message
-   (if (let (window (get-buffer-window (current-buffer)))
+   (if (let ((window (selected-window)))
          (set-window-dedicated-p window
                                  (not (window-dedicated-p window))))
        "Window '%s' is dedicated"

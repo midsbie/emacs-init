@@ -24,12 +24,7 @@
 
 ;;; Code:
 
-(defun init/dired/enable ()
-  ;; (dired-omit-mode 1)
-  )
-
 (use-package dired
-  :hook ((dired-load . init/dired/enable))
   :custom
   (dired-dwim-target t))
 

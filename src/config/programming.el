@@ -186,17 +186,11 @@
   ;; - LSP to correctly identify the `ts-ls' language server for Typescript
   ;;   source files.
   ;;
-  ;; Note that this requires an appropriate `use-package' invocation to load
-  ;; the `add-node-modules-path' package.  Refer to ./use-package.el for
-  ;; further infor.
-  ;;
-  ;; [31Oct22] This is now disabled because `add-node-modules-path' does not
-  ;; take into account the fact that mono-repositories often have multiple
-  ;; "node_modules" directories.  The custom function
+  ;; [31Oct22] The `add-node-modules-path' package is no longer used because
+  ;; it does not take into account the fact that mono-repositories often have
+  ;; multiple "node_modules" directories.  The custom function
   ;; `init/add-node-modules-to-exec-path' was crafted to take this into account
   ;; when looking for a repository's root "node_modules" directory.
-  ;;
-  ;; (add-node-modules-path)
   (init/add-node-modules-to-exec-path)
 
   (init/common-programming-mode)

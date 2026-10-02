@@ -29,11 +29,7 @@
   ;; Add this mode to LSP's formatting indent alist to ensure that the buffer is
   ;; formatted correctly.
   (when (boundp 'lsp--formatting-indent-alist)
-    (push '(vala-mode . c-basic-offset) lsp--formatting-indent-alist))
-
-  ;; Ensure that the idiomatic "vala" style is used in `vala-mode'.
-  (unless (assoc 'vala-mode c-default-style)
-    (add-to-list 'c-default-style '(vala-mode . "vala"))))
+    (push '(vala-mode . c-basic-offset) lsp--formatting-indent-alist)))
 
 (defun init/vala/enable ()
   "Configure `vala-mode'."

@@ -51,13 +51,6 @@
   (setq flycheck-phpmd-rulesets '("cleancode" "codesize" "controversial"
                                   "design" "naming" "unusedcode"))
 
-  ;; Disable jshint since we prefer eslint.
-  (setq-default flycheck-disabled-checkers
-                (append flycheck-disabled-checkers
-                        '(javascript-jshint
-                          ;; Using `tide-mode' and `javascript-eslint'
-                          typescript-tslint)))
-
   ;; + in `web-mode'
   ;; NOTE: htmltidy and csslint have been disabled since flycheck does not
   ;; support more than one linter per major mode; specifically, all the
@@ -104,11 +97,6 @@
                  (side            . bottom)
                  (reusable-frames . visible)
                  (window-height   . 0.15))))
-
-(defun init/flycheck/enable ()
-  ;; Flymake's configuration turns flycheck-mode off automatically if eglot is
-  ;; found to be running.
-  )
 
 (defun init/flycheck/on-flyspell-mode()
   ;; Deactivate annoying correction of previous misspelled error when C-; is hit.
@@ -163,7 +151,6 @@ because the checker does not exist."
   ;;
   ;; :hook ((flycheck-mode . flycheck-popup-tip-mode))
   :config (init/flycheck/config)
-  :hook ((flycheck-mode . init/flycheck/enable)
-         (lsp-diagnostics-mode . init/flycheck/chain-eslint-checker)))
+  :hook ((lsp-diagnostics-mode . init/flycheck/chain-eslint-checker)))
 
 ;;; flycheck.el ends here

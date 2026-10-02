@@ -1,4 +1,4 @@
-;;; ansi-color.el --- Customises ANSI color palette
+;;; ansi-color.el --- Configures `ansi-color'
 
 ;; Copyright (C) 2015-2024  Miguel Guedes
 
@@ -24,12 +24,6 @@
 
 ;;; Code:
 
-(defun init/ansi-color/config ()
-  "Initialize the `ansi-color' package."
-  (setq ansi-color-names-vector ["black" "red" "lawn green" "yellow"
-                                 "cornflower blue" "magenta" "cyan" "white"]
-        ansi-color-map          (ansi-color-make-color-map)))
-
 (defun my/colorize-buffer ()
   "Colorize the entirety of the current buffer if not read-only."
   (interactive)
@@ -37,11 +31,7 @@
       (message "Unable to colorize read-only buffer")
     (ansi-color-apply-on-region (point-min) (point-max))))
 
-(defun my/colorize-compilation-buffer ()
-  (ansi-color-apply-on-region compilation-filter-start (point-max)))
-
 (use-package ansi-color
-  :hook ((compilation-filter . my/colorize-compilation-buffer))
-  :config (init/ansi-color/config))
+  :hook ((compilation-filter . ansi-color-compilation-filter)))
 
 ;;; ansi-color.el ends here

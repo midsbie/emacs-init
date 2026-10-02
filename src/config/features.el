@@ -28,10 +28,6 @@
 (use-package ace-window
   :bind ("M-o" . ace-window))
 
-;; This package is required by `init/prettier-mode/maybe-enable' and all
-;; web-related source files..
-(use-package add-node-modules-path)
-
 (use-package autorevert
   :diminish auto-revert-mode
   :config

@@ -40,29 +40,12 @@
   :bind (:map copilot-completion-map
               ("<tab>" . 'copilot-accept-completion)
               ("TAB" . 'copilot-accept-completion)
-              ("C-TAB" . 'copilot-accept-completion-by-word)
               ("C-<tab>" . 'copilot-accept-completion-by-word)
               ("C-n" . 'copilot-next-completion)
               ("C-p" . 'copilot-previous-completion))
   (:map copilot-mode-map
-        ("C-TAB" . 'init/copilot/complete)
         ("C-<tab>" . 'init/copilot/complete))
   :custom
-  (copilot-idle-delay 0)
-
-  :config
-  ;; Known language identifiers:
-  ;; https://code.visualstudio.com/docs/languages/identifiers
-  (let ((extra-modes '(("c" . "c")
-                       ("csharp" . "csharp")
-                       ("css" . "css")
-                       ("fsharp" . "fsharp")
-                       ("go" . "go")
-                       ("scss" . "scss")
-                       ("sql" . "sql")
-                       ("typescript" . "typescript"))))
-    (dolist (item extra-modes)
-      (unless (assoc (car item) copilot-major-mode-alist)
-        (setq copilot-major-mode-alist (append copilot-major-mode-alist (list item)))))))
+  (copilot-idle-delay 0))
 
 ;;; copilot.el ends here

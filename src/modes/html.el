@@ -1,6 +1,6 @@
 ;;; html.el --- Configures `html-mode'
 
-;; Copyright (C) 2015-2024  Miguel Guedes
+;; Copyright (C) 2015-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -24,8 +24,8 @@
 
 ;;; Code:
 
+;; `.html' files open in `web-mode' (modes/web.el).
 (use-package html-ts-mode
-  :mode ("\\.html?\\'")
   :hook ((html-mode html-ts-mode) . init/common-web-programming-mode))
 
 ;;; html.el ends here

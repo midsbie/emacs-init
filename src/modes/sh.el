@@ -27,35 +27,18 @@
 (defun init/sh ()
   "Initialize sh-related modes."
   (setq-default  sh-basic-offset    2
-                 sh-indentation     2))
+                 sh-indentation     2)
+
+  ;; Prefer the tree-sitter mode.  `bash-ts-mode' hands scripts written for
+  ;; other shells (zsh, csh, ...) back to `sh-mode' (`sh--redirect-bash-ts-mode').
+  (add-to-list 'major-mode-remap-alist '(sh-mode . bash-ts-mode)))
 
 (defun init/sh/enable ()
   "Initialise modes related to shell scripting development."
-  (unless (init/sh/determine-script-mode)
-    (init/common-nonweb-programming-mode)
-    (when (and (boundp 'company-mode) company-mode)
-      ;; Disable to prevent frequent freezes. Unfortunately, deinitialization has
-      ;; to be deferred or it won't take.
-      (run-with-idle-timer .5 nil #'(lambda() (company-mode -1))))))
-
-(defun init/sh/determine-script-mode ()
-  "Determine the appropriate mode for a script based on the shebang line."
-  (save-excursion
-    (goto-char (point-min))
-    (when (looking-at "#!\\(.*\\)")
-      (let ((interpreter (match-string 1)))
-        (cond
-         ((string-match "bash" interpreter)
-          (unless (eq major-mode 'bash-ts-mode)
-            (bash-ts-mode)))
-         )))))
+  (init/common-nonweb-programming-mode))
 
 (use-package sh-script
-  :hook ((sh-mode . init/sh/enable))
-  :init (init/sh))
-
-(use-package bash-ts-mode
-  :hook ((bash-ts-mode . init/sh/enable))
+  :hook ((sh-mode bash-ts-mode) . init/sh/enable)
   :init (init/sh))
 
 ;;; sh.el ends here

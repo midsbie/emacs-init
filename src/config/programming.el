@@ -277,9 +277,11 @@ settings to be less of a pain point.
 It is unclear whether there will be performance issues from
 running the eslint tool in blocking mode."
   (interactive)
-  (when-let ((project (project-current)))
-    (let* ((root (expand-file-name (car (project-roots project)))))
-      (shell-command-to-string (format "%s/node_modules/.bin/eslint --fix %s" root buffer-file-name))
+  (when-let* ((project (project-current)))
+    (let ((eslint (expand-file-name "node_modules/.bin/eslint" (project-root project))))
+      (shell-command-to-string (format "%s --fix %s"
+                                       (shell-quote-argument eslint)
+                                       (shell-quote-argument buffer-file-name)))
       (revert-buffer t t t))))
 
 (defun init/run-language-server ()

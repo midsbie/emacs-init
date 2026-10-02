@@ -76,7 +76,7 @@ particular FILE-NAME and MODE."
   "Configures modes related to Javascript development."
   (init/common-web-programming-mode))
 
-(with-eval-after-load 'lsp
+(with-eval-after-load 'lsp-javascript
   (advice-add 'lsp-clients-flow-activate-p
               :override #'init/js/lsp-clients-flow-activate-p))
 

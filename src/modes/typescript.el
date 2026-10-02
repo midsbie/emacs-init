@@ -1,6 +1,6 @@
 ;;; typescript.el --- Configures Typescript buffers
 
-;; Copyright (C) 2020-2025  Miguel Guedes
+;; Copyright (C) 2020-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -46,16 +46,16 @@
 
 (defun init/typescript/enable ()
   "Configure buffer for Typescript development."
-  (setq-local typescript-ts-mode-indent-offset 2)
   (setq-local lsp-eslint-enable nil)
   (setq-local lsp-eslint-run "onSave")
   (setq-local lsp-eslint-format nil)
 
   (init/common-web-programming-mode)
 
-  ;; Adding 'operator to level 4 font lock features
-  (push 'operator (car (last treesit-font-lock-feature-list)))
-  (treesit-major-mode-setup))
+  ;; `tsx-ts-mode' leaves `operator' out of its feature levels.  Enable it for
+  ;; this buffer only; the feature list itself is shared by all buffers.
+  (when (treesit-parser-list)
+    (treesit-font-lock-recompute-features '(operator))))
 
 (use-package typescript-ts-mode
   :diminish "TS"

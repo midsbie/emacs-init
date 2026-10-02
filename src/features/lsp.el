@@ -1,6 +1,6 @@
 ;;; lsp.el --- Configures the `lsp' package
 
-;; Copyright (C) 2021-2024  Miguel Guedes
+;; Copyright (C) 2021-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -160,21 +160,7 @@ to degrade under LSP"))
 
   ;; Completion
   (setq lsp-completion-show-detail t)
-  (setq lsp-completion-show-kind t)
-
-  ;; Fix for error: json-parse-error \u0000 is not allowed without JSON_ALLOW_NUL
-  ;; Taken literally from:
-  ;; https://github.com/adimit/config/blob/f84b34c04d101bdd33e180c07715ce481608ba9f/emacs/main.org#work-around-null-bytes-in-json-response
-  (advice-add 'json-parse-string :around
-              (lambda (orig string &rest rest)
-                (apply orig (s-replace "\\u0000" "" string)
-                       rest)))
-  (advice-add 'json-parse-buffer :around
-              (lambda (orig &rest rest)
-                (save-excursion
-                  (while (re-search-forward "\\u0000" nil t)
-                    (replace-match "")))
-                (apply orig rest))))
+  (setq lsp-completion-show-kind t))
 
 (defun init/lsp/enable ()
   (lsp-enable-which-key-integration)

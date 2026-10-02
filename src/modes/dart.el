@@ -1,6 +1,6 @@
 ;;; dart.el --- Configures `dart-mode'
 
-;; Copyright (C) 2022-2025  Miguel Guedes
+;; Copyright (C) 2022-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -81,7 +81,9 @@
   "Configure `dart-mode' in the current buffer."
   ;; Start debugging session with `dap-debug'.
   (setq-local lsp-dart-dap-flutter-hot-reload-on-save t)
-  (init/common-web-programming-mode)
+  (init/common-nonweb-programming-mode)
+  ;; `dart-mode' sets `fill-column' to 80; keep the configured default.
+  (setq-local fill-column init/defaults/fill-column)
 
   (when (boundp 'company-minimum-prefix-length)
     ;; Changing the default setting of 1 because company mode in some

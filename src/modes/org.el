@@ -46,7 +46,6 @@
 
 (use-package org
   :hook (org-mode . init/org-mode/enable)
-  :after speedbar
   :bind
   (("C-c a a" . org-agenda-list)
    ("C-c a t" . org-todo-list)
@@ -70,8 +69,11 @@
   (org-todo-keyword-faces
    '(("TODO" . (:foreground "red" :weight bold))
      ("NEXT" . (:foreground "red" :weight bold))
+     ("IN-PROGRESS" . (:foreground "orange" :weight bold))
      ("DONE" . (:foreground "forest green" :weight bold))
+     ("WAIT" . (:foreground "orange" :weight bold))
      ("WAITING" . (:foreground "orange" :weight bold))
+     ("CANCELED" . (:foreground "forest green" :weight bold))
      ("CANCELLED" . (:foreground "forest green" :weight bold))
      ("SOMEDAY" . (:foreground "orange" :weight bold))
      ("OPEN" . (:foreground "red" :weight bold))
@@ -81,7 +83,7 @@
   (org-clock-persistence-insinuate)
   (setq org-default-notes-file (concat org-directory "/notes.org"))
 
-  (add-hook 'org-babel-after-execute-hook #'org-display-inline-images)
+  (add-hook 'org-babel-after-execute-hook #'org-link-preview-region)
 )
 
 

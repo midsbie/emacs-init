@@ -75,7 +75,7 @@
   (unless (and (boundp 'lsp-dart-flutter-sdk-dir) lsp-dart-flutter-sdk-dir)
     (when (executable-find "flutter")
       (setq lsp-dart-flutter-sdk-dir
-            (s-trim-right (shell-command-to-string "flutter sdk-path"))))))
+            (string-trim-right (shell-command-to-string "flutter sdk-path"))))))
 
 (defun init/dart-mode/enable ()
   "Configure `dart-mode' in the current buffer."
@@ -104,8 +104,6 @@
                                             (buffer-string))) 'SIGUSR1)))))
 
 (use-package dart-mode
-  ;; Requiring the `s' package because `s-trim-right' is used above.
-  :after (s)
   :hook ((dart-mode . init/dart-mode/enable))
   :config  (init/dart-mode/config))
 

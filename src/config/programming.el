@@ -126,8 +126,13 @@
   (local-set-key (kbd "M-a") #'my/beginning-of-statement)
   (local-set-key (kbd "M-e") #'my/end-of-statement)
 
-  ;; Configure compile
-  (local-set-key (kbd "C-c C-c") 'compile)
+  ;; Configure compile, unless the major mode already uses the key (e.g.
+  ;; `python-shell-send-buffer', `sh-case').
+  ;; `lookup-key' returns a number when `C-c' itself is unbound in the map.
+  (let ((binding (and (current-local-map)
+                      (lookup-key (current-local-map) (kbd "C-c C-c")))))
+    (unless (and binding (not (numberp binding)))
+      (local-set-key (kbd "C-c C-c") 'compile)))
 
   (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting
   (abbrev-mode -1)                  ; turn abbrev-mode off

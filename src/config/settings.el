@@ -211,14 +211,6 @@
       '(read-only t cursor-intangible t face minibuffer-prompt))
 (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
-;; Disable `corfu-mode` in `comint-mode` and buffers starting with
-;; `*aidermacs:`."
-(add-hook 'comint-mode-hook
-          #'(lambda ()
-              (when (and (eq major-mode 'comint-mode)
-                         (string-prefix-p "*aidermacs:" (buffer-name)))
-                (corfu-mode -1))))
-
 ;; Stop the *Warnings* buffer from popping up intrusively and stealing focus.
 ;; `display-warning' tags its display request with the `warning' category, so
 ;; this only suppresses the automatic pop-up; the buffer can still be shown

@@ -128,7 +128,6 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
       '(("GNU ELPA" . "https://elpa.gnu.org/packages/")
         ("MELPA stable" . "https://stable.melpa.org/packages/")
         ("MELPA unstable" . "https://melpa.org/packages/")
-        ;; Required by aidermacs and possibly other packages
         ("NON-GNU" . "https://elpa.nongnu.org/nongnu/"))
       package-archive-priorities
       '(

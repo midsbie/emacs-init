@@ -33,40 +33,4 @@ C-j that occurs in major modes (e.g. web-mode).
   (local-set-key (kbd "C-j") 'newline-and-indent)
   (local-set-key (kbd "RET") 'newline))
 
-(defun my/better-next-error ()
-"Go to next error.
-Attempts to jump to the next error as managed by `tide-mode' if
-the active project's error buffer is not visible, otherwise
-reverts to the default `next-error' defun."
-  (interactive)
-  (condition-case nil
-      (or
-       (let* ((win (get-buffer-window (tide-project-errors-buffer-name)))
-             (buf (window-buffer win)))
-         (when buf
-           (with-current-buffer buf
-             (set-window-point
-              (get-buffer-window buf)
-              (tide-find-next-error (point) 1))
-             (tide-goto-error)
-             t)))
-       (next-error))
-     (error
-      (next-error))))
-
-(defun my/better-previous-error ()
-"Go to previous error.
-Attempts to jump to the previous error as managed by `tide-mode',
-otherwise reverts to the default `previous-error' defun."
-  (interactive)
-  (condition-case nil
-      (let ((buf (tide-project-errors-buffer-name)))
-        (with-current-buffer buf
-          (set-window-point
-           (get-buffer-window buf)
-           (tide-find-previous-error (point) 1))
-          (tide-goto-error)))
-     (error
-      (previous-error))))
-
 ;;; programming.el ends here

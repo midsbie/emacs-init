@@ -35,8 +35,6 @@
 (global-set-key [M-down]              #'windmove-down)
 (global-set-key (kbd "C-x p")         #'my/other-previous-window)
 
-(global-set-key [f3]                  #'my/better-next-error)
-(global-set-key [S-f3]                #'my/better-previous-error)
 (global-set-key (kbd "C-x k")         #'my/kill-current-buffer)
 (global-set-key (kbd "C-x W")         #'my/copy-symbol-to-kill-ring)
 (global-set-key (kbd "C-c w")         #'my/select-current-word)

@@ -24,13 +24,6 @@
 
 ;;; Code:
 
-(defun init/php-mode ()
-  "Initialise `php-mode'."
-  (setq-default php-mode-coding-style      'default ; DISABLED: drupal
-                php-lineup-cascaded-calls  t
-                flycheck-phpmd-rulesets
-                '("cleancode" "codesize" "unusedcode" "design")))
-
 (defun init/php-mode/enable ()
   "Configure `php-mode'."
   (init/common-programming-mode)
@@ -40,7 +33,6 @@
 
 (use-package php-ts-mode
   :mode "\\.php\\'"
-  :hook ((php-mode php-ts-mode) . init/php-mode/enable)
-  :init (init/php-mode))
+  :hook (php-ts-mode . init/php-mode/enable))
 
 ;;; php.el ends here

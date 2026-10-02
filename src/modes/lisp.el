@@ -33,8 +33,6 @@
 
 (use-package emacs-lisp-mode
   :mode ("\\.el\\'")
-  :hook ((emacs-lisp-mode lisp-interaction-mode lisp-mode) . init/elisp/enable)
-  :bind (:map emacs-lisp-mode-map
-              ("C-x C-k" . my/eval-buffer)))
+  :hook ((emacs-lisp-mode lisp-interaction-mode lisp-mode) . init/elisp/enable))
 
 ;;; lisp.el ends here

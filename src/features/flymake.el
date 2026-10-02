@@ -1,6 +1,6 @@
 ;;; flymake.el --- Configures the flymake feature
 
-;; Copyright (C) 2022-2025  Miguel Guedes
+;; Copyright (C) 2022-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -27,23 +27,18 @@
 (defun init/flymake/enable ()
   "Configure flymake.
 
-This function disables `flycheck-mode', if enabled, and
-configures `flymake-eslint' correctly if it finds `eslint' in the
-variable `exec-path'."
-  (when (and (eglot-managed-p) (boundp 'flycheck-mode) flycheck-mode)
-    (flycheck-mode -1))
-
-  (flymake-diagnostic-at-point-mode 1))
+This function disables `flycheck-mode' in Eglot-managed buffers.  The
+diagnostic at point is shown through eldoc (`flymake-eldoc-function')."
+  ;; `eglot-managed-p' is not autoloaded, so guard against flymake starting
+  ;; before eglot has been loaded.
+  (when (and (fboundp 'eglot-managed-p) (eglot-managed-p)
+             (bound-and-true-p flycheck-mode))
+    (flycheck-mode -1)))
 
 (use-package flymake
   :demand
   :diminish
-  :hook ((flymake-mode . init/flymake/enable)))
-
-(use-package flymake-diagnostic-at-point
-  :demand
-  :diminish
-  :after flymake
+  :hook ((flymake-mode . init/flymake/enable))
   :bind ((:map flymake-mode-map
                ("C-c ! p" . flymake-goto-prev-error)
                ("C-c ! n" . flymake-goto-next-error)

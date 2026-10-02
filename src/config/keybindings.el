@@ -38,7 +38,7 @@
 (global-set-key [f3]                  #'my/better-next-error)
 (global-set-key [S-f3]                #'my/better-previous-error)
 (global-set-key (kbd "C-x k")         #'my/kill-current-buffer)
-(global-set-key (kbd "C-x w")         #'my/copy-symbol-to-kill-ring)
+(global-set-key (kbd "C-x W")         #'my/copy-symbol-to-kill-ring)
 (global-set-key (kbd "C-c w")         #'my/select-current-word)
 (global-set-key (kbd "C-c y")         #'browse-kill-ring)
 (global-set-key (kbd "M-Q")           #'my/unfill-paragraph)
@@ -57,7 +57,8 @@
 (global-set-key (kbd "C-x /")         #'bury-buffer)
 (global-set-key (kbd "C-x 4 k")       #'my/kill-other-buffer)
 (global-set-key (kbd "C-x 4 /")       #'my/bury-other-buffer)
-(global-set-key (kbd "C-x +")         #'my/rearrange-desktop)
+;; Next to the built-in window commands; `C-x +' stays `balance-windows'.
+(define-key window-prefix-map (kbd "=") #'my/rearrange-desktop)
 
 ;; Redefine C-h (help) as C-x h and define backspace as C-h. Note that Emacs
 ;; help feature can still be accessed via F1.

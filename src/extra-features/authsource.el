@@ -32,17 +32,16 @@ USER is the user for which to retrieve the secret.
 
 Returns the secret value, encoded in UTF-8, or nil if no matching
 authentication source is found."
-  (if-let ((secret
-            (plist-get
-             (car (auth-source-search
-                   :host host
-                   :user user
-                   :require '(:secret)))
-             :secret)))
-      (if (functionp secret)
-          (encode-coding-string (funcall secret) 'utf-8)
-        secret)
-    ))
+  (when-let* ((secret
+               (plist-get
+                (car (auth-source-search
+                      :host host
+                      :user user
+                      :require '(:secret)))
+                :secret)))
+    (if (functionp secret)
+        (encode-coding-string (funcall secret) 'utf-8)
+      secret)))
 
 (provide 'authsource)
 

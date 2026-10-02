@@ -336,7 +336,7 @@ formatter function, if one is specified in
 `init/buffer-format-handlers-alist', otherwise runs default LSP server
 formatter if neither `prettier-mode' nor `format-all-mode' are enabled."
   (unless (init/buffer-formatting-inhibited-p)
-    (if-let ((formatter (init/get-format-buffer-function-for-mode major-mode)))
+    (if-let* ((formatter (init/get-format-buffer-function-for-mode major-mode)))
         (funcall formatter)
       (unless (or
                (and (boundp 'prettier-mode) prettier-mode)

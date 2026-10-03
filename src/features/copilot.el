@@ -31,6 +31,22 @@
   (corfu-quit)
   (copilot-complete))
 
+(defun init/copilot/consume-typed-completion (command)
+  "Dismiss a one-character completion that COMMAND has just typed.
+When the typed character is the whole completion, `copilot--self-insert'
+accepts it, deleting and re-inserting text between positions recorded
+before the command ran.  `electric-indent-mode' re-indents the line in
+between (e.g. moving `}' to its block's column), so the stale positions
+either double the character and delete text after point, or undo the
+re-indentation.  The character is already in the buffer, so only the
+overlay needs to go."
+  (when (and (eq command 'self-insert-command)
+             (characterp last-command-event)
+             (equal (copilot-current-completion) (string last-command-event))
+             (copilot--satisfy-display-predicates))
+    (copilot-clear-overlay t)
+    t))
+
 (use-package copilot
   :vc (:url "https://github.com/copilot-emacs/copilot.el"
             :rev :newest
@@ -46,6 +62,8 @@
   (:map copilot-mode-map
         ("C-<tab>" . 'init/copilot/complete))
   :custom
-  (copilot-idle-delay 0))
+  (copilot-idle-delay 0)
+  :config
+  (advice-add 'copilot--self-insert :before-until #'init/copilot/consume-typed-completion))
 
 ;;; copilot.el ends here

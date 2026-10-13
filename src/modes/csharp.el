@@ -54,7 +54,7 @@ can be worked around by temporarily switching to `csharp-mode'."
   (init/common-nonweb-programming-mode)
 
   ;; Hide test sources from `M-?' by default.  See `features/consult.el'.
-  (setq-local init/consult/xref-references-initial-input "!Testing "))
+  (setq-local init/consult/xref-references-initial-input "!Test "))
 
 (use-package csharp-mode
   :mode ("\\.cs\\'" . csharp-ts-mode)

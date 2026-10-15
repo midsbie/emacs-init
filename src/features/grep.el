@@ -53,7 +53,8 @@ current working directory."
                        t 'literal)))
        (list (read-shell-command
               "Run git-grep (like this): "
-              (car (cl-acons command (+ (length word) (cdr my/git-grep-find-command)) '()))
+              (cons command
+                    (+ (length word) (cdr my/git-grep-find-command)))
               'grep-find-history)))))
   (let* ((last-grep-use-null-device
           (and (boundp 'grep-use-null-device) grep-use-null-device)))

@@ -42,18 +42,31 @@ attempt to provide a similar result using alternative methods."
   (interactive)
   (my/execute-first-in-list init/end-of-statement-fn))
 
-(defun my/select-current-word ()
-  "Select the word under cursor."
-  (interactive)
-  (let ((subword-enabled (and (fboundp 'subword-mode) subword-mode)))
-    (when subword-enabled
-      (subword-mode -1))
-    (unless (looking-at "\\<")
-      (backward-word))
-    (set-mark-command nil)
-    (forward-word)
-    (when subword-enabled
-      (subword-mode 1))))
+(defun my/copy-thing-at-point (&optional arg)
+  "Copy the symbol or word at point to the kill ring and clipboard.
+Without a prefix argument, copy the symbol in programming modes and
+the word elsewhere.  With a zero prefix ARG, copy the word; with
+\\[universal-argument], copy the symbol.
+
+A word spans a whole camelCase identifier even when `subword-mode'
+is on.  A symbol also spans whatever the major mode's syntax table
+joins to it, such as `foo_bar' in C or `my/foo' in Lisp."
+  (interactive "P")
+  (let* ((thing (cond ((eql arg 0) 'word)
+                      (arg 'symbol)
+                      ((derived-mode-p 'prog-mode) 'symbol)
+                      (t 'word)))
+         (text (if (eq thing 'symbol)
+                   (thing-at-point 'symbol t)
+                 ;; `subword-mode' installs a table that makes `forward-word'
+                 ;; stop inside camelCase; an empty one restores plain words.
+                 (let ((find-word-boundary-function-table
+                        (make-char-table nil)))
+                   (thing-at-point 'word t)))))
+    (unless text
+      (user-error "No %s at point" thing))
+    (kill-new text)
+    (message "Copied %s" text)))
 
 (defun my/kill-buffers-with-nonexistent-files ()
   "Kill all buffers associated with files that no longer exist."
@@ -84,14 +97,6 @@ With active region, unfill all paragraphs in the region."
 (defun my/get-word-at-point ()
   "Return word at point or empty string if not word."
   (my/get-word (thing-at-point 'sexp 'no-properties)))
-
-(defun my/copy-symbol-to-kill-ring ()
-  "Copy symbol at point to kill ring."
-  (interactive)
-  (let ((symbol (thing-at-point 'symbol t)))
-    (when symbol
-      (kill-new symbol)
-      (message "copied: %s" symbol))))
 
 (defun my/kill-other-buffer (count &optional all-frames)
   "Select next window and kill buffer associated with it.

@@ -45,7 +45,7 @@ repository and should be removed if the search is to be conducted from the
 current working directory."
   (interactive
    (progn
-     (let* ((word (my/get-word-at-point))
+     (let* ((word (or (my/get-thing-at-point) ""))
             (command (replace-regexp-in-string
                        (regexp-quote "%SUBJECT%")
                        word

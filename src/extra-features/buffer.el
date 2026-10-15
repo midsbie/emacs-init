@@ -42,6 +42,30 @@ attempt to provide a similar result using alternative methods."
   (interactive)
   (my/execute-first-in-list init/end-of-statement-fn))
 
+(defun my/get-thing-type-at-point (&optional arg)
+  "Return the type of thing at point."
+  (cond ((eql arg 0) 'word)
+        (arg 'symbol)
+        ((derived-mode-p 'prog-mode) 'symbol)
+        (t 'word)))
+
+(defun my/get-thing-at-point (&optional arg)
+  "Return the symbol or word at point.
+Without a prefix argument, return the symbol in programming modes and
+the word elsewhere.  With a zero prefix ARG, return the word; with
+\\[universal-argument], return the symbol.
+
+A word spans a whole camelCase identifier even when `subword-mode'
+is on.  A symbol also spans whatever the major mode's syntax table
+joins to it, such as `foo_bar' in C or `my/foo' in Lisp."
+  (if (eq (my/get-thing-type-at-point arg) 'symbol)
+      (thing-at-point 'symbol t)
+    ;; `subword-mode' installs a table that makes `forward-word'
+    ;; stop inside camelCase; an empty one restores plain words.
+    (let ((find-word-boundary-function-table
+           (make-char-table nil)))
+      (thing-at-point 'word t))))
+
 (defun my/copy-thing-at-point (&optional arg)
   "Copy the symbol or word at point to the kill ring and clipboard.
 Without a prefix argument, copy the symbol in programming modes and
@@ -52,19 +76,9 @@ A word spans a whole camelCase identifier even when `subword-mode'
 is on.  A symbol also spans whatever the major mode's syntax table
 joins to it, such as `foo_bar' in C or `my/foo' in Lisp."
   (interactive "P")
-  (let* ((thing (cond ((eql arg 0) 'word)
-                      (arg 'symbol)
-                      ((derived-mode-p 'prog-mode) 'symbol)
-                      (t 'word)))
-         (text (if (eq thing 'symbol)
-                   (thing-at-point 'symbol t)
-                 ;; `subword-mode' installs a table that makes `forward-word'
-                 ;; stop inside camelCase; an empty one restores plain words.
-                 (let ((find-word-boundary-function-table
-                        (make-char-table nil)))
-                   (thing-at-point 'word t)))))
+  (let ((text (my/get-thing-at-point arg)))
     (unless text
-      (user-error "No %s at point" thing))
+      (user-error "No %s at point" (my/get-thing-type-at-point arg)))
     (kill-new text)
     (message "Copied %s" text)))
 

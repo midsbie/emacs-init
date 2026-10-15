@@ -1,6 +1,6 @@
 ;;; grep.el --- grep command extensions
 
-;; Copyright (C) 2019-2024  Miguel Guedes
+;; Copyright (C) 2019-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
@@ -53,7 +53,7 @@ current working directory."
                        t 'literal)))
        (list (read-shell-command
               "Run git-grep (like this): "
-              (car (acons command (+ (length word) (cdr my/git-grep-find-command)) '()))
+              (car (cl-acons command (+ (length word) (cdr my/git-grep-find-command)) '()))
               'grep-find-history)))))
   (let* ((last-grep-use-null-device
           (and (boundp 'grep-use-null-device) grep-use-null-device)))

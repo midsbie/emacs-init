@@ -37,6 +37,9 @@
 
 (global-set-key (kbd "C-x k")         #'kill-current-buffer)
 (global-set-key (kbd "C-x W")         #'my/copy-symbol-to-kill-ring)
+;; `C-c f' copies the file path as `~/...'; `C-u C-c f' relative to the project
+;; root; `C-0 C-c f' as an absolute path.
+(global-set-key (kbd "C-c f")         #'my/copy-file-path)
 (global-set-key (kbd "C-c w")         #'my/select-current-word)
 (global-set-key (kbd "C-c y")         #'browse-kill-ring)
 (global-set-key (kbd "M-Q")           #'my/unfill-paragraph)

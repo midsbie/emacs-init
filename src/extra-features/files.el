@@ -195,4 +195,23 @@ privileges.  Dispatches to `my/find-file-as-user' or
      ((my/file-name-elevated-p name) (my/find-file-as-user))
      (t (my/find-file-as-root)))))
 
+(defun my/copy-file-path (&optional arg)
+  "Copy the current buffer's file path to the kill ring and clipboard.
+By default the path is abbreviated relative to the home directory (~/...).
+With \\[universal-argument], copy it relative to the project root instead;
+with a zero prefix ARG, copy the absolute path.  In Dired buffers the
+directory itself is copied."
+  (interactive "P")
+  (let* ((file (or (buffer-file-name (buffer-base-buffer))
+                   (and (derived-mode-p 'dired-mode) default-directory)
+                   (user-error "Current buffer is not visiting a file")))
+         (path (pcase arg
+                 ('nil (abbreviate-file-name file))
+                 (0    (expand-file-name file))
+                 (_    (let ((project (or (project-current)
+                                          (user-error "No project found"))))
+                         (file-relative-name file (project-root project)))))))
+    (kill-new path)
+    (message "Copied %s" path)))
+
 ;;; files.el ends here

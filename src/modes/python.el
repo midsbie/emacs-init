@@ -91,7 +91,7 @@
   "Customise `python-mode'."
 
   (init/common-nonweb-programming-mode)
-  (setq-local fill-column init/defaults/fill-column/narrow)
+  (setq-local fill-column 79)          ; 79 for code, 72 for comments, per PEP-8
 
   ;; Now relying on ruff
   ;;

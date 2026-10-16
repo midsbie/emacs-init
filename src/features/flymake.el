@@ -52,8 +52,14 @@ diagnostic at point is shown through eldoc (`flymake-eldoc-function')."
 Eglot replaces `flymake-diagnostic-functions' when it starts managing a
 buffer, dropping the ruff backend, so this also runs from
 `eglot-managed-mode-hook' to add it back.  That hook runs in every
-Eglot-managed buffer, so check the mode before loading ruff."
+Eglot-managed buffer, so check the mode before loading ruff.
+
+`pet' points other tools at the project's ruff but not `flymake-ruff',
+so do that here."
   (when (derived-mode-p 'python-base-mode)
+    (when-let* (((fboundp 'pet-executable-find))
+                (ruff (pet-executable-find "ruff")))
+      (setq-local flymake-ruff-program ruff))
     (flymake-ruff-load)
     (when flymake-mode
       (flymake-start))))

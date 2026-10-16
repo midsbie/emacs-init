@@ -22,68 +22,42 @@
 ;; 070423 elpy and python-mode packages removed in favor of the native python
 ;;        and tree-sitter packages.
 ;;
-;; ## INSTALLATION
-;; ### MODERN LINTER
-;; `ruff' is a modern Python linter written in Rust, designed to be a drop-in
-;; replacement for `flake8', pyflake and other tools.
+;; Ruff:
+;; `ruff' lints and formats Python, replacing flake8, pyflakes, Black and other
+;; tools.
 ;;
-;; The pylsp server enables pycodestyle hints by default, which can be annoying
-;; and redundant if using ruff.  Disable pycodestyle via .dir-locals.el as given
-;; below:
+;; Projects that format and lint with ruff opt in from the .dir-locals.el at
+;; their root:
 ;;
-;;   ((python-mode
+;;   ((python-base-mode
 ;;     . ((eval . (ruff-format-on-save-mode))
-;;        (init/inhibit-buffer-formatting t)
+;;        (init/inhibit-buffer-formatting . t)
 ;;        (eglot-workspace-configuration
-;;         . ((:pylsp . (:plugins (:pycodestyle (:enabled :json-false)
-;;                                              :autopep8 (:enabled :json-false)
-;;                                              :flake8 (:enabled :json-false)
-;;                                              )))))))
+;;         . (:pylsp (:plugins (:pycodestyle (:enabled :json-false))))))))
 ;;
-;;    (python-ts-mode
-;;     . ((eval . (ruff-format-on-save-mode))
-;;        (init/inhibit-buffer-formatting t)
-;;        (eglot-workspace-configuration
-;;         . ((:pylsp . (:plugins (:pycodestyle (:enabled :json-false)
-;;                                              :autopep8 (:enabled :json-false)
-;;                                              :flake8 (:enabled :json-false)
-;;                                              ))))))))
+;; - Without the opt-in, saving formats through pylsp's autopep8 at
+;;   pycodestyle's 79 columns, which fights ruff's own line length.
+;; - pylsp enables pycodestyle by default, duplicating ruff's E501 at 79.
+;;   Eglot reads `eglot-workspace-configuration' at the project root, so it has
+;;   no effect inside a subdirectory ("dir/") entry.
+;; - `pet' (features/pet.el) points `ruff-format' and `flymake-ruff' at the
+;;   project's own ruff.
 ;;
-;; This setup requires `flymake-ruff' to be installed.
+;; Why an opt-in rather than detection: nothing standard declares a project's
+;; formatter.  [tool.ruff] often configures linting only, next to Black for
+;; formatting; [tool.ruff.format] is optional; and the real choice may live only
+;; in a justfile, Makefile or CI script.  The cost of guessing wrong is
+;; lopsided: wrongly guessing ruff reformats whole files of someone else's
+;; project on the first save, while wrongly guessing nothing merely leaves the
+;; buffer unformatted.  Editors make format-on-save an explicit per-project
+;; setting for the same reason, e.g. VS Code's `editor.formatOnSave' in
+;; .vscode/settings.json.
 ;;
-;; ### OLD LINTERS
-;; Install the following PIP packages to ensure that elpy and flycheck work as
-;; expected:
-;;
-;; # pip install jedi pylint flake8 autopep8
-;;
-;; Note that flake8 is invoked by pylint (C-c C-v) whereas pylint is used by
-;; `flycheck'.  Beware that if using `eglot', `flymake' will be in use instead
-;; and may therefore not enable pylint.
-
-;; ### RUNNING EGLOT OR LSP CLIENTS
-;;
-;; For `eglot' or`lsp' to activate one needs to:
-;;
-;; 1. Install Python package:
-;;    pip install python-lsp-server[all]
-;;
-;; 2. Run `pylsp`:
-;;    pylsp
-;;
-;; Additional information at:
-;; https://emacs-lsp.github.io/lsp-mode/page/lsp-pylsp/
-
-;; ## PACKAGE ELPY NOT ENABLED
-;;
-;; The elpy-mode is currently not enabled because it was found to be super
-;; annoying.  Main reason is it defines keybindings that clash with existing
-;; ones.  Might be possible to customize but unclear if worth the effort.
-;;
-;; Installation instructions straight from:
-;; https://elpy.readthedocs.io/en/latest/introduction.html#installation
-
-;;
+;; Language server:
+;; Eglot (or lsp-mode) starts pylsp itself, so it only needs installing.  `pet'
+;; prefers a pylsp in the project's virtualenv over the one on PATH, such as a
+;; distribution package like Debian's python3-pylsp; system Pythons often
+;; refuse pip installs (PEP 668).
 
 ;;; Code:
 
@@ -91,14 +65,8 @@
   "Customise `python-mode'."
 
   (init/common-nonweb-programming-mode)
-  (setq-local fill-column 79)          ; 79 for code, 72 for comments, per PEP-8
-
-  ;; Now relying on ruff
-  ;;
-  ;; (pylint-add-menu-items)
-  ;; (pylint-add-key-bindings)
-  ;; (py-autopep8-mode)
-  )
+  ;; Ruff's and Black's default; PEP 8 uses 79 for code and 72 for comments.
+  (setq-local fill-column 88))
 
 (use-package python
   :mode (("\\.py\\'" . python-ts-mode))

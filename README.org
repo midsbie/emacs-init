@@ -6,27 +6,34 @@ Personal Emacs configuration.
 
 * Usage
 
-Load =src/init.el= from =~/.emacs=:
+Link the repository into =~/.emacs.d= and point Emacs's entry points at =src/=. A =~/.emacs= file would take precedence over =init.el=, so there must not be one:
 
-#+begin_src emacs-lisp
-(load "/path/to/emacs-init/src/init.el")
+#+begin_src sh
+ln -s /path/to/emacs-init ~/.emacs.d/init
+cd ~/.emacs.d
+ln -s init/src/early-init.el early-init.el
+ln -s init/src/init.el init.el
+ln -s init/src/user-lisp user-lisp
 #+end_src
+
+Identity, mail and per-host settings go in =~/.emacs.d/personal.el=, which loads if present, and customizations are saved to =~/.emacs.d/custom.el=, both outside the repository.
 
 On first launch, missing packages install into =elpa/= from GNU ELPA, NonGNU ELPA and MELPA, or from their git repositories for packages declared with =:vc=.
 
-=src/debug-init.el= sets up packages and =use-package= only, without loading the config, for debugging: =emacs -Q -l src/debug-init.el=.
+=src/debug-init.el= applies =early-init.el= and activates packages only, without loading the config, for debugging: =emacs -Q -l src/debug-init.el=.
 
 * Layout
 
-Directories under =src/= load in the order below. Within each directory, files load alphabetically.
+=src/early-init.el= holds the package settings, which apply before packages activate. =src/init.el= then requires each module, in the order it lists them.
 
-| Directory         | Contents                                     |
-|-------------------+----------------------------------------------|
-| =config/=         | Built-in settings, keybindings, constants    |
-| =features/=       | External packages, one per file              |
-| =extra-features/= | Utility commands as plain =defun= forms      |
-| =modes/=          | Major-mode setup, one per file               |
-| =environment/=    | =x.el= (GUI) or =term.el= (terminal), themes |
+| Directory      | Contents                                                    |
+|----------------+-------------------------------------------------------------|
+| =config/=      | Built-in settings, keybindings, constants                   |
+| =features/=    | External packages, one per file                             |
+| =modes/=       | Major-mode setup, one per file                              |
+| =environment/= | =init-x.el= (GUI) or =init-term.el= (terminal)              |
+| =user-lisp/=   | Utility commands, compiled by Emacs and loaded on first use |
+| =themes/=      | Custom themes                                               |
 
 * See also
 

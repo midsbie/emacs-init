@@ -1,4 +1,4 @@
-;;; debug-init.el --- Debugging initialization file for Emacs
+;;; debug-init.el --- Debugging initialization file for Emacs  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2024 Miguel Guedes
 
@@ -27,20 +27,19 @@
 ;; within your Emacs setup by excluding external influences and focusing solely
 ;; on the configuration under scrutiny.
 ;;
-;; This initialization file starts up Emacs in a pristine state. It sets up the
-;; `package-user-dir' variable with the path to the ELPA packages and exposes
-;; `use-package' to make it easy for individual to be loaded manually.
+;; This initialization file starts up Emacs in a pristine state. It applies the
+;; package settings in early-init.el and activates the installed packages, so
+;; that individual packages can be loaded manually with `use-package'.
 ;;
 ;; Usage:
 ;; emacs -Q -l /path/to/debug-init.el
 
 ;;; Code:
 
-(setq package-user-dir (concat (file-name-directory load-file-name) "../elpa"))
-(setq load-prefer-newer t)
-
-(package-initialize)
-(require 'use-package)
+;; -Q skips both early-init.el and package activation.
+(load (expand-file-name "early-init" (file-name-directory (file-truename load-file-name)))
+      nil 'nomessage)
+(package-activate-all)
 (setq use-package-always-ensure t)
 
 ;;; debug-init.el ends here

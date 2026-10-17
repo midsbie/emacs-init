@@ -1,4 +1,4 @@
-;;; init.el --- Master emacs initialisation file
+;;; init.el --- Master emacs initialisation file  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2014-2026 Miguel Guedes
 
@@ -22,29 +22,19 @@
 ;;
 ;;; Commentary:
 
-;;; Code:
+;; ~/.emacs.d/init.el is a symlink to this file, as are early-init.el and
+;; user-lisp/.  Settings that must apply before packages activate are in
+;; early-init.el.
+;;
+;; The modules in config/, features/, modes/ and environment/ configure Emacs
+;; as they load, in the order they are required below.  user-lisp/ is the
+;; User Lisp directory: at startup Emacs byte-compiles the utilities in it and
+;; registers their autoloads, so each loads the first time it is used.
 
-(eval-when-compile
-  (require 'cl-lib)
-  (require 'package))
+;;; Code:
 
 (defgroup init nil
   "Emacs initialisation mechanism.")
-
-(defvar init/path-base (file-name-directory (or load-file-name (buffer-file-name)))
-  "Absolute path to Emacs' init `src´ directory.
-If nil, `default-directory' is used instead.")
-
-(defvar init/dirs-load '("config" "features" "extra-features" "modes")
-  "Directories to automatically load.
-Contains directories to automatically load as part of the
-initialisation process.  Directories must be relative to
-`init/path-base'.")
-
-(defvar init/dir-packages (expand-file-name "../elpa" init/path-base)
-  "Directory to packages.
-Absolute path to directory containing packages managed by the
-`package' feature.")
 
 (defvar init/default-language-server-client 'eglot
   "Indicates which language server should be used by default when an
@@ -112,32 +102,12 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
   :group 'init
   :type 'symbol)
 
-(defun init/inclusion-path (path)
-  (concat (file-name-as-directory init/path-base) path))
+;; Custom saves customizations here rather than in this file.  The file is
+;; loaded last, below.
+(setq custom-file (locate-user-emacs-file "custom.el"))
 
 (message "[init] starting")
 (add-hook 'after-init-hook 'init/post-init)
-
-;; Setup and load ELPA packages (and others) first and foremost
-(setq package-user-dir init/dir-packages)
-;; Avoid loading byte-compiled packages that are older than the source file.
-(setq load-prefer-newer t)
-
-;; Setup package archives
-(setq package-archives
-      '(("GNU ELPA" . "https://elpa.gnu.org/packages/")
-        ("MELPA stable" . "https://stable.melpa.org/packages/")
-        ("MELPA unstable" . "https://melpa.org/packages/")
-        ("NON-GNU" . "https://elpa.nongnu.org/nongnu/"))
-      package-archive-priorities
-      '(
-        ;; MELPA stable disabled as not all packages support stable channel
-        ;; ("MELPA stable" . 10)
-        ("MELPA unstable" . 9)
-        ("GNU ELPA" . 5)))
-
-(package-initialize)
-(require 'use-package)
 
 ;; Install declared packages that are missing.  Built-in packages opt out with
 ;; `:ensure nil'.
@@ -156,38 +126,105 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
 ;; Required by the `:diminish' keyword.
 (use-package diminish)
 
-;; Taken verbatim from: http://www.emacswiki.org/emacs/DotEmacsModular
-;; Must be interpreted before loading begins below.
-(defun my/load-directory (directory)
-  "Load recursively all `.el' files in DIRECTORY without the extension.
-Dot-files (e.g. `.dir-locals.el', `.#' lock files) and flycheck's
-temporary `flycheck_*.el' files are skipped."
-  (dolist (element (directory-files-and-attributes directory nil nil nil))
-    (let* ((path (car element))
-           (fullpath (concat (file-name-as-directory directory) path))
-           (isdir (car (cdr element))))
-      (cond
-       ((string-prefix-p "." path))
-       ((eq isdir t)
-        (my/load-directory fullpath))
-       ((and (null isdir)
-             (string-suffix-p ".el" path)
-             (not (string-prefix-p "flycheck_" path)))
-        (load (file-name-sans-extension fullpath)))))))
+;; Make the modules loadable and the themes in themes/ available to
+;; `load-theme'.  `file-truename' resolves the symlink this file is loaded
+;; through.
+(let ((base (file-name-directory (file-truename (or load-file-name buffer-file-name)))))
+  (dolist (dir '("config" "features" "modes" "environment"))
+    (add-to-list 'load-path (expand-file-name dir base)))
+  (setq custom-theme-directory (expand-file-name "themes/" base)))
 
-;; Now safe to load all ELISP source files in directories specified in
-;; `init/dirs-load'
-(when load-file-name
-  (dolist (loading init/dirs-load)
-    (let ((dir-loading (concat init/path-base loading)))
-      (message "Loading ELISP files in: %s" dir-loading)
-      (my/load-directory dir-loading))))
+;; Each module may rely on those required before it.
+(require 'init-consts)
+(require 'init-features)
+(require 'init-keybindings)
+(require 'init-log)
+(require 'init-programming)
+(require 'init-settings)
 
+(require 'init-all-the-icons)
+(require 'init-ansi-color)
+(require 'init-avy)
+(require 'init-consult)
+(require 'init-copilot)
+(require 'init-corfu)
+(require 'init-desktop)
+(require 'init-dired)
+(require 'init-display-line-numbers)
+(require 'init-eglot)
+(require 'init-eldoc)
+(require 'init-embark)
+(require 'init-flycheck)
+(require 'init-flymake)
+(require 'init-format-all)
+(require 'init-git-commit)
+(require 'init-git-gutter)
+(require 'init-goggles)
+(require 'init-grep)
+(require 'init-indent-bars)
+(require 'init-lsp)
+(require 'init-magit)
+(require 'init-neotree)
+(require 'init-orderless)
+(require 'init-pet)
+(require 'init-prettier)
+(require 'init-project)
+(require 'init-promptivel)
+(require 'init-recentf)
+(require 'init-server)
+(require 'init-shell)
+(require 'init-speedbar)
+(require 'init-sqlformat)
+(require 'init-tramp)
+(require 'init-vertico)
+(require 'init-visual-fill-column)
+(require 'init-vterm)
+(require 'init-which-key)
+(require 'init-window-pulse)
+(require 'init-with-editor)
+
+;; The utilities in user-lisp/ need no `require'.  These three take effect only
+;; once switched on.
+(add-hook 'find-file-hook #'my/handle-large-file-hook)
+(my/modeline-mode 1)
+(add-hook 'after-change-major-mode-hook #'my/warn-when-root-visits-file)
+
+(require 'init-cc)
+(require 'init-conf)
+(require 'init-csharp)
+(require 'init-css)
+(require 'init-dart)
+(require 'init-go)
+(require 'init-html)
+(require 'init-jinja2)
+(require 'init-js)
+(require 'init-json)
+(require 'init-lisp)
+(require 'init-makefile)
+(require 'init-markdown)
+(require 'init-meson)
+(require 'init-nxml)
+(require 'init-org)
+(require 'init-php)
+(require 'init-python)
+(require 'init-rust)
+(require 'init-scss)
+(require 'init-sh)
+(require 'init-sql)
+(require 'init-text)
+(require 'init-typescript)
+(require 'init-vala)
+(require 'init-web)
+(require 'init-yaml)
 
 ;; Load configurations specific to the environment
-(load (init/inclusion-path
-       (or (and (display-graphic-p) "environment/x")
-           "environment/term")))
+(require (if (display-graphic-p) 'init-x 'init-term))
+
+;; Identity, mail and per-host settings, kept out of the repository, apply over
+;; everything above.
+(load (locate-user-emacs-file "personal.el") 'noerror 'nomessage)
+
+(load custom-file 'noerror 'nomessage)
 
 ;; Print useful diagnostic messages
 (if (and (fboundp 'native-comp-available-p)

@@ -1,4 +1,6 @@
 *.elc
+# Autoloads Emacs generates for the User Lisp directory
+.user-lisp-autoloads.el
 *~
 \#*
 .\#*

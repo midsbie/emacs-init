@@ -49,6 +49,7 @@
   (setq-local fill-column 100))
 
 (use-package rust-ts-mode
+  :ensure nil
   :mode (("\\.rs\\'" . rust-ts-mode))
   :hook ((rust-mode rust-ts-mode) . init/rust-mode/enable)
   :config (init/rust-mode/config))

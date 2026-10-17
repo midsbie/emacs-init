@@ -34,6 +34,7 @@
 ;; Moved to after the function declaration so as to avoid potential failures at
 ;; load time
 (use-package tramp
+  :ensure nil
   :config (init/tramp/config))
 
 ;;; tramp.el ends here

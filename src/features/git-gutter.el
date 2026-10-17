@@ -87,6 +87,10 @@
 
   (setq git-gutter:modified-sign "*"))
 
+;; Declared ahead of `git-gutter', whose :init requires it.
+(use-package git-gutter-fringe
+  :defer t)
+
 (use-package git-gutter
   :diminish
   :init (init/git-gutter)

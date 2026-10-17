@@ -52,6 +52,7 @@ been tried."
     (advice-remove 'find-file #'find-file-other-window)))
 
 (use-package project
+  :ensure nil
   ;; Don't use C-c C-p as it clashes with many major mode default bindings.
   :bind-keymap ("C-c P" . project-prefix-map)
   :bind (:map project-prefix-map

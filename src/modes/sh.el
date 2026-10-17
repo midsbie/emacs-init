@@ -38,6 +38,7 @@
   (init/common-nonweb-programming-mode))
 
 (use-package sh-script
+  :ensure nil
   :hook ((sh-mode bash-ts-mode) . init/sh/enable)
   :init (init/sh))
 

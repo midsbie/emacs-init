@@ -45,6 +45,7 @@
   (local-set-key (kbd "M-h") #'backward-kill-word))
 
 (use-package org
+  :ensure nil
   :hook (org-mode . init/org-mode/enable)
   :bind
   (("C-c a a" . org-agenda-list)

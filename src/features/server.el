@@ -40,6 +40,7 @@ seconds after Emacs has launched."
                              (server-start)))))
 
 (use-package server
+  :ensure nil
   :config (init/server/config))
 
 ;;; server.el ends here

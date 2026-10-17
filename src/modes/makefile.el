@@ -29,6 +29,7 @@
 
 ;; Mode is `makefile-mode' in make-mode.el, provides `make-mode'.
 (use-package make-mode
+  :ensure nil
   :hook ((makefile-mode . init/makefile-mode/enable)))
 
 ;;; makefile.el ends here

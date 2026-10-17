@@ -25,10 +25,12 @@
 ;;; Code:
 
 (use-package dired
+  :ensure nil
   :custom
   (dired-dwim-target t))
 
 (use-package dired-x
+  :ensure nil
   :after (dired))
 
 ;;; dired.el ends here

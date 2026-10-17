@@ -37,6 +37,7 @@
   )
 
 (use-package text-mode
+  :ensure nil
   :hook (text-mode . init/text-mode/enable))
 
 ;;; text.el ends here

@@ -200,6 +200,7 @@ to the same state."
            (if global " globally" "")))
 
 (use-package eglot
+  :ensure nil
   :config (init/eglot/config)
   ;; NOTE: the hook is appended via `init/eglot/config' so that it runs AFTER
   ;; eglot's own default hooks (which auto-enable `eglot-inlay-hints-mode').

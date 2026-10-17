@@ -58,6 +58,7 @@
   (setq-local fill-column 100))
 
 (use-package go-ts-mode
+  :ensure nil
   :mode (("\\.go\\'" . go-ts-mode))
   :hook ((go-mode go-ts-mode) . init/go-mode/enable)
   :config (init/go-mode/config))

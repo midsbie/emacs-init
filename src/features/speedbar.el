@@ -35,6 +35,7 @@
                                     (left-fringe . 0))))
 
 (use-package speedbar
+  :ensure nil
   :init (init/speedbar))
 
 ;;; speedbar.el ends here

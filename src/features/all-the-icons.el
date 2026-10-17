@@ -27,9 +27,11 @@
 ;;; Code:
 
 ;; Ref: https://github.com/domtronn/all-the-icons.el
-(use-package all-the-icons
-  :diminish all-the-icons-dired-mode
-  ;; Ref: https://github.com/wyuenho/all-the-icons-dired
+(use-package all-the-icons)
+
+;; Ref: https://github.com/wyuenho/all-the-icons-dired
+(use-package all-the-icons-dired
+  :diminish
   :hook ((dired-mode . all-the-icons-dired-mode)))
 
 (use-package all-the-icons-completion

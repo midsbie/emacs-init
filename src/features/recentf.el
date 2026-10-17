@@ -25,6 +25,7 @@
 ;;; Code:
 
 (use-package recentf
+  :ensure nil
   :demand
   ;; The following replaces default binding to `ido-find-file-read-only'
   ;; :bind ("C-x C-r" . recentf-open-files)

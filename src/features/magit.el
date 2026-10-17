@@ -30,7 +30,7 @@
   (let ((magit-display-buffer-function #'magit-display-buffer-traditional))
     (magit-status)))
 
-(use-package magit-status
+(use-package magit
   :custom
   ;; Don't ask to save buffers
   (magit-save-repository-buffers nil)

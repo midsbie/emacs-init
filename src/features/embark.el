@@ -44,8 +44,6 @@ which clipboard consumers commonly render as five replacement characters."
                 #'init/embark-collect/filter-buffer-substring))
 
 (use-package embark
-  :ensure t
-
   :bind
   (("C-." . embark-act)                 ; pick some comfortable binding
    ("C-;" . embark-dwim)                ; good alternative: M-.
@@ -66,7 +64,6 @@ which clipboard consumers commonly render as five replacement characters."
                  nil
                  (window-parameters (mode-line-format . none)))))
 
-(use-package embark-consult
-  :ensure t)
+(use-package embark-consult)
 
 ;;; embark.el ends here

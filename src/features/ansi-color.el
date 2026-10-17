@@ -32,6 +32,7 @@
     (ansi-color-apply-on-region (point-min) (point-max))))
 
 (use-package ansi-color
+  :ensure nil
   :hook ((compilation-filter . ansi-color-compilation-filter)))
 
 ;;; ansi-color.el ends here

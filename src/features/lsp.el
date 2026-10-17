@@ -184,4 +184,7 @@ be used when debugging `lsp'."
   :hook ((lsp-mode . init/lsp/enable)
          (lsp-after-open . init/lsp/after-open-hook)))
 
+(use-package lsp-ui
+  :defer t)
+
 ;;; lsp.el ends here

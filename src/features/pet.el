@@ -32,7 +32,6 @@
 ;;; Code:
 
 (use-package pet
-  :ensure t
   :hook (python-base-mode . pet-mode))
 
 ;;; pet.el ends here

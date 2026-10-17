@@ -69,7 +69,11 @@
   (setq-local fill-column 88))
 
 (use-package python
+  :ensure nil
   :mode (("\\.py\\'" . python-ts-mode))
   :hook ((python-mode python-ts-mode) . init/python-mode/enable))
+
+(use-package ruff-format
+  :defer t)
 
 ;;; python.el ends here

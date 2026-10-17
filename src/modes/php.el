@@ -32,6 +32,7 @@
   (setq-local comment-end   " */"))
 
 (use-package php-ts-mode
+  :ensure nil
   :mode "\\.php\\'"
   :hook (php-ts-mode . init/php-mode/enable))
 

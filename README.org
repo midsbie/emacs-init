@@ -12,6 +12,8 @@ Load =src/init.el= from =~/.emacs=:
 (load "/path/to/emacs-init/src/init.el")
 #+end_src
 
+On first launch, missing packages install into =elpa/= from GNU ELPA, NonGNU ELPA and MELPA, or from their git repositories for packages declared with =:vc=.
+
 =src/debug-init.el= sets up packages and =use-package= only, without loading the config, for debugging: =emacs -Q -l src/debug-init.el=.
 
 * Layout

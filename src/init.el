@@ -119,7 +119,7 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
 (add-hook 'after-init-hook 'init/post-init)
 
 ;; Setup and load ELPA packages (and others) first and foremost
-(setq package-user-dir (expand-file-name "src" init/dir-packages))
+(setq package-user-dir init/dir-packages)
 ;; Avoid loading byte-compiled packages that are older than the source file.
 (setq load-prefer-newer t)
 
@@ -138,6 +138,23 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
 
 (package-initialize)
 (require 'use-package)
+
+;; Install declared packages that are missing.  Built-in packages opt out with
+;; `:ensure nil'.
+;;
+;; Ensuring by default, rather than marking external packages with `:ensure t',
+;; makes a forgotten flag fail early and locally.  An external package missing
+;; the flag still installs, whereas one missing `:ensure t' would load from the
+;; existing `elpa/' and fail only on a fresh machine.  A built-in missing
+;; `:ensure nil' is either a no-op or fails to install on every startup.
+;;
+;; `:ensure nil' is required only on built-ins that package.el does not list
+;; (e.g. dired, nxml-mode, text-mode), but goes on every built-in so that no one
+;; has to check.  It is unnecessary with `:vc', which ignores `:ensure'.
+(setq use-package-always-ensure t)
+
+;; Required by the `:diminish' keyword.
+(use-package diminish)
 
 ;; Taken verbatim from: http://www.emacswiki.org/emacs/DotEmacsModular
 ;; Must be interpreted before loading begins below.

@@ -25,6 +25,8 @@
 ;;; Code:
 
 (use-package promptivel
+  :vc (:url "https://github.com/midsbie/promptivel"
+            :rev :newest)
   :diminish promptivel-global-mode
   :config
   (promptivel-global-mode))

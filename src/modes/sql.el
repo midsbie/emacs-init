@@ -28,6 +28,7 @@
   (init/common-programming-mode))
 
 (use-package sql
+  :ensure nil
   :hook (sql-mode . init/sql-mode/enable))
 
 ;;; sql.el ends here

@@ -30,6 +30,7 @@
                       :weight 'bold))
 
 (use-package eldoc
+  :ensure nil
   :diminish
   :config (init/eldoc/config))
 

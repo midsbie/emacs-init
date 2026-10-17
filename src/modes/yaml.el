@@ -28,6 +28,7 @@
   (init/common-programming-mode))
 
 (use-package yaml-ts-mode
+  :ensure nil
   :hook ((yaml-mode yaml-ts-mode) . init/yaml-mode/enable)
   :mode ("\\.yml\\'" "\\.yaml\\'" "\\.eslintrc\\'"))
 

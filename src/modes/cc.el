@@ -33,6 +33,7 @@
   (setq-local comment-end   " */"))
 
 (use-package cc-mode
+  :ensure nil
   :mode (("\\.c\\'" . c-ts-mode)
          ("\\.h\\'" . c-ts-mode)
          ("\\.cpp\\'" . c++-ts-mode)

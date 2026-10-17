@@ -43,6 +43,7 @@
   (global-display-line-numbers-mode t))
 
 (use-package display-line-numbers
+  :ensure nil
   :config (init/display-line-numbers/config))
 
 ;;; display-line-numbers.el ends here

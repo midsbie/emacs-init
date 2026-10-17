@@ -32,6 +32,7 @@
   (init/common-programming-mode))
 
 (use-package emacs-lisp-mode
+  :ensure nil
   :mode ("\\.el\\'")
   :hook ((emacs-lisp-mode lisp-interaction-mode lisp-mode) . init/elisp/enable))
 

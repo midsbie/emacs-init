@@ -41,8 +41,12 @@
                           (indent-for-tab-command))))
 
 (use-package css-mode
+  :ensure nil
   :mode (("\\.css\\'" . css-ts-mode))
   :config (css-eldoc-enable)
   :hook ((css-mode css-ts-mode) . init/css-mode/enable))
+
+(use-package css-eldoc
+  :defer t)
 
 ;;; css.el ends here

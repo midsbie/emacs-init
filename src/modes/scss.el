@@ -29,6 +29,7 @@
   (init/common-nonweb-programming-mode))
 
 (use-package scss-mode
+  :ensure nil
   :hook ((scss-mode . init/scss/enable)))
 
 ;;; scss.el ends here

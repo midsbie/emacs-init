@@ -25,6 +25,7 @@
 ;;; Code:
 
 (use-package desktop
+  :ensure nil
   :defer t
   :hook (;; Set our preferred window arrangement after successfully loading a
          ;; desktop configuration.

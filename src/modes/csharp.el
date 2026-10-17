@@ -57,6 +57,7 @@ can be worked around by temporarily switching to `csharp-mode'."
   (setq-local init/consult/xref-references-initial-input "!Test "))
 
 (use-package csharp-mode
+  :ensure nil
   :mode ("\\.cs\\'" . csharp-ts-mode)
   :hook ((csharp-mode csharp-ts-mode) . init/csharp-mode/enable)
   :bind (:map csharp-mode-map

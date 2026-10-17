@@ -34,6 +34,7 @@
 ;;; Code:
 
 (use-package nxml-mode
+  :ensure nil
   :mode (("\\.csproj\\'"  . nxml-mode)
          ("\\.fsproj\\'"  . nxml-mode)
          ("\\.vbproj\\'"  . nxml-mode)

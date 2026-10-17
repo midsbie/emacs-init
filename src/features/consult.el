@@ -48,7 +48,6 @@ also go through `consult-xref' and are left alone."
     init/consult/xref-references-initial-input))
 
 (use-package consult
-  :ensure t
   ;; Replace bindings. Lazily loaded by `use-package'.
   :bind (
          ;; C-c bindings (mode-specific-map)
@@ -174,5 +173,8 @@ also go through `consult-xref' and are left alone."
   ;;;; 4. locate-dominating-file
   ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
   )
+
+(use-package consult-flycheck
+  :defer t)
 
 ;;; consult.el ends here

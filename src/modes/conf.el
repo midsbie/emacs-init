@@ -25,6 +25,7 @@
 ;;; Code:
 
 (use-package conf-mode
+  :ensure nil
   :defer t
   :init
   (add-to-list 'auto-mode-alist '("\\.flowconfig?\\'" . conf-mode)))

@@ -36,6 +36,7 @@ diagnostic at point is shown through eldoc (`flymake-eldoc-function')."
     (flycheck-mode -1)))
 
 (use-package flymake
+  :ensure nil
   :demand
   :diminish
   :hook ((flymake-mode . init/flymake/enable))
@@ -65,7 +66,6 @@ so do that here."
       (flymake-start))))
 
 (use-package flymake-ruff
-  :ensure t
   :hook (((python-mode python-ts-mode eglot-managed-mode) . init/flymake-ruff/enable))
   ;; :vc (:url "git@github.com:midsbie/flymake-ruff.git"
   ;;             :rev :newest
@@ -92,5 +92,8 @@ so do that here."
                    (not (member "--no-cache" default-args)))
               (append '("check" "--no-cache") (cdr default-args))
             default-args))))
+
+(use-package flymake-eslint
+  :defer t)
 
 ;;; flymake.el ends here

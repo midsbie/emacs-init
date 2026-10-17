@@ -59,6 +59,7 @@ The fill is undone separately, so \\[undo] once restores the text as yanked."
   (my/git-commit/fill-paragraphs (min (point) (mark t)) (max (point) (mark t))))
 
 (use-package git-commit
+  :ensure magit
   :bind (:map git-commit-mode-map
               ([remap yank] . my/git-commit/yank-and-fill)))
 

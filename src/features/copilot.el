@@ -47,12 +47,28 @@ overlay needs to go."
     (copilot-clear-overlay t)
     t))
 
+(defvar init/copilot/server-warned nil
+  "Non-nil once the missing language server has been reported.")
+
+(defun init/copilot/enable ()
+  "Enable `copilot-mode' when its language server is installed.
+Otherwise warn, once per session.  Install the server with
+\\[copilot-install-server]."
+  (when (require 'copilot nil t)
+    (cond
+     ((ignore-errors (copilot-server-executable))
+      (copilot-mode 1))
+     ((not init/copilot/server-warned)
+      (setq init/copilot/server-warned t)
+      (display-warning 'copilot "Language server not installed; `copilot-mode' \
+disabled.  Install it with M-x copilot-install-server.")))))
+
 (use-package copilot
   :vc (:url "https://github.com/copilot-emacs/copilot.el"
             :rev :newest
             :branch "main")
   :diminish
-  :hook (prog-mode . copilot-mode)
+  :hook (prog-mode . init/copilot/enable)
   :bind (:map copilot-completion-map
               ("<tab>" . 'copilot-accept-completion)
               ("TAB" . 'copilot-accept-completion)

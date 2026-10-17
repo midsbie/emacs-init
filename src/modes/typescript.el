@@ -58,6 +58,7 @@
     (treesit-font-lock-recompute-features '(operator))))
 
 (use-package typescript-ts-mode
+  :ensure nil
   :diminish "TS"
   :mode (("\\.ts\\'" . typescript-ts-mode)
          ("\\.tsx\\'" . tsx-ts-mode))

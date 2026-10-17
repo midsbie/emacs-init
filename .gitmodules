@@ -1,3 +1,0 @@
-[submodule "elpa"]
-	path = elpa
-	url = git@gitlab.softgeist.com:el/emacs-elpa.git

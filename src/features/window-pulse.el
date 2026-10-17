@@ -25,6 +25,8 @@
 ;;; Code:
 
 (use-package window-pulse
+  :vc (:url "https://github.com/midsbie/window-pulse"
+            :rev :newest)
   :config (window-pulse-mode 1))
 
 ;;; window-pulse.el ends here

@@ -26,7 +26,6 @@
 ;;; Code:
 
 (use-package visual-fill-column
-  :ensure t
   :custom
   (visual-fill-column-width nil)
   :config

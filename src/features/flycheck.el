@@ -143,6 +143,10 @@ because the checker does not exist."
   (when (and flycheck-mode lsp-diagnostics-mode)
     (flycheck-add-next-checker 'lsp 'javascript-eslint)))
 
+;; Declared ahead of `flycheck', whose :config loads it.
+(use-package flycheck-flow
+  :defer t)
+
 (use-package flycheck
   :diminish
   ;; Not activating flycheck-popup-tip-mode because error messages frequently

@@ -36,10 +36,11 @@
 
 ;;; Code:
 
-(setq package-user-dir (concat (file-name-directory load-file-name) "../elpa/src"))
+(setq package-user-dir (concat (file-name-directory load-file-name) "../elpa"))
 (setq load-prefer-newer t)
 
 (package-initialize)
 (require 'use-package)
+(setq use-package-always-ensure t)
 
 ;;; debug-init.el ends here

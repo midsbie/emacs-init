@@ -33,12 +33,12 @@
 (load-theme 'wombat t)
 (load-theme 'my-term-dark t)
 
-;; Enable system clipboard integration in terminal (Emacs 29+)
-(if (package-installed-p 'xclip)
-    (use-package xclip
-      :config
-      (xclip-mode 1))
-  (warn "Package 'xclip' is not available; clipboard integration disabled"))
+;; Enable system clipboard integration in terminal.  Skipped on hosts without a
+;; clipboard tool (e.g. headless servers), where `xclip-mode' signals an error.
+(use-package xclip
+  :config
+  (when (executable-find xclip-program)
+    (xclip-mode 1)))
 
 
 ;;; term.el ends here

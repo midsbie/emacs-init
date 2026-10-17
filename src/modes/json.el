@@ -25,6 +25,7 @@
 ;;; Code:
 
 (use-package json-ts-mode
+  :ensure nil
   :mode ("\\.json\\'")
   :hook ((json-mode json-ts-mode) . init/common-nonweb-programming-mode))
 

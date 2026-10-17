@@ -26,6 +26,7 @@
 
 ;; `.html' files open in `web-mode' (modes/web.el).
 (use-package html-ts-mode
+  :ensure nil
   :hook ((html-mode html-ts-mode) . init/common-web-programming-mode))
 
 ;;; html.el ends here

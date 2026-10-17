@@ -81,6 +81,7 @@ particular FILE-NAME and MODE."
               :override #'init/js/lsp-clients-flow-activate-p))
 
 (use-package js
+  :ensure nil
   :diminish "JS"
   :mode (("\\.jsx?\\'" . init/determine-js-mode)
          ("\\.mjs\\'" . init/determine-js-mode))

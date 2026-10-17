@@ -29,18 +29,23 @@
   :bind ("M-o" . ace-window))
 
 (use-package autorevert
+  :ensure nil
   :diminish auto-revert-mode
   :config
   ;; Revert buffer if file associated with it changes outside of emacs.
   (global-auto-revert-mode 1))
 
-(use-package buf-move
+(use-package browse-kill-ring
+  :defer t)
+
+(use-package buffer-move
   :bind (("<C-S-up>" . buf-move-up)
          ("<C-S-down>" . buf-move-down)
          ("<C-S-left>" . buf-move-left)
          ("<C-S-right>" . buf-move-right)))
 
 (use-package dabbrev
+  :ensure nil
   :custom
   ;; Make it so matching and expansion respects case.  May need to be set for
   ;; prog modes only.
@@ -48,6 +53,7 @@
   (dabbrev-case-replace nil))
 
 (use-package erc
+  :ensure nil
   :init
   (setq erc-modules
         (quote (autojoin button completion fill irccontrols list
@@ -56,6 +62,7 @@
                          readonly ring stamp track))))
 
 (use-package display-fill-column-indicator
+  :ensure nil
   :diminish
   ;; Opt-in rather than global: avoids the indicator in buffers where
   ;; fill-column is meaningless (terminals, special buffers).  conf-mode and
@@ -73,6 +80,7 @@
   :config (global-highlight-parentheses-mode))
 
 (use-package flyspell
+  :ensure nil
   :diminish
   :config
   ;; Deactivate annoying correction of previous misspelled error when C-; is hit.
@@ -108,13 +116,16 @@
 
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
+  :ensure nil
   :config
   (savehist-mode))
 
 (use-package simple
+  :ensure nil
   :diminish auto-fill-mode)
 
 (use-package subword
+  :ensure nil
   :diminish)
 
 ;;; features.el ends here

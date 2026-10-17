@@ -95,6 +95,28 @@ joins to it, such as `foo_bar' in C or `my/foo' in Lisp."
   (interactive)
   (untabify (point-min) (point-max)))
 
+(defun my/cycle-line-wrapping ()
+  "Cycle line wrapping through window width, `fill-column', and off.
+Wrapping at `fill-column' enables both `visual-line-mode' and
+`visual-fill-column-mode'.  The off state truncates long lines."
+  (interactive)
+  (cond
+   ((bound-and-true-p visual-fill-column-mode)
+    (visual-fill-column-mode -1)
+    (visual-line-mode 1)
+    (message "Line wrapping: window width"))
+   (visual-line-mode
+    (visual-line-mode -1)
+    ;; Disabling `visual-line-mode' restores `truncate-lines', possibly to
+    ;; nil. Force truncation for the off state. Re-enabling the mode sets
+    ;; it to nil again; the fill-column state keeps that mode enabled.
+    (setq-local truncate-lines t)
+    (message "Line wrapping: off"))
+   (t
+    (visual-line-mode 1)
+    (visual-fill-column-mode 1)
+    (message "Line wrapping: fill-column (%d)" fill-column))))
+
 (defun my/unfill-paragraph (&optional region)
   "Inverse of `fill-paragraph'.
 Join lines in the current paragraph into a single long line.

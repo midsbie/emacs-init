@@ -45,10 +45,8 @@
 (global-set-key (kbd "M-Q")           #'my/unfill-paragraph)
 
 ;; Buffer-related
-; Was previously using `truncate-lines` but now using the much more useful
-; visual lines mode:
-;  (global-set-key (kbd "C-S-w")         #'toggle-truncate-lines)
-(global-set-key (kbd "C-S-w")         #'visual-line-mode)
+;; Cycle through window-width wrapping, fill-column wrapping, and truncation.
+(global-set-key (kbd "C-S-w")         #'my/cycle-line-wrapping)
 (global-set-key (kbd "M-r")           #'revert-buffer)
 (global-set-key (kbd "C-x C-b")       #'ibuffer)
 ; C-c g runs counsel-git-grep but we favour our own version since counsel was

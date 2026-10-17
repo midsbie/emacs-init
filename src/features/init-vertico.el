@@ -1,6 +1,6 @@
 ;;; init-vertico.el --- Configures the Vertico package  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022-2025  Miguel Guedes
+;; Copyright (C) 2022-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools

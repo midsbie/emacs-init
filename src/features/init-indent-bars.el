@@ -1,6 +1,6 @@
 ;;; init-indent-bars.el --- Configures `indent-bars-mode'  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2025  Miguel Guedes
+;; Copyright (C) 2025-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: internal, tools

@@ -1,6 +1,6 @@
 ;;; init-neotree.el --- Customises the neotree packge  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2024  Miguel Guedes
+;; Copyright (C) 2024-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools

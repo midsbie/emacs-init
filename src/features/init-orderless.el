@@ -1,6 +1,6 @@
 ;;; init-orderless.el --- Configures the orderless package  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022-2024  Miguel Guedes
+;; Copyright (C) 2022-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools

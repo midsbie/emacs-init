@@ -1,6 +1,6 @@
 ;;; init-server.el --- Configuration of Emacs `server' package  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2017-2024  Miguel Guedes
+;; Copyright (C) 2017-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools

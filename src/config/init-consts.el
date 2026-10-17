@@ -1,6 +1,6 @@
 ;;; init-consts.el --- defconst and defaliases statements  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2015-2020  Miguel Guedes
+;; Copyright (C) 2015-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools

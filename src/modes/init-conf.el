@@ -1,6 +1,6 @@
 ;;; init-conf.el --- Configures `conf-mode'  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2019-2020  Miguel Guedes
+;; Copyright (C) 2019-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools

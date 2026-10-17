@@ -1,6 +1,6 @@
 ;;; init-sqlformat.el --- Customises the sqlformat package  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2023-2024  Miguel Guedes
+;; Copyright (C) 2023-2026  Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools

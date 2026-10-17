@@ -96,7 +96,7 @@ joins to it, such as `foo_bar' in C or `my/foo' in Lisp."
   (untabify (point-min) (point-max)))
 
 (defun my/cycle-line-wrapping ()
-  "Cycle line wrapping through window width, `fill-column', and off.
+  "Cycle line wrapping through `fill-column', window width, and off.
 Wrapping at `fill-column' enables both `visual-line-mode' and
 `visual-fill-column-mode'.  The off state truncates long lines."
   (interactive)

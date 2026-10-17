@@ -1,6 +1,6 @@
 ;;; init-x.el --- Initialisation sequence when run within X  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2014-2023 Miguel Guedes
+;; Copyright (C) 2014-2026 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; URL:
@@ -24,18 +24,6 @@
 
 ;;; Code:
 
-;; Function: Set current frame width
-(defun my/set-current-frame-width (arg)
-  "Set the active frame's width to ARG."
-  (interactive "p")
-  (set-frame-width (selected-frame) arg))
-
-;; Function: Set current frame height
-(defun my/set-current-frame-height (arg)
-  "Set the active frame's height to ARG."
-  (interactive "p")
-  (set-frame-height (selected-frame) arg))
-
 (when window-system
   (setq speedbar-use-images nil)          ; do not use icons in `speedbar-mode'
 
@@ -55,7 +43,8 @@
   (setq select-enable-clipboard     t)
 
 
-  ;; Default face font (theme handles colors)
+  ;; Default face font (theme handles colors).  Keep it in step with the
+  ;; `font' frame parameter in early-init.el.
   (custom-set-faces
    '(default ((t (:inherit nil :stipple nil
                            :inverse-video nil :box nil
@@ -63,26 +52,10 @@
                            :slant normal :weight normal :height 85 :width normal
                            :family "Hack")))))
 
-  ;; Load personal GUI theme
+  ;; Load baseline theme and then overlay user-selected theme on top.
   (load-theme 'my-tango-ansi t)
   (when init/theme
     (load-theme init/theme t))
-
-  ;; Frame size and other window configuration.
-  ;;
-  ;; Properties can be accessed with the following form:
-  ;;
-  ;;   (cdr (assoc 'width default-frame-alist))
-  (add-to-list 'default-frame-alist (cons 'width 120))
-  (add-to-list 'default-frame-alist (cons 'height 70))
-
-  (let* ((width (cdr (assoc 'width default-frame-alist)))
-         (height (cdr (assoc 'height default-frame-alist))))
-    (and width (my/set-current-frame-width width))
-    (and height (my/set-current-frame-height height)))
-
-  ;; Re-balance windows now that the frame's size has been calculated
-  (balance-windows)
 
   ;; For some reason, version >25.x seems to activate the horizontal scrollbars.
   ;; We forcefully disable them here.

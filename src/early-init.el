@@ -58,4 +58,12 @@
 (and (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (and (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
+;; Create graphical frames at their final size and font.  The first frame is
+;; created after this file loads but before init.el runs, so setting these later
+;; makes it visibly resize once init finishes.  The font must match the default
+;; face set in environment/init-x.el.  Terminal frames ignore all three.
+(push '(width . 120) default-frame-alist)
+(push '(height . 70) default-frame-alist)
+(push '(font . "Hack-8.5") default-frame-alist)
+
 ;;; early-init.el ends here

@@ -20,8 +20,9 @@
 
 ;;; Commentary:
 
-;; Wrap at each buffer's `fill-column' when selected with C-S-w.
-;; Plain `visual-line-mode' continues to wrap at the window width.
+;; Wrap at each buffer's `fill-column' in `markdown-mode' and `org-mode'
+;; buffers, and elsewhere when selected with C-S-w.  Plain `visual-line-mode'
+;; continues to wrap at the window width.
 ;;
 ;; `visual-fill-column-mode' sizes the text area to `fill-column' columns, but
 ;; line numbers are drawn inside the text area, so text would wrap early by
@@ -59,8 +60,9 @@ whichever mode is enabled last."
 
 (use-package visual-fill-column
   :demand
-  :hook ((visual-fill-column-mode display-line-numbers-mode)
-         . init/visual-fill-column/enable)
+  :hook (((visual-fill-column-mode display-line-numbers-mode)
+          . init/visual-fill-column/enable)
+         ((markdown-mode org-mode) . visual-fill-column-mode))
   :custom
   (visual-fill-column-width nil)
   :config

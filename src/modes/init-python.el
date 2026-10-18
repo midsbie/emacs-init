@@ -71,6 +71,7 @@
 (use-package python
   :ensure nil
   :mode (("\\.py\\'" . python-ts-mode))
+  :interpreter (("python[0-9.]*" . python-ts-mode))
   :hook ((python-mode python-ts-mode) . init/python-mode/enable))
 
 (use-package ruff-format

@@ -26,7 +26,9 @@
 
 (defun init/markdown-mode/enable ()
   "Configure `markdown-mode' buffers."
-  (visual-line-mode 1))
+  (visual-line-mode 1)
+  (and (fboundp 'visual-fill-column-mode)
+       (visual-fill-column-mode 1)))
 
 (use-package markdown-mode
   :defer t

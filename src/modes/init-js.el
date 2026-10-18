@@ -85,6 +85,7 @@ particular FILE-NAME and MODE."
   :diminish "JS"
   :mode (("\\.jsx?\\'" . init/determine-js-mode)
          ("\\.mjs\\'" . init/determine-js-mode))
+  :interpreter (("node\\(?:js\\)?" . init/determine-js-mode))
   :hook (((js-ts-mode js-mode js-jsx-mode) . init/js-mode/enable)))
 
 (provide 'init-js)

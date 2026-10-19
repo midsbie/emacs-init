@@ -50,7 +50,28 @@ can be worked around by temporarily switching to `csharp-mode'."
   (when (treesit-parser-list nil 'c-sharp)
     (unless (eq fill-paragraph-function #'my/csharp-fill-paragraph)
       (setq-local my/csharp--prev-fill-paragraph-function fill-paragraph-function))
-    (setq-local fill-paragraph-function #'my/csharp-fill-paragraph))
+    (setq-local fill-paragraph-function #'my/csharp-fill-paragraph)
+
+    ;; `csharp-ts-mode' has no indent rule for expression bodies, so a `=>'
+    ;; line, or the expression after a trailing `=>', is left where it is in
+    ;; properties, indexers and accessors (column 0 after a newline), and
+    ;; gets the declaration's indentation in methods.  Indent both one level
+    ;; from the declaration, as `csharp-mode' does.  Still missing upstream
+    ;; as of Emacs 31.1.
+    (treesit-simple-indent-add-rules
+     'c-sharp
+     '(((node-is "arrow_expression_clause") parent-bol csharp-ts-indent-offset)
+       ((parent-is "arrow_expression_clause") parent-bol csharp-ts-indent-offset))
+     :before)
+
+    ;; Likewise a parameter on its own line is left where it is: the mode's
+    ;; rule names the Java grammar's `formal_parameters' node instead of C#'s
+    ;; `parameter_list', so it never fires (bug#67709).  Add the rule last, so
+    ;; the mode's rule for a closing `)' still wins.
+    (treesit-simple-indent-add-rules
+     'c-sharp
+     '(((parent-is "parameter_list") parent-bol csharp-ts-indent-offset))
+     :after))
 
   (init/common-nonweb-programming-mode)
 

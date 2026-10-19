@@ -54,10 +54,10 @@
 ;; .vscode/settings.json.
 ;;
 ;; Language server:
-;; Eglot (or lsp-mode) starts pylsp itself, so it only needs installing.  `pet'
-;; prefers a pylsp in the project's virtualenv over the one on PATH, such as a
-;; distribution package like Debian's python3-pylsp; system Pythons often
-;; refuse pip installs (PEP 668).
+;; Eglot starts pylsp itself, so it only needs installing.  `pet' prefers a
+;; pylsp in the project's virtualenv over the one on PATH, such as a
+;; distribution package like Debian's python3-pylsp; system Pythons often refuse
+;; pip installs (PEP 668).
 
 ;;; Code:
 

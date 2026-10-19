@@ -43,7 +43,7 @@
   :mode (("\\.css\\'" . css-ts-mode))
   :custom
   (css-indent-offset 2)
-  ;; SCSS inherits css-mode-hook; configuring it again would start LSP twice.
+  ;; SCSS inherits css-mode-hook; configuring it again would start Eglot twice.
   :hook ((css-mode css-ts-mode) . init/css-mode/enable))
 
 (provide 'init-css-mode)

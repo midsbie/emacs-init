@@ -46,10 +46,6 @@
 
 (defun init/typescript-ts-mode/enable ()
   "Configure buffer for Typescript development."
-  (setq-local lsp-eslint-enable nil)
-  (setq-local lsp-eslint-run "onSave")
-  (setq-local lsp-eslint-format nil)
-
   (init/common-web-programming-mode)
 
   ;; `tsx-ts-mode' leaves `operator' out of its feature levels.  Enable it for

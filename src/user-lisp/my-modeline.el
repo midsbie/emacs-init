@@ -260,30 +260,6 @@ Value is `unset' when not yet computed.")
       (my/modeline--recompute-flymake)
     my/modeline--flymake-cache))
 
-;; -- Segment: flycheck diagnostics --------------------------------------------
-(declare-function flycheck-count-errors "ext:flycheck")
-(defvar flycheck-current-errors)
-(defvar flycheck-last-status-change)
-(defvar flycheck-mode-line)
-
-(defun my/modeline-flycheck ()
-  "Return colorized flycheck diagnostic counts: E/W/I."
-  (when (bound-and-true-p flycheck-mode)
-    (let* ((running (eq flycheck-last-status-change 'running))
-           (errors (when flycheck-current-errors
-                     (flycheck-count-errors flycheck-current-errors)))
-           (errn (or (alist-get 'error errors) 0))
-           (warnn (or (alist-get 'warning errors) 0))
-           (infon (or (alist-get 'info errors) 0)))
-      (concat
-       (when running
-         (propertize "* " 'face 'my/modeline-diagnostic-running))
-       (propertize (number-to-string errn) 'face 'my/modeline-diagnostic-error)
-       "/"
-       (propertize (number-to-string warnn) 'face 'my/modeline-diagnostic-warning)
-       "/"
-       (propertize (number-to-string infon) 'face 'my/modeline-diagnostic-note)))))
-
 ;; -- Global minor mode ---------------------------------------------------------
 
 (defvar my/modeline--idle-timer nil
@@ -295,13 +271,10 @@ Value is `unset' when not yet computed.")
 (defvar my/modeline--saved-flymake-ml-format 'unset
   "Saved `flymake-mode-line-format', restored when the mode is disabled.")
 
-(defvar my/modeline--saved-flycheck-ml 'unset
-  "Saved `flycheck-mode-line', restored when the mode is disabled.")
-
 ;; Based on the Emacs default, with two changes:
 ;; - mode-line-modified removed (buffer-identification handles status
 ;;   indicators)
-;; - Right-aligned flymake/flycheck diagnostic counters appended
+;; - Right-aligned Flymake diagnostic counters appended
 (defvar my/modeline--format
   `("%e"
     mode-line-front-space
@@ -324,7 +297,6 @@ Value is `unset' when not yet computed.")
     mode-line-misc-info
     mode-line-format-right-align
     (:eval (when-let* ((s (my/modeline-flymake))) (concat s " ")))
-    (:eval (when-let* ((s (my/modeline-flycheck))) (concat s " ")))
     mode-line-end-spaces)
   "Custom mode-line format used by `my/modeline-mode'.")
 
@@ -348,18 +320,6 @@ Value is `unset' when not yet computed.")
     (advice-remove 'flymake--handle-report #'my/modeline--recompute-flymake)
     (advice-remove 'flymake-start #'my/modeline--recompute-flymake)))
 
-(defun my/modeline--setup-flycheck ()
-  "Integrate with flycheck: suppress its mode-line entry."
-  (when (eq my/modeline--saved-flycheck-ml 'unset)
-    (setq my/modeline--saved-flycheck-ml flycheck-mode-line
-          flycheck-mode-line nil)))
-
-(defun my/modeline--teardown-flycheck ()
-  "Remove flycheck integration."
-  (unless (eq my/modeline--saved-flycheck-ml 'unset)
-    (setq flycheck-mode-line my/modeline--saved-flycheck-ml
-          my/modeline--saved-flycheck-ml 'unset)))
-
 ;;;###autoload
 (define-minor-mode my/modeline-mode
   "Global minor mode for custom mode-line display.
@@ -375,22 +335,18 @@ counters.  All other segments use Emacs defaults."
         (setq my/modeline--idle-timer
               (run-with-idle-timer 1 t #'my/modeline--recompute-buffer-status))
         (when (featurep 'flymake) (my/modeline--setup-flymake))
-        (when (featurep 'flycheck) (my/modeline--setup-flycheck))
         (force-mode-line-update t))
     (when (timerp my/modeline--idle-timer)
       (cancel-timer my/modeline--idle-timer)
       (setq my/modeline--idle-timer nil))
     (advice-remove 'vc-refresh-state #'my/modeline--update-project-root)
     (when (featurep 'flymake) (my/modeline--teardown-flymake))
-    (when (featurep 'flycheck) (my/modeline--teardown-flycheck))
     (setq-default mode-line-format my/modeline--saved-mode-line-format)
     (force-mode-line-update t)))
 
 ;; Deferred integration: set up when libraries load (if mode is active).
 (with-eval-after-load 'flymake
   (when my/modeline-mode (my/modeline--setup-flymake)))
-(with-eval-after-load 'flycheck
-  (when my/modeline-mode (my/modeline--setup-flycheck)))
 
 (provide 'my-modeline)
 

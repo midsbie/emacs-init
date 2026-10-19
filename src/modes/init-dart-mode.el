@@ -20,12 +20,7 @@
 
 ;;; Commentary:
 ;;
-;; * Unfortunately the `dap-debug' and `lsp-dart-dap--flutter-hot-reload'
-;;   commands seem to consistently fail to work again once the first Chrome
-;;   instance hosting a debugging session crashes.  It wasn't clear why this
-;;   happened and sometimes not even restarting Emacs fixed it.  Since
-;;   hot-reloading is a super important develoment aid, support was added here
-;;   and should occur whenever the following conditions are true:
+;; Hot-reload Flutter whenever the following conditions are true:
 ;;
 ;;     1. a buffer was saved
 ;;

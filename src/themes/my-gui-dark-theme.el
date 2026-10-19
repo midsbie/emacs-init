@@ -42,9 +42,6 @@
    '(font-lock-number-face ((t (:inherit font-lock-warning-face :weight normal))))
    '(font-lock-operator-face ((t (:inherit font-lock-builtin-face))))
 
-   ;; LSP
-   '(lsp-headerline-breadcrumb-path-face ((t (:inherit font-lock-builtin-face :weight normal))))
-
    ;; Speedbar
    '(speedbar-highlight-face ((t (:foreground "dark blue"))))
 

@@ -27,9 +27,6 @@
  '(font-lock-function-call-face ((t (:inherit nil :foreground "Gray20"))))
  '(font-lock-number-face ((t (:inherit font-lock-warning-face :weight normal))))
  '(font-lock-operator-face ((t (:inherit font-lock-builtin-face))))
-
- ;; LSP
- '(lsp-headerline-breadcrumb-path-face ((t (:inherit font-lock-builtin-face :weight normal))))
 )
 
 (provide-theme 'my-gui-light)

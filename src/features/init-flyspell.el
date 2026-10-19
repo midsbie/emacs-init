@@ -10,7 +10,10 @@
 
 (use-package flyspell
   :ensure nil
-  :diminish)
+  :diminish
+  :config
+  ;; Keep C-; available for Embark.
+  (define-key flyspell-mode-map (kbd "C-;") nil))
 
 (provide 'init-flyspell)
 

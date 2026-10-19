@@ -36,41 +36,19 @@
 (defgroup init nil
   "Emacs initialisation mechanism.")
 
-(defvar init/default-language-server-client 'eglot
-  "Indicates which language server should be used by default when an
-explicit entry does not exist in
-`init/language-server-map-to-major-modes'.  Can be one of 'eglot,
-'lsp or nil.  If nil, defaults to 'lsp.")
-
-(defvar init/language-server-map-to-major-modes
-  '(
-    ;; Explicitly disabling language server for the major modes below
-    ;; ------------------------------------------------------------------------
-    (emacs-lisp-mode . nil)
-    (lisp-mode . nil)
-    (meson-mode . nil)
-    (sql-mode . nil)
-    ;; Explicitly specifying language server override for the major modes below
-    ;; ------------------------------------------------------------------------
-    (csharp-mode . eglot)
-    (csharp-ts-mode . eglot)
-    (vala-mode . eglot)
-    ;; lsp-dart did not work particularly well under `dart-mode' in the past.
-    ;; If this continues to be true, revert to eglot.
-    ;; (dart-mode . eglot)
-    )
-  "List of mapping between major mode and a language server.  The
-language server can be 'eglot, 'lsp or nil.  When nil, no
-language server is used.")
+(defvar init/eglot-disabled-modes
+  '(emacs-lisp-mode lisp-mode meson-mode sql-mode)
+  "Major modes in which Eglot should not start automatically.
+Derived modes are also excluded.")
 
 (defvar-local init/inhibit-buffer-formatting nil
-  "When non-nil, disable all automatic buffer formatting through LSP.")
+  "When non-nil, disable all automatic buffer formatting through Eglot.")
 
 (defvar init/buffer-format-handlers-alist
   '()
   "List of major modes for which to run a special function when saving the
 buffer.  If none is specified for the mode associated with the buffer,
-the LSP client's default formatting function is invoked.
+Eglot's default formatting function is invoked.
 
 Example:
   '(((js-mode js-ts-mode typescript typescript-ts-mode tsx-ts-mode) . my/special-formatter))
@@ -163,7 +141,6 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
 (require 'init-ansi-color)
 (require 'init-avy)
 (require 'init-consult)
-(require 'init-consult-flycheck)
 (require 'init-copilot)
 (require 'init-corfu)
 (require 'init-css-eldoc)
@@ -175,8 +152,6 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
 (require 'init-eldoc)
 (require 'init-embark)
 (require 'init-embark-consult)
-(require 'init-flycheck-flow)
-(require 'init-flycheck)
 (require 'init-flymake)
 (require 'init-flymake-ruff)
 (require 'init-flymake-eslint)
@@ -187,8 +162,6 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
 (require 'init-goggles)
 (require 'init-grep)
 (require 'init-indent-bars)
-(require 'init-lsp-mode)
-(require 'init-lsp-ui)
 (require 'init-magit)
 (require 'init-neotree)
 (require 'init-orderless)
@@ -218,7 +191,6 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
 (add-hook 'after-change-major-mode-hook #'my/warn-when-root-visits-file)
 
 (require 'init-cc-mode)
-(require 'init-conf-mode)
 (require 'init-csharp-mode)
 (require 'init-css-mode)
 (require 'init-dart-mode)

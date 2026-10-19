@@ -24,13 +24,6 @@
 
 ;;; Code:
 
-(defun init/vala-mode/config ()
-  "Initialise `vala-mode'."
-  ;; Add this mode to LSP's formatting indent alist to ensure that the buffer is
-  ;; formatted correctly.
-  (when (boundp 'lsp--formatting-indent-alist)
-    (push '(vala-mode . c-basic-offset) lsp--formatting-indent-alist)))
-
 (defun init/vala-mode/enable ()
   "Configure `vala-mode'."
 
@@ -41,7 +34,6 @@
   (setq-local indent-tabs-mode nil))
 
 (use-package vala-mode
-  :config (init/vala-mode/config)
   :hook ((vala-mode . init/vala-mode/enable)))
 
 (provide 'init-vala-mode)

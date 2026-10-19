@@ -25,21 +25,14 @@
 ;;; Code:
 
 (defun init/flymake/enable ()
-  "Configure flymake.
-
-This function disables `flycheck-mode' in Eglot-managed buffers.  The
-diagnostic at point is shown through eldoc (`flymake-eldoc-function')."
-  ;; `eglot-managed-p' is not autoloaded, so guard against flymake starting
-  ;; before eglot has been loaded.
-  (when (and (fboundp 'eglot-managed-p) (eglot-managed-p)
-             (bound-and-true-p flycheck-mode))
-    (flycheck-mode -1)))
+  "Enable Flymake for Emacs Lisp buffers, which do not use Eglot."
+  (flymake-mode 1))
 
 (use-package flymake
   :ensure nil
   :demand
   :diminish
-  :hook ((flymake-mode . init/flymake/enable))
+  :hook (((emacs-lisp-mode lisp-interaction-mode) . init/flymake/enable))
   :bind ((:map flymake-mode-map
                ("C-c ! p" . flymake-goto-prev-error)
                ("C-c ! n" . flymake-goto-next-error)

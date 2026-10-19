@@ -24,15 +24,6 @@
 
 ;;; Code:
 
-(defun init/consult/choose-fly-diagnostic ()
-  "Pick between flymake and flycheck and show diagnostics."
-  (interactive)
-  ;; Safe: `flymake' is built-in and loaded by `eglot' (its diagnostic
-  ;; backend), so `flymake-mode' is bound by the time the user invokes this.
-  (if flymake-mode
-      (consult-flymake)
-    (consult-flycheck)))
-
 (defvar-local init/consult/xref-references-initial-input nil
   "Initial minibuffer input when `consult-xref' shows references.
 Mode `enable' functions set a default; `.dir-locals.el' can override it per
@@ -72,7 +63,7 @@ also go through `consult-xref' and are left alone."
          ;; M-g bindings (goto-map)
          ("M-g e" . consult-compile-error)
          ("M-g r" . consult-grep-match)
-         ("M-g f" . init/consult/choose-fly-diagnostic)
+         ("M-g f" . consult-flymake)
          ("M-g g" . consult-goto-line)             ; was: goto-line
          ("M-g M-g" . consult-goto-line)           ; was: goto-line
          ("M-g o" . consult-outline)               ; Alternative: consult-org-heading

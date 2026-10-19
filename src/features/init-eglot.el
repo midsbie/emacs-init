@@ -20,8 +20,7 @@
 
 ;;; Commentary:
 
-;; This tutorial documents a user's journey to Eglot from LSP:
-;; https://andreyor.st/posts/2023-09-09-migrating-from-lsp-mode-to-eglot/
+;; Eglot is the language server client for all supported programming modes.
 
 ;;; Code:
 
@@ -215,8 +214,6 @@ to the same state."
               ("C-c l t h" . init/eglot/toggle-inlay-hints)
               )
 
-  ;; Most the customizations below were inspired by the tutorial referenced in
-  ;; the Commentary section.
   :custom
   (eglot-autoshutdown t)
   ;; Other features one might consider disabling:

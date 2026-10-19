@@ -25,9 +25,6 @@
 
 ;;; Log:
 ;;;
-;; 260323 Reverted to using `lsp' as an experiment to solve weird performance
-;;        issues under eglot.
-;;
 ;; xxxxxx React's jsx files are best loaded under web mode.  However, we're now
 ;;        using web-mode as the default mode for all things Javascript.
 ;;
@@ -78,15 +75,7 @@
 
   ;; javascript: make case indentation at the same level as the parent switch
   ;; statement.
-  (add-to-list 'web-mode-indentation-params '("case-extra-offset" . nil))
-
-  ;; Disable `flycheck-mode' for buffers where the eslint checker does not
-  ;; apply and would produce false positives.
-  (let ((ext (file-name-extension (buffer-file-name))))
-    (cond ((eq (string-match "^\\(css\\|html\\|less\\)$" ext) 0)
-           (when (and (boundp 'flycheck-mode) flycheck-mode)
-             (message "warn: flycheck-mode disabled")
-             (flycheck-mode -1))))))
+  (add-to-list 'web-mode-indentation-params '("case-extra-offset" . nil)))
 
 (defun init/web-mode/load-local-vars ()
   "Map the value of `c-basic-offset' to `web-mode-code-indent-offset'."

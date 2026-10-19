@@ -146,21 +146,20 @@
 
   ;; Delete all trailing whitespace before saving.  -100 argument makes it so
   ;; this particular hook runs before any other, which fixes a number of issues
-  ;; in some modes where LSP's own buffer formatting function would run ahead of
+  ;; in some modes where the server's buffer formatting would run ahead of
   ;; 'delete-trailing-whitespace but the whitespace would not be removed for
   ;; some reason.  Modes in which this was observed include `sh-mode'.
   (add-hook 'before-save-hook 'delete-trailing-whitespace -100 t) ; local hook
   (setq-local show-trailing-whitespace t)
 
-  ;; Attempt to run the language server for the active programming mode and
-  ;; enable tree-sitter.
+  ;; Start Eglot for the active programming mode.
   (init/run-language-server))
 
 (defun init/common-nonweb-programming-mode ()
   "Perform initialisation of aspects common to all programming-related modes."
   ;; NOTE: we are explicitly disabling `flyspell-mode' since it suffers from
   ;; very annoying, intrusive issues that actually impede development.
-  ;;(flyspell-prog-mode)              ; turn spell check for strings and comments
+  ;;(flyspell-prog-mode)            ; turn spell check for strings and comments
 
   ;; `c-auto-newline' was previously disabled and done so for a reason. Have
   ;; just tested it and seemed fine whilst editing a C source file but may not
@@ -185,7 +184,7 @@
   ;;
   ;; - `prettier-mode' to work
   ;;
-  ;; - LSP to correctly identify the `ts-ls' language server for Typescript
+  ;; - Eglot to find the TypeScript language server for Typescript
   ;;   source files.
   ;;
   ;; [31Oct22] The `add-node-modules-path' package is no longer used because
@@ -281,43 +280,9 @@ running the eslint tool in blocking mode."
       (revert-buffer t t t))))
 
 (defun init/run-language-server ()
-  ;; The following comments in modes/init-js.el kept for posteriority.
-  ;; ---
-  ;; Was activating flow minor mode previously:
-  ;;
-  ;;   (when (flycheck-flow--predicate)
-  ;;     (flow-minor-mode 1))
-  ;;
-  ;; Then support transitioned to LSP for Flow source files and to eglot for all
-  ;; other source files:
-  ;;
-  ;;   (cond
-  ;;    ((flycheck-flow--predicate)
-  ;;     (lsp-deferred))
-  ;;    (t
-  ;;     (eglot-ensure)))
-  ;;
-  ;; Now exclusively using eglot.
-  (init/run--explicit-language-server (init/get-language-server major-mode)))
-
-(defun init/get-language-server (mode)
-  "Retrieve the appropriate Language Server Protocol (LSP) client for the given MODE.
-
-This function checks the `init/language-server-map-to-major-modes' alist
-to determine the LSP client associated with the specified MODE. If an
-explicit entry is found, the corresponding LSP client is
-returned. Otherwise, it defaults to the value of
-`init/default-language-server-client'. If no default is set, the
-function returns `eglot' as the fallback LSP client."
-  (let ((lsl (assoc mode init/language-server-map-to-major-modes)))
-    (if lsl
-        (cdr lsl)
-      (or init/default-language-server-client 'eglot))))
-
-(defun init/run--explicit-language-server (ls)
-  (cl-case ls
-    (eglot (eglot-ensure))
-    (lsp (lsp-deferred))))
+  "Start Eglot unless the current mode is in `init/eglot-disabled-modes'."
+  (unless (apply #'derived-mode-p init/eglot-disabled-modes)
+    (eglot-ensure)))
 
 (defun init/buffer-formatting-inhibited-p ()
   "Returns t if master circuit breaker preventing buffer formatting is
@@ -329,19 +294,17 @@ enabled."
 
 Formats the current buffer if formatting isn't inhibited.  Runs a custom
 formatter function, if one is specified in
-`init/buffer-format-handlers-alist', otherwise runs default LSP server
-formatter if neither `prettier-mode' nor `format-all-mode' are enabled."
+`init/buffer-format-handlers-alist', otherwise formats through Eglot
+if neither `prettier-mode' nor `format-all-mode' are enabled."
   (unless (init/buffer-formatting-inhibited-p)
     (if-let* ((formatter (init/get-format-buffer-function-for-mode major-mode)))
         (funcall formatter)
       (unless (or
                (and (boundp 'prettier-mode) prettier-mode)
                (and (boundp 'format-all-mode) format-all-mode))
-        ;; Both clients load lazily, and their mode hooks also run when a
-        ;; buffer stops being managed, so either mode variable may be unbound.
-        (cond
-         ((bound-and-true-p eglot--managed-mode) (eglot-format-buffer))
-         ((bound-and-true-p lsp-mode) (lsp-format-buffer)))))))
+        ;; Eglot loads lazily, so its mode variable may be unbound.
+        (when (bound-and-true-p eglot--managed-mode)
+          (eglot-format-buffer))))))
 
 (defun init/get-format-buffer-function-for-mode (mode)
   "Get the save function for the current buffer's major mode."

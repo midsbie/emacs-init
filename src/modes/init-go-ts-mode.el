@@ -21,17 +21,6 @@
 ;;; Commentary:
 ;;
 
-;;; Log:
-;;
-;; 260323 Reverted to using `lsp' when js, typescript and web modes were
-;;        switched over.
-;;
-;; 280722 Switched exclusively to `eglot'
-;;
-;; 130720 Remove dependency on go-autocomplete in favour of lsp-server and
-;;        company-mode.
-;;
-
 ;;; Code:
 
 (defun init/go-ts-mode/config ()

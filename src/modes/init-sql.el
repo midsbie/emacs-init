@@ -24,12 +24,12 @@
 
 ;;; Code:
 
-(defun init/sql-mode/enable ()
+(defun init/sql/enable ()
   (init/common-programming-mode))
 
 (use-package sql
   :ensure nil
-  :hook (sql-mode . init/sql-mode/enable))
+  :hook (sql-mode . init/sql/enable))
 
 (provide 'init-sql)
 

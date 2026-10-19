@@ -147,7 +147,7 @@
 
 ;; PERFORMANCE OPTIMIZATIONS
 ;; -----------------------------------------------------------------------------
-;; `gc-cons-threshold' is managed by `gcmh-mode' (see config/init-features.el).
+;; `gc-cons-threshold' is managed by `gcmh-mode' (see features/init-gcmh.el).
 ;;
 ;; Documentation of `read-process-output-max' states that "on GNU/Linux systems,
 ;; the value should not exceed /proc/sys/fs/pipe-max-size".

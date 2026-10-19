@@ -29,21 +29,15 @@
 
 ;;; Code:
 
-(defun init/which-key ()
-  "Initialise the `which-key' package."
-  ;; Make sure which-key doesn't show automatically, as is default behavior, and
-  ;; refreshes quickly after it is triggered.
-  (setq which-key-idle-delay            10000.0
-        which-key-idle-secondary-delay  0.05
-        ;; Allow C-? to trigger which-key manually
-        which-key-show-early-on-C-h     t
-        which-key-side-window-max-width 0.5))
-
 (use-package which-key
   :ensure nil
   :diminish
-  :init
-  (init/which-key)
+  :custom
+  ;; Show only when requested, then refresh quickly.
+  (which-key-idle-delay 10000.0)
+  (which-key-idle-secondary-delay 0.05)
+  (which-key-show-early-on-C-h t)
+  (which-key-side-window-max-width 0.5)
   :config
   (which-key-setup-side-window-right-bottom)
   (which-key-mode))

@@ -72,7 +72,7 @@ particular FILE-NAME and MODE."
     ;; Javascript code.
     (js-ts-mode)))
 
-(defun init/js-mode/enable ()
+(defun init/js/enable ()
   "Configures modes related to Javascript development."
   (init/common-web-programming-mode))
 
@@ -82,11 +82,10 @@ particular FILE-NAME and MODE."
 
 (use-package js
   :ensure nil
-  :diminish "JS"
   :mode (("\\.jsx?\\'" . init/determine-js-mode)
          ("\\.mjs\\'" . init/determine-js-mode))
   :interpreter (("node\\(?:js\\)?" . init/determine-js-mode))
-  :hook (((js-ts-mode js-mode js-jsx-mode) . init/js-mode/enable)))
+  :hook (((js-ts-mode js-mode js-jsx-mode) . init/js/enable)))
 
 (provide 'init-js)
 

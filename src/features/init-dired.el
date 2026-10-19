@@ -29,10 +29,6 @@
   :custom
   (dired-dwim-target t))
 
-(use-package dired-x
-  :ensure nil
-  :after (dired))
-
 (provide 'init-dired)
 
 ;;; init-dired.el ends here

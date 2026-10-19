@@ -26,30 +26,23 @@
 
 (use-package orderless
   :demand
+  :custom
+  (completion-styles '(orderless basic substring flex initials partial-completion))
+  (orderless-matching-styles '(orderless-literal orderless-regexp))
+  ;; partial-completion handles file and TRAMP completion before Orderless.
+  (completion-category-overrides
+   '((file (styles partial-completion orderless+initialism))
+     (buffer (styles orderless+initialism))
+     (consult-multi (styles orderless+initialism))
+     (command (styles orderless+initialism))
+     (variable (styles orderless+initialism))
+     (symbol (styles orderless+initialism))))
   :config
-  ;; Taken from:
-  ;; https://www.reddit.com/r/emacs/comments/o9pue1/comment/h3cpr9x/
+  ;; Register the named style before any completion can use these settings.
   (orderless-define-completion-style orderless+initialism
     (orderless-matching-styles '(orderless-initialism orderless-literal orderless-regexp)))
-
-  (setq completion-styles '(orderless basic substring flex initials
-                                      partial-completion))
-
-  (setq completion-category-defaults nil
-        orderless-matching-styles    '(orderless-literal orderless-regexp))
-
-  (setq completion-category-overrides
-        ;; The documentation states that "basic completion style needs to be
-        ;; tried first (not as a fallback) for TRAMP hostname completion to
-        ;; work", however the partial-completion style seems to work just as
-        ;; fine.
-        '((file (styles partial-completion orderless+initialism))
-          (buffer (styles orderless+initialism))
-          (consult-multi (styles orderless+initialism))
-          (command (styles orderless+initialism))
-          (variable (styles orderless+initialism))
-          (symbol (styles orderless+initialism))))
-  )
+  ;; This is an ordinary variable, not a user option.
+  (setq completion-category-defaults nil))
 
 (provide 'init-orderless)
 

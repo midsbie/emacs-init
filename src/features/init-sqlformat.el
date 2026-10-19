@@ -24,14 +24,10 @@
 
 ;;; Code:
 
-(defun init/sqlformat/config ()
-  "Configure `sqlformat' package."
-  (setq sqlformat-command 'pgformatter
-        sqlformat-args '("-s2" "-g" "-w80"))
-)
-
 (use-package sqlformat
-  :config (init/sqlformat/config))
+  :custom
+  (sqlformat-command 'pgformatter)
+  (sqlformat-args '("-s2" "-g" "-w80")))
 
 (provide 'init-sqlformat)
 

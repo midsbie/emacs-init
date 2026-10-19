@@ -1,4 +1,4 @@
-;;; init-all-the-icons.el --- Configures all-the-icons and related packages  -*- lexical-binding: t; -*-
+;;; init-all-the-icons.el --- Configures all-the-icons  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2021-2026  Miguel Guedes
 
@@ -19,31 +19,12 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;; This module configures the all-the-icons package but also all packages
-;; related to it.
-
-;;
+;; Companion integrations have their own init-all-the-icons-*.el modules.
 
 ;;; Code:
 
 ;; Ref: https://github.com/domtronn/all-the-icons.el
 (use-package all-the-icons)
-
-;; Ref: https://github.com/wyuenho/all-the-icons-dired
-(use-package all-the-icons-dired
-  :diminish
-  :hook ((dired-mode . all-the-icons-dired-mode)))
-
-(use-package all-the-icons-completion
-  :config
-  ;; This package doesn't seem to do anything but here for now while it is
-  ;; evaluated.
-  ;; Ref: https://github.com/iyefrat/all-the-icons-completion
-  (all-the-icons-completion-mode))
-
-;; Ref: https://github.com/seagle0128/all-the-icons-ibuffer
-(use-package all-the-icons-ibuffer
-  :config (all-the-icons-ibuffer-mode 1))
 
 (provide 'init-all-the-icons)
 

@@ -64,8 +64,6 @@ which clipboard consumers commonly render as five replacement characters."
                  nil
                  (window-parameters (mode-line-format . none)))))
 
-(use-package embark-consult)
-
 (provide 'init-embark)
 
 ;;; init-embark.el ends here

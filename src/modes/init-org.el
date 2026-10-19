@@ -35,7 +35,7 @@
                     (buffer-list)))
   (message "Killed all Org-mode buffers"))
 
-(defun init/org-mode/enable ()
+(defun init/org/enable ()
   "Enhance `org-mode' with visual and behavior tweaks."
   (org-indent-mode 1)
   (visual-line-mode 1)
@@ -46,7 +46,7 @@
 
 (use-package org
   :ensure nil
-  :hook (org-mode . init/org-mode/enable)
+  :hook (org-mode . init/org/enable)
   :bind
   (("C-c a a" . org-agenda-list)
    ("C-c a t" . org-todo-list)
@@ -60,8 +60,9 @@
   (org-clock-persist 'history)
   (org-confirm-babel-evaluate nil)
   (org-directory "~/documents/org")
-  (org-startup-with-inline-images t)
-  (org-use-fast-todo-selection t)
+  (org-default-notes-file (concat org-directory "/notes.org"))
+  (org-startup-with-link-previews t)
+  (org-use-fast-todo-selection 'auto)
 
   (org-todo-keywords
    '((sequence "TODO(t)" "IN-PROGRESS(p!)" "WAIT(w@/!)"
@@ -82,8 +83,6 @@
      ("ONGOING" . (:foreground "orange" :weight bold))))
   :config
   (org-clock-persistence-insinuate)
-  (setq org-default-notes-file (concat org-directory "/notes.org"))
-
   (add-hook 'org-babel-after-execute-hook #'org-link-preview-region)
 )
 

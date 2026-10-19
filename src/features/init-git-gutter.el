@@ -21,80 +21,28 @@
 ;;; Commentary:
 ;; Project hosted on Github: https://github.com/emacsorphanage/git-gutter
 ;;
-;; A separate configuration for `git-gutter-fringe' is not provided because the
-;; interface is identical to `git-gutter' and it automatically defaults to the
-;; latter if not running in a graphical environment.
+;; Fringe rendering is configured in init-git-gutter-fringe.el.
 
 ;;; Code:
 
-(defun init/git-gutter ()
-  "Initialise git-gutter."
-  ;; The form `(use-package 'git-gutter-fringer)` did not work, but this did:
-  (require 'git-gutter-fringe)
-
-  (let ((prefix "C-x C-g "))
-    (global-set-key (kbd (concat prefix "!")) #'git-gutter)
-    (global-set-key (kbd (concat prefix "=")) #'git-gutter:popup-hunk)
-
-    ;; Jump to next/previous hunk
-    (global-set-key (kbd (concat prefix "p")) #'git-gutter:previous-hunk)
-    (global-set-key (kbd (concat prefix "n")) #'git-gutter:next-hunk)
-
-    ;; Stage current hunk
-    (global-set-key (kbd (concat prefix "s")) #'git-gutter:stage-hunk)
-
-    ;; Revert current hunk
-    (global-set-key (kbd (concat prefix "r")) #'git-gutter:revert-hunk)
-
-    ;; Mark current hunk
-    (global-set-key (kbd (concat prefix "SPC")) #'git-gutter:mark-hunk))
-
-  (dolist (sym '(git-gutter-fr:added git-gutter-fr:modified git-gutter-fr:deleted))
-    (fringe-helper-define sym nil
-      "....XXXX"
-      "....XXXX"
-      "....XXXX"
-      "....XXXX"
-      "....XXXX"
-      "....XXXX"
-      "....XXXX"
-      "....XXXX"
-      "....XXXX"
-      "....XXXX"
-      "....XXXX"
-      "....XXXX"
-      "....XXXX"
-      "....XXXX"
-      "....XXXX"
-      "....XXXX"))
-
-  (setq git-gutter:update-interval 2
-        git-gutter:lighter ""
-        git-gutter:hide-gutter t)
-
-  (run-with-timer 2 nil #'(lambda ()
-                            (let* ((fringe-bg (face-attribute 'fringe :background)))
-                              (set-face-foreground 'git-gutter-fr:modified "SkyBlue3")
-                              (set-face-background 'git-gutter-fr:modified fringe-bg)
-                              (set-face-foreground 'git-gutter-fr:added "dark green")
-                              (set-face-background 'git-gutter-fr:added fringe-bg)
-                              (set-face-foreground 'git-gutter-fr:deleted "dark red")
-                              (set-face-background 'git-gutter-fr:deleted fringe-bg)
-
-                              (set-face-background 'git-gutter:modified "SkyBlue3")
-                              (set-face-background 'git-gutter:added "dark green")
-                              (set-face-background 'git-gutter:deleted "dark red"))))
-
-  (setq git-gutter:modified-sign "*"))
-
-;; Declared ahead of `git-gutter', whose :init requires it.
-(use-package git-gutter-fringe
-  :defer t)
-
 (use-package git-gutter
+  :demand t
   :diminish
-  :init (init/git-gutter)
-  :config (global-git-gutter-mode t))
+  :bind (("C-x C-g !" . git-gutter)
+         ("C-x C-g =" . git-gutter:popup-hunk)
+         ("C-x C-g p" . git-gutter:previous-hunk)
+         ("C-x C-g n" . git-gutter:next-hunk)
+         ("C-x C-g s" . git-gutter:stage-hunk)
+         ("C-x C-g r" . git-gutter:revert-hunk)
+         ("C-x C-g SPC" . git-gutter:mark-hunk))
+  :custom
+  (git-gutter:update-interval 2)
+  (git-gutter:lighter "")
+  (git-gutter:hide-gutter t)
+  (git-gutter:modified-sign "*")
+  :config
+  (require 'git-gutter-fringe)
+  (global-git-gutter-mode 1))
 
 (provide 'init-git-gutter)
 

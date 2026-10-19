@@ -201,6 +201,9 @@ to the same state."
 
 (use-package eglot
   :ensure nil
+  :init
+  ;; This is an ordinary variable, so Custom cannot defer its initialization.
+  (setq eglot-stay-out-of '(yasnippet))
   :config (init/eglot/config)
   ;; NOTE: the hook is appended via `init/eglot/config' so that it runs AFTER
   ;; eglot's own default hooks (which auto-enable `eglot-inlay-hints-mode').
@@ -237,8 +240,7 @@ to the same state."
      :foldingRangeProvider
      ;; Eglot 1.20 (Emacs 31) paints LSP semantic tokens over tree-sitter's
      ;; faces, e.g. mapping the `static' modifier to `font-lock-keyword-face'.
-     :semanticTokensProvider))
-  (eglot-stay-out-of '(yasnippet)))
+     :semanticTokensProvider)))
 
 (provide 'init-eglot)
 

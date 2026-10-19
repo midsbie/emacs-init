@@ -48,13 +48,13 @@ all JS/X buffers."
   :group 'init/prettier-mode
   :type 'boolean)
 
-(defun init/prettier-mode/enable-in-buffer (buffer)
+(defun init/prettier/enable-in-buffer (buffer)
   "Turn on `prettier-mode' in BUFFER if it is still live."
   (when (buffer-live-p buffer)
     (with-current-buffer buffer
       (prettier-mode 1))))
 
-(defun init/prettier-mode/maybe-enable ()
+(defun init/prettier/maybe-enable ()
   "Turn on `prettier-mode' selectively.
 
 This function checks if the current buffer's file is within a repository
@@ -69,7 +69,7 @@ save. Strangely this only happens when LSP is active."
     (when (and (or init/enable-prettier-mode
                (my/locate-file-in-dominating-node-modules ".bin/prettier" default-directory))
            (not (my/dir-is-parent-p "node_modules" default-directory)))
-      (run-with-idle-timer .1 nil #'init/prettier-mode/enable-in-buffer
+      (run-with-idle-timer .1 nil #'init/prettier/enable-in-buffer
                            (current-buffer)))))
 
 (use-package prettier
@@ -83,7 +83,7 @@ save. Strangely this only happens when LSP is active."
                     css-ts-mode typescript-ts-mode tsx-ts-mode js-ts-mode
                     ;; Deprecated modes
                     js2-mode)
-         . init/prettier-mode/maybe-enable))
+         . init/prettier/maybe-enable))
 
 (provide 'init-prettier)
 

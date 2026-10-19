@@ -27,8 +27,8 @@
 (use-package goggles
   :diminish
   :hook ((prog-mode text-mode) . goggles-mode)
-  :config
-  (setq-default goggles-pulse t))
+  :custom
+  (goggles-pulse t))
 
 (provide 'init-goggles)
 

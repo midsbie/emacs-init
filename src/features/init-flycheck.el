@@ -44,13 +44,6 @@
   (global-flycheck-mode 1)
   (require 'flycheck-flow)
 
-  ;; + in c/c++ modes
-  (setq flycheck-cppcheck-checks '("all"))
-
-  ;; + in `php-mode'
-  (setq flycheck-phpmd-rulesets '("cleancode" "codesize" "controversial"
-                                  "design" "naming" "unusedcode"))
-
   ;; + in `web-mode'
   ;; NOTE: htmltidy and csslint have been disabled since flycheck does not
   ;; support more than one linter per major mode; specifically, all the
@@ -132,23 +125,20 @@
           (setq curdir (file-name-directory (directory-file-name curdir))))))))
 
 (defun init/flycheck/chain-eslint-checker ()
-  "Add javascript-eslint checker.
-
-This function adds the javascript-eslint checker to the current
-checkers after `lsp-diagnostics-mode' is loaded.  Attempting to
-add the the checker before the load occurs fails with an error
-because the checker does not exist."
-  ;; Safe: hooked to `lsp-diagnostics-mode' (guarantees lsp-mode is loaded)
-  ;; from within `use-package flycheck' (guarantees flycheck is loaded).
-  (when (and flycheck-mode lsp-diagnostics-mode)
+  "Chain ESLint after LSP when Flycheck is the active diagnostics backend."
+  ;; This hook also runs when diagnostics is disabled or uses Flymake, which
+  ;; need not load Flycheck or register its LSP checker.
+  (when (and (bound-and-true-p lsp-diagnostics-mode)
+             (bound-and-true-p lsp-diagnostics--flycheck-enabled)
+             (bound-and-true-p flycheck-mode))
     (flycheck-add-next-checker 'lsp 'javascript-eslint)))
-
-;; Declared ahead of `flycheck', whose :config loads it.
-(use-package flycheck-flow
-  :defer t)
 
 (use-package flycheck
   :diminish
+  :custom
+  (flycheck-cppcheck-checks '("all"))
+  (flycheck-phpmd-rulesets '("cleancode" "codesize" "controversial"
+                           "design" "naming" "unusedcode"))
   ;; Not activating flycheck-popup-tip-mode because error messages frequently
   ;; do not respect boundaries of the window, often making it impossible to
   ;; read the full message.

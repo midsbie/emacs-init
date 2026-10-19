@@ -31,13 +31,6 @@
 (load-theme 'wombat t)
 (load-theme 'my-term-dark t)
 
-;; Enable system clipboard integration in terminal.  Skipped on hosts without a
-;; clipboard tool (e.g. headless servers), where `xclip-mode' signals an error.
-(use-package xclip
-  :config
-  (when (executable-find xclip-program)
-    (xclip-mode 1)))
-
 (provide 'init-term)
 
 ;;; init-term.el ends here

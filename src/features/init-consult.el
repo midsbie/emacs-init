@@ -122,11 +122,12 @@ also go through `consult-xref' and are left alone."
   ;; register formatting, adds thin separator lines, register sorting and hides
   ;; the window mode line.
   (advice-add #'register-preview :override #'consult-register-window)
-  (setq register-preview-delay 0.5)
-
+  :custom
+  (register-preview-delay 0.5)
   ;; Use Consult to select xref locations with preview
-  (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref)
+  (xref-show-xrefs-function #'consult-xref)
+  (xref-show-definitions-function #'consult-xref)
+  (consult-narrow-key "<")
 
   ;; Configure other variables and modes in the :config section, after lazily
   ;; loading the package.
@@ -152,10 +153,6 @@ also go through `consult-xref' and are left alone."
    consult-xref
    :initial (init/consult/xref-initial-input))
 
-  ;; Optionally configure the narrowing key.
-  ;; Both < and C-+ work reasonably well.
-  (setq consult-narrow-key "<") ;; (kbd "C-+")
-
   ;; Optionally make narrowing help available in the minibuffer.
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
   ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
@@ -173,9 +170,6 @@ also go through `consult-xref' and are left alone."
   ;;;; 4. locate-dominating-file
   ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
   )
-
-(use-package consult-flycheck
-  :defer t)
 
 (provide 'init-consult)
 

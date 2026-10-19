@@ -61,7 +61,7 @@
 
 ;;; Code:
 
-(defun init/python-mode/enable ()
+(defun init/python/enable ()
   "Customise `python-mode'."
 
   (init/common-nonweb-programming-mode)
@@ -72,10 +72,7 @@
   :ensure nil
   :mode (("\\.py\\'" . python-ts-mode))
   :interpreter (("python[0-9.]*" . python-ts-mode))
-  :hook ((python-mode python-ts-mode) . init/python-mode/enable))
-
-(use-package ruff-format
-  :defer t)
+  :hook ((python-mode python-ts-mode) . init/python/enable))
 
 (provide 'init-python)
 

@@ -105,8 +105,7 @@
 (use-package neotree
   :init
      (setq neo-window-width 50
-           neo-smart-open   t
-           neo-theme        "nerd"))
+           neo-smart-open   t))
 
 (use-package recursion-indicator
   :demand t

@@ -73,7 +73,7 @@
 
 ;; Coding-related
 (setq-default comment-multi-line    t
-  comment-style                     'multi
+  comment-style                     'multi-line
   vc-follow-symlinks                t   ; follow symlinks instead of prompting
   )
 

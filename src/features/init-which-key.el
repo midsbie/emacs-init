@@ -33,7 +33,7 @@
   "Initialise the `which-key' package."
   ;; Make sure which-key doesn't show automatically, as is default behavior, and
   ;; refreshes quickly after it is triggered.
-  (setq which-key-idle-delay            10000
+  (setq which-key-idle-delay            10000.0
         which-key-idle-secondary-delay  0.05
         ;; Allow C-? to trigger which-key manually
         which-key-show-early-on-C-h     t

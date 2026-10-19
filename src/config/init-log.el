@@ -25,7 +25,7 @@
 ;;; Code:
 
 (eval-after-load 'add-log
-  '(setq change-log-default-name "CHANGELOG"))
+  '(setopt change-log-default-name "CHANGELOG"))
 
 (provide 'init-log)
 

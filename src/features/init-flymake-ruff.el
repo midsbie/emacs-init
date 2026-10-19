@@ -47,12 +47,12 @@ so do that here."
   ;;                 args))
   ;;
   ;; Change the first line to: (args (if (and nil code-filename)
-  (setq flymake-ruff-program-args
-        (let ((default-args flymake-ruff-program-args))
-          (if (and (equal (car default-args) "check")
-                   (not (member "--no-cache" default-args)))
-              (append '("check" "--no-cache") (cdr default-args))
-            default-args))))
+  (setopt flymake-ruff-program-args
+          (let ((default-args flymake-ruff-program-args))
+            (if (and (equal (car default-args) "check")
+                     (not (member "--no-cache" default-args)))
+                (append '("check" "--no-cache") (cdr default-args))
+              default-args))))
 
 (provide 'init-flymake-ruff)
 

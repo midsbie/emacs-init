@@ -33,6 +33,8 @@
   :mode (("\\.jsx?\\'" . js-ts-mode)
          ("\\.mjs\\'" . js-ts-mode))
   :interpreter (("node\\(?:js\\)?" . js-ts-mode))
+  :custom
+  (js-indent-level 2)
   :hook (((js-ts-mode js-mode js-jsx-mode) . init/js/enable)))
 
 (provide 'init-js)

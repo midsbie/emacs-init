@@ -40,6 +40,6 @@
 (load (expand-file-name "early-init" (file-name-directory (file-truename load-file-name)))
       nil 'nomessage)
 (package-activate-all)
-(setq use-package-always-ensure t)
+(setopt use-package-always-ensure t)
 
 ;;; debug-init.el ends here

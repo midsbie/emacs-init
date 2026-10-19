@@ -27,7 +27,7 @@
 ;; Settings
 ;; ----------------------------------------
 ; Don't ask to save buffers when running `grep-find'
-(setq-default grep-save-buffers nil)
+(setopt grep-save-buffers nil)
 
 (setq my/git-grep-find-command '("git --no-pager grep -nP '%SUBJECT%' -- :/" . 26))
 

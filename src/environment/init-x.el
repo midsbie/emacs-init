@@ -25,7 +25,7 @@
 ;;; Code:
 
 (when window-system
-  (setq speedbar-use-images nil)          ; do not use icons in `speedbar-mode'
+  (setopt speedbar-use-images nil)        ; do not use icons in `speedbar-mode'
 
   ;; Uncomment if desired that the window should be maximised
   ; (toggle-frame-maximized)
@@ -40,7 +40,7 @@
   (global-hl-line-mode 1)
 
   ;; Enable clipboard functionality
-  (setq select-enable-clipboard     t)
+  (setopt select-enable-clipboard t)
 
 
   ;; Default face font (theme handles colors).  Keep it in step with the

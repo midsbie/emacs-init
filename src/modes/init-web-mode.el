@@ -53,9 +53,9 @@
   (setq-local web-mode-comment-style            2)
   (setq-local web-mode-attr-value-indent-offset 2)
 
-  (setq-local web-mode-css-colorization                 t)
-  (setq-local web-mode-auto-pairs                       t)
-  (setq-local web-mode-comment-keywords                 t)
+  (setq-local web-mode-enable-css-colorization          t)
+  (setq-local web-mode-enable-auto-pairing              t)
+  (setq-local web-mode-enable-comment-interpolation     t)
   (setq-local web-mode-enable-current-element-highlight t)
 
   (local-set-key "."  #'(lambda ()

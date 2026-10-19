@@ -82,7 +82,7 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
 
 ;; Custom saves customizations here rather than in this file.  The file is
 ;; loaded last, below.
-(setq custom-file (locate-user-emacs-file "custom.el"))
+(setopt custom-file (locate-user-emacs-file "custom.el"))
 
 (message "[init] starting")
 (add-hook 'after-init-hook 'init/post-init)
@@ -99,7 +99,7 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
 ;; `:ensure nil' is required only on built-ins that package.el does not list
 ;; (e.g. dired, nxml-mode, text-mode), but goes on every built-in so that no one
 ;; has to check.  It is unnecessary with `:vc', which ignores `:ensure'.
-(setq use-package-always-ensure t)
+(setopt use-package-always-ensure t)
 
 ;; Make the modules loadable and the themes in themes/ available to
 ;; `load-theme'.  `file-truename' resolves the symlink this file is loaded
@@ -107,7 +107,7 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
 (let ((base (file-name-directory (file-truename (or load-file-name buffer-file-name)))))
   (dolist (dir '("config" "features" "modes" "environment"))
     (add-to-list 'load-path (expand-file-name dir base)))
-  (setq custom-theme-directory (expand-file-name "themes/" base)))
+  (setopt custom-theme-directory (expand-file-name "themes/" base)))
 
 ;; Each module may rely on those required before it.
 ;; Core settings are independent of package configuration.

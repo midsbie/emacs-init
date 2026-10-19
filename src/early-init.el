@@ -29,28 +29,28 @@
 ;; Packages install on first launch into the gitignored elpa/ directory at the
 ;; root of the repository.  `file-truename' resolves the symlink this file is
 ;; loaded through.
-(setq package-user-dir
-      (expand-file-name "../elpa" (file-name-directory (file-truename load-file-name))))
+(setopt package-user-dir
+        (expand-file-name "../elpa" (file-name-directory (file-truename load-file-name))))
 
 ;; Setup package archives
-(setq package-archives
-      '(("GNU ELPA" . "https://elpa.gnu.org/packages/")
-        ("MELPA stable" . "https://stable.melpa.org/packages/")
-        ("MELPA unstable" . "https://melpa.org/packages/")
-        ("NON-GNU" . "https://elpa.nongnu.org/nongnu/"))
-      package-archive-priorities
-      '(
-        ;; MELPA stable disabled as not all packages support stable channel
-        ;; ("MELPA stable" . 10)
-        ("MELPA unstable" . 9)
-        ("GNU ELPA" . 5)))
+(setopt package-archives
+        '(("GNU ELPA" . "https://elpa.gnu.org/packages/")
+          ("MELPA stable" . "https://stable.melpa.org/packages/")
+          ("MELPA unstable" . "https://melpa.org/packages/")
+          ("NON-GNU" . "https://elpa.nongnu.org/nongnu/"))
+        package-archive-priorities
+        '(
+          ;; MELPA stable disabled as not all packages support stable channel
+          ;; ("MELPA stable" . 10)
+          ("MELPA unstable" . 9)
+          ("GNU ELPA" . 5)))
 
 ;; Activate packages from one precomputed autoloads file, which package.el
 ;; regenerates whenever it installs or deletes a package.
-(setq package-quickstart t)
+(setopt package-quickstart t)
 
 ;; Avoid loading byte-compiled packages that are older than the source file.
-(setq load-prefer-newer t)
+(setopt load-prefer-newer t)
 
 ;; Turned off here so that the first frame is not drawn with them.  Builds
 ;; without a window system do not define the tool bar or scroll bar modes.

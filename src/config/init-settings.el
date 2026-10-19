@@ -39,7 +39,7 @@
       )
 
 ;; Assorted settings
-(setq-default
+(setopt
  enable-recursive-minibuffers t         ; allow recursive editing in minibuffer
  truncate-lines               t         ; don't wrap, truncate lines by default
  echo-keystrokes              0.2       ; show keystrokes as they're happen
@@ -64,28 +64,26 @@
 
 ;; Column
 (column-number-mode 1)
-(setq-default fill-column init/defaults/fill-column)
+(setopt fill-column init/defaults/fill-column)
 
 ;; Indentation
-(setq-default indent-tabs-mode      nil
-              standard-indent       2
-              tab-width             2)
+(setopt indent-tabs-mode nil
+        standard-indent  2
+        tab-width        2)
 
 ;; Coding-related
-(setq-default comment-multi-line    t
-  comment-style                     'multi-line
-  vc-follow-symlinks                t   ; follow symlinks instead of prompting
-  )
+(setopt comment-multi-line t
+        comment-style     'multi-line
+        vc-follow-symlinks t)          ; follow symlinks instead of prompting
 
 ;; Backups
-(setq backup-directory-alist        `(("." . "~/.emacs.d/backups"))
-      backup-by-copying             t   ; place backup files in `backups`
-      delete-old-versions           t
-      kept-new-versions             20
-      kept-old-versions             5
-      version-control t                 ; use version numbers on backups
-      )
-(setq create-lockfiles nil)             ; do not create lock files
+(setopt backup-directory-alist `(("." . "~/.emacs.d/backups"))
+        backup-by-copying      t       ; place backup files in `backups`
+        delete-old-versions    t
+        kept-new-versions      20
+        kept-old-versions      5
+        version-control        t)      ; use version numbers on backups
+(setopt create-lockfiles nil)          ; do not create lock files
 
 ;; Set calendar's week start day to Monday and not Sunday, as by default.
 (setopt calendar-week-start-day 1)
@@ -157,7 +155,7 @@
 
 ;; Some settings that may help with redisplay
 ;; Ref: [4:25] https://200ok.ch/posts/2020-10-01_introduction_to_profiling_in_emacs.html
-(setq-default bidi-paragraph-direction 'left-to-right)
+(setopt bidi-paragraph-direction 'left-to-right)
 (setq bidi-inhibit-bpa t)
 
 ;; The `list-timers' command is super useful when debugging high CPU usage
@@ -172,7 +170,7 @@
 (let (p)
   (dotimes (i 50)
     (setq p (cons (* 2 i) p)))
-  (setq tab-stop-list (reverse p)))
+  (setopt tab-stop-list (reverse p)))
 
 (fset 'yes-or-no-p 'y-or-n-p)           ; accept 'y' or 'n' instead of yes/no
 
@@ -203,9 +201,8 @@
         split-height-threshold  nil)
 
 ;; Do not allow the cursor in the minibuffer prompt
-(setq minibuffer-prompt-properties
-      '(read-only t cursor-intangible t face minibuffer-prompt))
-(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+(setopt minibuffer-prompt-properties
+        '(read-only t cursor-intangible t face minibuffer-prompt))
 
 ;; Stop the *Warnings* buffer from popping up intrusively and stealing focus.
 ;; `display-warning' tags its display request with the `warning' category, so

@@ -86,12 +86,9 @@
 ;; Default settings
 ;; - This cannot be a string because `vala-mode' expects it to be an assoc list
 ;;   and errors out during initialization otherwise.
+;; - Custom's type omits `vala-mode', so `setopt' would warn about this value.
 (setq-default c-default-style    '((vala-mode . "default")
                                    (other . "default")))
-;; - Etc
-(setq-default tab-width          2
-              indent-tabs-mode   nil
-              js-indent-level    2)
 
 ;; Tree-sitter
 ;; - Apply all available syntax highlighting

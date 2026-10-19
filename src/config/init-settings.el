@@ -52,6 +52,9 @@
  uniquify-buffer-name-style   'forward
  )
 
+;; Use text symbols for tree widgets.
+(setopt tree-widget-image-enable nil)
+
 ;; This measure is needed to prevent tramp from hanging at startup as it tries
 ;; to conduct a strange check on the system's host.
 ;;

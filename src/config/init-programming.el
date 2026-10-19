@@ -95,7 +95,7 @@
 
 ;; Tree-sitter
 ;; - Apply all available syntax highlighting
-(setq-default treesit-font-lock-level 4)
+(setopt treesit-font-lock-level 4)
 
 ;; Set the extra indentation before a substatement (e.g. the opening brace in
 ;; the consequent block of an if statement) to 0 (instead of '+)

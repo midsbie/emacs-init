@@ -34,26 +34,26 @@
 ;; GENERAL CONFIGURATION
 ;; -----------------------------------------------------------------------------
 ;; Emacs initialization
-(setq inhibit-splash-screen   t         ; Disable splash screen
-      initial-scratch-message nil       ; Disable startup message
+(setopt inhibit-startup-screen   t      ; Disable splash screen
+        initial-scratch-message nil     ; Disable startup message
       )
 
 ;; Assorted settings
 (setq-default
  enable-recursive-minibuffers t         ; allow recursive editing in minibuffer
- help-window-select           'other    ; focus on help window when spawning
  truncate-lines               t         ; don't wrap, truncate lines by default
  echo-keystrokes              0.2       ; show keystrokes as they're happen
  ring-bell-function           'ignore   ; don't ring any bell
- ;; Recommendation from https://protesilaos.com/emacs/modus-themes
- ;; found in: https://github.com/jeremyf/dotemacs/blob/main/emacs.d/configuration.org
+ ;; Recommendation from https://protesilaos.com/emacs/modus-themes found in:
+ ;; https://github.com/jeremyf/dotemacs/blob/main/emacs.d/configuration.org
  x-underline-at-descent-line  t
- password-cache-expiry        nil       ; disable password cache expiration
- uniquify-buffer-name-style   'forward
  )
 
-;; Use text symbols for tree widgets.
-(setopt tree-widget-image-enable nil)
+(setopt uniquify-buffer-name-style 'forward
+        help-window-select         'other ; focus on help window when spawning
+        password-cache-expiry        nil  ; disable password cache expiration
+        tree-widget-image-enable nil      ; text symbols for tree widgets
+)
 
 ;; This measure is needed to prevent tramp from hanging at startup as it tries
 ;; to conduct a strange check on the system's host.
@@ -63,8 +63,8 @@
       "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ConnectTimeout=1 -o ControlPersist=no")
 
 ;; Column
-(setq-default column-number-mode    t
-              fill-column           init/defaults/fill-column)
+(column-number-mode 1)
+(setq-default fill-column init/defaults/fill-column)
 
 ;; Indentation
 (setq-default indent-tabs-mode      nil
@@ -80,25 +80,25 @@
 ;; Backups
 (setq backup-directory-alist        `(("." . "~/.emacs.d/backups"))
       backup-by-copying             t   ; place backup files in `backups`
-      create-lockfiles              nil ; do not create lock files
       delete-old-versions           t
       kept-new-versions             20
       kept-old-versions             5
       version-control t                 ; use version numbers on backups
       )
+(setq create-lockfiles nil)             ; do not create lock files
 
 ;; Set calendar's week start day to Monday and not Sunday, as by default.
-(setq calendar-week-start-day 1)
+(setopt calendar-week-start-day 1)
 
 ;; Set default browser - currently set to `xdg-open'.
-(setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program  "xdg-open")
+(setopt browse-url-browser-function 'browse-url-generic
+        browse-url-generic-program  "xdg-open")
 
 ;; Following list of buffers shouldn't open a new window
-(setq same-window-buffer-names '("*shell*"
-                                 "*mail*"
-                                 "*unsent mail*"
-                                 "*info*"))
+(setopt same-window-buffer-names '("*shell*"
+                                   "*mail*"
+                                   "*unsent mail*"
+                                   "*info*"))
 
 ;; Preferred coding system
 (prefer-coding-system 'utf-8)
@@ -199,8 +199,8 @@
 
 ;; This should be improved upon to take into account the dimensions of the
 ;; display and make splitting behave accordingly.
-(setq split-width-threshold   nil
-      split-height-threshold  nil)
+(setopt split-width-threshold   nil
+        split-height-threshold  nil)
 
 ;; Do not allow the cursor in the minibuffer prompt
 (setq minibuffer-prompt-properties

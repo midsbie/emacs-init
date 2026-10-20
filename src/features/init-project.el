@@ -42,21 +42,12 @@ been tried."
                 (bury-buffer))
               (setq attempts (1+ attempts)))))))))
 
-(defun my/project-find-file-other-window (&optional include-all)
-  "Open FILENAME from a project in another window."
-  (interactive)
-  (unwind-protect
-      (progn
-        (advice-add 'find-file :override #'find-file-other-window)
-        (project-find-file include-all))
-    (advice-remove 'find-file #'find-file-other-window)))
-
 (use-package project
   :ensure nil
   ;; Don't use C-c C-p as it clashes with many major mode default bindings.
   :bind-keymap ("C-c P" . project-prefix-map)
   :bind (:map project-prefix-map
-              ("4 f" . my/project-find-file-other-window)
+              ("4" . project-other-window-command)
               ("/" . my/project-bury-buffers)
               ("m" . magit-project-status))
   :custom

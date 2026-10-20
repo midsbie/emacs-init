@@ -26,6 +26,7 @@
 
 (use-package speedbar
   :ensure nil
+  :defer t
   :custom
   (speedbar-frame-parameters '((minibuffer . nil)
                               (width . 40)

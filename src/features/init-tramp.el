@@ -35,6 +35,7 @@
 ;; load time
 (use-package tramp
   :ensure nil
+  :defer t
   :config (init/tramp/config))
 
 (provide 'init-tramp)

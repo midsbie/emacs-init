@@ -27,22 +27,16 @@
 (use-package orderless
   :demand
   :custom
-  (completion-styles '(orderless basic substring flex initials partial-completion))
+  (completion-styles '(orderless basic))
   (orderless-matching-styles '(orderless-literal orderless-regexp))
-  ;; partial-completion handles file and TRAMP completion before Orderless.
+  ;; Request initialisms with a comma and flex matching with a tilde.
+  ;; Ordinary file prompts need path expansion and TRAMP completion;
+  ;; project prompts match a supplied list of project-relative paths.
   (completion-category-overrides
-   '((file (styles partial-completion orderless+initialism))
-     (buffer (styles orderless+initialism))
-     (consult-multi (styles orderless+initialism))
-     (command (styles orderless+initialism))
-     (variable (styles orderless+initialism))
-     (symbol (styles orderless+initialism))))
-  :config
-  ;; Register the named style before any completion can use these settings.
-  (orderless-define-completion-style orderless+initialism
-    (orderless-matching-styles '(orderless-initialism orderless-literal orderless-regexp)))
-  ;; This is an ordinary variable, not a user option.
-  (setq completion-category-defaults nil))
+   '((file (styles partial-completion orderless))
+     (project-file (styles orderless))))
+  ;; Emacs 31: allow fragments within each partial path component.
+  (completion-pcm-leading-wildcard t))
 
 (provide 'init-orderless)
 

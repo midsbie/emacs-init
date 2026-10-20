@@ -35,11 +35,7 @@ On first launch, missing packages install into =elpa/= from GNU ELPA, NonGNU ELP
 | =user-lisp/=   | Utility commands, compiled by Emacs and loaded on first use |
 | =themes/=      | Custom themes                                               |
 
-Each =use-package= declaration lives in =init-LIBRARY.el= under =features/=
-or =modes/=. Companion libraries have separate modules. =config/= and
-=environment/= contain ordinary Emacs Lisp setup. The explicit =require= list
-in =src/init.el= loads core settings first, then package and mode modules;
-dependency declarations precede modules whose setup loads them.
+Each =use-package= declaration lives in =init-LIBRARY.el= under =features/= or =modes/=. Companion libraries have separate modules. =config/= and =environment/= contain ordinary Emacs Lisp setup. The explicit =require= list in =src/init.el= loads core settings first, then package and mode modules; dependency declarations precede modules whose setup loads them.
 
 * See also
 

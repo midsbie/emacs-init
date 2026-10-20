@@ -1,10 +1,9 @@
-;;; init-git-gutter-fringe.el --- Configure git-gutter-fringe -*- lexical-binding: t; -*-
+;;; init-git-gutter-fringe.el --- Configure git-gutter-fringe  -*- lexical-binding: t; -*-
 
+;; Copyright (C) 2026 Miguel Guedes
+
+;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; SPDX-License-Identifier: GPL-3.0-or-later
-
-;;; Commentary:
-
-;; Configuration for the git-gutter-fringe library.
 
 ;;; Code:
 

@@ -1,41 +1,15 @@
-;;; init-web-mode.el --- Configures `web-mode'  -*- lexical-binding: t; -*-
+;;; init-web-mode.el --- Configure web-mode  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2015-2026  Miguel Guedes
+;; Copyright (C) 2015-2026 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
-
-;; This program is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
-
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-
-;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
-;;
-;; Do not forget to also make changes in the ~/.emacs file as it might be
-;; forcefully enabling this (or some other) mode.
 
-;;; Log:
-;;;
-;; xxxxxx React's jsx files are best loaded under web mode.  However, we're now
-;;        using web-mode as the default mode for all things Javascript.
-;;
-;; 140520 Emacs supports JSX natively now, however syntax highlighting is still
-;;        not great.  Waiting until v27 and considering building from source.
-;;
-;; 120519 Noting that `js-mode' and `js-jsx-mode' seem stable at the moment.
-;;        Unfortunately, `web-mode' still provides an overall better experience
-;;        but the two Emacs native modes should be kept regular under
-;;        evaluation.
-;;
+;; HTML files open in web-mode.  JavaScript and JSX use init-js.el;
+;; TypeScript and TSX use init-typescript-ts-mode.el.
 
 ;;; Code:
 

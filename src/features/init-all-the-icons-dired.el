@@ -1,10 +1,9 @@
-;;; init-all-the-icons-dired.el --- Configure all-the-icons-dired -*- lexical-binding: t; -*-
+;;; init-all-the-icons-dired.el --- Configure all-the-icons-dired  -*- lexical-binding: t; -*-
 
+;; Copyright (C) 2026 Miguel Guedes
+
+;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; SPDX-License-Identifier: GPL-3.0-or-later
-
-;;; Commentary:
-
-;; Configuration for the all-the-icons-dired library.
 
 ;;; Code:
 

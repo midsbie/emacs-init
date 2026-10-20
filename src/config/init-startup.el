@@ -1,10 +1,9 @@
-;;; init-startup.el --- Startup diagnostics -*- lexical-binding: t; -*-
+;;; init-startup.el --- Startup diagnostics  -*- lexical-binding: t; -*-
 
+;; Copyright (C) 2026 Miguel Guedes
+
+;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; SPDX-License-Identifier: GPL-3.0-or-later
-
-;;; Commentary:
-
-;; Report startup diagnostics after initialization.
 
 ;;; Code:
 

@@ -1,10 +1,9 @@
-;;; init-savehist.el --- Configure savehist -*- lexical-binding: t; -*-
+;;; init-savehist.el --- Configure savehist  -*- lexical-binding: t; -*-
 
+;; Copyright (C) 2026 Miguel Guedes
+
+;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; SPDX-License-Identifier: GPL-3.0-or-later
-
-;;; Commentary:
-
-;; Configuration for the savehist library.
 
 ;;; Code:
 

@@ -1,10 +1,9 @@
-;;; init-windows.el --- Window display and layout configuration -*- lexical-binding: t; -*-
+;;; init-windows.el --- Window display and layout configuration  -*- lexical-binding: t; -*-
 
+;; Copyright (C) 2026 Miguel Guedes
+
+;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; SPDX-License-Identifier: GPL-3.0-or-later
-
-;;; Commentary:
-
-;; General window placement, layout history and navigation bindings.
 
 ;;; Code:
 

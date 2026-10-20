@@ -1,10 +1,9 @@
-;;; init-dired-x.el --- Configure dired-x -*- lexical-binding: t; -*-
+;;; init-dired-x.el --- Configure dired-x  -*- lexical-binding: t; -*-
 
+;; Copyright (C) 2026 Miguel Guedes
+
+;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; SPDX-License-Identifier: GPL-3.0-or-later
-
-;;; Commentary:
-
-;; Configuration for the dired-x library.
 
 ;;; Code:
 

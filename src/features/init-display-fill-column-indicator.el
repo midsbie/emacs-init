@@ -1,10 +1,9 @@
-;;; init-display-fill-column-indicator.el --- Configure display-fill-column-indicator -*- lexical-binding: t; -*-
+;;; init-display-fill-column-indicator.el --- Configure display-fill-column-indicator  -*- lexical-binding: t; -*-
 
+;; Copyright (C) 2026 Miguel Guedes
+
+;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; SPDX-License-Identifier: GPL-3.0-or-later
-
-;;; Commentary:
-
-;; Configuration for the display-fill-column-indicator library.
 
 ;;; Code:
 

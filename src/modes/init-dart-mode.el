@@ -1,25 +1,13 @@
-;;; init-dart-mode.el --- Configures `dart-mode'  -*- lexical-binding: t; -*-
+;;; init-dart-mode.el --- Configure Dart mode  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022-2026  Miguel Guedes
+;; Copyright (C) 2022-2026 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; Keywords: tools
-
-;; This program is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
-
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-
-;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
-;;
+
 ;; Hot-reload Flutter whenever the following conditions are true:
 ;;
 ;;     1. a buffer was saved
@@ -36,7 +24,7 @@
 ;;  (4) above requires running flutter as given below:
 ;;
 ;;    $ flutter run --debug --hot --pid-file=${init/dart-mode/flutter-pid-file}
-;;
+
 ;;; Code:
 
 (defvar init/dart-mode/flutter-pid-file ".flutter-debug.pid")

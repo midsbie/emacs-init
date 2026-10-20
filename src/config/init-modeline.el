@@ -1,10 +1,9 @@
-;;; init-modeline.el --- Modeline display and root warnings -*- lexical-binding: t; -*-
+;;; init-modeline.el --- Mode line display and root warnings  -*- lexical-binding: t; -*-
 
+;; Copyright (C) 2026 Miguel Guedes
+
+;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
 ;; SPDX-License-Identifier: GPL-3.0-or-later
-
-;;; Commentary:
-
-;; Configure the custom modeline and highlight buffers opened as remote root.
 
 ;;; Code:
 

@@ -1,8 +1,9 @@
 ;;; my-gui-dark-theme.el --- Personal dark GUI theme  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2014-2026  Miguel Guedes
+;; Copyright (C) 2014-2026 Miguel Guedes
 
 ;; Author: Miguel Guedes <miguel.a.guedes@gmail.com>
+;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; Commentary:
 

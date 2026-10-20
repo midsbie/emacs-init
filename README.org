@@ -4,6 +4,8 @@
 
 Personal Emacs configuration.
 
+Requires Emacs 31.1 or later for native User Lisp startup support (=prepare-user-lisp=).
+
 * Usage
 
 Link the repository into =~/.emacs.d= and point Emacs's entry points at =src/=. A =~/.emacs= file would take precedence over =init.el=, so there must not be one:

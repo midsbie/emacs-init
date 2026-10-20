@@ -55,13 +55,6 @@
         tree-widget-image-enable nil      ; text symbols for tree widgets
 )
 
-;; This measure is needed to prevent tramp from hanging at startup as it tries
-;; to conduct a strange check on the system's host.
-;;
-;; More information here: https://debbugs.gnu.org/cgi/bugreport.cgi?bug=20015
-(setq tramp-ssh-controlmaster-options
-      "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ConnectTimeout=1 -o ControlPersist=no")
-
 ;; Column
 (column-number-mode 1)
 (setopt fill-column init/defaults/fill-column)

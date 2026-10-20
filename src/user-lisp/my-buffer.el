@@ -179,6 +179,13 @@ into account buffers in all frames."
     (other-window (* count 1) all-frames)
     (bury-buffer)))
 
+;;;###autoload
+(defun my/insert-and-indent (count)
+  "Insert the typed character COUNT times, then indent the current line."
+  (interactive "p")
+  (self-insert-command count)
+  (indent-for-tab-command))
+
 (provide 'my-buffer)
 
 ;;; my-buffer.el ends here

@@ -58,21 +58,6 @@
   (setq-local web-mode-enable-comment-interpolation     t)
   (setq-local web-mode-enable-current-element-highlight t)
 
-  (local-set-key "."  #'(lambda ()
-                          (interactive)
-                          (insert-char ?.)
-                          (indent-for-tab-command)))
-
-  (local-set-key "}"  #'(lambda ()
-                          (interactive)
-                          (insert-char ?})
-                          (indent-for-tab-command)))
-
-  ;; Fix C-left movement causing curly and double quote char to be inserted
-  ;; inside JSX block
-  (local-set-key [C-left] 'backward-word)
-  (local-set-key [C-right] 'forward-word)
-
   ;; javascript: make case indentation at the same level as the parent switch
   ;; statement.
   (add-to-list 'web-mode-indentation-params '("case-extra-offset" . nil)))
@@ -108,6 +93,12 @@
   )
 
 (use-package web-mode
+  :bind (:map web-mode-map
+         ("." . my/insert-and-indent)
+         ("}" . my/insert-and-indent)
+         ;; Avoid inserting control characters inside JSX blocks.
+         ("C-<left>" . backward-word)
+         ("C-<right>" . forward-word))
   :mode ("\\.html?\\'")
 
   :hook ((web-mode-local-vars . init/web-mode/load-local-vars)

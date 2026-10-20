@@ -26,20 +26,16 @@
 
 (defun init/css-mode/enable ()
   "Configure `css-mode'."
-  (init/common-nonweb-programming-mode)
-
-  (local-set-key "}"  #'(lambda ()
-                          (interactive)
-                          (insert-char ?})
-                          (indent-for-tab-command)))
-
-  (local-set-key ";"  #'(lambda ()
-                          (interactive)
-                          (insert-char ?\;)
-                          (indent-for-tab-command))))
+  (init/common-nonweb-programming-mode))
 
 (use-package css-mode
   :ensure nil
+  :bind (:map css-mode-map
+         ("}" . my/insert-and-indent)
+         (";" . my/insert-and-indent)
+         :map css-ts-mode-map
+         ("}" . my/insert-and-indent)
+         (";" . my/insert-and-indent))
   :mode (("\\.css\\'" . css-ts-mode))
   :custom
   (css-indent-offset 2)

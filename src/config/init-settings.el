@@ -28,6 +28,9 @@
 
 ;;; Code:
 
+(defvar init/compilation-jump-to-bottom t
+  "When non-nil, move point to the end of a visible compilation buffer on start.")
+
 ;; Prevent Git from using pager in `shell-mode'.
 (setenv "GIT_PAGER" "cat")
 
@@ -101,6 +104,10 @@
 (delete-selection-mode t)               ; C-D deletes selected text
 (transient-mark-mode t)                 ; typing replaces selected text
 (global-so-long-mode t)                 ; better handling of long files
+;; Mode-selection alists run after explicit mode cookies and shebangs; intercept
+;; selection itself so large files skip language hooks in every case.
+(advice-add 'set-auto-mode :before-until #'my/handle-large-file-hook)
+
 (size-indication-mode t)                ; size indication mode
 (global-prettify-symbols-mode)          ; (lambda ... -> (λ ...
 (winner-mode)                           ; window configuration mutation undo

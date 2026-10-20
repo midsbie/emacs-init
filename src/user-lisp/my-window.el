@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-;; Defined in init.el, which loads after this file is compiled.
+;; Configuration loads after this file is compiled.
 (defvar init/defaults/fill-column)
 
 ;; The following disabled as it was identified as the cause of strange

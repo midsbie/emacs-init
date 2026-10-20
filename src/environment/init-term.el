@@ -22,7 +22,7 @@
 
 ;;; Commentary:
 
-;; Loaded by `init.el' when `display-graphic-p' is nil (terminal Emacs).
+;; Loaded by `init/configure-frame' for the first terminal frame.
 ;; All forms are evaluated at top level on load.
 
 ;;; Code:

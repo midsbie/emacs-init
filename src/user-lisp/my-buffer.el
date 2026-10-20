@@ -28,7 +28,7 @@
 
 (declare-function visual-fill-column-mode "ext:visual-fill-column")
 
-;; Defined in init.el, which loads after this file is compiled.
+;; Configuration loads after this file is compiled.
 (defvar init/beginning-of-statement-fn)
 (defvar init/end-of-statement-fn)
 

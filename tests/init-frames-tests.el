@@ -13,6 +13,7 @@
         (after-change-major-mode-hook nil)
         (find-file-hook nil)
         (after-make-frame-functions nil)
+        (features (remq 'init-frames features))
         (graphic nil)
         initialized
         (init-file (expand-file-name "init.el" init-test/source-directory))
@@ -21,7 +22,8 @@
     (cl-letf (((symbol-function 'display-graphic-p) (lambda (&optional _) graphic))
               ((symbol-function 'require)
                (lambda (feature &rest args)
-                 (if (string-prefix-p "init-" (symbol-name feature))
+                 (if (and (string-prefix-p "init-" (symbol-name feature))
+                          (not (memq feature '(init-consts init-startup init-frames))))
                      (progn
                        (when (memq feature '(init-x init-term))
                          (push feature initialized))
@@ -31,8 +33,7 @@
                (lambda (file &rest args)
                  (unless (member (file-name-nondirectory file)
                                  '("personal.el" "custom.el"))
-                   (apply original-load file args))))
-              ((symbol-function 'my/modeline-mode) #'ignore))
+                   (apply original-load file args)))))
       (funcall original-load init-file nil t)
       (should (equal initialized '(init-term)))
       (setq graphic t)

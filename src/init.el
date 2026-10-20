@@ -33,78 +33,19 @@
 
 ;;; Code:
 
-(defgroup init nil
-  "Emacs initialisation mechanism.")
-
-(defvar init/eglot-disabled-modes
-  '(emacs-lisp-mode lisp-mode meson-mode sql-mode)
-  "Major modes in which Eglot should not start automatically.
-Derived modes are also excluded.")
-
-(defvar-local init/inhibit-buffer-formatting nil
-  "When non-nil, disable all automatic buffer formatting through Eglot.")
-
-(defvar init/buffer-format-handlers-alist
-  '()
-  "List of major modes for which to run a special function when saving the
-buffer.  If none is specified for the mode associated with the buffer,
-Eglot's default formatting function is invoked.
-
-Example:
-  '(((js-mode js-ts-mode typescript typescript-ts-mode tsx-ts-mode) . my/special-formatter))
-")
-
-(defconst init/web-programming-modes
-  '(js-mode js-ts-mode typescript-mode typescript-ts-mode tsx-ts-mode)
-  "List of major modes that are related to web programming.")
-
-(defvar init/beginning-of-statement-fn '(c-backward-sexp backward-sexp backward-sentence)
-  "List containing the order of functions to execute when M-a is pressed.")
-
-(defvar init/end-of-statement-fn '(c-forward-sexp forward-sexp forward-sentence)
-  "List containing the order of functions to execute when M-e is pressed.")
-
-(defvar init/compilation-jump-to-bottom t
-  "Causes the caret to move to the bottom of the compilation buffer when t.")
-
-(defconst init/defaults/fill-column 100
-  "Default `fill-column' value.")
-
-(defconst init/defaults/fill-column/narrow 80
-  "Default narrow `fill-column' value.")
-
-(defcustom init/theme 'my-gui-dark
-  "Theme to load during GUI initialization.
-Can be `my-gui-dark', `my-gui-light', or any other installed theme.
-Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
-  :group 'init
-  :type 'symbol)
-
 ;; Custom saves customizations here rather than in this file.  The file is
 ;; loaded last, below.
 (setopt custom-file (locate-user-emacs-file "custom.el"))
 
-(message "[init] starting")
-(add-hook 'after-init-hook 'init/post-init)
-
 ;; Install declared packages that are missing.  Built-in packages opt out with
 ;; `:ensure nil'.
-;;
-;; Ensuring by default, rather than marking external packages with `:ensure t',
-;; makes a forgotten flag fail early and locally.  An external package missing
-;; the flag still installs, whereas one missing `:ensure t' would load from the
-;; existing `elpa/' and fail only on a fresh machine.  A built-in missing
-;; `:ensure nil' is either a no-op or fails to install on every startup.
-;;
-;; `:ensure nil' is required only on built-ins that package.el does not list
-;; (e.g. dired, nxml-mode, text-mode), but goes on every built-in so that no one
-;; has to check.  It is unnecessary with `:vc', which ignores `:ensure'.
 (setopt use-package-always-ensure t)
 
 ;; Make the modules loadable and the themes in themes/ available to
 ;; `load-theme'.  `file-truename' resolves the symlink this file is loaded
 ;; through.
-(let ((base (file-name-directory (file-truename (or load-file-name buffer-file-name)))))
+(let ((base (file-name-directory
+             (file-truename (or load-file-name buffer-file-name)))))
   (dolist (dir '("config" "features" "modes" "environment"))
     (add-to-list 'load-path (expand-file-name dir base)))
   (setopt custom-theme-directory (expand-file-name "themes/" base)))
@@ -112,6 +53,7 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
 ;; Each module may rely on those required before it.
 ;; Core settings are independent of package configuration.
 (require 'init-consts)
+(require 'init-startup)
 (require 'init-keybindings)
 (require 'init-log)
 (require 'init-programming)
@@ -184,13 +126,7 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
 (require 'init-with-editor)
 (require 'init-xclip)
 
-;; The utilities in user-lisp/ need no `require'.  These three take effect only
-;; once switched on.
-;; Mode-selection alists run after explicit mode cookies and shebangs; intercept
-;; selection itself so large files skip language hooks in every case.
-(advice-add 'set-auto-mode :before-until #'my/handle-large-file-hook)
-(my/modeline-mode 1)
-(add-hook 'after-change-major-mode-hook #'my/warn-when-root-visits-file)
+(require 'init-modeline)
 
 (require 'init-cc-mode)
 (require 'init-csharp-mode)
@@ -218,33 +154,12 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
 (require 'init-web-mode)
 (require 'init-yaml-ts-mode)
 
-;; Initialize each display type when it first appears, including daemon clients.
-(defun init/configure-frame (frame)
-  "Load the environment configuration for FRAME's display type."
-  (with-selected-frame frame
-    (require (if (display-graphic-p frame) 'init-x 'init-term))))
-
-(add-hook 'after-make-frame-functions #'init/configure-frame)
-(init/configure-frame (selected-frame))
+(require 'init-frames)
 
 ;; Identity, mail and per-host settings, kept out of the repository, apply over
 ;; everything above.
 (load (locate-user-emacs-file "personal.el") 'noerror 'nomessage)
 
 (load custom-file 'noerror 'nomessage)
-
-;; Print useful diagnostic messages
-(unless (and (fboundp 'native-comp-available-p)
-             (native-comp-available-p))
-  (message "Native compilation is NOT available"))
-
-(message "[init] done.")
-
-;; --
-(defun init/post-init ()
-  "Perform post-init steps."
-  ;; Show how long it took to initialise emacs after 1 idle second.
-  (run-with-idle-timer 1 nil #'(lambda ()
-                                 (message "init took %s" (emacs-init-time)))))
 
 ;;; init.el ends here

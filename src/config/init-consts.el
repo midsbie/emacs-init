@@ -1,4 +1,4 @@
-;;; init-consts.el --- defconst and defaliases statements  -*- lexical-binding: t; -*-
+;;; init-consts.el --- Shared constants and aliases  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2015-2026  Miguel Guedes
 
@@ -23,6 +23,15 @@
 ;;
 
 ;;; Code:
+
+(defgroup init nil
+  "Emacs initialisation mechanism.")
+
+(defconst init/defaults/fill-column 100
+  "Default `fill-column' value.")
+
+(defconst init/defaults/fill-column/narrow 80
+  "Default narrow `fill-column' value.")
 
 (defalias 'hscroll-mode 'toggle-truncate-lines)
 

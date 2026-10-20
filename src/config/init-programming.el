@@ -26,6 +26,31 @@
 
 (require 'cl-lib)
 
+(defvar init/eglot-disabled-modes
+  '(emacs-lisp-mode lisp-mode meson-mode sql-mode)
+  "Major modes in which Eglot should not start automatically.
+Derived modes are also excluded.")
+
+(defvar-local init/inhibit-buffer-formatting nil
+  "When non-nil, disable automatic formatting through `init/maybe-format-buffer'.")
+
+(defvar init/buffer-format-handlers-alist nil
+  "Alist mapping major modes to functions called without arguments on save.
+Each key is a mode symbol or a list of mode symbols.  The first matching
+entry overrides the default formatting in `init/maybe-format-buffer'.")
+
+(defconst init/web-programming-modes
+  '(js-mode js-ts-mode typescript-mode typescript-ts-mode tsx-ts-mode)
+  "List of major modes that are related to web programming.")
+
+(defvar init/beginning-of-statement-fn
+  '(c-backward-sexp backward-sexp backward-sentence)
+  "Functions tried in order by `my/beginning-of-statement'.")
+
+(defvar init/end-of-statement-fn
+  '(c-forward-sexp forward-sexp forward-sentence)
+  "Functions tried in order by `my/end-of-statement'.")
+
 ;; Global programming settings
 ;; --
 ;; Own custom default style

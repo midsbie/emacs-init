@@ -97,20 +97,6 @@
   "Face for running/checking indicator."
   :group 'init)
 
-;; -- Faces: VC state ----------------------------------------------------------
-(custom-theme-set-faces
- 'user
- '(vc-up-to-date-state    ((t (:inherit shadow))))
- '(vc-edited-state        ((t (:inherit success))))
- '(vc-locally-added-state ((t (:inherit font-lock-constant-face))))
- '(vc-needs-update-state  ((t (:inherit warning))))
- '(vc-conflict-state      ((t (:inherit (bold error)))))
- '(vc-missing-state       ((t (:inherit error))))
- '(vc-removed-state       ((t (:inherit warning))))
- '(vc-locked-state        ((t (:inherit font-lock-constant-face))))
- '(vc-ignored-state       ((t (:inherit shadow)))))
-
-
 ;; -- Segment: VCS branch ------------------------------------------------------
 (defun my/modeline-vcs ()
   "Return VC branch name without the backend prefix.
@@ -263,7 +249,8 @@ Value is `unset' when not yet computed.")
 ;; -- Global minor mode ---------------------------------------------------------
 
 (defvar my/modeline--idle-timer nil
-  "Idle timer for periodic buffer status recomputation.")
+  "Idle timer for periodic buffer status recomputation.
+Non-nil while the mode's setup is active.")
 
 (defvar my/modeline--saved-mode-line-format nil
   "Saved `mode-line-format' default, restored when the mode is disabled.")
@@ -328,25 +315,22 @@ counters.  All other segments use Emacs defaults."
   :global t
   :group 'init
   (if my/modeline-mode
-      (progn
+      (unless my/modeline--idle-timer
         (setq my/modeline--saved-mode-line-format (default-value 'mode-line-format))
         (setq-default mode-line-format my/modeline--format)
         (advice-add 'vc-refresh-state :after #'my/modeline--update-project-root)
         (setq my/modeline--idle-timer
               (run-with-idle-timer 1 t #'my/modeline--recompute-buffer-status))
-        (when (featurep 'flymake) (my/modeline--setup-flymake))
+        (with-eval-after-load 'flymake
+          (when my/modeline-mode (my/modeline--setup-flymake)))
         (force-mode-line-update t))
-    (when (timerp my/modeline--idle-timer)
+    (when my/modeline--idle-timer
       (cancel-timer my/modeline--idle-timer)
-      (setq my/modeline--idle-timer nil))
-    (advice-remove 'vc-refresh-state #'my/modeline--update-project-root)
-    (when (featurep 'flymake) (my/modeline--teardown-flymake))
-    (setq-default mode-line-format my/modeline--saved-mode-line-format)
-    (force-mode-line-update t)))
-
-;; Deferred integration: set up when libraries load (if mode is active).
-(with-eval-after-load 'flymake
-  (when my/modeline-mode (my/modeline--setup-flymake)))
+      (setq my/modeline--idle-timer nil)
+      (advice-remove 'vc-refresh-state #'my/modeline--update-project-root)
+      (when (featurep 'flymake) (my/modeline--teardown-flymake))
+      (setq-default mode-line-format my/modeline--saved-mode-line-format)
+      (force-mode-line-update t))))
 
 (provide 'my-modeline)
 

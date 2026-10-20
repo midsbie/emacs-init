@@ -24,14 +24,13 @@
 
 ;;; Code:
 
+(defvar-local init/vterm/copy-mode-cursor-remap nil
+  "Face-remapping cookie used while Vterm copy mode is active.")
+
 (defun init/vterm/enable ()
   "Enable vterm buffer settings.
 Called from `vterm-mode-hook' to set up per-buffer defaults."
   (display-line-numbers-mode -1))
-
-(defun init/vterm/config ()
-  "Configure `vterm' package."
-  (advice-add 'vterm-copy-mode :after #'init/vterm/copy-mode-cursor-fix))
 
 (defun init/vterm/restore-cursor ()
   "Restore cursor settings based on `init/vterm/hollow-cursor-mode' state.
@@ -63,7 +62,7 @@ running a TUI that conflicts."
   :lighter " Hollow"
   (init/vterm/restore-cursor))
 
-(defun init/vterm/copy-mode-cursor-fix (&rest _)
+(defun init/vterm/copy-mode-cursor-fix ()
   "Force a visible cursor in `vterm-copy-mode'.
 
 Some TUI applications (e.g. Claude Code) set terminal colors that cause the
@@ -78,22 +77,22 @@ cursor.  On exit, cursor settings are restored according to the mode's state."
       (progn
         (unless init/vterm/hollow-cursor-mode
           (init/vterm/hollow-cursor-mode 1))
-        (when (bound-and-true-p vterm--copy-mode-cursor-remap)
-          (face-remap-remove-relative vterm--copy-mode-cursor-remap))
+        (when (bound-and-true-p init/vterm/copy-mode-cursor-remap)
+          (face-remap-remove-relative init/vterm/copy-mode-cursor-remap))
         (setq-local cursor-type 'box
                     blink-cursor-alist '((box . box))
-                    vterm--copy-mode-cursor-remap
+                    init/vterm/copy-mode-cursor-remap
                     (face-remap-add-relative 'cursor :background (face-foreground 'default))))
-    (when (bound-and-true-p vterm--copy-mode-cursor-remap)
-      (face-remap-remove-relative vterm--copy-mode-cursor-remap)
-      (kill-local-variable 'vterm--copy-mode-cursor-remap)
+    (when (bound-and-true-p init/vterm/copy-mode-cursor-remap)
+      (face-remap-remove-relative init/vterm/copy-mode-cursor-remap)
+      (kill-local-variable 'init/vterm/copy-mode-cursor-remap)
       (init/vterm/restore-cursor))))
 
 (use-package vterm
-  :hook (vterm-mode . init/vterm/enable)
+  :hook ((vterm-mode . init/vterm/enable)
+         (vterm-copy-mode . init/vterm/copy-mode-cursor-fix))
   :bind (:map vterm-mode-map
-         ([remap delete-backward-char] . vterm-send-backspace))
-  :config (init/vterm/config))
+         ([remap delete-backward-char] . vterm-send-backspace)))
 
 (provide 'init-vterm)
 

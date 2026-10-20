@@ -24,7 +24,9 @@
 
 ;;; Code:
 
-(defvar embark-collect--outline-string) ; Defined by Embark.
+;; Embark exposes no public API for its outline sentinel.  Read its constant
+;; rather than duplicating the value, so copying follows the package's format.
+(defvar embark-collect--outline-string)
 
 (defun init/embark-collect/filter-buffer-substring (text)
   "Remove Embark's invisible outline sentinel from copied TEXT.

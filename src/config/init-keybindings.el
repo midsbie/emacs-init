@@ -28,13 +28,6 @@
 
 ;;; Code:
 
-;; Awesome key bindings for moving around and manipulating windows.
-(global-set-key [M-left]              #'windmove-left)
-(global-set-key [M-right]             #'windmove-right)
-(global-set-key [M-up]                #'windmove-up)
-(global-set-key [M-down]              #'windmove-down)
-(global-set-key (kbd "C-x p")         #'my/other-previous-window)
-
 (global-set-key (kbd "C-x k")         #'kill-current-buffer)
 ;; `C-c f' copies the file path as `~/...'; `C-u C-c f' relative to the project
 ;; root; `C-0 C-c f' as an absolute path.
@@ -54,12 +47,6 @@
 (global-set-key (kbd "C-c g")         #'my/git-grep)
 (global-set-key (kbd "C-c G")         #'find-grep)
 (global-set-key (kbd "C-x /")         #'bury-buffer)
-(global-set-key (kbd "C-x 4 k")       #'my/kill-other-buffer)
-(global-set-key (kbd "C-x 4 /")       #'my/bury-other-buffer)
-;; Next to the built-in window commands; `C-x +' stays `balance-windows'.
-(define-key window-prefix-map (kbd "=") #'my/rearrange-desktop)
-;; Press [pause] in each window you want to "freeze" (also on `C-x w d').
-(global-set-key [pause]               #'toggle-window-dedicated)
 
 ;; Redefine C-h (help) as C-x h and define backspace as C-h. Note that Emacs
 ;; help feature can still be accessed via F1.
@@ -86,10 +73,6 @@ With a prefix argument, creates a new terminal buffer."
     (shell (when current-prefix-arg
              (generate-new-buffer-name "*shell*")))))
 (global-set-key (kbd "C-c t")         #'my/terminal)
-
-;; Disable the two-column minor mode keymap entirely as it is easy to trigger
-;; accidentally and disrupts the window layout.
-(global-set-key [f2]                  nil)
 
 (provide 'init-keybindings)
 

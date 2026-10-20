@@ -1,0 +1,54 @@
+;;; init-windows.el --- Window display and layout configuration -*- lexical-binding: t; -*-
+
+;; SPDX-License-Identifier: GPL-3.0-or-later
+
+;;; Commentary:
+
+;; General window placement, layout history and navigation bindings.
+
+;;; Code:
+
+(setopt help-window-select 'other)
+
+;; Following list of buffers shouldn't open a new window.
+(setopt same-window-buffer-names '("*shell*"
+                                  "*mail*"
+                                  "*unsent mail*"
+                                  "*info*"))
+
+;; This should be improved upon to take into account the dimensions of the
+;; display and make splitting behave accordingly.
+(setopt split-width-threshold nil
+        split-height-threshold nil)
+
+;; Stop the *Warnings* buffer from popping up intrusively and stealing focus.
+;; `display-warning' tags its display request with the `warning' category, so
+;; this only suppresses the automatic pop-up; the buffer can still be shown
+;; deliberately (e.g. `C-x b *Warnings*').
+(add-to-list 'display-buffer-alist
+             '((category . warning)
+               (display-buffer-no-window)
+               (allow-no-window . t)))
+
+(winner-mode)                           ; window configuration mutation undo
+
+(global-set-key [M-left]              #'windmove-left)
+(global-set-key [M-right]             #'windmove-right)
+(global-set-key [M-up]                #'windmove-up)
+(global-set-key [M-down]              #'windmove-down)
+(global-set-key (kbd "C-x p")         #'my/other-previous-window)
+(global-set-key (kbd "C-x 4 k")       #'my/kill-other-buffer)
+(global-set-key (kbd "C-x 4 /")       #'my/bury-other-buffer)
+
+;; Next to the built-in window commands; `C-x +' stays `balance-windows'.
+(define-key window-prefix-map (kbd "=") #'my/rearrange-desktop)
+;; Press [pause] in each window you want to "freeze" (also on `C-x w d').
+(global-set-key [pause]               #'toggle-window-dedicated)
+
+;; Disable the two-column minor mode keymap entirely as it is easy to trigger
+;; accidentally and disrupts the window layout.
+(global-set-key [f2]                  nil)
+
+(provide 'init-windows)
+
+;;; init-windows.el ends here

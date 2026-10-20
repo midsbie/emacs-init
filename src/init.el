@@ -58,6 +58,7 @@
 (require 'init-log)
 (require 'init-programming)
 (require 'init-settings)
+(require 'init-windows)
 
 ;; Diminish must be available before declarations that use its keyword.
 (require 'init-diminish)

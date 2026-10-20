@@ -19,12 +19,6 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;;
-;; This setting did NOT prevent Emacs from aggressively resizing windows.
-;; Ref: https://stackoverflow.com/a/11458625
-;; (setq even-window-heights nil)
-
-;;
 
 ;;; Code:
 
@@ -53,7 +47,6 @@
  )
 
 (setopt uniquify-buffer-name-style 'forward
-        help-window-select         'other ; focus on help window when spawning
         password-cache-expiry        nil  ; disable password cache expiration
         tree-widget-image-enable nil      ; text symbols for tree widgets
 )
@@ -88,12 +81,6 @@
 (setopt browse-url-browser-function 'browse-url-generic
         browse-url-generic-program  "xdg-open")
 
-;; Following list of buffers shouldn't open a new window
-(setopt same-window-buffer-names '("*shell*"
-                                   "*mail*"
-                                   "*unsent mail*"
-                                   "*info*"))
-
 ;; Preferred coding system
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
@@ -110,7 +97,6 @@
 
 (size-indication-mode t)                ; size indication mode
 (global-prettify-symbols-mode)          ; (lambda ... -> (λ ...
-(winner-mode)                           ; window configuration mutation undo
 (save-place-mode 1)                     ; save position in buffer
 
 (tooltip-mode -1)                       ; disable tooltips
@@ -195,23 +181,9 @@
 ;; adds newlines when some characters are types (e.g. `{').
 (electric-layout-mode -1)
 
-;; This should be improved upon to take into account the dimensions of the
-;; display and make splitting behave accordingly.
-(setopt split-width-threshold   nil
-        split-height-threshold  nil)
-
 ;; Do not allow the cursor in the minibuffer prompt
 (setopt minibuffer-prompt-properties
         '(read-only t cursor-intangible t face minibuffer-prompt))
-
-;; Stop the *Warnings* buffer from popping up intrusively and stealing focus.
-;; `display-warning' tags its display request with the `warning' category, so
-;; this only suppresses the automatic pop-up; the buffer can still be shown
-;; deliberately (e.g. `C-x b *Warnings*').
-(add-to-list 'display-buffer-alist
-             '((category . warning)
-               (display-buffer-no-window)
-               (allow-no-window . t)))
 
 ;; Run a MAJORMODE-local-vars-hook when local vars are processed.
 ;; From: https://www.emacswiki.org/emacs/LocalVariables

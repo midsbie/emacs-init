@@ -216,8 +216,14 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
 (require 'init-web-mode)
 (require 'init-yaml-ts-mode)
 
-;; Load configurations specific to the environment
-(require (if (display-graphic-p) 'init-x 'init-term))
+;; Initialize each display type when it first appears, including daemon clients.
+(defun init/configure-frame (frame)
+  "Load the environment configuration for FRAME's display type."
+  (with-selected-frame frame
+    (require (if (display-graphic-p frame) 'init-x 'init-term))))
+
+(add-hook 'after-make-frame-functions #'init/configure-frame)
+(init/configure-frame (selected-frame))
 
 ;; Identity, mail and per-host settings, kept out of the repository, apply over
 ;; everything above.

@@ -26,6 +26,8 @@ On first launch, missing packages install into =elpa/= from GNU ELPA, NonGNU ELP
 
 =src/early-init.el= holds the package settings, which apply before packages activate. =src/init.el= then requires each module, in the order it lists them.
 
+Environment setup also runs when client frames are created, so a graphical client of an Emacs daemon loads the GUI configuration. Each environment module loads once; themes apply to the whole Emacs process.
+
 | Directory      | Contents                                                    |
 |----------------+-------------------------------------------------------------|
 | =config/=      | Built-in settings, keybindings, constants                   |

@@ -29,7 +29,10 @@
 ; Don't ask to save buffers when running `grep-find'
 (setopt grep-save-buffers nil)
 
-(setq my/git-grep-find-command '("git --no-pager grep -nP '%SUBJECT%' -- :/" . 26))
+(defvar grep-use-null-device)
+
+(defvar my/git-grep-find-command '("git --no-pager grep -nP '%SUBJECT%' -- :/" . 26)
+  "Git grep command template and insertion position for the search text.")
 
 ;; Functions
 ;; ----------------------------------------
@@ -56,14 +59,9 @@ current working directory."
               (cons command
                     (+ (length word) (cdr my/git-grep-find-command)))
               'grep-find-history)))))
-  (let* ((last-grep-use-null-device
-          (and (boundp 'grep-use-null-device) grep-use-null-device)))
-    ;; We must set `grep-use-null-device' to nil or we get a strange error
-    ;; involving output redirection to /dev/null
-    (setq grep-use-null-device nil)
-    (grep command-args)
-    ;; Restore variable state
-    (setq grep-use-null-device last-grep-use-null-device)))
+  ;; Git grep already supplies file names; avoid adding /dev/null redirection.
+  (let ((grep-use-null-device nil))
+    (grep command-args)))
 
 (provide 'init-grep)
 

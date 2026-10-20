@@ -234,10 +234,9 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
 (load custom-file 'noerror 'nomessage)
 
 ;; Print useful diagnostic messages
-(if (and (fboundp 'native-comp-available-p)
-         (native-comp-available-p))
-    (message "Native compilation is available")
-  (message "Native compilation is *not* available"))
+(unless (and (fboundp 'native-comp-available-p)
+             (native-comp-available-p))
+  (message "Native compilation is NOT available"))
 
 (message "[init] done.")
 

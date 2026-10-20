@@ -8,6 +8,60 @@
 
 ;;; Code:
 
+(require 'cl-lib)
+
+(defun init/windows/display-adjacent (buffer alist)
+  "Display BUFFER in a horizontal neighbour for other-window requests.
+Act only when ALIST has a non-nil `inhibit-same-window' entry.  Prefer
+windows sharing the selected window's right edge, then its left edge.
+Skip dedicated, side and `no-other-window' windows.  Return the window
+used, or nil to let the remaining display actions handle the request."
+  (when (cdr (assq 'inhibit-same-window alist))
+    (when-let* ((window
+                 (cl-loop for edge in '(right left)
+                          thereis
+                          (cl-find-if
+                           (lambda (candidate)
+                             (not (or (window-dedicated-p candidate)
+                                      (window-parameter candidate 'window-side)
+                                      (window-parameter candidate 'no-other-window))))
+                           (windows-sharing-edge nil edge)))))
+      (display-buffer-use-some-window
+       buffer (cons (cons 'some-window (lambda (_buffer _alist) window))
+                    alist)))))
+
+(defun init/windows/other-window-prefix (function &rest arguments)
+  "Prefer adjacent windows for FUNCTION's next-command display.
+FUNCTION is the original `other-window-prefix'; ARGUMENTS are passed
+through.  Retain its fallback and one-command cleanup."
+  (let ((register (symbol-function 'display-buffer-override-next-command)))
+    (cl-letf (((symbol-function 'display-buffer-override-next-command)
+               (lambda (prepare &optional post echo)
+                 (funcall register
+                          (lambda (buffer alist)
+                            (if-let* ((window
+                                       (init/windows/display-adjacent
+                                        buffer (cons '(inhibit-same-window . t)
+                                                     alist))))
+                                (cons window 'reuse)
+                              (funcall prepare buffer alist)))
+                          post echo))))
+      (apply function arguments))))
+
+;; Base actions follow buffer-specific rules and explicit display actions,
+;; including requests for contextual panes below the selected window.
+(let ((functions (car display-buffer-base-action)))
+  (when (functionp functions)
+    (setq functions (list functions)))
+  (setopt display-buffer-base-action
+          (cons (cons #'init/windows/display-adjacent
+                      (remq #'init/windows/display-adjacent functions))
+                (cdr display-buffer-base-action))))
+
+;; The prefix installs an overriding action that bypasses base actions.
+;; Wrapping its registration preserves Emacs's fallback and cleanup logic.
+(advice-add 'other-window-prefix :around #'init/windows/other-window-prefix)
+
 (setopt help-window-select 'other)
 
 ;; Following list of buffers shouldn't open a new window.

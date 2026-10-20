@@ -299,8 +299,8 @@ if neither `prettier-mode' nor `format-all-mode' are enabled."
       (unless (or
                (and (boundp 'prettier-mode) prettier-mode)
                (and (boundp 'format-all-mode) format-all-mode))
-        ;; Eglot loads lazily, so its mode variable may be unbound.
-        (when (bound-and-true-p eglot--managed-mode)
+        ;; Eglot loads lazily; its predicate is not autoloaded.
+        (when (and (fboundp 'eglot-managed-p) (eglot-managed-p))
           (eglot-format-buffer))))))
 
 (defun init/get-format-buffer-function-for-mode (mode)

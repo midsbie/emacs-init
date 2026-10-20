@@ -25,15 +25,15 @@
 ;;; Code:
 
 ;;;###autoload
-(defun my/handle-large-file-hook ()
-  "Make buffer read-only for large files.
-
-If a file is over a given size, makes the buffer read only and
-forcefully switches to fundamental mode."
-  (when (> (buffer-size) (* 1024 1024))
+(defun my/handle-large-file-hook (&rest _args)
+  "Use read-only Fundamental mode for files over 1,048,576 characters.
+Return non-nil when handled, for use as before-until advice on
+`set-auto-mode'.  Ignore that function's arguments."
+  (when (and buffer-file-name (> (buffer-size) (* 1024 1024)))
+    (fundamental-mode)
     (setq buffer-read-only t)
     (buffer-disable-undo)
-    (fundamental-mode)))
+    t))
 
 (provide 'my-large-files)
 

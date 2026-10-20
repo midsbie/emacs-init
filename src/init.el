@@ -186,7 +186,9 @@ Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
 
 ;; The utilities in user-lisp/ need no `require'.  These three take effect only
 ;; once switched on.
-(add-hook 'find-file-hook #'my/handle-large-file-hook)
+;; Mode-selection alists run after explicit mode cookies and shebangs; intercept
+;; selection itself so large files skip language hooks in every case.
+(advice-add 'set-auto-mode :before-until #'my/handle-large-file-hook)
 (my/modeline-mode 1)
 (add-hook 'after-change-major-mode-hook #'my/warn-when-root-visits-file)
 

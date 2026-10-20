@@ -33,18 +33,17 @@
 This function records the last refreshed buffer to prevent unnecessary
 updates from taking place."
   (interactive)
-  (when (and (neo-global--window-exists-p)
+  (when (and (get-buffer-window neo-buffer-name)
              (buffer-file-name)
              (not (eq my/neotree/last-buffer (current-buffer))))
     (setq my/neotree/last-buffer (current-buffer))
     (when my/neotree/refresh-timer
       (cancel-timer my/neotree/refresh-timer))
     (setq my/neotree/refresh-timer
-          (run-with-idle-timer .25 nil #'(lambda ()
-                                          (neotree-refresh t))))))
+          (run-with-idle-timer .25 nil #'neotree-refresh t))))
 
 (use-package neotree
-  ;; The buffer-list hook calls Neotree internals, so load them before wiring it.
+  ;; Load the buffer-name constant before registering the buffer-list hook.
   :demand t
   :custom
   (neo-window-width 50)

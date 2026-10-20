@@ -133,7 +133,6 @@
     (unless (and binding (not (numberp binding)))
       (local-set-key (kbd "C-c C-c") 'compile)))
 
-  (highlight-parentheses-mode)      ; turn on { } and ( ) highlighting
   (abbrev-mode -1)                  ; turn abbrev-mode off
   (subword-mode 1)
 

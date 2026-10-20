@@ -32,4 +32,24 @@
         (web-mode)))
     (should (eq (lookup-key web-mode-map ".") binding))))
 
+(defvar init/defaults/fill-column/narrow 80)
+
+(ert-deftest init/lisp-interaction-initializes-once ()
+  (require 'init-elisp-mode)
+  (let ((calls 0))
+    (cl-letf (((symbol-function 'init/common-programming-mode)
+               (lambda () (setq calls (1+ calls)))))
+      (with-temp-buffer
+        (lisp-interaction-mode)))
+    (should (= calls 1))))
+
+(ert-deftest init/js-jsx-initializes-once ()
+  (require 'init-js)
+  (let ((calls 0))
+    (cl-letf (((symbol-function 'init/common-web-programming-mode)
+               (lambda () (setq calls (1+ calls)))))
+      (with-temp-buffer
+        (js-jsx-mode)))
+    (should (= calls 1))))
+
 ;;; init-modes-tests.el ends here

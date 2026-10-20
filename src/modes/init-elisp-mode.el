@@ -32,7 +32,7 @@
 
 (use-package elisp-mode
   :ensure nil
-  :hook ((emacs-lisp-mode lisp-interaction-mode lisp-mode) . init/elisp-mode/enable))
+  :hook ((emacs-lisp-mode lisp-mode) . init/elisp-mode/enable))
 
 (provide 'init-elisp-mode)
 

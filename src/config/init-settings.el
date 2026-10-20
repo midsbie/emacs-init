@@ -172,7 +172,7 @@
     (setq p (cons (* 2 i) p)))
   (setopt tab-stop-list (reverse p)))
 
-(fset 'yes-or-no-p 'y-or-n-p)           ; accept 'y' or 'n' instead of yes/no
+(setopt use-short-answers t)
 
 ;; To make it easier for newcomers to Emacs, the developers decided to swap out
 ;; the mechanics of C-j and RET when `electric-indent-mode' is enabled.  Retain

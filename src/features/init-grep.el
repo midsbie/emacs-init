@@ -8,18 +8,11 @@
 
 ;;; Code:
 
-;; Settings
-;; ----------------------------------------
-; Don't ask to save buffers when running `grep-find'
-(setopt grep-save-buffers nil)
-
 (defvar grep-use-null-device)
 
 (defvar my/git-grep-find-command '("git --no-pager grep -nP '%SUBJECT%' -- :/" . 26)
   "Git grep command template and insertion position for the search text.")
 
-;; Functions
-;; ----------------------------------------
 (defun my/git-grep(command-args)
   "Run a grep search for QUERY using git.
 
@@ -46,6 +39,13 @@ current working directory."
   ;; Git grep already supplies file names; avoid adding /dev/null redirection.
   (let ((grep-use-null-device nil))
     (grep command-args)))
+
+(use-package grep
+  :ensure nil
+  :defer t
+  :custom
+  ;; Don't ask to save buffers when running `grep-find'.
+  (grep-save-buffers nil))
 
 (provide 'init-grep)
 

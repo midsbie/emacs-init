@@ -45,26 +45,20 @@
         (cond ((eq var 'c-basic-offset)
                (setq-local web-mode-code-indent-offset val)))))))
 
-(defun init/web-mode/before-save ()
-  ;; Set web-mode's content-type to "typescript" when editing TS source files or
-  ;; it'll default to JSX, causing prettier to error out on Typescript-specific
-  ;; syntax.  This cannot be set preemptively because it results in web-mode not
-  ;; rendering the JSX markup in the buffer correctly.
-  (when (eq major-mode 'web-mode)
-    (let ((ext (file-name-extension (buffer-file-name))))
-      (cond ((not ext) t)
-            ((eq (string-match "^tsx?$" ext) 0)
-             (setq web-mode-content-type "typescript")))))
-  )
+(defvar web-mode-content-type)
 
-(defun init/web-mode/after-save ()
-  ;; Undoing the setting made in `init/web-mode/before-save', if applicable.
-  (when (eq major-mode 'web-mode)
-    (let ((ext (file-name-extension (buffer-file-name))))
-      (cond ((not ext) t)
-            ((eq (string-match "^tsx?$" ext) 0)
-             (setq web-mode-content-type "jsx")))))
-  )
+(defun init/web-mode/prettify-as-typescript (prettify)
+  "Call PRETTIFY with a TypeScript content type in web-mode TS and TSX buffers.
+Web-mode does not give these files a TypeScript content type, so
+Prettier would reject TypeScript syntax.  Keeping that content type
+would make web-mode render JSX markup incorrectly, so the original is
+restored however PRETTIFY exits."
+  (if (and (eq major-mode 'web-mode)
+           buffer-file-name
+           (member (file-name-extension buffer-file-name) '("ts" "tsx")))
+      (let ((web-mode-content-type "typescript"))
+        (funcall prettify))
+    (funcall prettify)))
 
 (use-package web-mode
   :bind (:map web-mode-map
@@ -83,9 +77,8 @@
   ;; Source: http://cha1tanya.com/2015/06/20/configuring-web-mode-with-jsx.html
   (setq-default web-mode-content-types-alist '(("jsx" . "\\.\\(jsx?\\|tsx\\)\\'")))
 
-  (advice-add 'prettier--maybe-prettify-on-save :before #'init/web-mode/before-save)
-  (advice-add 'prettier--maybe-prettify-on-save :after #'init/web-mode/after-save)
-  )
+  (advice-add 'prettier--maybe-prettify-on-save :around
+              #'init/web-mode/prettify-as-typescript))
 
 (provide 'init-web-mode)
 

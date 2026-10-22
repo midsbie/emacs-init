@@ -26,19 +26,10 @@
   ;; Enable clipboard functionality
   (setopt select-enable-clipboard t)
 
-
-  ;; Default face font (theme handles colors).  Keep it in step with the
-  ;; `font' frame parameter in early-init.el.
-  (custom-set-faces
-   '(default ((t (:inherit nil :stipple nil
-                           :inverse-video nil :box nil
-                           :strike-through nil :overline nil :underline nil
-                           :slant normal :weight normal :height 85 :width normal
-                           :family "Hack")))))
-
   ;; Load baseline theme and then overlay the personal theme on top.
   (load-theme 'my-tango-ansi t)
   (load-theme 'my-gui-dark t)
+  (load-theme 'my-common t)
 
   ;; For some reason, version >25.x seems to activate the horizontal scrollbars.
   ;; We forcefully disable them here.

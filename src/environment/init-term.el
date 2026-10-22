@@ -15,6 +15,7 @@
 ;; Load wombat as the base, then layer our terminal theme on top.
 (load-theme 'wombat t)
 (load-theme 'my-term-dark t)
+(load-theme 'my-common t)
 
 (provide 'init-term)
 

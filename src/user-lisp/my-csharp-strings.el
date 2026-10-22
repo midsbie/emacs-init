@@ -38,21 +38,29 @@
 
 (require 'treesit)
 
+(defun my/csharp--child-of-type-p (node type)
+  "Non-nil when NODE has a child of tree-sitter TYPE."
+  (seq-some (lambda (child) (equal (treesit-node-type child) type))
+            (treesit-node-children node)))
+
 (defun my/csharp--string-pieces (node)
   "Return the ordered list of `string_literal' NODEs forming a plain
 C# string (concatenation) rooted at NODE, or nil if NODE is not a
 pure concatenation of plain double-quoted string literals.
 
-Verbatim (@\"...\"), interpolated ($\"...\") and raw strings are
-intentionally rejected so they are never mangled."
+Verbatim (@\"...\"), interpolated ($\"...\"), raw and UTF-8 (\"...\"u8)
+strings, and concatenations containing comments, are rejected because
+rewriting them would change or delete source."
   (cond
    ((null node) nil)
    ((equal (treesit-node-type node) "string_literal")
-    (list node))
+    (unless (my/csharp--child-of-type-p node "string_literal_encoding")
+      (list node)))
    ((and (equal (treesit-node-type node) "binary_expression")
          (equal (treesit-node-text
                  (treesit-node-child-by-field-name node "operator") t)
-                "+"))
+                "+")
+         (not (my/csharp--child-of-type-p node "comment")))
     (let ((l (my/csharp--string-pieces
               (treesit-node-child-by-field-name node "left")))
           (r (my/csharp--string-pieces
@@ -82,17 +90,11 @@ concatenation covering POS, or nil when POS is not on one."
     (error nil)))
 
 (defun my/csharp--literal-content (node)
-  "Return the raw source text between the quotes of string_literal NODE.
+  "Return the raw source text between the quotes of plain string_literal NODE.
 Everything inside the quotes is kept verbatim, including escape
 sequences such as \\\" which the grammar exposes as separate
 children."
-  (let* ((s (treesit-node-text node t))
-         (n (length s)))
-    (if (and (>= n 2)
-             (eq (aref s 0) ?\")
-             (eq (aref s (1- n)) ?\"))
-        (substring s 1 (1- n))
-      s)))
+  (substring (treesit-node-text node t) 1 -1))
 
 (defun my/csharp--last-space (s from to)
   "Index of the last ?\\s in S within [FROM, TO), or nil."

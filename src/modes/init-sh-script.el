@@ -15,8 +15,6 @@
 (use-package sh-script
   :ensure nil
   :hook ((sh-mode bash-ts-mode) . init/sh-script/enable)
-  :custom
-  (sh-basic-offset 2)
   :init
   ;; Bash's tree-sitter mode redirects scripts for other shells to sh-mode.
   (add-to-list 'major-mode-remap-alist '(sh-mode . bash-ts-mode)))

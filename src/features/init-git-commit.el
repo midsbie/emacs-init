@@ -10,6 +10,17 @@
 
 (defvar git-commit-need-summary-line)   ; Defined by git-commit.
 
+(defgroup init/git-commit nil
+  "Customisations for `git-commit'."
+  :group 'init
+  :prefix "init/git-commit/")
+
+(defcustom init/git-commit/irregularity-regexps '("^[ \t]*irregularit")
+  "Regexps identifying irregularities in commit messages.
+Matching ignores case.  An empty list disables irregularity detection."
+  :group 'init/git-commit
+  :type '(repeat regexp))
+
 (defun my/git-commit/summary-paragraph-p ()
   "Return non-nil if the paragraph at point holds the summary line."
   (and git-commit-need-summary-line
@@ -35,16 +46,24 @@ The summary line is left alone, as `git-commit-setup-auto-fill' does."
       (set-marker end nil))))
 
 (defun my/git-commit/irregularity-p (&optional beg end)
-  "Return non-nil for a line starting with \"irregularit\" between BEG and END.
-Ignore leading spaces and tabs and letter case.  BEG and END default to
-the accessible buffer bounds.  The non-nil value is the line's beginning
-position; point and match data are preserved."
+  "Return the beginning of the first line matching an irregularity regexp.
+Search `init/git-commit/irregularity-regexps' case-insensitively between
+BEG and END, defaulting to the accessible buffer bounds.  Return nil if
+none match.  Preserve point and match data."
   (save-match-data
     (save-excursion
-      (goto-char (or beg (point-min)))
-      (let ((case-fold-search t))
-        (when (re-search-forward "^[ \t]*irregularit" end t)
-          (match-beginning 0))))))
+      (let ((case-fold-search t)
+            (beg (or beg (point-min)))
+            start)
+        (dolist (regexp init/git-commit/irregularity-regexps)
+          (goto-char beg)
+          (when (re-search-forward regexp end t)
+            (setq start (if start
+                            (min start (match-beginning 0))
+                          (match-beginning 0)))))
+        (when start
+          (goto-char start)
+          (line-beginning-position))))))
 
 (defun my/git-commit/check-irregularity (force)
   "Ask before finishing a commit containing an irregularity line.
@@ -56,7 +75,8 @@ skips the check, as for other commit finish queries."
 
 (defun my/git-commit/yank-and-fill (&optional arg)
   "Yank as `yank' does with ARG, then fill each yanked paragraph.
-Select the first yanked paragraph starting with \"irregularit\", ignoring case.
+Select the first yanked paragraph matching an irregularity regexp
+from `init/git-commit/irregularity-regexps', ignoring case.
 The fill is undone separately, so \\[undo] once restores the text as yanked."
   (interactive "*P")
   (yank arg)

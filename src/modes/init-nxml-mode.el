@@ -27,6 +27,7 @@
          ("\\.fsproj\\'"  . nxml-mode)
          ("\\.vbproj\\'"  . nxml-mode)
          ("\\.vcxproj\\'" . nxml-mode)
+         ("\\.proj\\'"    . nxml-mode)
          ("\\.props\\'"   . nxml-mode)
          ("\\.targets\\'" . nxml-mode)
          ("\\.nuspec\\'"  . nxml-mode)))

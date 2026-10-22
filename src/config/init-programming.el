@@ -221,14 +221,7 @@ entry overrides the default formatting in `init/maybe-format-buffer'.")
                 (concat (if (and (executable-find "yarn")
                                  (locate-dominating-file default-directory "yarn.lock"))
                             "yarn"
-                          "npm") " run test")))
-
-  ;; `flymake-mode' is automatically enabled by `eglot' but this isn't done
-  ;; preemptively.
-  (when (and (boundp 'flymake-mode) flymake-mode)
-    (ignore-errors
-      (when (flymake-eslint-enable)
-        (flymake-start)))))
+                          "npm") " run test"))))
 
 (defun init/find-node-modules ()
   "Find path to node_modules directory.

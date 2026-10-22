@@ -44,9 +44,14 @@ with `init/eglot/toggle-inlay-hints'."
   ;; (setq eglot-send-changes-idle-time 1.0)
 
   ;; Configure Typescript language server with inlay hints enabled by default.
+  ;; The server rejects language IDs derived from these mode names.
   (add-to-list
    'eglot-server-programs
-   `((typescript-ts-mode tsx-ts-mode js-ts-mode typescript-mode js-mode)
+   `(((typescript-ts-mode :language-id "typescript")
+      (tsx-ts-mode :language-id "typescriptreact")
+      (js-ts-mode :language-id "javascript")
+      (typescript-mode :language-id "typescript")
+      (js-mode :language-id "javascript"))
      . ("typescript-language-server" "--stdio"
         :initializationOptions
         (:preferences

@@ -267,21 +267,31 @@ it to the buffer-local `exec-path' if found."
     (init/run-eslint-autofix)))
 
 (defun init/run-eslint-autofix ()
-  "Apply eslint auto-fixes after buffer save.
+  "Apply ESLint fixes to the visited file and refresh the buffer.
 
-This function applies eslint's auto-fixes automatically to a
-buffer after it has been saved.  The main motivating factor here
-is to make organization of imports as per the repository's
-settings to be less of a pain point.
-
-It is unclear whether there will be performance issues from
-running the eslint tool in blocking mode."
+Meant to run after saving, so that imports are organized as the
+repository's settings require.  ESLint runs synchronously on the file on
+disk, so a modified buffer is refused rather than reverted.  The first
+ESLint on the buffer's `exec-path' runs from the buffer's directory, so
+the nearest installation and configuration apply.  Signal an error when
+ESLint is missing or fails to run."
   (interactive)
-  (when-let* ((project (project-current)))
-    (let ((eslint (expand-file-name "node_modules/.bin/eslint" (project-root project))))
-      (shell-command-to-string (format "%s --fix %s"
-                                       (shell-quote-argument eslint)
-                                       (shell-quote-argument buffer-file-name)))
+  (unless buffer-file-name
+    (user-error "Buffer is not visiting a file"))
+  (when (buffer-modified-p)
+    (user-error "Save the buffer before applying ESLint fixes"))
+  (let ((eslint (or (executable-find "eslint" t)
+                    (user-error "ESLint not found")))
+        (file (file-local-name buffer-file-name)))
+    (with-temp-buffer
+      ;; The temporary buffer inherits `default-directory', from which
+      ;; ESLint 9 looks up its configuration.  ESLint exits with 1 when
+      ;; problems remain after fixing.
+      (let ((status (process-file eslint nil t nil "--fix" file)))
+        (unless (memq status '(0 1))
+          (error "ESLint failed with status %s: %s"
+                 status (string-trim (buffer-string))))))
+    (unless (verify-visited-file-modtime)
       (revert-buffer t t t))))
 
 (defun init/run-language-server ()

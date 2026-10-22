@@ -185,18 +185,8 @@ entry overrides the default formatting in `init/maybe-format-buffer'.")
   (setq-local c-basic-offset  2)
   (setq-local fill-column     init/defaults/fill-column)
 
-  ;; Add node_modules path to `exec-path' to enable:
-  ;;
-  ;; - `prettier-mode' to work
-  ;;
-  ;; - Eglot to find the TypeScript language server for Typescript
-  ;;   source files.
-  ;;
-  ;; [31Oct22] The `add-node-modules-path' package is no longer used because
-  ;; it does not take into account the fact that mono-repositories often have
-  ;; multiple "node_modules" directories.  The custom function
-  ;; `init/add-node-modules-to-exec-path' was crafted to take this into account
-  ;; when looking for a repository's root "node_modules" directory.
+  ;; Let `prettier-mode', ESLint and Eglot find the project's executables,
+  ;; including the TypeScript language server.
   (init/add-node-modules-to-exec-path)
 
   (init/common-programming-mode)
@@ -210,28 +200,23 @@ entry overrides the default formatting in `init/maybe-format-buffer'.")
                             "yarn"
                           "npm") " run test"))))
 
-(defun init/find-node-modules ()
-  "Find path to node_modules directory.
-
-Attempts to determine the path to the repository's topmost node_modules
-directory by recursively traversing all the directories of the current
-buffer."
-  (when-let* ((path (my/locate-topmost-file (or (buffer-file-name) default-directory)
-                                            "node_modules"))
-              (full-path (expand-file-name "node_modules" path)))
-    (when (file-directory-p full-path)
-      full-path)))
+(defun init/node-modules-bin-directories ()
+  "Return the node_modules/.bin directories above the buffer, nearest first."
+  (let ((dir (file-name-directory (expand-file-name (or buffer-file-name default-directory))))
+        dirs)
+    (while (setq dir (locate-dominating-file dir "node_modules/.bin"))
+      (push (expand-file-name "node_modules/.bin" dir) dirs)
+      (let ((parent (file-name-directory (directory-file-name dir))))
+        (setq dir (unless (equal parent dir) parent))))
+    (nreverse dirs)))
 
 (defun init/add-node-modules-to-exec-path ()
-  "Add node_modules/.bin directory to buffer-local `exec-path' when present.
-
-Searches for node_modules/.bin in the buffer's directory tree and adds
-it to the buffer-local `exec-path' if found."
-  (let* ((p (init/find-node-modules))
-         (binp (and p (expand-file-name ".bin" p))))
-    (when (and binp (file-directory-p binp))
-      (make-local-variable 'exec-path)
-      (add-to-list 'exec-path binp))))
+  "Prepend the node_modules/.bin directories above the buffer to its `exec-path'.
+Nearer directories come first, so a package's own executables shadow
+those installed further up a monorepo.  Repeated calls leave `exec-path'
+unchanged."
+  (when-let* ((bins (init/node-modules-bin-directories)))
+    (setq-local exec-path (append bins (seq-difference exec-path bins)))))
 
 (defun init/is-web-programming-mode-p ()
   "Return t if current `major-mode' is a web programming mode."

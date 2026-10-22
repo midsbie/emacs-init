@@ -200,22 +200,9 @@ entry overrides the default formatting in `init/maybe-format-buffer'.")
   (init/add-node-modules-to-exec-path)
 
   (init/common-programming-mode)
-  (let ((buf (current-buffer)))
-    (run-with-idle-timer
-     1 nil
-     (lambda ()
-       (when (buffer-live-p buf)
-         (with-current-buffer buf
-           (init/common-web-programming-mode--deferred)))))))
 
-(defun init/common-web-programming-mode--deferred ()
-  "Deferred initialization of common settings for web-related modes."
-  ;; For some reason preemptively setting the fill column above is
-  ;; now not taking hold in `js-mode' buffers.
-  (setq-local fill-column init/defaults/fill-column)
-
-  ;; Provide default command for `compile' that should apply to all
-  ;; web-related major modes.
+  ;; Default `compile' to the package's tests unless the mode chose a command.
+  ;; File and directory local values apply after this hook and take precedence.
   (when (string= compile-command (default-value 'compile-command))
     (setq-local compile-command
                 (concat (if (and (executable-find "yarn")

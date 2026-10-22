@@ -36,29 +36,41 @@ all JS/X buffers."
   :group 'init/prettier-mode
   :type 'boolean)
 
-(defun init/prettier/enable-in-buffer (buffer)
-  "Turn on `prettier-mode' in BUFFER if it is still live."
+(defvar-local init/prettier/enable-timer nil
+  "Idle timer scheduled to turn on `prettier-mode' in this buffer.")
+;; Survive major mode changes so that setup under a later mode can cancel it.
+(put 'init/prettier/enable-timer 'permanent-local t)
+
+(defun init/prettier/enable-in-buffer (buffer mode)
+  "Turn on `prettier-mode' in BUFFER if it is live, still in MODE and eligible.
+
+BUFFER is eligible when its repository has a local Prettier installation
+\(the executable is found in the relative path
+\"node_modules/.bin/prettier\") or `init/enable-prettier-mode' is non-nil,
+and BUFFER is not itself inside node_modules."
   (when (buffer-live-p buffer)
     (with-current-buffer buffer
-      (prettier-mode 1))))
+      (setq init/prettier/enable-timer nil)
+      (when (and (eq major-mode mode)
+                 (ignore-errors
+                   (and (or init/enable-prettier-mode
+                            (my/locate-file-in-dominating-node-modules
+                             ".bin/prettier" default-directory))
+                        (not (my/dir-is-parent-p "node_modules" default-directory)))))
+        (prettier-mode 1)))))
 
 (defun init/prettier/maybe-enable ()
-  "Turn on `prettier-mode' selectively.
+  "Turn on `prettier-mode' selectively, once the buffer is idle.
 
-This function checks if the current buffer's file is within a repository
-that has a local Prettier installation (i.e., the prettier executable is
-found in the relative path \"node_modules/.bin/prettier\"). If so,
-`prettier-mode' is enabled.
-
-Note that enabling of the mode is deferred to resolve an issue where
-some .prettierrc settings are ignored when formatting the buffer on
-save. Strangely this only happens when LSP is active."
-  (ignore-errors
-    (when (and (or init/enable-prettier-mode
-               (my/locate-file-in-dominating-node-modules ".bin/prettier" default-directory))
-           (not (my/dir-is-parent-p "node_modules" default-directory)))
-      (run-with-idle-timer .1 nil #'init/prettier/enable-in-buffer
-                           (current-buffer)))))
+Enabling is deferred to resolve an issue where some .prettierrc settings
+are ignored when formatting the buffer on save.  Strangely this only
+happens when LSP is active.  Repeated calls replace the pending request,
+which `init/prettier/enable-in-buffer' drops if the major mode changed."
+  (when (timerp init/prettier/enable-timer)
+    (cancel-timer init/prettier/enable-timer))
+  (setq init/prettier/enable-timer
+        (run-with-idle-timer .1 nil #'init/prettier/enable-in-buffer
+                             (current-buffer) major-mode)))
 
 (use-package prettier
   :diminish " P"

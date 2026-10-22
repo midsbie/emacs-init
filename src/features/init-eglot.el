@@ -110,27 +110,34 @@ check and suggested name are kept.  ORIG-FUN is called with ARGS."
       (init/eglot/csharp-metadata-file uri)
     (funcall orig-fun uri)))
 
-(defvar init/eglot/csharp-metadata-files (make-hash-table :test #'equal)
-  "Cache files written this session, keyed by csharp-ls `csharp:/' URI.
+(defvar init/eglot/csharp-metadata-files (make-hash-table :test #'eq :weakness 'key)
+  "Cache files each csharp-ls server resolved, keyed by server.
+Each value maps the `csharp:/' URIs the server resolved to their files.
 Eglot resolves a URI once per location in a result, so this saves a
-`csharp/metadata' round trip for each.  Starting empty every session means
-a file left behind by an older csharp-ls or SDK is rewritten on first use.")
+`csharp/metadata' round trip for each.  A replacement server starts with
+no entries, so each file is checked against its source on first use: the
+server's positions refer to that source, which another csharp-ls, SDK or
+assembly version may decompile differently.")
 
 (defun init/eglot/csharp-metadata-file (uri)
   "Return the cache file holding the decompiled source for URI."
-  (let ((file (gethash uri init/eglot/csharp-metadata-files)))
-    (if (and file (file-exists-p file))
-        file
-      (puthash uri (init/eglot/csharp-fetch-metadata uri)
-               init/eglot/csharp-metadata-files))))
-
-(defun init/eglot/csharp-fetch-metadata (uri)
-  "Write the source for URI, fetched via `csharp/metadata', to the cache.
-The file lives under the project root next to a sidecar recording URI
-\(see `init/eglot/csharp-metadata-uri-file'); its name is returned."
   (let* ((server (or (eglot-current-server)
                      (user-error "No Eglot server to resolve %s" uri)))
-         (metadata (jsonrpc-request server "csharp/metadata" `(:textDocument (:uri ,uri))))
+         (files (or (gethash server init/eglot/csharp-metadata-files)
+                    (puthash server (make-hash-table :test #'equal)
+                             init/eglot/csharp-metadata-files)))
+         (file (gethash uri files)))
+    (if (and file (file-exists-p file))
+        file
+      (puthash uri (init/eglot/csharp-fetch-metadata server uri) files))))
+
+(defun init/eglot/csharp-fetch-metadata (server uri)
+  "Write the source for URI, fetched from SERVER via `csharp/metadata'.
+The file lives under the project root next to a sidecar recording URI
+\(see `init/eglot/csharp-metadata-uri-file'); its name is returned.  A
+file already holding the source is left untouched; otherwise a buffer
+visiting it is reverted."
+  (let* ((metadata (jsonrpc-request server "csharp/metadata" `(:textDocument (:uri ,uri))))
          (source (or (plist-get metadata :source)
                      (user-error "csharp-ls returned no source for %s" uri)))
          (file (expand-file-name
@@ -139,8 +146,19 @@ The file lives under the project root next to a sidecar recording URI
                         (plist-get metadata :assemblyName)
                         (plist-get metadata :symbolName))
                 (project-root (project-current t)))))
-    (make-directory (file-name-directory file) t)
-    (with-temp-file file (insert source))
+    ;; Rewriting an unchanged file would make visiting it prompt to reread
+    ;; it.  UTF-8 without EOL conversion reproduces SOURCE exactly.
+    (unless (and (file-exists-p file)
+                 (with-temp-buffer
+                   (let ((coding-system-for-read 'utf-8-unix))
+                     (insert-file-contents file))
+                   (equal (buffer-string) source)))
+      (make-directory (file-name-directory file) t)
+      (let ((coding-system-for-write 'utf-8-unix))
+        (with-temp-file file (insert source)))
+      (when-let* ((buffer (find-buffer-visiting file)))
+        (with-current-buffer buffer
+          (revert-buffer t t t))))
     (with-temp-file (init/eglot/csharp-metadata-uri-file file) (insert uri))
     file))
 

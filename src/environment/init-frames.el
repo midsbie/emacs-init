@@ -12,20 +12,16 @@
 
 ;;; Code:
 
-(defcustom init/theme 'my-gui-dark
-  "Theme to load during GUI initialization.
-Can be `my-gui-dark', `my-gui-light', or any other installed theme.
-Terminal Emacs uses `wombat' with `my-term-dark' layered on top."
-  :group 'init
-  :type 'symbol)
-
 (defun init/configure-frame (frame)
   "Load the environment configuration once for FRAME's display type."
   (with-selected-frame frame
     (require (if (display-graphic-p frame) 'init-x 'init-term))))
 
 (add-hook 'after-make-frame-functions #'init/configure-frame)
-(init/configure-frame (selected-frame))
+;; A daemon's initial frame is never displayed; configuring it would enable
+;; the terminal themes for every client.
+(unless (daemonp)
+  (init/configure-frame (selected-frame)))
 
 (provide 'init-frames)
 

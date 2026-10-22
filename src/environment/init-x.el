@@ -36,10 +36,9 @@
                            :slant normal :weight normal :height 85 :width normal
                            :family "Hack")))))
 
-  ;; Load baseline theme and then overlay user-selected theme on top.
+  ;; Load baseline theme and then overlay the personal theme on top.
   (load-theme 'my-tango-ansi t)
-  (when init/theme
-    (load-theme init/theme t))
+  (load-theme 'my-gui-dark t)
 
   ;; For some reason, version >25.x seems to activate the horizontal scrollbars.
   ;; We forcefully disable them here.

@@ -39,13 +39,7 @@
    '(font-lock-doc-face ((t (:foreground "dark salmon"))))
    '(font-lock-property-use-face ((t (:foreground "cornsilk"))))
    '(font-lock-function-call-face ((t (:inherit nil :foreground "LightBlue"))))
-   '(font-lock-number-face ((t (:inherit font-lock-warning-face :weight normal))))
-   '(font-lock-operator-face ((t (:inherit font-lock-builtin-face))))
-
-   ;; Speedbar
-   '(speedbar-highlight-face ((t (:foreground "dark blue"))))
-
-   ))
+   '(font-lock-number-face ((t (:inherit font-lock-warning-face :weight normal))))))
 
 (provide-theme 'my-gui-dark)
 

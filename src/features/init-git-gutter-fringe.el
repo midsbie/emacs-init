@@ -30,16 +30,6 @@
 
 (use-package git-gutter-fringe
   :defer t
-  :custom-face
-  (git-gutter-fr:modified ((t (:inherit fringe :foreground "SkyBlue3"))))
-  (git-gutter-fr:added ((t (:inherit fringe :foreground "dark green"))))
-  (git-gutter-fr:deleted ((t (:inherit fringe :foreground "dark red"))))
-  (git-gutter:modified
-   ((t (:inherit default :weight bold :foreground "magenta" :background "SkyBlue3"))))
-  (git-gutter:added
-   ((t (:inherit default :weight bold :foreground "green" :background "dark green"))))
-  (git-gutter:deleted
-   ((t (:inherit default :weight bold :foreground "red" :background "dark red"))))
   :config (init/git-gutter-fringe/config))
 
 (provide 'init-git-gutter-fringe)

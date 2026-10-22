@@ -120,10 +120,17 @@
 ;; `gc-cons-threshold' is managed by `gcmh-mode' (see features/init-gcmh.el).
 ;;
 ;; Documentation of `read-process-output-max' states that "on GNU/Linux systems,
-;; the value should not exceed /proc/sys/fs/pipe-max-size".
-(setq read-process-output-max (with-temp-buffer
-                                (insert-file-contents "/proc/sys/fs/pipe-max-size")
-                                (string-to-number (buffer-string))))
+;; the value should not exceed /proc/sys/fs/pipe-max-size".  Systems without
+;; that limit get its usual Linux value, 1 MiB.
+(setopt read-process-output-max
+        (let* ((limit "/proc/sys/fs/pipe-max-size")
+               (size (and (file-readable-p limit)
+                          (with-temp-buffer
+                            (insert-file-contents limit)
+                            (string-to-number (buffer-string))))))
+          (if (and (natnump size) (> size 0))
+              size
+            (* 1024 1024))))
 
 ;; Some settings that may help with redisplay
 ;; Ref: [4:25] https://200ok.ch/posts/2020-10-01_introduction_to_profiling_in_emacs.html

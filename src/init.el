@@ -104,7 +104,6 @@
 (require 'init-shell)
 (require 'init-speedbar)
 (require 'init-sqlformat)
-(require 'init-tramp)
 (require 'init-vertico)
 (require 'init-visual-fill-column)
 (require 'init-vterm)

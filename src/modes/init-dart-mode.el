@@ -44,14 +44,21 @@
   (add-hook 'after-save-hook #'init/dart-mode/maybe-hotreload nil t))
 
 (defun init/dart-mode/maybe-hotreload ()
-  "Maybe hot-reload Flutter debugging session."
+  "Hot-reload the Flutter session named by the repository's PID file.
+Signal nothing unless the file holds a positive integer.  The PID of a
+remote buffer's session is signalled on that buffer's host."
   (ignore-errors
     (let* ((root-dir (vc-git-root (buffer-file-name)))
            (pid-file-name (concat root-dir init/dart-mode/flutter-pid-file)))
       (when (and root-dir (file-exists-p pid-file-name))
-        (signal-process (string-to-number (with-temp-buffer
-                                            (insert-file-contents pid-file-name)
-                                            (buffer-string))) 'SIGUSR1)))))
+        (let* ((contents (string-trim (with-temp-buffer
+                                        (insert-file-contents pid-file-name)
+                                        (buffer-string))))
+               (pid (and (string-match-p "\\`[0-9]+\\'" contents)
+                         (string-to-number contents))))
+          ;; Zero and negative PIDs would signal process groups.
+          (when (and pid (> pid 0))
+            (signal-process pid 'SIGUSR1 (file-remote-p root-dir))))))))
 
 (use-package dart-mode
   :hook (dart-mode . init/dart-mode/enable))

@@ -19,11 +19,7 @@
 (use-package cc-mode
   :ensure nil
   :mode (("\\.c\\'" . c-ts-mode)
-         ("\\.h\\'" . c-ts-mode)
-         ("\\.cpp\\'" . c++-ts-mode)
-         ("\\.cxx\\'" . c++-ts-mode)
-         ("\\.hpp\\'" . c++-ts-mode)
-         ("\\.hxx\\'" . c++-ts-mode))
+         ("\\.h\\'" . c-ts-mode))
 
   ;; buftoggle not found
   ;;  :bind (("C-c o" . buftoggle))
@@ -38,6 +34,9 @@
   (c-ts-mode-indent-style 'bsd)
 
   :init
+  ;; Emacs associates every C++ file name and mode cookie with `c++-mode'.
+  (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
+
   ;; Set environment for compilers to use, but only if not set.
   (when (not (getenv "CC"))
     (setenv "CC" (or (and (executable-find "clang") "clang") "gcc")))

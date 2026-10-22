@@ -34,6 +34,26 @@ The summary line is left alone, as `git-commit-setup-auto-fill' does."
         (forward-paragraph))
       (set-marker end nil))))
 
+(defun my/git-commit/irregularity-p (&optional beg end)
+  "Return non-nil for a line starting with \"irregularit\" between BEG and END.
+Ignore leading spaces and tabs and letter case.  BEG and END default to
+the accessible buffer bounds.  The non-nil value is the line's beginning
+position; point and match data are preserved."
+  (save-match-data
+    (save-excursion
+      (goto-char (or beg (point-min)))
+      (let ((case-fold-search t))
+        (when (re-search-forward "^[ \t]*irregularit" end t)
+          (match-beginning 0))))))
+
+(defun my/git-commit/check-irregularity (force)
+  "Ask before finishing a commit containing an irregularity line.
+Return non-nil to proceed, or nil to keep editing.  A non-nil FORCE
+skips the check, as for other commit finish queries."
+  (or force
+      (not (my/git-commit/irregularity-p))
+      (y-or-n-p "Commit message contains irregularities.  Commit anyway? ")))
+
 (defun my/git-commit/yank-and-fill (&optional arg)
   "Yank as `yank' does with ARG, then fill each yanked paragraph.
 Select the first yanked paragraph starting with \"irregularit\", ignoring case.
@@ -43,12 +63,8 @@ The fill is undone separately, so \\[undo] once restores the text as yanked."
   (undo-boundary)
   (my/git-commit/fill-paragraphs (min (point) (mark t)) (max (point) (mark t)))
   (let ((beg (min (point) (mark t)))
-        (end (max (point) (mark t)))
-        (case-fold-search t))
-    (when-let* ((start (save-excursion
-                        (goto-char beg)
-                        (when (re-search-forward "^[ \t]*irregularit" end t)
-                          (match-beginning 0)))))
+        (end (max (point) (mark t))))
+    (when-let* ((start (my/git-commit/irregularity-p beg end)))
       (goto-char start)
       (push-mark (min end (save-excursion (forward-paragraph) (point))) t t)
       (setq deactivate-mark nil))))
@@ -58,6 +74,8 @@ The fill is undone separately, so \\[undo] once restores the text as yanked."
   :init
   ;; Selection replacement runs before the command, so wrappers need this too.
   (put 'my/git-commit/yank-and-fill 'delete-selection 'yank)
+  :config
+  (add-hook 'git-commit-finish-query-functions #'my/git-commit/check-irregularity)
   :bind (:map git-commit-mode-map
               ([remap yank] . my/git-commit/yank-and-fill)))
 

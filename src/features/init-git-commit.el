@@ -36,11 +36,22 @@ The summary line is left alone, as `git-commit-setup-auto-fill' does."
 
 (defun my/git-commit/yank-and-fill (&optional arg)
   "Yank as `yank' does with ARG, then fill each yanked paragraph.
+Select the first yanked paragraph starting with \"irregularit\", ignoring case.
 The fill is undone separately, so \\[undo] once restores the text as yanked."
   (interactive "*P")
   (yank arg)
   (undo-boundary)
-  (my/git-commit/fill-paragraphs (min (point) (mark t)) (max (point) (mark t))))
+  (my/git-commit/fill-paragraphs (min (point) (mark t)) (max (point) (mark t)))
+  (let ((beg (min (point) (mark t)))
+        (end (max (point) (mark t)))
+        (case-fold-search t))
+    (when-let* ((start (save-excursion
+                        (goto-char beg)
+                        (when (re-search-forward "^[ \t]*irregularit" end t)
+                          (match-beginning 0)))))
+      (goto-char start)
+      (push-mark (min end (save-excursion (forward-paragraph) (point))) t t)
+      (setq deactivate-mark nil))))
 
 (use-package git-commit
   :ensure magit

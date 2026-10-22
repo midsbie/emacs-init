@@ -8,13 +8,17 @@
 
 ;;; Code:
 
+(require 'subr-x)
+
 (declare-function dired-advertise "dired")
 (declare-function dired-unadvertise "dired")
 (declare-function project-root "project")
+(declare-function tramp-compute-multi-hops "tramp")
 (declare-function tramp-dissect-file-name "tramp")
-(declare-function tramp-file-name-hop "tramp")
 (declare-function tramp-file-name-localname "tramp")
 (declare-function tramp-file-name-method "tramp")
+(declare-function tramp-file-name-unify "tramp")
+(declare-function tramp-make-tramp-hop-name "tramp")
 (declare-function tramp-tramp-file-p "tramp")
 (defvar tramp-postfix-hop-format)
 (defvar tramp-postfix-host-format)
@@ -113,23 +117,29 @@ sudo (e.g. \"/ssh:host|sudo:host:/etc\") counts as elevated."
 
 (defun my/file-name-without-sudo (filename)
   "Return FILENAME with a trailing elevation hop (sudo, su, ...) removed.
-If FILENAME is reached through a multi-hop chain, only the final
-elevation hop is stripped and the preceding chain is preserved.  When
+The hops leading to the elevation are preserved, whether FILENAME names
+them or `tramp-default-proxies-alist' implies them, so the result names
+the same file on the same host.  It is local only when the elevation was
+the sole hop.  Signal an error when Tramp rejects the chain.  When
 FILENAME is not visited via an elevation method it is returned
 unchanged."
   (if (not (my/file-name-elevated-p filename))
       filename
     (let* ((v (tramp-dissect-file-name filename))
-           (hop (tramp-file-name-hop v))
-           (localname (tramp-file-name-localname v)))
-      (if (and hop (string-suffix-p tramp-postfix-hop-format hop))
-          ;; Drop the final (elevation) hop, keep the chain leading to it.
-          (concat tramp-prefix-format
-                  (substring hop 0 (- (length tramp-postfix-hop-format)))
-                  tramp-postfix-host-format
-                  localname)
-        ;; The elevation was the sole hop: fall back to the plain file.
-        localname))))
+           (localname (tramp-file-name-localname v))
+           ;; The full chain, first hop first and the elevation last.
+           (hops (butlast (tramp-compute-multi-hops v))))
+      (if (null hops)
+          localname
+        (concat tramp-prefix-format
+                (string-remove-suffix
+                 tramp-postfix-hop-format
+                 (mapconcat (lambda (hop)
+                              (substring-no-properties
+                               (tramp-make-tramp-hop-name (tramp-file-name-unify hop))))
+                            hops ""))
+                tramp-postfix-host-format
+                localname)))))
 
 (defun my/dired-directory-without-sudo (dired-dir)
   "Strip an elevation hop from DIRED-DIR, a `dired-directory' value.

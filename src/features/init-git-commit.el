@@ -44,6 +44,9 @@ The fill is undone separately, so \\[undo] once restores the text as yanked."
 
 (use-package git-commit
   :ensure magit
+  :init
+  ;; Selection replacement runs before the command, so wrappers need this too.
+  (put 'my/git-commit/yank-and-fill 'delete-selection 'yank)
   :bind (:map git-commit-mode-map
               ([remap yank] . my/git-commit/yank-and-fill)))
 

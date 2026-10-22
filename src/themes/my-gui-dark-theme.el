@@ -25,7 +25,6 @@
 
    ;; Base
    '(default ((t (:foreground "#ffffff" :background "#080808"))))
-   '(widget-field ((t (:foreground "black"))))
    '(highlight ((t (:background "#004225"))))
    '(hl-line ((t (:inherit highlight :background "#000f08"))))
 
